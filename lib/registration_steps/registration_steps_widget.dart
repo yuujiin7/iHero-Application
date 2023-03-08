@@ -505,7 +505,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                   'Button_navigate_to');
 
                                               context
-                                                  .pushNamed('appointmentPage');
+                                                  .goNamed('appointmentPage');
                                             },
                                             text: 'Apply for Appointment',
                                             options: FFButtonOptions(

@@ -88,73 +88,66 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
             children: [
               Container(
                 width: double.infinity,
-                height: 96.5,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryColor,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30.0,
-                            borderWidth: 1.0,
-                            buttonSize: 60.0,
-                            icon: Icon(
-                              Icons.keyboard_backspace,
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              size: 30.0,
-                            ),
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'MANAGE_D_P_A_keyboard_backspace_ICN_ON_T');
-                              logFirebaseEvent('IconButton_navigate_back');
-                              context.pop();
-                            },
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30.0,
+                          borderWidth: 1.0,
+                          buttonSize: 60.0,
+                          icon: Icon(
+                            Icons.keyboard_backspace,
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            size: 30.0,
                           ),
-                          Text(
-                            'HELP CENTER',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Ubuntu',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
-                                ),
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'MANAGE_D_P_A_keyboard_backspace_ICN_ON_T');
+                            logFirebaseEvent('IconButton_navigate_back');
+                            context.pop();
+                          },
+                        ),
+                        Text(
+                          'HELP CENTER',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Ubuntu',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .bodyText1Family),
+                              ),
+                        ),
+                        FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30.0,
+                          borderWidth: 1.0,
+                          buttonSize: 60.0,
+                          icon: Icon(
+                            Icons.menu_open_rounded,
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            size: 40.0,
                           ),
-                          FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30.0,
-                            borderWidth: 1.0,
-                            buttonSize: 60.0,
-                            icon: Icon(
-                              Icons.menu_open_rounded,
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              size: 40.0,
-                            ),
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'MANAGE_D_P_A_menu_open_rounded_ICN_ON_TA');
-                              logFirebaseEvent('IconButton_drawer');
-                              scaffoldKey.currentState!.openEndDrawer();
-                            },
-                          ),
-                        ],
-                      ),
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'MANAGE_D_P_A_menu_open_rounded_ICN_ON_TA');
+                            logFirebaseEvent('IconButton_drawer');
+                            scaffoldKey.currentState!.openEndDrawer();
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

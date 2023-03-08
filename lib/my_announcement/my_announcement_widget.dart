@@ -81,10 +81,8 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
           onTap: () async {
             logFirebaseEvent('MY_ANNOUNCEMENT_Icon_tq75n70h_ON_TAP');
             logFirebaseEvent('Icon_navigate_to');
-            if (Navigator.of(context).canPop()) {
-              context.pop();
-            }
-            context.pushNamed('profileScreen');
+
+            context.goNamed('profileScreen');
           },
           child: Icon(
             Icons.arrow_back_rounded,

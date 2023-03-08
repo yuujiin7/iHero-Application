@@ -150,6 +150,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                     await showModalBottomSheet(
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
+                      enableDrag: false,
                       context: context,
                       builder: (context) {
                         return Padding(
@@ -184,6 +185,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                     await showModalBottomSheet(
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
+                      enableDrag: false,
                       context: context,
                       builder: (context) {
                         return Padding(

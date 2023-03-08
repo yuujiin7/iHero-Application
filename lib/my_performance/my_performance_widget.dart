@@ -219,7 +219,11 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                         width: double.infinity,
                                         height: 72.0,
                                         decoration: BoxDecoration(
-                                          color: Color(0xFFEBEFF7),
+                                          color: colorFromCssString(
+                                            functions.customColorRating(
+                                                widget.points!),
+                                            defaultColor: Colors.black,
+                                          ),
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(12.0),
                                             bottomRight: Radius.circular(12.0),

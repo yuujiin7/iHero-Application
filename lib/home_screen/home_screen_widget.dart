@@ -149,7 +149,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             AuthUserStreamWidget(
                                               builder: (context) =>
                                                   AutoSizeText(
-                                                currentUserDisplayName,
+                                                currentUserDisplayName
+                                                    .maybeHandleOverflow(
+                                                  maxChars: 14,
+                                                  replacement: '…',
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText1
@@ -235,7 +239,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       logFirebaseEvent(
                                                           'CircleImage_navigate_to');
 
-                                                      context.pushNamed(
+                                                      context.goNamed(
                                                           'profileScreen');
                                                     },
                                                     child: Container(
@@ -514,8 +518,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   logFirebaseEvent(
                                                       'createEventButton_navigate_to');
 
-                                                  context.pushNamed(
-                                                      'volunteerList');
+                                                  context
+                                                      .goNamed('volunteerList');
                                                 },
                                                 text: 'VIEW',
                                                 options: FFButtonOptions(
@@ -1096,7 +1100,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                           'HOME_SCREEN_PAGE_Text_ox9fm537_ON_TAP');
                                       logFirebaseEvent('Text_navigate_to');
 
-                                      context.pushNamed('MyEventsVolunteer');
+                                      context.goNamed('MyEventsVolunteer');
                                     },
                                     child: Text(
                                       'see all',
@@ -1429,7 +1433,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             'HOME_SCREEN_PAGE_Text_91lxbgfv_ON_TAP');
                                         logFirebaseEvent('Text_navigate_to');
 
-                                        context.pushNamed('MyEventsAdmin');
+                                        context.goNamed('MyEventsAdmin');
                                       },
                                       child: Text(
                                         'see all',

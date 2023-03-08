@@ -116,7 +116,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                 logFirebaseEvent('VOLUNTEER_LIST_keyboard_backspace_ICN_ON');
                 logFirebaseEvent('IconButton_navigate_to');
 
-                context.pushNamed('HomeScreen');
+                context.goNamed('HomeScreen');
               },
             ),
             title: Text(

@@ -137,7 +137,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                         'PROFILE_SCREEN_keyboard_backspace_ICN_ON');
                                     logFirebaseEvent('IconButton_navigate_to');
 
-                                    context.pushNamed('HomeScreen');
+                                    context.goNamed('HomeScreen');
                                   },
                                 ),
                                 FlutterFlowIconButton(

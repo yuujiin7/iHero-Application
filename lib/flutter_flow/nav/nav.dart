@@ -100,11 +100,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => VolunteerPhoneWidget(),
             ),
             FFRoute(
-              name: 'RegistrationSteps',
-              path: 'registrationSteps',
-              builder: (context, params) => RegistrationStepsWidget(),
-            ),
-            FFRoute(
               name: 'OTPCode',
               path: 'oTPCode',
               builder: (context, params) => OTPCodeWidget(
@@ -112,8 +107,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'RegistrationSteps',
+              path: 'registrationSteps',
+              builder: (context, params) => RegistrationStepsWidget(),
+            ),
+            FFRoute(
               name: 'eventMap',
               path: 'eventMap',
+              requireAuth: true,
               builder: (context, params) => EventMapWidget(
                 eventLocationLatLng:
                     params.getParam('eventLocationLatLng', ParamType.LatLng),
@@ -122,26 +123,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'findEvents',
               path: 'findEvents',
+              requireAuth: true,
               builder: (context, params) => FindEventsWidget(),
             ),
             FFRoute(
               name: 'appointmentPage',
               path: 'appointmentPage',
+              requireAuth: true,
               builder: (context, params) => AppointmentPageWidget(),
-            ),
-            FFRoute(
-              name: 'HomeScreen',
-              path: 'HomeScreen',
-              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'journeyScreen',
               path: 'journeyScreen',
+              requireAuth: true,
               builder: (context, params) => JourneyScreenWidget(),
+            ),
+            FFRoute(
+              name: 'HomeScreen',
+              path: 'HomeScreen',
+              requireAuth: true,
+              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'allChat',
               path: 'allChat',
+              requireAuth: true,
               asyncParams: {
                 'userRecord': getDoc(['users'], UsersRecord.serializer),
               },
@@ -154,6 +160,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'chatPage',
               path: 'chatPage',
+              requireAuth: true,
               asyncParams: {
                 'chatUser': getDoc(['users'], UsersRecord.serializer),
               },
@@ -166,11 +173,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'groupChatPage',
               path: 'groupChatPage',
+              requireAuth: true,
               builder: (context, params) => GroupChatPageWidget(),
             ),
             FFRoute(
               name: 'eventCreate',
               path: 'eventCreate',
+              requireAuth: true,
               builder: (context, params) => EventCreateWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
@@ -178,6 +187,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'announcementDetails',
               path: 'announcementDetails',
+              requireAuth: true,
               asyncParams: {
                 'announcementdetails':
                     getDoc(['announcement'], AnnouncementRecord.serializer),
@@ -190,6 +200,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'volunteerList',
               path: 'volunteerList',
+              requireAuth: true,
               builder: (context, params) => VolunteerListWidget(
                 volunteerList: params.getParam('volunteerList',
                     ParamType.DocumentReference, false, ['users']),
@@ -198,37 +209,25 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'pendingRegistration',
               path: 'pendingRegistration',
+              requireAuth: true,
               builder: (context, params) => PendingRegistrationWidget(),
-            ),
-            FFRoute(
-              name: 'appointments',
-              path: 'appointments',
-              builder: (context, params) => AppointmentsWidget(),
             ),
             FFRoute(
               name: 'profileScreen',
               path: 'profileScreen',
+              requireAuth: true,
               builder: (context, params) => ProfileScreenWidget(),
             ),
             FFRoute(
               name: 'announcementFeed',
               path: 'announcementFeed',
+              requireAuth: true,
               builder: (context, params) => AnnouncementFeedWidget(),
-            ),
-            FFRoute(
-              name: 'eventFullDetail',
-              path: 'eventFullDetail',
-              asyncParams: {
-                'eventFullDetails': getDoc(['events'], EventsRecord.serializer),
-              },
-              builder: (context, params) => EventFullDetailWidget(
-                eventFullDetails:
-                    params.getParam('eventFullDetails', ParamType.Document),
-              ),
             ),
             FFRoute(
               name: 'volunteerToEvent',
               path: 'volunteerToEvent',
+              requireAuth: true,
               asyncParams: {
                 'volunteerListofEvent':
                     getDoc(['events'], EventsRecord.serializer),
@@ -239,35 +238,59 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'helpCenter',
-              path: 'helpCenter',
-              builder: (context, params) => HelpCenterWidget(),
+              name: 'appointments',
+              path: 'appointments',
+              requireAuth: true,
+              builder: (context, params) => AppointmentsWidget(),
+            ),
+            FFRoute(
+              name: 'eventFullDetail',
+              path: 'eventFullDetail',
+              requireAuth: true,
+              asyncParams: {
+                'eventFullDetails': getDoc(['events'], EventsRecord.serializer),
+              },
+              builder: (context, params) => EventFullDetailWidget(
+                eventFullDetails:
+                    params.getParam('eventFullDetails', ParamType.Document),
+              ),
             ),
             FFRoute(
               name: 'ReportingAbuse',
               path: 'reportingAbuse',
+              requireAuth: true,
               builder: (context, params) => ReportingAbuseWidget(),
+            ),
+            FFRoute(
+              name: 'helpCenter',
+              path: 'helpCenter',
+              requireAuth: true,
+              builder: (context, params) => HelpCenterWidget(),
             ),
             FFRoute(
               name: 'forgotPassword',
               path: 'forgotPassword',
+              requireAuth: true,
               builder: (context, params) => ForgotPasswordWidget(),
-            ),
-            FFRoute(
-              name: 'ManageDPA',
-              path: 'manageDPA',
-              builder: (context, params) => ManageDPAWidget(),
             ),
             FFRoute(
               name: 'MyEventsAdmin',
               path: 'myEventsAdmin',
+              requireAuth: true,
               builder: (context, params) => MyEventsAdminWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
             ),
             FFRoute(
+              name: 'ManageDPA',
+              path: 'manageDPA',
+              requireAuth: true,
+              builder: (context, params) => ManageDPAWidget(),
+            ),
+            FFRoute(
               name: 'MyEventsVolunteer',
               path: 'myEventsVolunteer',
+              requireAuth: true,
               builder: (context, params) => MyEventsVolunteerWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
@@ -275,6 +298,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'myAnnouncement',
               path: 'myAnnouncement',
+              requireAuth: true,
               builder: (context, params) => MyAnnouncementWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
@@ -282,6 +306,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'myPerformance',
               path: 'myPerformance',
+              requireAuth: true,
               builder: (context, params) => MyPerformanceWidget(
                 points: params.getParam('points', ParamType.int),
               ),
@@ -289,6 +314,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'CreditScore',
               path: 'creditScore',
+              requireAuth: true,
               builder: (context, params) => CreditScoreWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),

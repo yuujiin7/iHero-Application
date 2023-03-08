@@ -113,13 +113,14 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        iconTheme: IconThemeData(color: Color(0xFFFFA534)),
+        iconTheme: IconThemeData(
+            color: FlutterFlowTheme.of(context).primaryBackground),
         automaticallyImplyLeading: true,
         title: Text(
           'FILL UP THE FORM',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Ubuntu',
-                color: Color(0xFFFFA534),
+                color: FlutterFlowTheme.of(context).primaryBackground,
                 fontSize: 20.0,
                 useGoogleFonts: GoogleFonts.asMap()
                     .containsKey(FlutterFlowTheme.of(context).bodyText1Family),
