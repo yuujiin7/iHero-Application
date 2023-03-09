@@ -1,0 +1,466 @@
+import '/backend/backend.dart';
+import '/chat_page/chat_page_widget.dart';
+import '/flutter_flow/chat/index.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
+import 'group_chat_page_model.dart';
+export 'group_chat_page_model.dart';
+
+class GroupChatPageWidget extends StatefulWidget {
+  const GroupChatPageWidget({Key? key}) : super(key: key);
+
+  @override
+  _GroupChatPageWidgetState createState() => _GroupChatPageWidgetState();
+}
+
+class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
+  late GroupChatPageModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => GroupChatPageModel());
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'groupChatPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('GROUP_CHAT_groupChatPage_ON_LOAD');
+      logFirebaseEvent('groupChatPage_custom_action');
+      await actions.lockOrientation();
+    });
+
+    _model.textController ??= TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Color(0xFFF1F4F8),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30.0,
+          buttonSize: 24.0,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Color(0xFF95A1AC),
+            size: 24.0,
+          ),
+          onPressed: () async {
+            logFirebaseEvent('GROUP_CHAT_arrow_back_rounded_ICN_ON_TAP');
+            logFirebaseEvent('IconButton_navigate_back');
+            context.pop();
+          },
+        ),
+        title: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Create Group Chat',
+              style: FlutterFlowTheme.of(context).subtitle1.override(
+                    fontFamily: 'Lexend Deca',
+                    color: Color(0xFF95A1AC),
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).subtitle1Family),
+                  ),
+            ),
+            Text(
+              'Select the friends to add to chat.',
+              style: FlutterFlowTheme.of(context).bodyText2.override(
+                    fontFamily: 'Lexend Deca',
+                    color: Color(0xFF1A1F24),
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).bodyText2Family),
+                  ),
+            ),
+          ],
+        ),
+        actions: [],
+        centerTitle: false,
+        elevation: 0.0,
+      ),
+      body: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 50.0,
+              decoration: BoxDecoration(
+                color: Color(0xFFDBE2E7),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3.0,
+                    color: Color(0x33000000),
+                    offset: Offset(0.0, 2.0),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(0.0),
+              ),
+              alignment: AlignmentDirectional(0.0, 0.0),
+              child: TextFormField(
+                controller: _model.textController,
+                obscureText: false,
+                decoration: InputDecoration(
+                  hintText: 'Search for friends...',
+                  hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Lexend Deca',
+                        color: Color(0xFF95A1AC),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.normal,
+                        useGoogleFonts: GoogleFonts.asMap().containsKey(
+                            FlutterFlowTheme.of(context).bodyText1Family),
+                      ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1.0,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1.0,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1.0,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1.0,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  contentPadding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 14.0, 0.0, 0.0),
+                  prefixIcon: Icon(
+                    Icons.search_outlined,
+                    color: Color(0xFF95A1AC),
+                    size: 24.0,
+                  ),
+                ),
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Lexend Deca',
+                      color: Color(0xFF95A1AC),
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.normal,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyText1Family),
+                    ),
+                validator: _model.textControllerValidator.asValidator(context),
+              ),
+            ),
+            Expanded(
+              child: PagedListView<DocumentSnapshot<Object?>?, UsersRecord>(
+                pagingController: () {
+                  final Query<Object?> Function(Query<Object?>) queryBuilder =
+                      (usersRecord) =>
+                          usersRecord.where('userType', isEqualTo: 'volunteer');
+                  if (_model.pagingController != null) {
+                    final query = queryBuilder(UsersRecord.collection);
+                    if (query != _model.pagingQuery) {
+                      // The query has changed
+                      _model.pagingQuery = query;
+                      _model.streamSubscriptions.forEach((s) => s?.cancel());
+                      _model.streamSubscriptions.clear();
+                      _model.pagingController!.refresh();
+                    }
+                    return _model.pagingController!;
+                  }
+
+                  _model.pagingController =
+                      PagingController(firstPageKey: null);
+                  _model.pagingQuery = queryBuilder(UsersRecord.collection);
+                  _model.pagingController!
+                      .addPageRequestListener((nextPageMarker) {
+                    queryUsersRecordPage(
+                      queryBuilder: (usersRecord) =>
+                          usersRecord.where('userType', isEqualTo: 'volunteer'),
+                      nextPageMarker: nextPageMarker,
+                      pageSize: 25,
+                      isStream: true,
+                    ).then((page) {
+                      _model.pagingController!.appendPage(
+                        page.data,
+                        page.nextPageMarker,
+                      );
+                      final streamSubscription =
+                          page.dataStream?.listen((data) {
+                        data.forEach((item) {
+                          final itemIndexes = _model.pagingController!.itemList!
+                              .asMap()
+                              .map((k, v) => MapEntry(v.reference.id, k));
+                          final index = itemIndexes[item.reference.id];
+                          final items = _model.pagingController!.itemList!;
+                          if (index != null) {
+                            items.replaceRange(index, index + 1, [item]);
+                            _model.pagingController!.itemList = {
+                              for (var item in items) item.reference: item
+                            }.values.toList();
+                          }
+                        });
+                        setState(() {});
+                      });
+                      _model.streamSubscriptions.add(streamSubscription);
+                    });
+                  });
+                  return _model.pagingController!;
+                }(),
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                builderDelegate: PagedChildBuilderDelegate<UsersRecord>(
+                  // Customize what your widget looks like when it's loading the first page.
+                  firstPageProgressIndicatorBuilder: (_) => Center(
+                    child: SizedBox(
+                      width: 50.0,
+                      height: 50.0,
+                      child: SpinKitSquareCircle(
+                        color: Color(0xFFFE2126),
+                        size: 50.0,
+                      ),
+                    ),
+                  ),
+
+                  itemBuilder: (context, _, listViewIndex) {
+                    final listViewUsersRecord =
+                        _model.pagingController!.itemList![listViewIndex];
+                    return Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 70.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 0.0,
+                              color: Color(0xFFDBE2E7),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(0.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 0.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                color: Color(0xFFFF4D4D),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      2.0, 2.0, 2.0, 2.0),
+                                  child: Container(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl: valueOrDefault<String>(
+                                        listViewUsersRecord.photoUrl,
+                                        'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fblank-profile-picture-973460_1280.webp?alt=media&token=6b24d361-09ef-40bb-87f8-e501dd9e7222',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      2.0, 0.0, 0.0, 0.0),
+                                  child: Theme(
+                                    data: ThemeData(
+                                      unselectedWidgetColor: Color(0xFF707070),
+                                    ),
+                                    child: CheckboxListTile(
+                                      value: _model.checkboxListTileValueMap[
+                                          listViewUsersRecord] ??= false,
+                                      onChanged: (newValue) async {
+                                        setState(() => _model
+                                                .checkboxListTileValueMap[
+                                            listViewUsersRecord] = newValue!);
+                                      },
+                                      title: Text(
+                                        listViewUsersRecord.displayName!,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Lexend Deca',
+                                              color: Color(0xFF95A1AC),
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w500,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle1Family),
+                                            ),
+                                      ),
+                                      subtitle: Text(
+                                        listViewUsersRecord.userType!,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Lexend Deca',
+                                              color: Color(0xFF1A1F24),
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.normal,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2Family),
+                                            ),
+                                      ),
+                                      tileColor: Color(0xFFF5F5F5),
+                                      activeColor: Color(0xFF4E39F9),
+                                      dense: false,
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4.0,
+                    color: Color(0x3314181B),
+                    offset: Offset(0.0, -2.0),
+                  )
+                ],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(0.0),
+                  bottomRight: Radius.circular(0.0),
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 34.0),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    logFirebaseEvent('GROUP_CHAT_CREATE_CHAT_BTN_ON_TAP');
+                    logFirebaseEvent('Button_group_chat_action');
+                    _model.groupChat = await FFChatManager.instance.createChat(
+                      _model.checkboxListTileCheckedItems
+                          .map((e) => e.reference)
+                          .toList(),
+                    );
+                    context.pushNamed(
+                      'chatPage',
+                      queryParams: {
+                        'chatRef': serializeParam(
+                          _model.groupChat?.reference,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
+
+                    setState(() {});
+                  },
+                  text: 'Create Chat',
+                  options: FFButtonOptions(
+                    width: 130.0,
+                    height: 40.0,
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    textStyle: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Lexend Deca',
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          useGoogleFonts: GoogleFonts.asMap().containsKey(
+                              FlutterFlowTheme.of(context).title3Family),
+                        ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

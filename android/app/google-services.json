@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "814825895000",
+    "firebase_url": "https://ihero-43ccd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ihero-43ccd",
+    "storage_bucket": "ihero-43ccd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814825895000:android:afbde948a9f3ac0c2d062d",
+        "android_client_info": {
+          "package_name": "com.iHero.WebApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814825895000-t2c952g5jkvuqn801d46qu27flmk78da.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iHero.WebApp",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "814825895000-82rodmda7f4paqmb60f8l110sm57l79s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDMdQC_NKO8zi-fh0f6swHg_vMhxfOgEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814825895000-82rodmda7f4paqmb60f8l110sm57l79s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814825895000-35tlvat04si4qm3rs7u4d7b205vjec4d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.iheroWeb.dashboard"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814825895000:android:5559c7c21dd70dd82d062d",
+        "android_client_info": {
+          "package_name": "com.volunteer.ihero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814825895000-f8micf4p5hcd471d6hk9fjl282go90s0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.volunteer.ihero",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "814825895000-82rodmda7f4paqmb60f8l110sm57l79s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDMdQC_NKO8zi-fh0f6swHg_vMhxfOgEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814825895000-82rodmda7f4paqmb60f8l110sm57l79s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814825895000-35tlvat04si4qm3rs7u4d7b205vjec4d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.iheroWeb.dashboard"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
