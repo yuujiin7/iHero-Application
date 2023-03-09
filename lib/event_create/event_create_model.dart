@@ -120,11 +120,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 6) {
-      return 'Requires at least 6 characters.';
-    }
-    if (val.length > 1) {
-      return 'Maximum 1 characters allowed, currently ${val.length}.';
+    if (val.length > 256) {
+      return 'Maximum 256 characters allowed, currently ${val.length}.';
     }
 
     return null;

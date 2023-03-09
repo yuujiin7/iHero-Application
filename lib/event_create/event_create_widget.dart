@@ -53,38 +53,50 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('EVENT_CREATE_eventCreate_ON_LOAD');
+      Function() _navigate = () {};
       logFirebaseEvent('eventCreate_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('eventCreate_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'unknows';
-          }
-        }(),
-        'Event  Create',
-      );
-      logFirebaseEvent('eventCreate_custom_action');
-      _model.emailList = await actions.getUserEmails();
-      logFirebaseEvent('eventCreate_update_app_state');
-      setState(() {
-        FFAppState().startDate = null;
-        FFAppState().endDate = null;
-        FFAppState().deleteAddress();
-        FFAppState().address = '';
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('eventCreate_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('eventCreate_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'unknows';
+            }
+          }(),
+          'Event  Create',
+        );
+        logFirebaseEvent('eventCreate_custom_action');
+        _model.emailList = await actions.getUserEmails();
+        logFirebaseEvent('eventCreate_update_app_state');
+        setState(() {
+          FFAppState().startDate = null;
+          FFAppState().endDate = null;
+          FFAppState().deleteAddress();
+          FFAppState().address = '';
 
-        FFAppState().deleteLocationLatLng();
-        FFAppState().locationLatLng = null;
+          FFAppState().deleteLocationLatLng();
+          FFAppState().locationLatLng = null;
 
-        FFAppState().emailList = _model.emailList!.toList();
-      });
+          FFAppState().emailList = _model.emailList!.toList();
+        });
+        return;
+      }
+
+      _navigate();
     });
 
     _model.titleEventController ??= TextEditingController();
@@ -251,7 +263,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           imageQuality: 60,
                                                           allowPhoto: true,
                                                           pickerFontFamily:
-                                                              'Comfortaa',
+                                                              'Ubuntu',
                                                         );
                                                         if (selectedMedia !=
                                                                 null &&
@@ -656,12 +668,14 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                   context)
                                                               .bodyText1
                                                               .override(
-                                                                fontFamily: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family,
+                                                                fontFamily:
+                                                                    'Barlow',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primaryText,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
@@ -1159,13 +1173,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       String>(
                                                                     dateTimeFormat(
                                                                       'jm',
-                                                                      FFAppState()
-                                                                          .startDate,
+                                                                      _model
+                                                                          .datePicked1,
                                                                       locale: FFLocalizations.of(
                                                                               context)
                                                                           .languageCode,
                                                                     ),
-                                                                    'start time',
+                                                                    '00:00',
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
@@ -1340,13 +1354,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       String>(
                                                                     dateTimeFormat(
                                                                       'jm',
-                                                                      FFAppState()
-                                                                          .endTime,
+                                                                      _model
+                                                                          .datePicked2,
                                                                       locale: FFLocalizations.of(
                                                                               context)
                                                                           .languageCode,
                                                                     ),
-                                                                    'end time',
+                                                                    '00:00',
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
@@ -1813,11 +1827,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                       validator: _model
                                                           .personInChargeControllerValidator
                                                           .asValidator(context),
-                                                      inputFormatters: [
-                                                        FilteringTextInputFormatter
-                                                            .allow(RegExp(
-                                                                '[a-zA-Z]'))
-                                                      ],
                                                     ),
                                                   ),
                                                 ),
@@ -2722,7 +2731,8 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                     decoration: BoxDecoration(),
                                     child: Form(
                                       key: _model.formKey2,
-                                      autovalidateMode: AutovalidateMode.always,
+                                      autovalidateMode:
+                                          AutovalidateMode.disabled,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,

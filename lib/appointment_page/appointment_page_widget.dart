@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/back_component_widget.dart';
 import '/components/email_confirmation_widget.dart';
+import '/components/search_for_country_code_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -48,13 +49,23 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
       logFirebaseEvent('APPOINTMENT_appointmentPage_ON_LOAD');
       logFirebaseEvent('appointmentPage_custom_action');
       await actions.lockOrientation();
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('appointmentPage_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        return;
+      } else {
+        return;
+      }
+
+      context.goNamedAuth('splashScreen', mounted);
     });
 
     _model.fullNameController ??= TextEditingController();
     _model.nationalityController ??= TextEditingController();
     _model.civilStatusController ??= TextEditingController();
     _model.addressController ??= TextEditingController();
-    _model.contactNumberController ??= TextEditingController(text: '+63');
+    _model.contactNumberController ??= TextEditingController();
     _model.emailController ??= TextEditingController();
   }
 
@@ -173,7 +184,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                             final selectedMedia =
                                 await selectMediaWithSourceBottomSheet(
                               context: context,
-                              imageQuality: 65,
+                              imageQuality: 60,
                               allowPhoto: true,
                             );
                             if (selectedMedia != null &&
@@ -580,10 +591,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                           validator: _model.nationalityControllerValidator
                               .asValidator(context),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z]'))
-                          ],
                         ),
                       ),
                     ),
@@ -684,10 +691,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                           validator: _model.civilStatusControllerValidator
                               .asValidator(context),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z]'))
-                          ],
                         ),
                       ),
                     ),
@@ -789,10 +792,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           keyboardType: TextInputType.streetAddress,
                           validator: _model.addressControllerValidator
                               .asValidator(context),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z0-9]'))
-                          ],
                         ),
                       ),
                     ),
@@ -814,88 +813,111 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           ],
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: TextFormField(
-                          controller: _model.contactNumberController,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'Contact Number',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Ubuntu',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w500,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                wrapWithModel(
+                                  model: _model.searchForCountryCodeModel,
+                                  updateCallback: () => setState(() {}),
+                                  child: SearchForCountryCodeWidget(),
                                 ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 0.0,
-                              ),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(12.0),
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(12.0),
-                              ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _model.contactNumberController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      hintText: 'Contact Number',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Ubuntu',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1Family),
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 0.0,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(12.0),
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(12.0),
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 0.0,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(12.0),
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(12.0),
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 0.0,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(12.0),
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(12.0),
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 0.0,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(12.0),
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(12.0),
+                                        ),
+                                      ),
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              24.0, 24.0, 20.0, 24.0),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Barlow',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontWeight: FontWeight.w500,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1Family),
+                                        ),
+                                    keyboardType: TextInputType.phone,
+                                    validator: _model
+                                        .contactNumberControllerValidator
+                                        .asValidator(context),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[0-9]'))
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 0.0,
-                              ),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(12.0),
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(12.0),
-                              ),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 0.0,
-                              ),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(12.0),
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(12.0),
-                              ),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 0.0,
-                              ),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(12.0),
-                                topLeft: Radius.circular(10.0),
-                                topRight: Radius.circular(12.0),
-                              ),
-                            ),
-                            contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 24.0, 20.0, 24.0),
-                          ),
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
-                              ),
-                          keyboardType: TextInputType.phone,
-                          validator: _model.contactNumberControllerValidator
-                              .asValidator(context),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp('[0-9]'))
                           ],
                         ),
                       ),
@@ -1008,7 +1030,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Expanded(
                             child: Padding(
@@ -1155,7 +1177,8 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                             ...createRegistrationRecordData(
                               displayName: _model.fullNameController.text,
                               address: _model.addressController.text,
-                              phoneNumber: _model.contactNumberController.text,
+                              phoneNumber:
+                                  '+${FFAppState().selectedCountryCode}${_model.contactNumberController.text}',
                               email: _model.emailController.text,
                               photoUrl: _model.uploadedFileUrl1,
                               birthDate: _model.datePicked,
@@ -1166,7 +1189,8 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               isDeleted: false,
                               isConfirmbySA: false,
                             ),
-                            'ID_url': _model.uploadedFileUrls2,
+                            'ID_url':
+                                _model.uploadedFileUrls2.map((e) => e).toList(),
                           };
                           await RegistrationRecord.collection
                               .doc()

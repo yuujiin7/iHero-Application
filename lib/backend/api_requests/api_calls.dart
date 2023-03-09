@@ -58,6 +58,81 @@ class SendEmailCall {
   }
 }
 
+class CountryCodeCall {
+  static Future<ApiCallResponse> call() {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Country Code',
+      apiUrl:
+          'https://restcountries.com/v2/all?fields=name,flags,callingCodes,alpha3Code',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic name(dynamic response) => getJsonField(
+        response,
+        r'''$[:].name''',
+        true,
+      );
+  static dynamic alpha3Code(dynamic response) => getJsonField(
+        response,
+        r'''$[:].alpha3Code''',
+        true,
+      );
+  static dynamic callingCodes(dynamic response) => getJsonField(
+        response,
+        r'''$[:].callingCodes''',
+        true,
+      );
+  static dynamic flag(dynamic response) => getJsonField(
+        response,
+        r'''$[:].flags.png''',
+        true,
+      );
+}
+
+class CountryCodeSearchCall {
+  static Future<ApiCallResponse> call({
+    String? name = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'countryCodeSearch',
+      apiUrl: 'https://restcountries.com/v2/name/${name}',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {
+        'name': name,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic name(dynamic response) => getJsonField(
+        response,
+        r'''$[:].name''',
+      );
+  static dynamic alpha3Code(dynamic response) => getJsonField(
+        response,
+        r'''$[:].alpha3Code''',
+      );
+  static dynamic callingCodes(dynamic response) => getJsonField(
+        response,
+        r'''$[:].callingCodes''',
+      );
+  static dynamic flag(dynamic response) => getJsonField(
+        response,
+        r'''$[:].flags.png''',
+      );
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

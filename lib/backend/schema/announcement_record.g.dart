@@ -96,6 +96,13 @@ class _$AnnouncementRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.isDeclined;
+    if (value != null) {
+      result
+        ..add('isDeclined')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -164,6 +171,10 @@ class _$AnnouncementRecordSerializer
           result.reason = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'isDeclined':
+          result.isDeclined = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -199,6 +210,8 @@ class _$AnnouncementRecord extends AnnouncementRecord {
   @override
   final String? reason;
   @override
+  final bool? isDeclined;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$AnnouncementRecord(
@@ -216,6 +229,7 @@ class _$AnnouncementRecord extends AnnouncementRecord {
       this.isDeleted,
       this.isConfirmbySA,
       this.reason,
+      this.isDeclined,
       this.ffRef})
       : super._();
 
@@ -242,6 +256,7 @@ class _$AnnouncementRecord extends AnnouncementRecord {
         isDeleted == other.isDeleted &&
         isConfirmbySA == other.isConfirmbySA &&
         reason == other.reason &&
+        isDeclined == other.isDeclined &&
         ffRef == other.ffRef;
   }
 
@@ -256,16 +271,18 @@ class _$AnnouncementRecord extends AnnouncementRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, title.hashCode),
-                                            body.hashCode),
-                                        photoUrl.hashCode),
-                                    createdTime.hashCode),
-                                createdBy.hashCode),
-                            likedBy.hashCode),
-                        expiryDate.hashCode),
-                    isDeleted.hashCode),
-                isConfirmbySA.hashCode),
-            reason.hashCode),
+                                        $jc(
+                                            $jc($jc(0, title.hashCode),
+                                                body.hashCode),
+                                            photoUrl.hashCode),
+                                        createdTime.hashCode),
+                                    createdBy.hashCode),
+                                likedBy.hashCode),
+                            expiryDate.hashCode),
+                        isDeleted.hashCode),
+                    isConfirmbySA.hashCode),
+                reason.hashCode),
+            isDeclined.hashCode),
         ffRef.hashCode));
   }
 
@@ -282,6 +299,7 @@ class _$AnnouncementRecord extends AnnouncementRecord {
           ..add('isDeleted', isDeleted)
           ..add('isConfirmbySA', isConfirmbySA)
           ..add('reason', reason)
+          ..add('isDeclined', isDeclined)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -335,6 +353,10 @@ class AnnouncementRecordBuilder
   String? get reason => _$this._reason;
   set reason(String? reason) => _$this._reason = reason;
 
+  bool? _isDeclined;
+  bool? get isDeclined => _$this._isDeclined;
+  set isDeclined(bool? isDeclined) => _$this._isDeclined = isDeclined;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -356,6 +378,7 @@ class AnnouncementRecordBuilder
       _isDeleted = $v.isDeleted;
       _isConfirmbySA = $v.isConfirmbySA;
       _reason = $v.reason;
+      _isDeclined = $v.isDeclined;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -391,6 +414,7 @@ class AnnouncementRecordBuilder
               isDeleted: isDeleted,
               isConfirmbySA: isConfirmbySA,
               reason: reason,
+              isDeclined: isDeclined,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

@@ -41,24 +41,36 @@ class _EventMapWidgetState extends State<EventMapWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('EVENT_MAP_PAGE_eventMap_ON_PAGE_LOAD');
+      Function() _navigate = () {};
       logFirebaseEvent('eventMap_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('eventMap_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Event Map',
-      );
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('eventMap_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('eventMap_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Event Map',
+        );
+        return;
+      }
+
+      _navigate();
     });
   }
 

@@ -146,7 +146,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                       fontFamily: 'Ubuntu',
                       color: Colors.white,
-                      fontSize: 25.0,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
                           FlutterFlowTheme.of(context).subtitle2Family),
@@ -178,7 +178,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                   textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                         fontFamily:
                             FlutterFlowTheme.of(context).subtitle2Family,
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
                             FlutterFlowTheme.of(context).subtitle2Family),
                       ),

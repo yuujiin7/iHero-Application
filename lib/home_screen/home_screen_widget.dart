@@ -41,30 +41,42 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       logFirebaseEvent('HOME_SCREEN_PAGE_HomeScreen_ON_PAGE_LOAD');
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+      Function() _navigate = () {};
       logFirebaseEvent('HomeScreen_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('HomeScreen_update_app_state');
-      FFAppState().update(() {
-        FFAppState().userlocation = currentUserLocationValue;
-      });
-      logFirebaseEvent('HomeScreen_custom_action');
-      await actions.batchUpdateEndedEvents();
-      logFirebaseEvent('HomeScreen_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Home Screen',
-      );
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('HomeScreen_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('HomeScreen_update_app_state');
+        FFAppState().update(() {
+          FFAppState().userlocation = currentUserLocationValue;
+        });
+        logFirebaseEvent('HomeScreen_custom_action');
+        await actions.batchUpdateEndedEvents();
+        logFirebaseEvent('HomeScreen_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Home Screen',
+        );
+        return;
+      }
+
+      _navigate();
     });
   }
 

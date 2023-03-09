@@ -96,6 +96,8 @@ abstract class EventsRecord
 
   String? get reason;
 
+  bool? get isDeclined;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -127,7 +129,8 @@ abstract class EventsRecord
     ..recurranceDate = ''
     ..rateTotal = 0.0
     ..rateCount = 0.0
-    ..reason = '';
+    ..reason = ''
+    ..isDeclined = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -197,6 +200,7 @@ abstract class EventsRecord
           ..rateTotal = snapshot.data['rateTotal']?.toDouble()
           ..rateCount = snapshot.data['rateCount']?.toDouble()
           ..reason = snapshot.data['reason']
+          ..isDeclined = snapshot.data['isDeclined']
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -256,6 +260,7 @@ Map<String, dynamic> createEventsRecordData({
   double? rateTotal,
   double? rateCount,
   String? reason,
+  bool? isDeclined,
 }) {
   final firestoreData = serializers.toFirestore(
     EventsRecord.serializer,
@@ -296,7 +301,8 @@ Map<String, dynamic> createEventsRecordData({
         ..recurranceDate = recurranceDate
         ..rateTotal = rateTotal
         ..rateCount = rateCount
-        ..reason = reason,
+        ..reason = reason
+        ..isDeclined = isDeclined,
     ),
   );
 

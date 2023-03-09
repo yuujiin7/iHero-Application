@@ -26,6 +26,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
   late AnnouncementFeedModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -37,24 +38,36 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('ANNOUNCEMENT_FEED_announcementFeed_ON_LO');
+      Function() _navigate = () {};
       logFirebaseEvent('announcementFeed_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('announcementFeed_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Announcement Feed',
-      );
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('announcementFeed_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('announcementFeed_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Announcement Feed',
+        );
+        return;
+      }
+
+      _navigate();
     });
   }
 
@@ -62,6 +75,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
   void dispose() {
     _model.dispose();
 
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -92,427 +106,451 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
           ),
         ),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 1.0,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 3.0,
-                  color: Color(0x3A000000),
-                  offset: Offset(0.0, 1.0),
-                )
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                wrapWithModel(
-                  model: _model.backComponentModel,
-                  updateCallback: () => setState(() {}),
-                  child: BackComponentWidget(),
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 1.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 3.0,
+                      color: Color(0x3A000000),
+                      offset: Offset(0.0, 1.0),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                        child: AuthUserStreamWidget(
-                          builder: (context) => Container(
-                            width: 40.0,
-                            height: 40.0,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: CachedNetworkImage(
-                              imageUrl: currentUserPhoto,
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Welcome',
-                        style: FlutterFlowTheme.of(context).title2,
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                        child: AuthUserStreamWidget(
-                          builder: (context) => Text(
-                            currentUserDisplayName,
-                            style: FlutterFlowTheme.of(context)
-                                .subtitle1
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .subtitle1Family,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .subtitle1Family),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    wrapWithModel(
+                      model: _model.backComponentModel,
+                      updateCallback: () => setState(() {}),
+                      child: BackComponentWidget(),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 8.0, 0.0),
+                            child: AuthUserStreamWidget(
+                              builder: (context) => Container(
+                                width: 40.0,
+                                height: 40.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
+                                child: CachedNetworkImage(
+                                  imageUrl: currentUserPhoto,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            'Welcome',
+                            style: FlutterFlowTheme.of(context).title2,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                4.0, 0.0, 0.0, 0.0),
+                            child: AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                currentUserDisplayName,
+                                style: FlutterFlowTheme.of(context)
+                                    .subtitle1
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .subtitle1Family,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle1Family),
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 12.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 4.0, 0.0, 0.0),
+                            child: Text(
+                              'Checkout news and announcement below.',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyText2Family,
+                                    color: Color(0xFF8B97A2),
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyText2Family),
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 12.0),
-                  child: Row(
+              ),
+              Expanded(
+                child: Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 32.0),
+                  child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                        child: Text(
-                          'Checkout news and announcement below.',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: FlutterFlowTheme.of(context)
-                                    .bodyText2Family,
-                                color: Color(0xFF8B97A2),
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyText2Family),
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 32.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFEBEFF7),
-                      ),
-                      child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
-                        child: PagedListView<DocumentSnapshot<Object?>?,
-                            AnnouncementRecord>(
-                          pagingController: () {
-                            final Query<Object?> Function(Query<Object?>)
-                                queryBuilder = (announcementRecord) =>
-                                    announcementRecord
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEBEFF7),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                5.0, 0.0, 5.0, 0.0),
+                            child: PagedListView<DocumentSnapshot<Object?>?,
+                                AnnouncementRecord>(
+                              pagingController: () {
+                                final Query<Object?> Function(Query<Object?>)
+                                    queryBuilder =
+                                    (announcementRecord) => announcementRecord
                                         .where('isConfirmbySA', isEqualTo: true)
                                         .where('isDeleted', isEqualTo: false);
-                            if (_model.pagingController != null) {
-                              final query =
-                                  queryBuilder(AnnouncementRecord.collection);
-                              if (query != _model.pagingQuery) {
-                                // The query has changed
-                                _model.pagingQuery = query;
-                                _model.streamSubscriptions
-                                    .forEach((s) => s?.cancel());
-                                _model.streamSubscriptions.clear();
-                                _model.pagingController!.refresh();
-                              }
-                              return _model.pagingController!;
-                            }
+                                if (_model.pagingController != null) {
+                                  final query = queryBuilder(
+                                      AnnouncementRecord.collection);
+                                  if (query != _model.pagingQuery) {
+                                    // The query has changed
+                                    _model.pagingQuery = query;
+                                    _model.streamSubscriptions
+                                        .forEach((s) => s?.cancel());
+                                    _model.streamSubscriptions.clear();
+                                    _model.pagingController!.refresh();
+                                  }
+                                  return _model.pagingController!;
+                                }
 
-                            _model.pagingController =
-                                PagingController(firstPageKey: null);
-                            _model.pagingQuery =
-                                queryBuilder(AnnouncementRecord.collection);
-                            _model.pagingController!
-                                .addPageRequestListener((nextPageMarker) {
-                              queryAnnouncementRecordPage(
-                                queryBuilder: (announcementRecord) =>
-                                    announcementRecord
-                                        .where('isConfirmbySA', isEqualTo: true)
-                                        .where('isDeleted', isEqualTo: false),
-                                nextPageMarker: nextPageMarker,
-                                pageSize: 25,
-                                isStream: true,
-                              ).then((page) {
-                                _model.pagingController!.appendPage(
-                                  page.data,
-                                  page.nextPageMarker,
-                                );
-                                final streamSubscription =
-                                    page.dataStream?.listen((data) {
-                                  data.forEach((item) {
-                                    final itemIndexes = _model
-                                        .pagingController!.itemList!
-                                        .asMap()
-                                        .map((k, v) =>
-                                            MapEntry(v.reference.id, k));
-                                    final index =
-                                        itemIndexes[item.reference.id];
-                                    final items =
-                                        _model.pagingController!.itemList!;
-                                    if (index != null) {
-                                      items.replaceRange(
-                                          index, index + 1, [item]);
-                                      _model.pagingController!.itemList = {
-                                        for (var item in items)
-                                          item.reference: item
-                                      }.values.toList();
-                                    }
+                                _model.pagingController =
+                                    PagingController(firstPageKey: null);
+                                _model.pagingQuery =
+                                    queryBuilder(AnnouncementRecord.collection);
+                                _model.pagingController!
+                                    .addPageRequestListener((nextPageMarker) {
+                                  queryAnnouncementRecordPage(
+                                    queryBuilder: (announcementRecord) =>
+                                        announcementRecord
+                                            .where('isConfirmbySA',
+                                                isEqualTo: true)
+                                            .where('isDeleted',
+                                                isEqualTo: false),
+                                    nextPageMarker: nextPageMarker,
+                                    pageSize: 25,
+                                    isStream: true,
+                                  ).then((page) {
+                                    _model.pagingController!.appendPage(
+                                      page.data,
+                                      page.nextPageMarker,
+                                    );
+                                    final streamSubscription =
+                                        page.dataStream?.listen((data) {
+                                      data.forEach((item) {
+                                        final itemIndexes = _model
+                                            .pagingController!.itemList!
+                                            .asMap()
+                                            .map((k, v) =>
+                                                MapEntry(v.reference.id, k));
+                                        final index =
+                                            itemIndexes[item.reference.id];
+                                        final items =
+                                            _model.pagingController!.itemList!;
+                                        if (index != null) {
+                                          items.replaceRange(
+                                              index, index + 1, [item]);
+                                          _model.pagingController!.itemList = {
+                                            for (var item in items)
+                                              item.reference: item
+                                          }.values.toList();
+                                        }
+                                      });
+                                      setState(() {});
+                                    });
+                                    _model.streamSubscriptions
+                                        .add(streamSubscription);
                                   });
-                                  setState(() {});
                                 });
-                                _model.streamSubscriptions
-                                    .add(streamSubscription);
-                              });
-                            });
-                            return _model.pagingController!;
-                          }(),
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          builderDelegate:
-                              PagedChildBuilderDelegate<AnnouncementRecord>(
-                            // Customize what your widget looks like when it's loading the first page.
-                            firstPageProgressIndicatorBuilder: (_) => Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: SpinKitSquareCircle(
-                                  color: Color(0xFFFE2126),
-                                  size: 50.0,
-                                ),
-                              ),
-                            ),
-                            noItemsFoundIndicatorBuilder: (_) => Center(
-                              child: Image.asset(
-                                'assets/images/2895108.jpg',
-                              ),
-                            ),
-                            itemBuilder: (context, _, listViewIndex) {
-                              final listViewAnnouncementRecord = _model
-                                  .pagingController!.itemList![listViewIndex];
-                              return Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 8.0, 0.0, 12.0),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 2.0,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.94,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
+                                return _model.pagingController!;
+                              }(),
+                              padding: EdgeInsets.zero,
+                              scrollDirection: Axis.vertical,
+                              builderDelegate:
+                                  PagedChildBuilderDelegate<AnnouncementRecord>(
+                                // Customize what your widget looks like when it's loading the first page.
+                                firstPageProgressIndicatorBuilder: (_) =>
+                                    Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: SpinKitSquareCircle(
+                                      color: Color(0xFFFE2126),
+                                      size: 50.0,
                                     ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 2.0, 0.0),
-                                          child: StreamBuilder<UsersRecord>(
-                                            stream: UsersRecord.getDocument(
-                                                listViewAnnouncementRecord
-                                                    .createdBy!),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    child: SpinKitSquareCircle(
-                                                      color: Color(0xFFFE2126),
-                                                      size: 50.0,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              final userInfoUsersRecord =
-                                                  snapshot.data!;
-                                              return Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Card(
-                                                    clipBehavior: Clip
-                                                        .antiAliasWithSaveLayer,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryColor,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20.0),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  1.0,
-                                                                  1.0,
-                                                                  1.0,
-                                                                  1.0),
-                                                      child: Container(
-                                                        width: 40.0,
-                                                        height: 40.0,
-                                                        clipBehavior:
-                                                            Clip.antiAlias,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Image.network(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            userInfoUsersRecord
-                                                                .photoUrl,
-                                                            'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fblank-profile-picture-973460_1280.webp?alt=media&token=6b24d361-09ef-40bb-87f8-e501dd9e7222',
-                                                          ),
-                                                          fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                                noItemsFoundIndicatorBuilder: (_) => Center(
+                                  child: Image.asset(
+                                    'assets/images/2895108.jpg',
+                                  ),
+                                ),
+                                itemBuilder: (context, _, listViewIndex) {
+                                  final listViewAnnouncementRecord = _model
+                                      .pagingController!
+                                      .itemList![listViewIndex];
+                                  return Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 12.0),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 2.0,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.94,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 2.0, 0.0),
+                                              child: StreamBuilder<UsersRecord>(
+                                                stream: UsersRecord.getDocument(
+                                                    listViewAnnouncementRecord
+                                                        .createdBy!),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 50.0,
+                                                        height: 50.0,
+                                                        child:
+                                                            SpinKitSquareCircle(
+                                                          color:
+                                                              Color(0xFFFE2126),
+                                                          size: 50.0,
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Padding(
+                                                    );
+                                                  }
+                                                  final userInfoUsersRecord =
+                                                      snapshot.data!;
+                                                  return Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Card(
+                                                        clipBehavior: Clip
+                                                            .antiAliasWithSaveLayer,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20.0),
+                                                        ),
+                                                        child: Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      12.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            userInfoUsersRecord
-                                                                .displayName!,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText1,
+                                                                      1.0,
+                                                                      1.0,
+                                                                      1.0,
+                                                                      1.0),
+                                                          child: Container(
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child:
+                                                                Image.network(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                userInfoUsersRecord
+                                                                    .photoUrl,
+                                                                'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fblank-profile-picture-973460_1280.webp?alt=media&token=6b24d361-09ef-40bb-87f8-e501dd9e7222',
+                                                              ),
+                                                              fit: BoxFit
+                                                                  .fitWidth,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 0.0),
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.96,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  'assets/images/b32e58588483fd6e53615b5be59fe152.jpg',
-                                                ).image,
+                                                      ),
+                                                      Expanded(
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                userInfoUsersRecord
+                                                                    .displayName!,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
                                               ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  blurRadius: 6.0,
-                                                  color: Color(0x3A000000),
-                                                  offset: Offset(0.0, 2.0),
-                                                )
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
                                             ),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                logFirebaseEvent(
-                                                    'ANNOUNCEMENT_FEED_Image_q5q8xxnh_ON_TAP');
-                                                logFirebaseEvent(
-                                                    'Image_navigate_to');
-
-                                                context.pushNamed(
-                                                  'announcementDetails',
-                                                  queryParams: {
-                                                    'announcementdetails':
-                                                        serializeParam(
-                                                      listViewAnnouncementRecord,
-                                                      ParamType.Document,
-                                                    ),
-                                                  }.withoutNulls,
-                                                  extra: <String, dynamic>{
-                                                    'announcementdetails':
-                                                        listViewAnnouncementRecord,
-                                                  },
-                                                );
-                                              },
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      valueOrDefault<String>(
-                                                    listViewAnnouncementRecord
-                                                        .photoUrl,
-                                                    'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fno-image.png?alt=media&token=3789cfb4-dd33-4c94-8711-646cc5ff4fa7',
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.96,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: Image.asset(
+                                                      'assets/images/b32e58588483fd6e53615b5be59fe152.jpg',
+                                                    ).image,
                                                   ),
-                                                  width: 100.0,
-                                                  height: 300.0,
-                                                  fit: BoxFit.cover,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 6.0,
+                                                      color: Color(0x3A000000),
+                                                      offset: Offset(0.0, 2.0),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'ANNOUNCEMENT_FEED_Image_q5q8xxnh_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Image_navigate_to');
+
+                                                    context.pushNamed(
+                                                      'announcementDetails',
+                                                      queryParams: {
+                                                        'announcementdetails':
+                                                            serializeParam(
+                                                          listViewAnnouncementRecord,
+                                                          ParamType.Document,
+                                                        ),
+                                                      }.withoutNulls,
+                                                      extra: <String, dynamic>{
+                                                        'announcementdetails':
+                                                            listViewAnnouncementRecord,
+                                                      },
+                                                    );
+                                                  },
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: valueOrDefault<
+                                                          String>(
+                                                        listViewAnnouncementRecord
+                                                            .photoUrl,
+                                                        'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fno-image.png?alt=media&token=3789cfb4-dd33-4c94-8711-646cc5ff4fa7',
+                                                      ),
+                                                      width: 100.0,
+                                                      height: 300.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 8.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 8.0, 0.0),
+                                              child: Row(
                                                 mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                16.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        ToggleIcon(
-                                                          onPressed: () async {
-                                                            final likedByElement =
-                                                                listViewAnnouncementRecord
-                                                                    .reference;
-                                                            final likedByUpdate =
-                                                                listViewAnnouncementRecord
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            ToggleIcon(
+                                                              onPressed:
+                                                                  () async {
+                                                                final likedByElement =
+                                                                    listViewAnnouncementRecord
+                                                                        .reference;
+                                                                final likedByUpdate = listViewAnnouncementRecord
                                                                         .likedBy!
                                                                         .toList()
                                                                         .contains(
@@ -525,110 +563,116 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                         .arrayUnion([
                                                                         likedByElement
                                                                       ]);
-                                                            final announcementUpdateData =
-                                                                {
-                                                              'liked_by':
-                                                                  likedByUpdate,
-                                                            };
-                                                            await listViewAnnouncementRecord
-                                                                .reference
-                                                                .update(
-                                                                    announcementUpdateData);
-                                                          },
-                                                          value: listViewAnnouncementRecord
-                                                              .likedBy!
-                                                              .toList()
-                                                              .contains(
-                                                                  listViewAnnouncementRecord
-                                                                      .reference),
-                                                          onIcon: Icon(
-                                                            Icons
-                                                                .favorite_rounded,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            size: 25.0,
-                                                          ),
-                                                          offIcon: Icon(
-                                                            Icons
-                                                                .favorite_border,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .grayIcon,
-                                                            size: 25.0,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      4.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            formatNumber(
-                                                              listViewAnnouncementRecord
+                                                                final announcementUpdateData =
+                                                                    {
+                                                                  'liked_by':
+                                                                      likedByUpdate,
+                                                                };
+                                                                await listViewAnnouncementRecord
+                                                                    .reference
+                                                                    .update(
+                                                                        announcementUpdateData);
+                                                              },
+                                                              value: listViewAnnouncementRecord
                                                                   .likedBy!
                                                                   .toList()
-                                                                  .length,
-                                                              formatType:
-                                                                  FormatType
-                                                                      .compact,
+                                                                  .contains(
+                                                                      listViewAnnouncementRecord
+                                                                          .reference),
+                                                              onIcon: Icon(
+                                                                Icons
+                                                                    .favorite_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                size: 25.0,
+                                                              ),
+                                                              offIcon: Icon(
+                                                                Icons
+                                                                    .favorite_border,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .grayIcon,
+                                                                size: 25.0,
+                                                              ),
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText2,
-                                                          ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                formatNumber(
+                                                                  listViewAnnouncementRecord
+                                                                      .likedBy!
+                                                                      .toList()
+                                                                      .length,
+                                                                  formatType:
+                                                                      FormatType
+                                                                          .compact,
+                                                                ),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText2,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(2.0, 4.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  10.0),
+                                                      child: Text(
+                                                        listViewAnnouncementRecord
+                                                            .title!,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  2.0, 4.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 10.0),
-                                                  child: Text(
-                                                    listViewAnnouncementRecord
-                                                        .title!,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            },
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

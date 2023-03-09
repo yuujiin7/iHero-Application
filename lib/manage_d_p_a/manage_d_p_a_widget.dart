@@ -52,7 +52,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
             return 'iOS';
           }
         }(),
-        'Manage DPA',
+        'Help Center',
       );
     });
   }
@@ -83,164 +83,160 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30.0,
-                          borderWidth: 1.0,
-                          buttonSize: 60.0,
-                          icon: Icon(
-                            Icons.keyboard_backspace,
-                            color: FlutterFlowTheme.of(context).primaryBtnText,
-                            size: 30.0,
-                          ),
-                          onPressed: () async {
-                            logFirebaseEvent(
-                                'MANAGE_D_P_A_keyboard_backspace_ICN_ON_T');
-                            logFirebaseEvent('IconButton_navigate_back');
-                            context.pop();
-                          },
-                        ),
-                        Text(
-                          'HELP CENTER',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Ubuntu',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
-                              ),
-                        ),
-                        FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30.0,
-                          borderWidth: 1.0,
-                          buttonSize: 60.0,
-                          icon: Icon(
-                            Icons.menu_open_rounded,
-                            color: FlutterFlowTheme.of(context).primaryBtnText,
-                            size: 40.0,
-                          ),
-                          onPressed: () async {
-                            logFirebaseEvent(
-                                'MANAGE_D_P_A_menu_open_rounded_ICN_ON_TA');
-                            logFirebaseEvent('IconButton_drawer');
-                            scaffoldKey.currentState!.openEndDrawer();
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEEEEEE),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0xFFEBEFF7),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Stack(
                     children: [
-                      Container(
-                        height: 200.0,
-                        child: Stack(
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30.0,
+                                        borderWidth: 1.0,
+                                        buttonSize: 60.0,
+                                        icon: Icon(
+                                          Icons.keyboard_backspace,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                          size: 30.0,
+                                        ),
+                                        onPressed: () async {
+                                          logFirebaseEvent(
+                                              'MANAGE_D_P_A_keyboard_backspace_ICN_ON_T');
+                                          logFirebaseEvent(
+                                              'IconButton_navigate_to');
+
+                                          context.pushNamed('profileScreen');
+                                        },
+                                      ),
+                                      Text(
+                                        'HELP CENTER',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Ubuntu',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBtnText,
+                                              fontSize: 24.0,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                            ),
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30.0,
+                                        borderWidth: 1.0,
+                                        buttonSize: 60.0,
+                                        icon: Icon(
+                                          Icons.menu_open_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                          size: 40.0,
+                                        ),
+                                        onPressed: () async {
+                                          logFirebaseEvent(
+                                              'MANAGE_D_P_A_menu_open_rounded_ICN_ON_TA');
+                                          logFirebaseEvent('IconButton_drawer');
+                                          scaffoldKey.currentState!
+                                              .openEndDrawer();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 110.0, 0.0, 0.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  5.0, 0.0, 5.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 10.0, 10.0, 10.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 60.1,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          image: DecorationImage(
-                                            fit: BoxFit.fitWidth,
-                                            image: Image.asset(
-                                              'assets/images/5a9c940bc0de9a71ecefac837f501fe3.png',
-                                            ).image,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4.0,
-                                              color: Color(0x33000000),
-                                              offset: Offset(0.0, 2.0),
-                                            )
-                                          ],
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Managing a \nDeceased Person\'s Account',
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Ubuntu',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBtnText,
-                                                          fontSize: 20.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family),
-                                                        ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                  35.0, 0.0, 35.0, 0.0),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 2.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(45.0),
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 70.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(45.0),
                                   ),
-                                ],
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Managing a \nDeceased Person\'s Account',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1Family,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w600,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 30.0, 0.0, 0.0),
+                                  0.0, 15.0, 0.0, 0.0),
                               child: Image.asset(
                                 'assets/images/DPA.png',
                                 width: double.infinity,
@@ -248,114 +244,156 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                 fit: BoxFit.contain,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
-                        child: Text(
-                          'If iHero is made aware that a person has passed away, it\'s our policy to memorialize the account. ',
-                          textAlign: TextAlign.justify,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Barlow',
-                                fontSize: 18.0,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 5.0, 16.0, 0.0),
-                        child: Text(
-                          'Memorialized accounts are a place for friends and family to gather and share memories after a person has passed away.',
-                          textAlign: TextAlign.justify,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Barlow',
-                                fontSize: 18.0,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 10.0, 16.0, 0.0),
-                        child: Text(
-                          'Memorializing an account also helps keep it secure by preventing anyone from logging into it.',
-                          textAlign: TextAlign.justify,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Barlow',
-                                fontSize: 18.0,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            logFirebaseEvent(
-                                'MANAGE_D_P_A_MEMORALIZATION_REQUEST_BTN_');
-                            logFirebaseEvent('Button_bottom_sheet');
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              enableDrag: false,
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.of(context).viewInsets,
-                                  child: MemoRequestWidget(),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
-                          },
-                          text: 'Memoralization Request',
-                          options: FFButtonOptions(
-                            width: 350.0,
-                            height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .subtitle2
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .subtitle2Family,
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .subtitle2Family),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 15.0, 20.0, 25.0),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 1.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
                                 ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 10.0, 20.0, 10.0),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'If iHero is made aware that a person has passed away, it\'s our policy to memorialize the account. ',
+                                            textAlign: TextAlign.justify,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Barlow',
+                                                  fontSize: 17.0,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                                ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 15.0, 0.0, 0.0),
+                                            child: Text(
+                                              'Memorialized accounts are a place for friends and family to gather and share memories after a person has passed away.',
+                                              textAlign: TextAlign.justify,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Barlow',
+                                                        fontSize: 17.0,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family),
+                                                      ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 25.0, 0.0, 0.0),
+                                            child: Text(
+                                              'Memorializing an account also helps keep it secure by preventing anyone from logging into it.',
+                                              textAlign: TextAlign.justify,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Barlow',
+                                                        fontSize: 17.0,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family),
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 0.0, 20.0, 0.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'MANAGE_D_P_A_MEMORALIZATION_REQUEST_BTN_');
+                                  logFirebaseEvent('Button_bottom_sheet');
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.of(context).viewInsets,
+                                        child: MemoRequestWidget(),
+                                      );
+                                    },
+                                  ).then((value) => setState(() {}));
+                                },
+                                text: 'Memoralization Request',
+                                options: FFButtonOptions(
+                                  width: 350.0,
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .subtitle2Family,
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle2Family),
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

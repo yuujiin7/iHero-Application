@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/back_component_widget.dart';
 import '/components/email_confirmation_widget.dart';
+import '/components/search_for_country_code_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -107,6 +108,8 @@ class AppointmentPageModel extends FlutterFlowModel {
     return null;
   }
 
+  // Model for searchForCountryCode component.
+  late SearchForCountryCodeModel searchForCountryCodeModel;
   // State field(s) for contactNumber widget.
   TextEditingController? contactNumberController;
   String? Function(BuildContext, String?)? contactNumberControllerValidator;
@@ -115,9 +118,13 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (!RegExp('^(09|\\+639)\\d{9}\$').hasMatch(val)) {
-      return 'Invalid text';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
     }
+    if (val.length > 15) {
+      return 'Maximum 15 characters allowed, currently ${val.length}.';
+    }
+
     return null;
   }
 
@@ -150,6 +157,8 @@ class AppointmentPageModel extends FlutterFlowModel {
     nationalityControllerValidator = _nationalityControllerValidator;
     civilStatusControllerValidator = _civilStatusControllerValidator;
     addressControllerValidator = _addressControllerValidator;
+    searchForCountryCodeModel =
+        createModel(context, () => SearchForCountryCodeModel());
     contactNumberControllerValidator = _contactNumberControllerValidator;
     emailControllerValidator = _emailControllerValidator;
   }
@@ -160,6 +169,7 @@ class AppointmentPageModel extends FlutterFlowModel {
     nationalityController?.dispose();
     civilStatusController?.dispose();
     addressController?.dispose();
+    searchForCountryCodeModel.dispose();
     contactNumberController?.dispose();
     emailController?.dispose();
   }

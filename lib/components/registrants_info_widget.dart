@@ -189,7 +189,7 @@ class _RegistrantsInfoWidgetState extends State<RegistrantsInfoWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBtnText,
-                                              fontSize: 20.0,
+                                              fontSize: 18.0,
                                               useGoogleFonts:
                                                   GoogleFonts.asMap()
                                                       .containsKey(
@@ -229,7 +229,7 @@ class _RegistrantsInfoWidgetState extends State<RegistrantsInfoWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
-                                              fontSize: 20.0,
+                                              fontSize: 18.0,
                                               useGoogleFonts:
                                                   GoogleFonts.asMap()
                                                       .containsKey(
@@ -649,6 +649,46 @@ class _RegistrantsInfoWidgetState extends State<RegistrantsInfoWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed:
+                              containerRegistrationRecord.appointmentDate ==
+                                      null
+                                  ? null
+                                  : () {
+                                      print('Button pressed ...');
+                                    },
+                          text: 'Decline',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: Color(0xFFD54343),
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle2
+                                .override(
+                                  fontFamily: 'Ubuntu',
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .subtitle2Family),
+                                ),
+                            elevation: 2.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                      ),
                       FFButtonWidget(
                         onPressed: containerRegistrationRecord
                                     .appointmentDate ==
@@ -739,12 +779,13 @@ class _RegistrantsInfoWidgetState extends State<RegistrantsInfoWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          color: Color(0xFF2B8C2A),
                           textStyle: FlutterFlowTheme.of(context)
                               .subtitle2
                               .override(
                                 fontFamily: 'Ubuntu',
-                                color: Color(0xFFFF0000),
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w600,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -757,6 +798,10 @@ class _RegistrantsInfoWidgetState extends State<RegistrantsInfoWidget> {
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(12.0),
+                          disabledColor:
+                              FlutterFlowTheme.of(context).secondaryText,
+                          disabledTextColor:
+                              FlutterFlowTheme.of(context).primaryText,
                         ),
                       ),
                     ],

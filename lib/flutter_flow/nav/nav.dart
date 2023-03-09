@@ -80,14 +80,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : SplashScreenWidget(),
           routes: [
             FFRoute(
-              name: 'splashScreen',
-              path: 'splashScreen',
-              builder: (context, params) => SplashScreenWidget(),
-            ),
-            FFRoute(
               name: 'Onboarding',
               path: 'onboarding',
               builder: (context, params) => OnboardingWidget(),
+            ),
+            FFRoute(
+              name: 'splashScreen',
+              path: 'splashScreen',
+              builder: (context, params) => SplashScreenWidget(),
             ),
             FFRoute(
               name: 'Login',
@@ -121,15 +121,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'findEvents',
-              path: 'findEvents',
-              requireAuth: true,
-              builder: (context, params) => FindEventsWidget(),
-            ),
-            FFRoute(
               name: 'appointmentPage',
               path: 'appointmentPage',
-              requireAuth: true,
               builder: (context, params) => AppointmentPageWidget(),
             ),
             FFRoute(
@@ -139,9 +132,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => JourneyScreenWidget(),
             ),
             FFRoute(
+              name: 'findEvents',
+              path: 'findEvents',
+              requireAuth: true,
+              builder: (context, params) => FindEventsWidget(),
+            ),
+            FFRoute(
               name: 'HomeScreen',
               path: 'HomeScreen',
-              requireAuth: true,
               builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
@@ -256,16 +254,34 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'helpCenter',
+              path: 'helpCenter',
+              requireAuth: true,
+              builder: (context, params) => HelpCenterWidget(),
+            ),
+            FFRoute(
+              name: 'FAQs',
+              path: 'fAQs',
+              requireAuth: true,
+              builder: (context, params) => FAQsWidget(),
+            ),
+            FFRoute(
               name: 'ReportingAbuse',
               path: 'reportingAbuse',
               requireAuth: true,
               builder: (context, params) => ReportingAbuseWidget(),
             ),
             FFRoute(
-              name: 'helpCenter',
-              path: 'helpCenter',
+              name: 'CreditScore',
+              path: 'creditScore',
               requireAuth: true,
-              builder: (context, params) => HelpCenterWidget(),
+              builder: (context, params) => CreditScoreWidget(),
+            ),
+            FFRoute(
+              name: 'ManageDPA',
+              path: 'manageDPA',
+              requireAuth: true,
+              builder: (context, params) => ManageDPAWidget(),
             ),
             FFRoute(
               name: 'forgotPassword',
@@ -280,12 +296,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => MyEventsAdminWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
-            ),
-            FFRoute(
-              name: 'ManageDPA',
-              path: 'manageDPA',
-              requireAuth: true,
-              builder: (context, params) => ManageDPAWidget(),
             ),
             FFRoute(
               name: 'MyEventsVolunteer',
@@ -310,16 +320,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => MyPerformanceWidget(
                 points: params.getParam('points', ParamType.int),
               ),
-            ),
-            FFRoute(
-              name: 'CreditScore',
-              path: 'creditScore',
-              requireAuth: true,
-              builder: (context, params) => CreditScoreWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
-        ).toRoute(appStateNotifier),
-      ],
+        ),
+      ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
     );
 
@@ -365,6 +369,16 @@ extension NavigationExtensions on BuildContext {
               queryParams: queryParams,
               extra: extra,
             );
+
+  void safePop() {
+    // If there is only one route on the stack, navigate to the initial
+    // page instead of popping.
+    if (GoRouter.of(this).routerDelegate.matches.length <= 1) {
+      go('/');
+    } else {
+      pop();
+    }
+  }
 }
 
 extension GoRouterExtensions on GoRouter {

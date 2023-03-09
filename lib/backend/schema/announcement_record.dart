@@ -36,6 +36,8 @@ abstract class AnnouncementRecord
 
   String? get reason;
 
+  bool? get isDeclined;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -47,7 +49,8 @@ abstract class AnnouncementRecord
     ..likedBy = ListBuilder()
     ..isDeleted = false
     ..isConfirmbySA = false
-    ..reason = '';
+    ..reason = ''
+    ..isDeclined = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('announcement');
@@ -81,6 +84,7 @@ Map<String, dynamic> createAnnouncementRecordData({
   bool? isDeleted,
   bool? isConfirmbySA,
   String? reason,
+  bool? isDeclined,
 }) {
   final firestoreData = serializers.toFirestore(
     AnnouncementRecord.serializer,
@@ -95,7 +99,8 @@ Map<String, dynamic> createAnnouncementRecordData({
         ..expiryDate = expiryDate
         ..isDeleted = isDeleted
         ..isConfirmbySA = isConfirmbySA
-        ..reason = reason,
+        ..reason = reason
+        ..isDeclined = isDeclined,
     ),
   );
 

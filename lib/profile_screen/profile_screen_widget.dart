@@ -1,5 +1,6 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/bug_report_widget.dart';
 import '/components/confirm_logout_widget.dart';
 import '/components/edit_profile_picture_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -41,24 +42,36 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('PROFILE_SCREEN_profileScreen_ON_LOAD');
+      Function() _navigate = () {};
       logFirebaseEvent('profileScreen_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('profileScreen_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Profile Screen',
-      );
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('profileScreen_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('profileScreen_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Profile Screen',
+        );
+        return;
+      }
+
+      _navigate();
     });
   }
 
@@ -608,7 +621,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                   logFirebaseEvent(
                                                       'Row_navigate_to');
 
-                                                  context.goNamed(
+                                                  context.pushNamed(
                                                       'pendingRegistration');
                                                 },
                                                 child: Row(
@@ -776,7 +789,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     logFirebaseEvent(
                                                         'Row_navigate_to');
 
-                                                    context.goNamed(
+                                                    context.pushNamed(
                                                         'appointments');
                                                   },
                                                   child: Row(
@@ -1013,7 +1026,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                   logFirebaseEvent(
                                                       'Row_navigate_to');
 
-                                                  context.goNamed(
+                                                  context.pushNamed(
                                                     'myPerformance',
                                                     queryParams: {
                                                       'points': serializeParam(
@@ -1141,7 +1154,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                               logFirebaseEvent(
                                                   'Row_navigate_to');
 
-                                              context.goNamed('helpCenter');
+                                              context.pushNamed('helpCenter');
                                             },
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
@@ -1202,58 +1215,81 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 10.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.bug_report_outlined,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 22.0,
-                                                    ),
-                                                    Padding(
+                                            child: InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'PROFILE_SCREEN_PAGE_Row_mgqvil84_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Row_bottom_sheet');
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  5.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        'Report a Problem',
-                                                        style:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets,
+                                                      child: BugReportWidget(),
+                                                    );
+                                                  },
+                                                ).then(
+                                                    (value) => setState(() {}));
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .bug_report_outlined,
+                                                        color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  useGoogleFonts: GoogleFonts
-                                                                          .asMap()
-                                                                      .containsKey(
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
-                                                                ),
+                                                                .secondaryText,
+                                                        size: 22.0,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'Report a Problem',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 16.0,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyText1Family),
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],

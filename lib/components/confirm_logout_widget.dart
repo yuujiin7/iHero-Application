@@ -77,16 +77,44 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                     currentUserReference!.id,
                     getCurrentTimestamp,
                   );
-                  logFirebaseEvent('Button_auth');
-                  GoRouter.of(context).prepareAuthEvent(true);
-                  await signOut();
-                  logFirebaseEvent('Button_navigate_to');
+                  logFirebaseEvent('Button_alert_dialog');
+                  var confirmDialogResponse = await showDialog<bool>(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Logout'),
+                            content: Text('Are you sure you want to logout?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, false),
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, true),
+                                child: Text('Confirm'),
+                              ),
+                            ],
+                          );
+                        },
+                      ) ??
+                      false;
+                  if (confirmDialogResponse) {
+                    logFirebaseEvent('Button_auth');
+                    GoRouter.of(context).prepareAuthEvent(true);
+                    await signOut();
+                    logFirebaseEvent('Button_navigate_to');
 
-                  context.goNamedAuth(
-                    'Login',
-                    mounted,
-                    ignoreRedirect: true,
-                  );
+                    context.goNamedAuth(
+                      'Login',
+                      mounted,
+                      ignoreRedirect: true,
+                    );
+                  } else {
+                    logFirebaseEvent('Button_bottom_sheet');
+                    Navigator.pop(context);
+                  }
                 },
                 text: 'Logout',
                 options: FFButtonOptions(

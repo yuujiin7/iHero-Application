@@ -1,3 +1,4 @@
+import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/registrants_info_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -36,8 +37,36 @@ class _PendingRegistrationWidgetState extends State<PendingRegistrationWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('PENDING_REGISTRATION_pendingRegistration');
+      Function() _navigate = () {};
       logFirebaseEvent('pendingRegistration_custom_action');
       await actions.lockOrientation();
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('pendingRegistration_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('pendingRegistration_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Pending Registration',
+        );
+        return;
+      }
+
+      _navigate();
     });
   }
 

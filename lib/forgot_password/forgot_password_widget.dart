@@ -316,8 +316,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                 .subtitle2
                                 .override(
                                   fontFamily: 'Ubuntu',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: Color(0xFF0B266B),
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
                                           .subtitle2Family),

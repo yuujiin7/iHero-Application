@@ -315,6 +315,12 @@ class FFAppState extends ChangeNotifier {
   set endTime(DateTime? _value) {
     _endTime = _value;
   }
+
+  String _selectedCountryCode = '';
+  String get selectedCountryCode => _selectedCountryCode;
+  set selectedCountryCode(String _value) {
+    _selectedCountryCode = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

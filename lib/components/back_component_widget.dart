@@ -62,8 +62,9 @@ class _BackComponentWidgetState extends State<BackComponentWidget> {
               ),
               onPressed: () async {
                 logFirebaseEvent('BACK_COMPONENT_keyboard_backspace_ICN_ON');
-                logFirebaseEvent('IconButton_navigate_back');
-                context.pop();
+                logFirebaseEvent('IconButton_navigate_to');
+
+                context.pushNamed('Login');
               },
             ),
           ),

@@ -48,24 +48,36 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('ANNOUNCEMENT_DETAILS_announcementDetails');
+      Function() _navigate = () {};
       logFirebaseEvent('announcementDetails_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('announcementDetails_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Announcement Details',
-      );
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('announcementDetails_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('announcementDetails_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Announcement Details',
+        );
+        return;
+      }
+
+      _navigate();
     });
   }
 

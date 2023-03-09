@@ -44,32 +44,44 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('FIND_EVENTS_PAGE_findEvents_ON_PAGE_LOAD');
+      Function() _navigate = () {};
       logFirebaseEvent('findEvents_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('findEvents_update_app_state');
-      setState(() {
-        FFAppState().searchActive = false;
-        FFAppState().startDate = null;
-        FFAppState().endDate = null;
-        FFAppState().searchCause = '';
-        FFAppState().searchOrg = '';
-      });
-      logFirebaseEvent('findEvents_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Find Events',
-      );
+      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
+        logFirebaseEvent('findEvents_auth');
+        GoRouter.of(context).prepareAuthEvent();
+        await signOut();
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        return;
+      } else {
+        logFirebaseEvent('findEvents_update_app_state');
+        setState(() {
+          FFAppState().searchActive = false;
+          FFAppState().startDate = null;
+          FFAppState().endDate = null;
+          FFAppState().searchCause = '';
+          FFAppState().searchOrg = '';
+        });
+        logFirebaseEvent('findEvents_custom_action');
+        await actions.updateSession(
+          currentUserReference!.id,
+          getCurrentTimestamp,
+          null,
+          () {
+            if (isAndroid) {
+              return 'Android';
+            } else if (isiOS) {
+              return 'iOS';
+            } else {
+              return 'iOS';
+            }
+          }(),
+          'Find Events',
+        );
+        return;
+      }
+
+      _navigate();
     });
 
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)

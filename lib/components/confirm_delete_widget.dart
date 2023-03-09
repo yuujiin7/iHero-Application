@@ -127,7 +127,7 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                   textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                         fontFamily: 'Ubuntu',
                         color: Colors.white,
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
                             FlutterFlowTheme.of(context).subtitle2Family),
@@ -159,7 +159,7 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                   color: FlutterFlowTheme.of(context).primaryBackground,
                   textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                         fontFamily: 'Ubuntu',
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
                             FlutterFlowTheme.of(context).subtitle2Family),
                       ),

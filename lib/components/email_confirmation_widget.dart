@@ -103,7 +103,7 @@ class _EmailConfirmationWidgetState extends State<EmailConfirmationWidget> {
                 logFirebaseEvent('EMAIL_CONFIRMATION_COMP_OKAY_BTN_ON_TAP');
                 logFirebaseEvent('Button_navigate_to');
 
-                context.pushNamed('Login');
+                context.goNamed('Login');
               },
               text: 'Okay',
               options: FFButtonOptions(
