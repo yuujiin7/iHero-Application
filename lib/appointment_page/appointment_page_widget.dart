@@ -276,9 +276,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.fullNameController,
+                          maxLength: 50,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Enter Full Name',
+                            counterText: "",
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -514,9 +516,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.nationalityController,
+                          maxLength: 50,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Nationality',
+                            counterText: "",
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -614,9 +618,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.civilStatusController,
+                          maxLength: 50,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Civil Status',
+                            counterText: "",
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -714,9 +720,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.addressController,
+                          maxLength: 255,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Full Address',
+                            counterText: "",
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -827,9 +835,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                 Expanded(
                                   child: TextFormField(
                                     controller: _model.contactNumberController,
+                                    maxLength: 15,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       hintText: 'Contact Number',
+                                      counterText: "",
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -942,9 +952,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.emailController,
+                          maxLength: 50,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Email Address',
+                            counterText: "",
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
