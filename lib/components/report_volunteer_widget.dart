@@ -707,6 +707,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 reportBy: currentUserReference,
                                 reportedAt: getCurrentTimestamp,
                                 isConfirmbySA: false,
+                                isDeclined: false,
                               ),
                               'report_behavior': _model.checkboxGroupValues,
                             };

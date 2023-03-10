@@ -27,6 +27,8 @@ abstract class MemoralizationReportRecord
 
   bool? get isConfirmbySA;
 
+  bool? get isDeclined;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -35,7 +37,8 @@ abstract class MemoralizationReportRecord
       builder
         ..fullName = ''
         ..photoUrl = ListBuilder()
-        ..isConfirmbySA = false;
+        ..isConfirmbySA = false
+        ..isDeclined = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('memoralization_report');
@@ -67,6 +70,7 @@ Map<String, dynamic> createMemoralizationReportRecordData({
   DocumentReference? reportBy,
   DateTime? reportedAt,
   bool? isConfirmbySA,
+  bool? isDeclined,
 }) {
   final firestoreData = serializers.toFirestore(
     MemoralizationReportRecord.serializer,
@@ -77,7 +81,8 @@ Map<String, dynamic> createMemoralizationReportRecordData({
         ..photoUrl = null
         ..reportBy = reportBy
         ..reportedAt = reportedAt
-        ..isConfirmbySA = isConfirmbySA,
+        ..isConfirmbySA = isConfirmbySA
+        ..isDeclined = isDeclined,
     ),
   );
 

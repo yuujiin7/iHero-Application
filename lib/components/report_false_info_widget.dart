@@ -639,6 +639,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               reportBy: currentUserReference,
                               reportedAt: getCurrentTimestamp,
                               isConfirmbySA: false,
+                              isDeclined: false,
                             );
                             await FalseInformationReportRecord.collection
                                 .doc()

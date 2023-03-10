@@ -188,14 +188,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'eventCreate',
-              path: 'eventCreate',
-              requireAuth: true,
-              builder: (context, params) => EventCreateWidget(
-                tabIndex: params.getParam('tabIndex', ParamType.int),
-              ),
-            ),
-            FFRoute(
               name: 'volunteerList',
               path: 'volunteerList',
               requireAuth: true,
@@ -205,10 +197,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'pendingRegistration',
-              path: 'pendingRegistration',
+              name: 'eventCreate',
+              path: 'eventCreate',
               requireAuth: true,
-              builder: (context, params) => PendingRegistrationWidget(),
+              builder: (context, params) => EventCreateWidget(
+                tabIndex: params.getParam('tabIndex', ParamType.int),
+              ),
             ),
             FFRoute(
               name: 'profileScreen',

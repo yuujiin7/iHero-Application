@@ -363,7 +363,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                               String>(
                                                             _model
                                                                 .uploadedFileUrl1,
-                                                            ' https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
+                                                            'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
                                                           ),
                                                           width: 100.0,
                                                           height: 100.0,
@@ -2374,13 +2374,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                             .validate()) {
                                                                       return;
                                                                     }
-                                                                    if (_model.uploadedFileUrl1 ==
-                                                                            null ||
-                                                                        _model
-                                                                            .uploadedFileUrl1
-                                                                            .isEmpty) {
-                                                                      return;
-                                                                    }
                                                                     if (_model
                                                                             .datePicked1 ==
                                                                         null) {
@@ -2499,6 +2492,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               recurranceDate: _model.choiceChipsValue,
                                                                               rateTotal: 0.0,
                                                                               rateCount: 0.0,
+                                                                              isDeclined: false,
                                                                             ),
                                                                             'admin_ref':
                                                                                 [
@@ -2589,6 +2583,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               startTime: _model.datePicked1,
                                                                               endTime: _model.datePicked2,
                                                                               recurranceDate: 'Everyday',
+                                                                              isDeclined: false,
                                                                             ),
                                                                             'admin_ref':
                                                                                 [
@@ -2902,7 +2897,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                 ),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -3268,6 +3262,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           currentUserReference,
                                                       isDeleted: false,
                                                       isConfirmbySA: false,
+                                                      isDeclined: false,
                                                     );
                                                     await AnnouncementRecord
                                                         .collection

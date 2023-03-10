@@ -30,6 +30,8 @@ abstract class FalseInformationReportRecord
 
   bool? get isConfirmbySA;
 
+  bool? get isDeclined;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -40,7 +42,8 @@ abstract class FalseInformationReportRecord
         ..email = ''
         ..reportDetail = ''
         ..photoUrl = ''
-        ..isConfirmbySA = false;
+        ..isConfirmbySA = false
+        ..isDeclined = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('false_information_report');
@@ -74,6 +77,7 @@ Map<String, dynamic> createFalseInformationReportRecordData({
   DocumentReference? reportBy,
   DateTime? reportedAt,
   bool? isConfirmbySA,
+  bool? isDeclined,
 }) {
   final firestoreData = serializers.toFirestore(
     FalseInformationReportRecord.serializer,
@@ -85,7 +89,8 @@ Map<String, dynamic> createFalseInformationReportRecordData({
         ..photoUrl = photoUrl
         ..reportBy = reportBy
         ..reportedAt = reportedAt
-        ..isConfirmbySA = isConfirmbySA,
+        ..isConfirmbySA = isConfirmbySA
+        ..isDeclined = isDeclined,
     ),
   );
 

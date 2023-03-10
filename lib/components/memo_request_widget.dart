@@ -648,6 +648,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                 reportBy: currentUserReference,
                                 reportedAt: getCurrentTimestamp,
                                 isConfirmbySA: false,
+                                isDeclined: false,
                               ),
                               'photo_url': _model.uploadedFileUrls,
                             };
