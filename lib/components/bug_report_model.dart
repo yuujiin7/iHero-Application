@@ -15,9 +15,22 @@ import 'package:url_launcher/url_launcher.dart';
 class BugReportModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this component.
 
+  final formKey = GlobalKey<FormState>();
   // State field(s) for TextField widget.
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  String? _textControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 255) {
+      return 'Max 255 character';
+    }
+
+    return null;
+  }
+
   bool isMediaUploading = false;
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -25,7 +38,9 @@ class BugReportModel extends FlutterFlowModel {
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    textControllerValidator = _textControllerValidator;
+  }
 
   void dispose() {
     textController?.dispose();

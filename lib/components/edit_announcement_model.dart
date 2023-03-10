@@ -23,14 +23,44 @@ class EditAnnouncementModel extends FlutterFlowModel {
   // State field(s) for TitleAnnouncement widget.
   TextEditingController? titleAnnouncementController;
   String? Function(BuildContext, String?)? titleAnnouncementControllerValidator;
+  String? _titleAnnouncementControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 255) {
+      return 'Max 255 character';
+    }
+
+    return null;
+  }
+
   // State field(s) for DescriptionAnnouncement widget.
   TextEditingController? descriptionAnnouncementController;
   String? Function(BuildContext, String?)?
       descriptionAnnouncementControllerValidator;
+  String? _descriptionAnnouncementControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 2200) {
+      return 'Max 2200 character';
+    }
+
+    return null;
+  }
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    titleAnnouncementControllerValidator =
+        _titleAnnouncementControllerValidator;
+    descriptionAnnouncementControllerValidator =
+        _descriptionAnnouncementControllerValidator;
+  }
 
   void dispose() {
     titleAnnouncementController?.dispose();

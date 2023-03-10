@@ -15,9 +15,9 @@ export '/home_screen/home_screen_widget.dart' show HomeScreenWidget;
 export '/all_chat/all_chat_widget.dart' show AllChatWidget;
 export '/chat_page/chat_page_widget.dart' show ChatPageWidget;
 export '/group_chat_page/group_chat_page_widget.dart' show GroupChatPageWidget;
-export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/announcement_details/announcement_details_widget.dart'
     show AnnouncementDetailsWidget;
+export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/volunteer_list/volunteer_list_widget.dart' show VolunteerListWidget;
 export '/pending_registration/pending_registration_widget.dart'
     show PendingRegistrationWidget;

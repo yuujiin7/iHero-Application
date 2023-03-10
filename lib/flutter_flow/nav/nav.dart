@@ -175,14 +175,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => GroupChatPageWidget(),
             ),
             FFRoute(
-              name: 'eventCreate',
-              path: 'eventCreate',
-              requireAuth: true,
-              builder: (context, params) => EventCreateWidget(
-                tabIndex: params.getParam('tabIndex', ParamType.int),
-              ),
-            ),
-            FFRoute(
               name: 'announcementDetails',
               path: 'announcementDetails',
               requireAuth: true,
@@ -193,6 +185,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AnnouncementDetailsWidget(
                 announcementdetails:
                     params.getParam('announcementdetails', ParamType.Document),
+              ),
+            ),
+            FFRoute(
+              name: 'eventCreate',
+              path: 'eventCreate',
+              requireAuth: true,
+              builder: (context, params) => EventCreateWidget(
+                tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
             ),
             FFRoute(

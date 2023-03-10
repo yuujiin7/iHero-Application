@@ -45,7 +45,7 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 50) {
-      return 'Maximum 50 characters allowed, currently ${val.length}.';
+      return 'Max 50 character';
     }
 
     return null;
@@ -63,7 +63,7 @@ class AppointmentPageModel extends FlutterFlowModel {
     }
 
     if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+      return 'Max 50 character';
     }
     if (val.length > 50) {
       return 'Maximum 50 characters allowed, currently ${val.length}.';
@@ -84,7 +84,7 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 50) {
-      return 'Maximum 50 characters allowed, currently ${val.length}.';
+      return 'Max 50 character';
     }
 
     return null;
@@ -99,10 +99,10 @@ class AppointmentPageModel extends FlutterFlowModel {
     }
 
     if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+      return 'Max 255 character';
     }
-    if (val.length > 100) {
-      return 'Maximum 100 characters allowed, currently ${val.length}.';
+    if (val.length > 255) {
+      return 'Max 255 character';
     }
 
     return null;
@@ -122,7 +122,7 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 15) {
-      return 'Maximum 15 characters allowed, currently ${val.length}.';
+      return 'Max 15 character';
     }
 
     return null;
@@ -136,8 +136,11 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 100) {
-      return 'Maximum 100 characters allowed, currently ${val.length}.';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
+    }
+    if (val.length > 50) {
+      return 'Max 50 character';
     }
     if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
       return 'Has to be a valid email address.';

@@ -39,7 +39,7 @@ class ReportVolunteerModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 50) {
-      return 'Maximum 50 characters allowed, currently ${val.length}.';
+      return 'Max 50 character';
     }
 
     return null;

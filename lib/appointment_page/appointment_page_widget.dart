@@ -1129,7 +1129,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                             ),
                           ),
-                          if (_model.isMediaUploading2 != null)
+                          if (_model.uploadedFileUrls2.length != null)
                             Icon(
                               Icons.check_rounded,
                               color: Color(0xFF39D2C0),
