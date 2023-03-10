@@ -683,7 +683,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                           child: TextFormField(
                                             controller:
                                                 _model.searchFieldController,
-                                            maxLength: 50,
                                             onChanged: (_) =>
                                                 EasyDebounce.debounce(
                                               '_model.searchFieldController',
@@ -703,7 +702,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                             ),
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              counterText: "",
                                               hintText:
                                                   'Search Events Title Here...',
                                               hintStyle:

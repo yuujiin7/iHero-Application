@@ -197,11 +197,9 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.fullNameController,
-                                maxLength: 50,
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  counterText: "",
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -298,11 +296,9 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.descriptionEventController,
-                                maxLength: 2200,
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  counterText: "",
                                   hintText: 'Description',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
