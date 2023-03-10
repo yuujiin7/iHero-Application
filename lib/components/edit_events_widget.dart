@@ -1167,7 +1167,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   .isRecurring!,
                                           onChanged: (newValue) async {
                                             setState(() =>
-                                                _model.switchValue = newValue!);
+                                                _model.switchValue = newValue);
                                           },
                                         ),
                                       ],
