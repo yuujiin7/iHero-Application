@@ -36,13 +36,6 @@ class _$RegistrationRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.location;
-    if (value != null) {
-      result
-        ..add('location')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(LatLng)));
-    }
     value = object.email;
     if (value != null) {
       result
@@ -208,10 +201,6 @@ class _$RegistrationRecordSerializer
           result.address = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'location':
-          result.location = serializers.deserialize(value,
-              specifiedType: const FullType(LatLng)) as LatLng?;
-          break;
         case 'email':
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -311,8 +300,6 @@ class _$RegistrationRecord extends RegistrationRecord {
   @override
   final String? address;
   @override
-  final LatLng? location;
-  @override
   final String? email;
   @override
   final String? photoUrl;
@@ -360,7 +347,6 @@ class _$RegistrationRecord extends RegistrationRecord {
   _$RegistrationRecord._(
       {this.displayName,
       this.address,
-      this.location,
       this.email,
       this.photoUrl,
       this.createdTime,
@@ -398,7 +384,6 @@ class _$RegistrationRecord extends RegistrationRecord {
     return other is RegistrationRecord &&
         displayName == other.displayName &&
         address == other.address &&
-        location == other.location &&
         email == other.email &&
         photoUrl == other.photoUrl &&
         createdTime == other.createdTime &&
@@ -441,7 +426,7 @@ class _$RegistrationRecord extends RegistrationRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, displayName.hashCode), address.hashCode), location.hashCode), email.hashCode),
+                                                                            $jc($jc($jc($jc(0, displayName.hashCode), address.hashCode), email.hashCode),
                                                                                 photoUrl.hashCode),
                                                                             createdTime.hashCode),
                                                                         uid.hashCode),
@@ -468,7 +453,6 @@ class _$RegistrationRecord extends RegistrationRecord {
     return (newBuiltValueToStringHelper(r'RegistrationRecord')
           ..add('displayName', displayName)
           ..add('address', address)
-          ..add('location', location)
           ..add('email', email)
           ..add('photoUrl', photoUrl)
           ..add('createdTime', createdTime)
@@ -504,10 +488,6 @@ class RegistrationRecordBuilder
   String? _address;
   String? get address => _$this._address;
   set address(String? address) => _$this._address = address;
-
-  LatLng? _location;
-  LatLng? get location => _$this._location;
-  set location(LatLng? location) => _$this._location = location;
 
   String? _email;
   String? get email => _$this._email;
@@ -602,7 +582,6 @@ class RegistrationRecordBuilder
     if ($v != null) {
       _displayName = $v.displayName;
       _address = $v.address;
-      _location = $v.location;
       _email = $v.email;
       _photoUrl = $v.photoUrl;
       _createdTime = $v.createdTime;
@@ -649,7 +628,6 @@ class RegistrationRecordBuilder
           new _$RegistrationRecord._(
               displayName: displayName,
               address: address,
-              location: location,
               email: email,
               photoUrl: photoUrl,
               createdTime: createdTime,

@@ -16,8 +16,6 @@ abstract class RegistrationRecord
 
   String? get address;
 
-  LatLng? get location;
-
   String? get email;
 
   @BuiltValueField(wireName: 'photo_url')
@@ -112,7 +110,6 @@ abstract class RegistrationRecord
 Map<String, dynamic> createRegistrationRecordData({
   String? displayName,
   String? address,
-  LatLng? location,
   String? email,
   String? photoUrl,
   DateTime? createdTime,
@@ -138,7 +135,6 @@ Map<String, dynamic> createRegistrationRecordData({
       (r) => r
         ..displayName = displayName
         ..address = address
-        ..location = location
         ..email = email
         ..photoUrl = photoUrl
         ..createdTime = createdTime
