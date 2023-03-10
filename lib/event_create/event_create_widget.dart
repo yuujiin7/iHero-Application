@@ -354,21 +354,15 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           }
                                                         }
                                                       },
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                        child: Image.network(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            _model
-                                                                .uploadedFileUrl1,
-                                                            ' https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
-                                                          ),
-                                                          width: 100.0,
-                                                          height: 100.0,
-                                                          fit: BoxFit.cover,
+                                                      child: Image.network(
+                                                        valueOrDefault<String>(
+                                                          _model
+                                                              .uploadedFileUrl1,
+                                                          ' https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
                                                         ),
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                   ),
@@ -399,6 +393,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .titleEventController,
+                                                      maxLength: 255,
                                                       onChanged: (_) =>
                                                           EasyDebounce.debounce(
                                                         '_model.titleEventController',
@@ -415,6 +410,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         labelText: 'Title',
                                                         labelStyle:
                                                             FlutterFlowTheme.of(
@@ -570,9 +566,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .descriptionEventController,
+                                                      maxLength: 2200,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'Type your Description here...',
                                                         hintStyle:
@@ -1356,13 +1354,17 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       ),
                                                                 ),
                                                                 Text(
-                                                                  dateTimeFormat(
-                                                                    'jm',
-                                                                    FFAppState()
-                                                                        .endDate,
-                                                                    locale: FFLocalizations.of(
-                                                                            context)
-                                                                        .languageCode,
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    dateTimeFormat(
+                                                                      'jm',
+                                                                      _model
+                                                                          .datePicked2,
+                                                                      locale: FFLocalizations.of(
+                                                                              context)
+                                                                          .languageCode,
+                                                                    ),
+                                                                    '00:00',
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
@@ -1569,7 +1571,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                     (newValue) async {
                                                                   setState(() =>
                                                                       _model.switchValue =
-                                                                          newValue!);
+                                                                          newValue);
                                                                 },
                                                                 activeColor:
                                                                     FlutterFlowTheme.of(
@@ -1708,9 +1710,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .personInChargeController,
+                                                      maxLength: 50,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'Who is in charge?',
                                                         hintStyle:
@@ -1859,9 +1863,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .contactNumberController,
+                                                      maxLength: 15,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'Contact Number',
                                                         hintStyle:
@@ -2020,9 +2026,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .neededVolunteerController,
+                                                      maxLength: 6,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'No. of volunteer needed',
                                                         hintStyle:
@@ -2365,44 +2373,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                     var _shouldSetState =
                                                                         false;
                                                                     logFirebaseEvent(
-                                                                        'ButtonSubmit_validate_form');
-                                                                    if (_model.formKey1.currentState ==
-                                                                            null ||
-                                                                        !_model
-                                                                            .formKey1
-                                                                            .currentState!
-                                                                            .validate()) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model.uploadedFileUrl1 ==
-                                                                            null ||
-                                                                        _model
-                                                                            .uploadedFileUrl1
-                                                                            .isEmpty) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model
-                                                                            .datePicked1 ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model
-                                                                            .datePicked2 ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model
-                                                                            .selectCauseCreateModel
-                                                                            .dropDownValue ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model
-                                                                            .partnerDropDownValue ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    logFirebaseEvent(
                                                                         'ButtonSubmit_alert_dialog');
                                                                     var confirmDialogResponse =
                                                                         await showDialog<bool>(
@@ -2426,6 +2396,44 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                             ) ??
                                                                             false;
                                                                     if (confirmDialogResponse) {
+                                                                      logFirebaseEvent(
+                                                                          'ButtonSubmit_validate_form');
+                                                                      if (_model.formKey1.currentState ==
+                                                                              null ||
+                                                                          !_model
+                                                                              .formKey1
+                                                                              .currentState!
+                                                                              .validate()) {
+                                                                        return;
+                                                                      }
+                                                                      if (_model.uploadedFileUrl1 ==
+                                                                              null ||
+                                                                          _model
+                                                                              .uploadedFileUrl1
+                                                                              .isEmpty) {
+                                                                        return;
+                                                                      }
+                                                                      if (_model
+                                                                              .datePicked1 ==
+                                                                          null) {
+                                                                        return;
+                                                                      }
+                                                                      if (_model
+                                                                              .datePicked2 ==
+                                                                          null) {
+                                                                        return;
+                                                                      }
+                                                                      if (_model
+                                                                              .selectCauseCreateModel
+                                                                              .dropDownValue ==
+                                                                          null) {
+                                                                        return;
+                                                                      }
+                                                                      if (_model
+                                                                              .partnerDropDownValue ==
+                                                                          null) {
+                                                                        return;
+                                                                      }
                                                                       logFirebaseEvent(
                                                                           'ButtonSubmit_custom_action');
                                                                       _model.isEventExist =
@@ -2914,8 +2922,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                   child: TextFormField(
                                                     controller: _model
                                                         .titleAnnouncementController,
+                                                    maxLength: 255,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
+                                                      counterText: "",
                                                       hintText: 'Title',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
@@ -3069,8 +3079,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                   child: TextFormField(
                                                     controller: _model
                                                         .descriptionAnnouncementController,
+                                                    maxLength: 2200,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
+                                                      counterText: "",
                                                       hintText: 'Description',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
