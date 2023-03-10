@@ -43,11 +43,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 5) {
-      return 'Requires at least 5 characters.';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
     }
-    if (val.length > 256) {
-      return 'Maximum 256 characters allowed, currently ${val.length}.';
+    if (val.length > 255) {
+      return 'Max 255 character';
     }
 
     return null;
@@ -62,11 +62,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 5) {
-      return 'Requires at least 5 characters.';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
     }
-    if (val.length > 256) {
-      return 'Maximum 256 characters allowed, currently ${val.length}.';
+    if (val.length > 2200) {
+      return 'Max 2200 character';
     }
 
     return null;
@@ -90,8 +90,8 @@ class EventCreateModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 75) {
-      return 'Maximum 75 characters allowed, currently ${val.length}.';
+    if (val.length > 50) {
+      return 'Max 50 character';
     }
 
     return null;
@@ -105,9 +105,10 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (!RegExp('^(09|\\+639)\\d{9}\$').hasMatch(val)) {
-      return 'Include the + symbol, country code (63). ';
+    if (val.length > 15) {
+      return 'Max 15 character';
     }
+
     return null;
   }
 
@@ -120,8 +121,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 256) {
-      return 'Maximum 256 characters allowed, currently ${val.length}.';
+    if (val.length > 6) {
+      return 'Max 6 character';
     }
 
     return null;
@@ -147,11 +148,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 5) {
-      return 'Requires at least 5 characters.';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
     }
-    if (val.length > 256) {
-      return 'Maximum 256 characters allowed, currently ${val.length}.';
+    if (val.length > 255) {
+      return 'Max 255 character';
     }
 
     return null;
@@ -167,11 +168,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 5) {
-      return 'Requires at least 5 characters.';
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
     }
-    if (val.length > 256) {
-      return 'Maximum 256 characters allowed, currently ${val.length}.';
+    if (val.length > 2200) {
+      return 'Max 2200 character';
     }
 
     return null;

@@ -44,9 +44,40 @@ class EditEventsModel extends FlutterFlowModel {
   // State field(s) for TitleEvent widget.
   TextEditingController? titleEventController;
   String? Function(BuildContext, String?)? titleEventControllerValidator;
+  String? _titleEventControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
+    }
+    if (val.length > 255) {
+      return 'Max 255 character';
+    }
+
+    return null;
+  }
+
   // State field(s) for DescriptionEvent widget.
   TextEditingController? descriptionEventController;
   String? Function(BuildContext, String?)? descriptionEventControllerValidator;
+  String? _descriptionEventControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
+    }
+    if (val.length > 2200) {
+      return 'Max 2200 character';
+    }
+
+    return null;
+  }
+
   DateTime? datePicked1;
   DateTime? datePicked2;
   // State field(s) for Switch widget.
@@ -56,12 +87,56 @@ class EditEventsModel extends FlutterFlowModel {
   // State field(s) for PersonInCharge widget.
   TextEditingController? personInChargeController;
   String? Function(BuildContext, String?)? personInChargeControllerValidator;
+  String? _personInChargeControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
+    }
+    if (val.length > 50) {
+      return 'Max 50 character';
+    }
+
+    return null;
+  }
+
   // State field(s) for ContactNumber widget.
   TextEditingController? contactNumberController;
   String? Function(BuildContext, String?)? contactNumberControllerValidator;
+  String? _contactNumberControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 1) {
+      return 'Requires at least 1 characters.';
+    }
+    if (val.length > 15) {
+      return 'Max 15 character';
+    }
+
+    return null;
+  }
+
   // State field(s) for neededVolunteer widget.
   TextEditingController? neededVolunteerController;
   String? Function(BuildContext, String?)? neededVolunteerControllerValidator;
+  String? _neededVolunteerControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 6) {
+      return 'Max 6 character';
+    }
+
+    return null;
+  }
+
   // Model for selectCauseEdit component.
   late SelectCauseEditModel selectCauseEditModel;
   // State field(s) for PartnerDropDown widget.
@@ -72,6 +147,11 @@ class EditEventsModel extends FlutterFlowModel {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
+    titleEventControllerValidator = _titleEventControllerValidator;
+    descriptionEventControllerValidator = _descriptionEventControllerValidator;
+    personInChargeControllerValidator = _personInChargeControllerValidator;
+    contactNumberControllerValidator = _contactNumberControllerValidator;
+    neededVolunteerControllerValidator = _neededVolunteerControllerValidator;
     selectCauseEditModel = createModel(context, () => SelectCauseEditModel());
   }
 

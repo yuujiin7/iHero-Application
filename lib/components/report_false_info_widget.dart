@@ -294,6 +294,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: TextFormField(
                                 controller: _model.descriptionEventController,

@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 class CountryCodeModel extends FlutterFlowModel {
   ///  Local state fields for this component.
 
-  String? countryCode;
+  String? countryCode = '';
 
-  bool? searchActive;
+  bool searchActive = false;
 
   ///  State fields for stateful widgets in this component.
 
