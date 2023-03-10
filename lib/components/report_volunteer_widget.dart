@@ -208,9 +208,11 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.textFieldController,
+                                maxLength: 50,
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
