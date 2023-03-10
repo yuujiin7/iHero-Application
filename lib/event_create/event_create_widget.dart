@@ -393,6 +393,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .titleEventController,
+                                                      maxLength: 255,
                                                       onChanged: (_) =>
                                                           EasyDebounce.debounce(
                                                         '_model.titleEventController',
@@ -409,6 +410,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         labelText: 'Title',
                                                         labelStyle:
                                                             FlutterFlowTheme.of(
@@ -564,9 +566,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .descriptionEventController,
+                                                      maxLength: 2200,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'Type your Description here...',
                                                         hintStyle:
@@ -1567,7 +1571,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                     (newValue) async {
                                                                   setState(() =>
                                                                       _model.switchValue =
-                                                                          newValue!);
+                                                                          newValue);
                                                                 },
                                                                 activeColor:
                                                                     FlutterFlowTheme.of(
@@ -1706,9 +1710,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .personInChargeController,
+                                                      maxLength: 50,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'Who is in charge?',
                                                         hintStyle:
@@ -1857,9 +1863,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .contactNumberController,
+                                                      maxLength: 15,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'Contact Number',
                                                         hintStyle:
@@ -2018,9 +2026,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                     child: TextFormField(
                                                       controller: _model
                                                           .neededVolunteerController,
+                                                      maxLength: 6,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
+                                                        counterText: "",
                                                         hintText:
                                                             'No. of volunteer needed',
                                                         hintStyle:
@@ -2912,8 +2922,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                   child: TextFormField(
                                                     controller: _model
                                                         .titleAnnouncementController,
+                                                    maxLength: 255,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
+                                                      counterText: "",
                                                       hintText: 'Title',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
@@ -3067,8 +3079,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                   child: TextFormField(
                                                     controller: _model
                                                         .descriptionAnnouncementController,
+                                                    maxLength: 2200,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
+                                                      counterText: "",
                                                       hintText: 'Description',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
