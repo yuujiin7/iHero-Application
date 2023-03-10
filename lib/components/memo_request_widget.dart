@@ -58,7 +58,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
           maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
+          color: Color(0xFFEBEFF7),
           boxShadow: [
             BoxShadow(
               blurRadius: 12.0,

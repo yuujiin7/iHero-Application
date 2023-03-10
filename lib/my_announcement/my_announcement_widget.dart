@@ -120,13 +120,13 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
               children: [
                 Expanded(
                   child: DefaultTabController(
-                    length: 2,
+                    length: 3,
                     initialIndex: min(
                         valueOrDefault<int>(
                           widget.tabIndex,
                           0,
                         ),
-                        1),
+                        2),
                     child: Column(
                       children: [
                         TabBar(
@@ -152,6 +152,9 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                             ),
                             Tab(
                               text: 'Posted',
+                            ),
+                            Tab(
+                              text: 'Declined',
                             ),
                           ],
                         ),
@@ -179,6 +182,8 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                               .where('created_by',
                                                   isEqualTo:
                                                       currentUserReference)
+                                              .where('isDeclined',
+                                                  isEqualTo: false)
                                               .orderBy('title'),
                                     ),
                                     builder: (context, snapshot) {
@@ -819,6 +824,20 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                     },
                                   ),
                                 ),
+                              ),
+                              Text(
+                                'Tab View 3',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyText1Family,
+                                      fontSize: 32.0,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1Family),
+                                    ),
                               ),
                             ],
                           ),

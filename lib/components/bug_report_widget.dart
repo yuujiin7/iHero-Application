@@ -327,8 +327,9 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                     FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent('BUG_REPORT_COMP_CANCEL_BTN_ON_TAP');
-                        logFirebaseEvent('Button_navigate_back');
-                        context.pop();
+                        logFirebaseEvent('Button_navigate_to');
+
+                        context.pushNamed('profileScreen');
                       },
                       text: 'Cancel',
                       options: FFButtonOptions(

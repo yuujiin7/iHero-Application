@@ -101,7 +101,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 122.5,
+                            height: 112.6,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).primaryColor,
                             ),
@@ -203,7 +203,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                     ),
                                     child: Container(
                                       width: double.infinity,
-                                      height: 70.0,
+                                      height: 50.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
@@ -375,7 +375,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 520.0, 0.0, 80.0),
+                            0.0, 500.0, 0.0, 80.0),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
