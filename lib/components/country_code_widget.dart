@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -280,8 +281,9 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: Image.network(
-                                                      valueOrDefault<String>(
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: valueOrDefault<
+                                                          String>(
                                                         CountryCodeCall.flag(
                                                           containerCountryCodeResponse
                                                               .jsonBody,
@@ -311,6 +313,9 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                                 countryListIndex]
                                                             .toString(),
                                                         'Code',
+                                                      ).maybeHandleOverflow(
+                                                        maxChars: 5,
+                                                        replacement: '…',
                                                       ),
                                                       style:
                                                           FlutterFlowTheme.of(
@@ -388,7 +393,8 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                               countryListIndex]
                                                           .toString(),
                                                       'Phone Code',
-                                                    ),
+                                                    ).maybeHandleOverflow(
+                                                        maxChars: 5),
                                                     maxLines: 2,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -439,7 +445,12 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                       'COUNTRY_CODE_Container_75s7onbu_ON_TAP');
                                   logFirebaseEvent(
                                       'Container_update_app_state');
-                                  setState(() {});
+                                  setState(() {
+                                    FFAppState().selectedCountryCode =
+                                        CountryCodeSearchCall.callingCodes(
+                                      (_model.apiResultn0w?.jsonBody ?? ''),
+                                    ).toString();
+                                  });
                                   logFirebaseEvent('Container_bottom_sheet');
                                   Navigator.pop(context);
                                 },
@@ -469,8 +480,8 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Image.network(
-                                              valueOrDefault<String>(
+                                            child: CachedNetworkImage(
+                                              imageUrl: valueOrDefault<String>(
                                                 CountryCodeSearchCall.flag(
                                                   (_model.apiResultn0w
                                                           ?.jsonBody ??
@@ -488,11 +499,16 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10.0, 0.0, 10.0, 0.0),
                                             child: Text(
-                                              CountryCodeSearchCall.alpha3Code(
-                                                (_model.apiResultn0w
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              ).toString(),
+                                              valueOrDefault<String>(
+                                                CountryCodeSearchCall
+                                                    .alpha3Code(
+                                                  (_model.apiResultn0w
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                ).toString(),
+                                                'Country code',
+                                              ).maybeHandleOverflow(
+                                                  maxChars: 5),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText1
@@ -518,14 +534,17 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10.0, 0.0, 10.0, 0.0),
                                             child: Text(
-                                              CountryCodeSearchCall.name(
-                                                (_model.apiResultn0w
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              ).toString().maybeHandleOverflow(
-                                                    maxChars: 15,
-                                                    replacement: '…',
-                                                  ),
+                                              valueOrDefault<String>(
+                                                CountryCodeSearchCall.name(
+                                                  (_model.apiResultn0w
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                ).toString(),
+                                                'Country name',
+                                              ).maybeHandleOverflow(
+                                                maxChars: 15,
+                                                replacement: '…',
+                                              ),
                                               maxLines: 2,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -551,10 +570,15 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   10.0, 0.0, 10.0, 0.0),
                                           child: Text(
-                                            CountryCodeSearchCall.callingCodes(
-                                              (_model.apiResultn0w?.jsonBody ??
-                                                  ''),
-                                            ).toString(),
+                                            valueOrDefault<String>(
+                                              CountryCodeSearchCall
+                                                  .callingCodes(
+                                                (_model.apiResultn0w
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              ).toString(),
+                                              'Calling code',
+                                            ).maybeHandleOverflow(maxChars: 5),
                                             maxLines: 2,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
