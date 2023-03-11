@@ -40,17 +40,12 @@ abstract class EventsRecord
 
   bool? get isEnded;
 
-  int? get numberOfRemainingDays;
-
   @BuiltValueField(wireName: 'volunteer_count')
   double? get volunteerCount;
 
   bool? get isDeleted;
 
   String? get eventContactNumber;
-
-  @BuiltValueField(wireName: 'archive_date')
-  DateTime? get archiveDate;
 
   bool? get isConfirmbySA;
 
@@ -98,6 +93,9 @@ abstract class EventsRecord
 
   bool? get isDeclined;
 
+  @BuiltValueField(wireName: 'rate_ref')
+  BuiltList<DocumentReference>? get rateRef;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -113,7 +111,6 @@ abstract class EventsRecord
     ..neededVolunteer = 0.0
     ..eventTag = ListBuilder()
     ..isEnded = false
-    ..numberOfRemainingDays = 0
     ..volunteerCount = 0.0
     ..isDeleted = false
     ..eventContactNumber = ''
@@ -130,7 +127,8 @@ abstract class EventsRecord
     ..rateTotal = 0.0
     ..rateCount = 0.0
     ..reason = ''
-    ..isDeclined = false;
+    ..isDeclined = false
+    ..rateRef = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -164,13 +162,9 @@ abstract class EventsRecord
               snapshot.data['created_date']))
           ..eventTag = safeGet(() => ListBuilder(snapshot.data['eventTag']))
           ..isEnded = snapshot.data['isEnded']
-          ..numberOfRemainingDays =
-              snapshot.data['numberOfRemainingDays']?.round()
           ..volunteerCount = snapshot.data['volunteer_count']?.toDouble()
           ..isDeleted = snapshot.data['isDeleted']
           ..eventContactNumber = snapshot.data['eventContactNumber']
-          ..archiveDate = safeGet(() => DateTime.fromMillisecondsSinceEpoch(
-              snapshot.data['archive_date']))
           ..isConfirmbySA = snapshot.data['isConfirmbySA']
           ..expiryDate = safeGet(() =>
               DateTime.fromMillisecondsSinceEpoch(snapshot.data['expiry_date']))
@@ -201,6 +195,8 @@ abstract class EventsRecord
           ..rateCount = snapshot.data['rateCount']?.toDouble()
           ..reason = snapshot.data['reason']
           ..isDeclined = snapshot.data['isDeclined']
+          ..rateRef = safeGet(
+              () => ListBuilder(snapshot.data['rate_ref'].map((s) => toRef(s))))
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -240,11 +236,9 @@ Map<String, dynamic> createEventsRecordData({
   double? neededVolunteer,
   DateTime? createdDate,
   bool? isEnded,
-  int? numberOfRemainingDays,
   double? volunteerCount,
   bool? isDeleted,
   String? eventContactNumber,
-  DateTime? archiveDate,
   bool? isConfirmbySA,
   DateTime? expiryDate,
   DateTime? eventDateStart,
@@ -278,11 +272,9 @@ Map<String, dynamic> createEventsRecordData({
         ..createdDate = createdDate
         ..eventTag = null
         ..isEnded = isEnded
-        ..numberOfRemainingDays = numberOfRemainingDays
         ..volunteerCount = volunteerCount
         ..isDeleted = isDeleted
         ..eventContactNumber = eventContactNumber
-        ..archiveDate = archiveDate
         ..isConfirmbySA = isConfirmbySA
         ..expiryDate = expiryDate
         ..adminRef = null
@@ -302,7 +294,8 @@ Map<String, dynamic> createEventsRecordData({
         ..rateTotal = rateTotal
         ..rateCount = rateCount
         ..reason = reason
-        ..isDeclined = isDeclined,
+        ..isDeclined = isDeclined
+        ..rateRef = null,
     ),
   );
 

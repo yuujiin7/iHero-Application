@@ -1422,7 +1422,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                 });
                                                               }
                                                               if (_model
-                                                                      .datePicked1 !=
+                                                                      .datePicked2 !=
                                                                   null) {
                                                                 logFirebaseEvent(
                                                                     'Container_update_app_state');
@@ -2375,16 +2375,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       return;
                                                                     }
                                                                     if (_model
-                                                                            .datePicked1 ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model
-                                                                            .datePicked2 ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    if (_model
                                                                             .selectCauseCreateModel
                                                                             .dropDownValue ==
                                                                         null) {
@@ -2444,7 +2434,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               (alertDialogContext) {
                                                                             return AlertDialog(
                                                                               title: Text('Failed'),
-                                                                              content: Text('Another Events has the same Location and Date is scanned.'),
+                                                                              content: Text('Another events has the same Location and Date.'),
                                                                               actions: [
                                                                                 TextButton(
                                                                                   onPressed: () => Navigator.pop(alertDialogContext),
@@ -2493,6 +2483,9 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               rateTotal: 0.0,
                                                                               rateCount: 0.0,
                                                                               isDeclined: false,
+                                                                              volunteerCount: null,
+                                                                              expiryDate: null,
+                                                                              reason: null,
                                                                             ),
                                                                             'admin_ref':
                                                                                 [
@@ -2505,55 +2498,75 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               _model.partnerDropDownValue
                                                                             ],
                                                                           };
-                                                                          await EventsRecord
+                                                                          var eventsRecordReference1 = EventsRecord
                                                                               .collection
-                                                                              .doc()
+                                                                              .doc();
+                                                                          await eventsRecordReference1
                                                                               .set(eventsCreateData1);
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_alert_dialog');
-                                                                          await showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder:
-                                                                                (alertDialogContext) {
-                                                                              return AlertDialog(
-                                                                                title: Text('Done'),
-                                                                                content: Text('Event is to be confirmed.'),
-                                                                                actions: [
-                                                                                  TextButton(
-                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                    child: Text('Ok'),
-                                                                                  ),
-                                                                                ],
-                                                                              );
-                                                                            },
-                                                                          );
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_update_app_state');
-                                                                          setState(
-                                                                              () {
-                                                                            FFAppState().deleteLocationLatLng();
-                                                                            FFAppState().locationLatLng =
-                                                                                null;
+                                                                          _model.isCreated1 = EventsRecord.getDocumentFromData(
+                                                                              eventsCreateData1,
+                                                                              eventsRecordReference1);
+                                                                          _shouldSetState =
+                                                                              true;
+                                                                          if (_model.isCreated1!.reference !=
+                                                                              null) {
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Event is to be confirmed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                            FFAppState().update(() {
+                                                                              FFAppState().deleteLocationLatLng();
+                                                                              FFAppState().locationLatLng = null;
 
-                                                                            FFAppState().deleteAddress();
-                                                                            FFAppState().address =
-                                                                                '';
+                                                                              FFAppState().deleteAddress();
+                                                                              FFAppState().address = '';
 
-                                                                            FFAppState().startDate =
-                                                                                null;
-                                                                            FFAppState().endDate =
-                                                                                null;
-                                                                          });
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_navigate_to');
+                                                                              FFAppState().startDate = null;
+                                                                              FFAppState().endDate = null;
+                                                                              FFAppState().startTime = null;
+                                                                              FFAppState().endTime = null;
+                                                                            });
+                                                                            logFirebaseEvent('ButtonSubmit_navigate_to');
 
-                                                                          context
-                                                                              .pushNamed('HomeScreen');
+                                                                            context.pushNamed('HomeScreen');
 
-                                                                          if (_shouldSetState)
-                                                                            setState(() {});
-                                                                          return;
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
+                                                                          } else {
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Creation failed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
+                                                                          }
                                                                         } else {
                                                                           logFirebaseEvent(
                                                                               'ButtonSubmit_backend_call');
@@ -2584,6 +2597,12 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               endTime: _model.datePicked2,
                                                                               recurranceDate: 'Everyday',
                                                                               isDeclined: false,
+                                                                              volunteerCount: null,
+                                                                              expiryDate: null,
+                                                                              isRecurring: false,
+                                                                              rateTotal: 0.0,
+                                                                              rateCount: 0.0,
+                                                                              reason: null,
                                                                             ),
                                                                             'admin_ref':
                                                                                 [
@@ -2600,51 +2619,65 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               .collection
                                                                               .doc()
                                                                               .set(eventsCreateData2);
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_alert_dialog');
-                                                                          await showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder:
-                                                                                (alertDialogContext) {
-                                                                              return AlertDialog(
-                                                                                title: Text('Done'),
-                                                                                content: Text('Event is to be confirmed.'),
-                                                                                actions: [
-                                                                                  TextButton(
-                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                    child: Text('Ok'),
-                                                                                  ),
-                                                                                ],
-                                                                              );
-                                                                            },
-                                                                          );
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_update_app_state');
-                                                                          setState(
-                                                                              () {
-                                                                            FFAppState().deleteLocationLatLng();
-                                                                            FFAppState().locationLatLng =
-                                                                                null;
+                                                                          if (_model.isCreated1!.reference !=
+                                                                              null) {
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Event is to be confirmed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                            FFAppState().update(() {
+                                                                              FFAppState().deleteLocationLatLng();
+                                                                              FFAppState().locationLatLng = null;
 
-                                                                            FFAppState().deleteAddress();
-                                                                            FFAppState().address =
-                                                                                '';
+                                                                              FFAppState().deleteAddress();
+                                                                              FFAppState().address = '';
 
-                                                                            FFAppState().startDate =
-                                                                                null;
-                                                                            FFAppState().endDate =
-                                                                                null;
-                                                                          });
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_navigate_to');
+                                                                              FFAppState().startDate = null;
+                                                                              FFAppState().endDate = null;
+                                                                              FFAppState().startTime = null;
+                                                                              FFAppState().endTime = null;
+                                                                            });
+                                                                            logFirebaseEvent('ButtonSubmit_navigate_to');
 
-                                                                          context
-                                                                              .pushNamed('HomeScreen');
+                                                                            context.pushNamed('HomeScreen');
 
-                                                                          if (_shouldSetState)
-                                                                            setState(() {});
-                                                                          return;
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
+                                                                          } else {
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Creation failed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
+                                                                          }
                                                                         }
                                                                       }
                                                                     } else {
@@ -3235,12 +3268,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                         !_model.formKey2
                                                             .currentState!
                                                             .validate()) {
-                                                      return;
-                                                    }
-                                                    if (_model.uploadedFileUrl2 ==
-                                                            null ||
-                                                        _model.uploadedFileUrl2
-                                                            .isEmpty) {
                                                       return;
                                                     }
                                                     logFirebaseEvent(

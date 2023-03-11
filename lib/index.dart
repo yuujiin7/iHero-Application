@@ -18,8 +18,8 @@ export '/group_chat_page/group_chat_page_widget.dart' show GroupChatPageWidget;
 export '/announcement_details/announcement_details_widget.dart'
     show AnnouncementDetailsWidget;
 export '/volunteer_list/volunteer_list_widget.dart' show VolunteerListWidget;
-export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/profile_screen/profile_screen_widget.dart' show ProfileScreenWidget;
+export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/announcement_feed/announcement_feed_widget.dart'
     show AnnouncementFeedWidget;
 export '/volunteer_to_event/volunteer_to_event_widget.dart'

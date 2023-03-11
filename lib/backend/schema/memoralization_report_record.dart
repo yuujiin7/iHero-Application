@@ -29,6 +29,13 @@ abstract class MemoralizationReportRecord
 
   bool? get isDeclined;
 
+  String? get reason;
+
+  String? get isDeleted;
+
+  @BuiltValueField(wireName: 'expiry_date')
+  DateTime? get expiryDate;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -38,7 +45,9 @@ abstract class MemoralizationReportRecord
         ..fullName = ''
         ..photoUrl = ListBuilder()
         ..isConfirmbySA = false
-        ..isDeclined = false;
+        ..isDeclined = false
+        ..reason = ''
+        ..isDeleted = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('memoralization_report');
@@ -71,6 +80,9 @@ Map<String, dynamic> createMemoralizationReportRecordData({
   DateTime? reportedAt,
   bool? isConfirmbySA,
   bool? isDeclined,
+  String? reason,
+  String? isDeleted,
+  DateTime? expiryDate,
 }) {
   final firestoreData = serializers.toFirestore(
     MemoralizationReportRecord.serializer,
@@ -82,7 +94,10 @@ Map<String, dynamic> createMemoralizationReportRecordData({
         ..reportBy = reportBy
         ..reportedAt = reportedAt
         ..isConfirmbySA = isConfirmbySA
-        ..isDeclined = isDeclined,
+        ..isDeclined = isDeclined
+        ..reason = reason
+        ..isDeleted = isDeleted
+        ..expiryDate = expiryDate,
     ),
   );
 

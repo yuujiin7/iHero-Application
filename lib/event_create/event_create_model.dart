@@ -134,6 +134,8 @@ class EventCreateModel extends FlutterFlowModel {
   String? partnerDropDownValue;
   // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
   bool? isEventExist;
+  // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.
+  EventsRecord? isCreated1;
   bool isMediaUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));

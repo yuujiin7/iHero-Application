@@ -31,14 +31,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   String? get location;
 
-  @BuiltValueField(wireName: 'heart_count')
-  int? get heartCount;
-
   bool? get isDeceased;
 
   int? get meritScore;
-
-  String? get department;
 
   bool? get isDeleted;
 
@@ -68,10 +63,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..userType = ''
     ..gender = ''
     ..location = ''
-    ..heartCount = 0
     ..isDeceased = false
     ..meritScore = 0
-    ..department = ''
     ..isDeleted = false
     ..deviceType = ''
     ..screenName = ''
@@ -108,10 +101,8 @@ Map<String, dynamic> createUsersRecordData({
   String? userType,
   String? gender,
   String? location,
-  int? heartCount,
   bool? isDeceased,
   int? meritScore,
-  String? department,
   bool? isDeleted,
   DateTime? expiryDate,
   DateTime? startTime,
@@ -133,10 +124,8 @@ Map<String, dynamic> createUsersRecordData({
         ..userType = userType
         ..gender = gender
         ..location = location
-        ..heartCount = heartCount
         ..isDeceased = isDeceased
         ..meritScore = meritScore
-        ..department = department
         ..isDeleted = isDeleted
         ..expiryDate = expiryDate
         ..startTime = startTime

@@ -197,18 +197,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'profileScreen',
+              path: 'profileScreen',
+              requireAuth: true,
+              builder: (context, params) => ProfileScreenWidget(),
+            ),
+            FFRoute(
               name: 'eventCreate',
               path: 'eventCreate',
               requireAuth: true,
               builder: (context, params) => EventCreateWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
-            ),
-            FFRoute(
-              name: 'profileScreen',
-              path: 'profileScreen',
-              requireAuth: true,
-              builder: (context, params) => ProfileScreenWidget(),
             ),
             FFRoute(
               name: 'announcementFeed',

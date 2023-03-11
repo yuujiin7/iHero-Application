@@ -82,12 +82,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.heartCount;
-    if (value != null) {
-      result
-        ..add('heart_count')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.isDeceased;
     if (value != null) {
       result
@@ -100,13 +94,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
       result
         ..add('meritScore')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.department;
-    if (value != null) {
-      result
-        ..add('department')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
     }
     value = object.isDeleted;
     if (value != null) {
@@ -214,10 +201,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.location = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'heart_count':
-          result.heartCount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'isDeceased':
           result.isDeceased = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -225,10 +208,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         case 'meritScore':
           result.meritScore = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
-          break;
-        case 'department':
-          result.department = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
         case 'isDeleted':
           result.isDeleted = serializers.deserialize(value,
@@ -291,13 +270,9 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? location;
   @override
-  final int? heartCount;
-  @override
   final bool? isDeceased;
   @override
   final int? meritScore;
-  @override
-  final String? department;
   @override
   final bool? isDeleted;
   @override
@@ -328,10 +303,8 @@ class _$UsersRecord extends UsersRecord {
       this.userType,
       this.gender,
       this.location,
-      this.heartCount,
       this.isDeceased,
       this.meritScore,
-      this.department,
       this.isDeleted,
       this.expiryDate,
       this.startTime,
@@ -362,10 +335,8 @@ class _$UsersRecord extends UsersRecord {
         userType == other.userType &&
         gender == other.gender &&
         location == other.location &&
-        heartCount == other.heartCount &&
         isDeceased == other.isDeceased &&
         meritScore == other.meritScore &&
-        department == other.department &&
         isDeleted == other.isDeleted &&
         expiryDate == other.expiryDate &&
         startTime == other.startTime &&
@@ -396,18 +367,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                                                                                photoUrl.hashCode),
-                                                                            uid.hashCode),
-                                                                        createdTime.hashCode),
-                                                                    phoneNumber.hashCode),
-                                                                userType.hashCode),
-                                                            gender.hashCode),
-                                                        location.hashCode),
-                                                    heartCount.hashCode),
-                                                isDeceased.hashCode),
-                                            meritScore.hashCode),
-                                        department.hashCode),
+                                                                            $jc(
+                                                                                0,
+                                                                                email
+                                                                                    .hashCode),
+                                                                            displayName
+                                                                                .hashCode),
+                                                                        photoUrl
+                                                                            .hashCode),
+                                                                    uid
+                                                                        .hashCode),
+                                                                createdTime
+                                                                    .hashCode),
+                                                            phoneNumber
+                                                                .hashCode),
+                                                        userType.hashCode),
+                                                    gender.hashCode),
+                                                location.hashCode),
+                                            isDeceased.hashCode),
+                                        meritScore.hashCode),
                                     isDeleted.hashCode),
                                 expiryDate.hashCode),
                             startTime.hashCode),
@@ -430,10 +408,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('userType', userType)
           ..add('gender', gender)
           ..add('location', location)
-          ..add('heartCount', heartCount)
           ..add('isDeceased', isDeceased)
           ..add('meritScore', meritScore)
-          ..add('department', department)
           ..add('isDeleted', isDeleted)
           ..add('expiryDate', expiryDate)
           ..add('startTime', startTime)
@@ -485,10 +461,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get location => _$this._location;
   set location(String? location) => _$this._location = location;
 
-  int? _heartCount;
-  int? get heartCount => _$this._heartCount;
-  set heartCount(int? heartCount) => _$this._heartCount = heartCount;
-
   bool? _isDeceased;
   bool? get isDeceased => _$this._isDeceased;
   set isDeceased(bool? isDeceased) => _$this._isDeceased = isDeceased;
@@ -496,10 +468,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   int? _meritScore;
   int? get meritScore => _$this._meritScore;
   set meritScore(int? meritScore) => _$this._meritScore = meritScore;
-
-  String? _department;
-  String? get department => _$this._department;
-  set department(String? department) => _$this._department = department;
 
   bool? _isDeleted;
   bool? get isDeleted => _$this._isDeleted;
@@ -549,10 +517,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _userType = $v.userType;
       _gender = $v.gender;
       _location = $v.location;
-      _heartCount = $v.heartCount;
       _isDeceased = $v.isDeceased;
       _meritScore = $v.meritScore;
-      _department = $v.department;
       _isDeleted = $v.isDeleted;
       _expiryDate = $v.expiryDate;
       _startTime = $v.startTime;
@@ -592,10 +558,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             userType: userType,
             gender: gender,
             location: location,
-            heartCount: heartCount,
             isDeceased: isDeceased,
             meritScore: meritScore,
-            department: department,
             isDeleted: isDeleted,
             expiryDate: expiryDate,
             startTime: startTime,
