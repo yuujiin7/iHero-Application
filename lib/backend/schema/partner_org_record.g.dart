@@ -114,6 +114,20 @@ class _$PartnerOrgRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.createdBy;
+    if (value != null) {
+      result
+        ..add('created_by')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.createdAt;
+    if (value != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -193,6 +207,14 @@ class _$PartnerOrgRecordSerializer
           result.expiryDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'created_by':
+          result.createdBy = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -234,6 +256,10 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
   @override
   final DateTime? expiryDate;
   @override
+  final DateTime? createdBy;
+  @override
+  final DateTime? createdAt;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$PartnerOrgRecord(
@@ -254,6 +280,8 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
       this.adminRef,
       this.isDeleted,
       this.expiryDate,
+      this.createdBy,
+      this.createdAt,
       this.ffRef})
       : super._();
 
@@ -282,6 +310,8 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
         adminRef == other.adminRef &&
         isDeleted == other.isDeleted &&
         expiryDate == other.expiryDate &&
+        createdBy == other.createdBy &&
+        createdAt == other.createdAt &&
         ffRef == other.ffRef;
   }
 
@@ -301,21 +331,27 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            0,
-                                                            websiteUrl
+                                                            $jc(
+                                                                $jc(
+                                                                    0,
+                                                                    websiteUrl
+                                                                        .hashCode),
+                                                                orgName
+                                                                    .hashCode),
+                                                            description
                                                                 .hashCode),
-                                                        orgName.hashCode),
-                                                    description.hashCode),
-                                                contactPerson.hashCode),
-                                            contactNumber.hashCode),
-                                        mission.hashCode),
-                                    orgType.hashCode),
-                                email.hashCode),
-                            address.hashCode),
-                        photoUrl.hashCode),
-                    adminRef.hashCode),
-                isDeleted.hashCode),
-            expiryDate.hashCode),
+                                                        contactPerson.hashCode),
+                                                    contactNumber.hashCode),
+                                                mission.hashCode),
+                                            orgType.hashCode),
+                                        email.hashCode),
+                                    address.hashCode),
+                                photoUrl.hashCode),
+                            adminRef.hashCode),
+                        isDeleted.hashCode),
+                    expiryDate.hashCode),
+                createdBy.hashCode),
+            createdAt.hashCode),
         ffRef.hashCode));
   }
 
@@ -335,6 +371,8 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
           ..add('adminRef', adminRef)
           ..add('isDeleted', isDeleted)
           ..add('expiryDate', expiryDate)
+          ..add('createdBy', createdBy)
+          ..add('createdAt', createdAt)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -400,6 +438,14 @@ class PartnerOrgRecordBuilder
   DateTime? get expiryDate => _$this._expiryDate;
   set expiryDate(DateTime? expiryDate) => _$this._expiryDate = expiryDate;
 
+  DateTime? _createdBy;
+  DateTime? get createdBy => _$this._createdBy;
+  set createdBy(DateTime? createdBy) => _$this._createdBy = createdBy;
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _$this._createdAt;
+  set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -424,6 +470,8 @@ class PartnerOrgRecordBuilder
       _adminRef = $v.adminRef;
       _isDeleted = $v.isDeleted;
       _expiryDate = $v.expiryDate;
+      _createdBy = $v.createdBy;
+      _createdAt = $v.createdAt;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -462,6 +510,8 @@ class PartnerOrgRecordBuilder
               adminRef: adminRef,
               isDeleted: isDeleted,
               expiryDate: expiryDate,
+              createdBy: createdBy,
+              createdAt: createdAt,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

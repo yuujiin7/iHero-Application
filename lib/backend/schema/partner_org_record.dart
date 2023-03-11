@@ -42,6 +42,12 @@ abstract class PartnerOrgRecord
   @BuiltValueField(wireName: 'expiry_date')
   DateTime? get expiryDate;
 
+  @BuiltValueField(wireName: 'created_by')
+  DateTime? get createdBy;
+
+  @BuiltValueField(wireName: 'created_at')
+  DateTime? get createdAt;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -93,6 +99,8 @@ Map<String, dynamic> createPartnerOrgRecordData({
   DocumentReference? adminRef,
   bool? isDeleted,
   DateTime? expiryDate,
+  DateTime? createdBy,
+  DateTime? createdAt,
 }) {
   final firestoreData = serializers.toFirestore(
     PartnerOrgRecord.serializer,
@@ -110,7 +118,9 @@ Map<String, dynamic> createPartnerOrgRecordData({
         ..photoUrl = photoUrl
         ..adminRef = adminRef
         ..isDeleted = isDeleted
-        ..expiryDate = expiryDate,
+        ..expiryDate = expiryDate
+        ..createdBy = createdBy
+        ..createdAt = createdAt,
     ),
   );
 

@@ -1237,18 +1237,18 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                 );
                                                               });
                                                             }
-                                                            if (_model
-                                                                    .datePicked1 !=
-                                                                null) {
-                                                              logFirebaseEvent(
-                                                                  'Container_update_app_state');
-                                                              setState(() {
+                                                            logFirebaseEvent(
+                                                                'Container_update_app_state');
+                                                            setState(() {
+                                                              FFAppState()
+                                                                      .startTime =
+                                                                  _model
+                                                                      .datePicked1;
+                                                            });
+                                                            if (FFAppState()
+                                                                    .startTime! >=
                                                                 FFAppState()
-                                                                        .endTime =
-                                                                    _model
-                                                                        .datePicked1;
-                                                              });
-                                                            } else {
+                                                                    .endTime!) {
                                                               logFirebaseEvent(
                                                                   'Container_alert_dialog');
                                                               await showDialog(
@@ -1258,7 +1258,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                     (alertDialogContext) {
                                                                   return AlertDialog(
                                                                     content: Text(
-                                                                        'End Date is not set'),
+                                                                        'Invalid Time'),
                                                                     actions: [
                                                                       TextButton(
                                                                         onPressed:
@@ -1271,6 +1271,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                   );
                                                                 },
                                                               );
+                                                              logFirebaseEvent(
+                                                                  'Container_update_app_state');
+                                                              setState(() {
+                                                                FFAppState()
+                                                                        .startTime =
+                                                                    null;
+                                                              });
                                                             }
                                                           },
                                                           child: Container(
@@ -1356,13 +1363,17 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       ),
                                                                 ),
                                                                 Text(
-                                                                  dateTimeFormat(
-                                                                    'jm',
-                                                                    FFAppState()
-                                                                        .endDate,
-                                                                    locale: FFLocalizations.of(
-                                                                            context)
-                                                                        .languageCode,
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    dateTimeFormat(
+                                                                      'jm',
+                                                                      FFAppState()
+                                                                          .endDate,
+                                                                      locale: FFLocalizations.of(
+                                                                              context)
+                                                                          .languageCode,
+                                                                    ),
+                                                                    'end Date',
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
@@ -1421,18 +1432,18 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                   );
                                                                 });
                                                               }
-                                                              if (_model
-                                                                      .datePicked2 !=
-                                                                  null) {
-                                                                logFirebaseEvent(
-                                                                    'Container_update_app_state');
-                                                                setState(() {
+                                                              logFirebaseEvent(
+                                                                  'Container_update_app_state');
+                                                              setState(() {
+                                                                FFAppState()
+                                                                        .endTime =
+                                                                    _model
+                                                                        .datePicked2;
+                                                              });
+                                                              if (FFAppState()
+                                                                      .endTime! <=
                                                                   FFAppState()
-                                                                          .endTime =
-                                                                      _model
-                                                                          .datePicked2;
-                                                                });
-                                                              } else {
+                                                                      .startTime!) {
                                                                 logFirebaseEvent(
                                                                     'Container_alert_dialog');
                                                                 await showDialog(
@@ -1442,7 +1453,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       (alertDialogContext) {
                                                                     return AlertDialog(
                                                                       content: Text(
-                                                                          'End Date is not set'),
+                                                                          'Invalid Time'),
                                                                       actions: [
                                                                         TextButton(
                                                                           onPressed: () =>
@@ -1454,6 +1465,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                     );
                                                                   },
                                                                 );
+                                                                logFirebaseEvent(
+                                                                    'Container_update_app_state');
+                                                                setState(() {
+                                                                  FFAppState()
+                                                                          .endTime =
+                                                                      null;
+                                                                });
                                                               }
                                                             },
                                                             child: Container(

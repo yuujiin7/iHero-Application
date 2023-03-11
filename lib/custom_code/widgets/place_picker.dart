@@ -35,7 +35,7 @@ class _PlacePickerState extends State<PlacePicker> {
           selectLocationButtonText: 'Select Event Location',
           initZoom: 11,
           minZoomLevel: 5,
-          maxZoomLevel: 24,
+          maxZoomLevel: 40,
           trackMyPosition: true,
           onPicked: (pickedData) {
             setState(() {

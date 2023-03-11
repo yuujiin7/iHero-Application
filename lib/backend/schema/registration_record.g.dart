@@ -170,6 +170,13 @@ class _$RegistrationRecordSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.reason;
+    if (value != null) {
+      result
+        ..add('reason')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -281,6 +288,10 @@ class _$RegistrationRecordSerializer
           result.isDeclined = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'reason':
+          result.reason = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -338,6 +349,8 @@ class _$RegistrationRecord extends RegistrationRecord {
   @override
   final bool? isDeclined;
   @override
+  final String? reason;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$RegistrationRecord(
@@ -366,6 +379,7 @@ class _$RegistrationRecord extends RegistrationRecord {
       this.isConfirmbySA,
       this.phoneNumber,
       this.isDeclined,
+      this.reason,
       this.ffRef})
       : super._();
 
@@ -403,6 +417,7 @@ class _$RegistrationRecord extends RegistrationRecord {
         isConfirmbySA == other.isConfirmbySA &&
         phoneNumber == other.phoneNumber &&
         isDeclined == other.isDeclined &&
+        reason == other.reason &&
         ffRef == other.ffRef;
   }
 
@@ -426,25 +441,25 @@ class _$RegistrationRecord extends RegistrationRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, displayName.hashCode), address.hashCode), email.hashCode),
-                                                                                photoUrl.hashCode),
-                                                                            createdTime.hashCode),
-                                                                        uid.hashCode),
-                                                                    createdBy.hashCode),
-                                                                profession.hashCode),
-                                                            birthDate.hashCode),
-                                                        age.hashCode),
-                                                    gender.hashCode),
-                                                nationality.hashCode),
-                                            civilStatus.hashCode),
-                                        emergencyContact.hashCode),
-                                    appointmentDate.hashCode),
-                                iDUrl.hashCode),
-                            isDeleted.hashCode),
-                        expiryDate.hashCode),
-                    isConfirmbySA.hashCode),
-                phoneNumber.hashCode),
-            isDeclined.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, displayName.hashCode), address.hashCode), email.hashCode), photoUrl.hashCode),
+                                                                                createdTime.hashCode),
+                                                                            uid.hashCode),
+                                                                        createdBy.hashCode),
+                                                                    profession.hashCode),
+                                                                birthDate.hashCode),
+                                                            age.hashCode),
+                                                        gender.hashCode),
+                                                    nationality.hashCode),
+                                                civilStatus.hashCode),
+                                            emergencyContact.hashCode),
+                                        appointmentDate.hashCode),
+                                    iDUrl.hashCode),
+                                isDeleted.hashCode),
+                            expiryDate.hashCode),
+                        isConfirmbySA.hashCode),
+                    phoneNumber.hashCode),
+                isDeclined.hashCode),
+            reason.hashCode),
         ffRef.hashCode));
   }
 
@@ -472,6 +487,7 @@ class _$RegistrationRecord extends RegistrationRecord {
           ..add('isConfirmbySA', isConfirmbySA)
           ..add('phoneNumber', phoneNumber)
           ..add('isDeclined', isDeclined)
+          ..add('reason', reason)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -569,6 +585,10 @@ class RegistrationRecordBuilder
   bool? get isDeclined => _$this._isDeclined;
   set isDeclined(bool? isDeclined) => _$this._isDeclined = isDeclined;
 
+  String? _reason;
+  String? get reason => _$this._reason;
+  set reason(String? reason) => _$this._reason = reason;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -601,6 +621,7 @@ class RegistrationRecordBuilder
       _isConfirmbySA = $v.isConfirmbySA;
       _phoneNumber = $v.phoneNumber;
       _isDeclined = $v.isDeclined;
+      _reason = $v.reason;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -647,6 +668,7 @@ class RegistrationRecordBuilder
               isConfirmbySA: isConfirmbySA,
               phoneNumber: phoneNumber,
               isDeclined: isDeclined,
+              reason: reason,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
