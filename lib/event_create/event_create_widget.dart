@@ -1,4 +1,5 @@
 import '/auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -415,18 +416,20 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
-                                                        labelText: 'Title',
-                                                        labelStyle:
+                                                        hintText: 'Title',
+                                                        hintStyle:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .bodyText1
                                                                 .override(
-                                                                  fontFamily: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family,
+                                                                  fontFamily:
+                                                                      'Ubuntu',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
                                                                   useGoogleFonts: GoogleFonts
                                                                           .asMap()
                                                                       .containsKey(
@@ -1175,17 +1178,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       ),
                                                                 ),
                                                                 Text(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    dateTimeFormat(
-                                                                      'jm',
-                                                                      _model
-                                                                          .datePicked1,
-                                                                      locale: FFLocalizations.of(
-                                                                              context)
-                                                                          .languageCode,
-                                                                    ),
-                                                                    '00:00',
+                                                                  dateTimeFormat(
+                                                                    'jm',
+                                                                    FFAppState()
+                                                                        .startTime,
+                                                                    locale: FFLocalizations.of(
+                                                                            context)
+                                                                        .languageCode,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
@@ -1363,17 +1362,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       ),
                                                                 ),
                                                                 Text(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    dateTimeFormat(
-                                                                      'jm',
-                                                                      FFAppState()
-                                                                          .endDate,
-                                                                      locale: FFLocalizations.of(
-                                                                              context)
-                                                                          .languageCode,
-                                                                    ),
-                                                                    'end Date',
+                                                                  dateTimeFormat(
+                                                                    'jm',
+                                                                    FFAppState()
+                                                                        .endTime,
+                                                                    locale: FFLocalizations.of(
+                                                                            context)
+                                                                        .languageCode,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
@@ -1446,32 +1441,93 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       .startTime!) {
                                                                 logFirebaseEvent(
                                                                     'Container_alert_dialog');
-                                                                await showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (alertDialogContext) {
-                                                                    return AlertDialog(
-                                                                      content: Text(
-                                                                          'Invalid Time'),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed: () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                          child:
-                                                                              Text('Ok'),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                                logFirebaseEvent(
-                                                                    'Container_update_app_state');
-                                                                setState(() {
-                                                                  FFAppState()
-                                                                          .endTime =
-                                                                      null;
-                                                                });
+                                                                var confirmDialogResponse =
+                                                                    await showDialog<
+                                                                            bool>(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (alertDialogContext) {
+                                                                            return AlertDialog(
+                                                                              content: Text('End date will be adjusted.'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                  child: Text('Cancel'),
+                                                                                ),
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                  child: Text('Confirm'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        ) ??
+                                                                        false;
+                                                                if (confirmDialogResponse) {
+                                                                  logFirebaseEvent(
+                                                                      'Container_update_app_state');
+                                                                  setState(() {
+                                                                    FFAppState()
+                                                                            .endDate =
+                                                                        functions.futureDate(
+                                                                            _model.datePicked2,
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            1);
+                                                                  });
+                                                                  logFirebaseEvent(
+                                                                      'Container_alert_dialog');
+                                                                  await showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (alertDialogContext) {
+                                                                      return AlertDialog(
+                                                                        content:
+                                                                            Text('End date is adjusted.'),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                            child:
+                                                                                Text('Ok'),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  );
+                                                                } else {
+                                                                  logFirebaseEvent(
+                                                                      'Container_update_app_state');
+                                                                  setState(() {
+                                                                    FFAppState()
+                                                                            .endDate =
+                                                                        null;
+                                                                  });
+                                                                  logFirebaseEvent(
+                                                                      'Container_alert_dialog');
+                                                                  await showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (alertDialogContext) {
+                                                                      return AlertDialog(
+                                                                        content:
+                                                                            Text('End date is cleared.'),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                            child:
+                                                                                Text('Ok'),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  );
+                                                                }
                                                               }
                                                             },
                                                             child: Container(
@@ -2528,6 +2584,25 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               true;
                                                                           if (_model.isCreated1!.reference !=
                                                                               null) {
+                                                                            logFirebaseEvent('ButtonSubmit_backend_call');
+                                                                            _model.emailSent1 =
+                                                                                await SendEmailCopyCall.call(
+                                                                              serviceId: 'service_db1x3jm',
+                                                                              userId: '7F9iSMHhFAfXWrKTV',
+                                                                              accessToken: 'eIEFG19Do2TPYCGeyzeiZ',
+                                                                              templateId: 'template_ykcpvtd',
+                                                                              toEmail: functions.formatEmailList(_model.emailList!.toList()),
+                                                                              title: _model.titleEventController.text,
+                                                                              decription: _model.descriptionEventController.text,
+                                                                              eventDateStart: FFAppState().startDate?.toString(),
+                                                                              eventDateEnd: FFAppState().endDate?.toString(),
+                                                                              personInCharge: _model.personInChargeController.text,
+                                                                              contactNumber: _model.contactNumberController.text,
+                                                                              startTime: FFAppState().startTime?.toString(),
+                                                                              endTime: FFAppState().endTime?.toString(),
+                                                                            );
+                                                                            _shouldSetState =
+                                                                                true;
                                                                             logFirebaseEvent('ButtonSubmit_alert_dialog');
                                                                             await showDialog(
                                                                               context: context,

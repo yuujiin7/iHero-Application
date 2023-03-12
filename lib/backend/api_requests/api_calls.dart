@@ -58,6 +58,54 @@ class SendEmailCall {
   }
 }
 
+class SendEmailCopyCall {
+  static Future<ApiCallResponse> call({
+    String? serviceId = 'service_goh0ize',
+    String? userId = 'UH047zYJllec6akwn',
+    String? accessToken = 'HWB-Pwzl-b8RqKhNl0yPR',
+    String? toName = 'user',
+    String? toEmail = '',
+    String? bugReport = 'bug_report',
+    String? templateId = 'template_3axj5wc',
+    String? title = '',
+    String? decription = '',
+    String? photoUrl = '',
+    String? eventDateStart = '',
+    String? eventDateEnd = '',
+    String? personInCharge = '',
+    String? contactNumber = '',
+    String? startTime = '',
+    String? endTime = '',
+  }) {
+    final body = '''
+{
+  "accessToken": "${accessToken}",
+  "service_id": "${serviceId}",
+  "template_id": "${templateId}",
+  "user_id": "${userId}",
+  "template_params": {
+    "to_email": "${toEmail}",
+    "to_name": "${toName}",
+    "appointment_date": "<appointment_date>",
+    "bug_report": "${bugReport}"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'SendEmail Copy',
+      apiUrl: 'https://api.emailjs.com/api/v1.0/email/send',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
 class CountryCodeCall {
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(
@@ -118,18 +166,22 @@ class CountryCodeSearchCall {
   static dynamic name(dynamic response) => getJsonField(
         response,
         r'''$[:].name''',
+        true,
       );
   static dynamic alpha3Code(dynamic response) => getJsonField(
         response,
         r'''$[:].alpha3Code''',
+        true,
       );
   static dynamic callingCodes(dynamic response) => getJsonField(
         response,
         r'''$[:].callingCodes''',
+        true,
       );
   static dynamic flag(dynamic response) => getJsonField(
         response,
         r'''$[:].flags.png''',
+        true,
       );
 }
 

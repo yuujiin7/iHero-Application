@@ -624,10 +624,6 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                 !_model.formKey.currentState!.validate()) {
                               return;
                             }
-                            if (_model.uploadedFileUrl == null ||
-                                _model.uploadedFileUrl.isEmpty) {
-                              return;
-                            }
                             logFirebaseEvent('Button_backend_call');
 
                             final falseInformationReportCreateData =

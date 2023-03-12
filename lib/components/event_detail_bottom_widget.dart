@@ -416,6 +416,24 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                 };
                                 await widget.eventDetails!.reference
                                     .update(eventsUpdateData);
+                                logFirebaseEvent('Button_alert_dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Success'),
+                                      content: Text(
+                                          'Great! Thank you for registering to this event!'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                                 logFirebaseEvent('Button_bottom_sheet');
                                 Navigator.pop(context);
                                 return;

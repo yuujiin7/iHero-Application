@@ -18,6 +18,7 @@ import 'schema/unethical_illegal_conduct_report_record.dart';
 import 'schema/false_information_report_record.dart';
 import 'schema/memoralization_report_record.dart';
 import 'schema/monthly_created_event_record.dart';
+import 'schema/active_user_counts_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -38,6 +39,7 @@ export 'schema/unethical_illegal_conduct_report_record.dart';
 export 'schema/false_information_report_record.dart';
 export 'schema/memoralization_report_record.dart';
 export 'schema/monthly_created_event_record.dart';
+export 'schema/active_user_counts_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -724,6 +726,59 @@ Future<FFFirestorePage<MonthlyCreatedEventRecord>>
         queryCollectionPage(
           MonthlyCreatedEventRecord.collection,
           MonthlyCreatedEventRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query ActiveUserCountsRecords (as a Stream and as a Future).
+Future<int> queryActiveUserCountsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ActiveUserCountsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ActiveUserCountsRecord>> queryActiveUserCountsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ActiveUserCountsRecord.collection,
+      ActiveUserCountsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ActiveUserCountsRecord>> queryActiveUserCountsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ActiveUserCountsRecord.collection,
+      ActiveUserCountsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<ActiveUserCountsRecord>>
+    queryActiveUserCountsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          ActiveUserCountsRecord.collection,
+          ActiveUserCountsRecord.serializer,
           queryBuilder: queryBuilder,
           nextPageMarker: nextPageMarker,
           pageSize: pageSize,

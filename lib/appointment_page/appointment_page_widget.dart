@@ -1129,10 +1129,16 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                             ),
                           ),
-                          if (_model.uploadedFileUrls2.length != null)
+                          if (_model.uploadedFileUrls2.length > 0)
                             Icon(
                               Icons.check_rounded,
-                              color: Color(0xFF39D2C0),
+                              color: valueOrDefault<Color>(
+                                _model.uploadedFileUrls2.length > 0
+                                    ? FlutterFlowTheme.of(context).customColor1
+                                    : FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                FlutterFlowTheme.of(context).secondaryText,
+                              ),
                               size: 24.0,
                             ),
                         ],
@@ -1171,43 +1177,73 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                             );
                             return;
                           }
-                          logFirebaseEvent('Button-Login_backend_call');
+                          logFirebaseEvent('Button-Login_alert_dialog');
+                          var confirmDialogResponse = await showDialog<bool>(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Submit'),
+                                    content: Text('Do you want to submit?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, false),
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, true),
+                                        child: Text('Confirm'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ) ??
+                              false;
+                          if (confirmDialogResponse) {
+                            logFirebaseEvent('Button-Login_backend_call');
 
-                          final registrationCreateData = {
-                            ...createRegistrationRecordData(
-                              displayName: _model.fullNameController.text,
-                              address: _model.addressController.text,
-                              phoneNumber:
-                                  '+${FFAppState().selectedCountryCode}${_model.contactNumberController.text}',
-                              email: _model.emailController.text,
-                              photoUrl: _model.uploadedFileUrl1,
-                              birthDate: _model.datePicked,
-                              gender: _model.genderValue,
-                              nationality: _model.nationalityController.text,
-                              civilStatus: _model.civilStatusController.text,
-                              createdTime: getCurrentTimestamp,
-                              isDeleted: false,
-                              isConfirmbySA: false,
-                              isDeclined: false,
-                            ),
-                            'ID_url':
-                                _model.uploadedFileUrls2.map((e) => e).toList(),
-                          };
-                          await RegistrationRecord.collection
-                              .doc()
-                              .set(registrationCreateData);
-                          logFirebaseEvent('Button-Login_bottom_sheet');
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: EmailConfirmationWidget(),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
+                            final registrationCreateData = {
+                              ...createRegistrationRecordData(
+                                displayName: _model.fullNameController.text,
+                                address: _model.addressController.text,
+                                phoneNumber:
+                                    '+${FFAppState().selectedCountryCode}${_model.contactNumberController.text}',
+                                email: _model.emailController.text,
+                                photoUrl: _model.uploadedFileUrl1,
+                                birthDate: _model.datePicked,
+                                gender: _model.genderValue,
+                                nationality: _model.nationalityController.text,
+                                civilStatus: _model.civilStatusController.text,
+                                createdTime: getCurrentTimestamp,
+                                isDeleted: false,
+                                isConfirmbySA: false,
+                                isDeclined: false,
+                              ),
+                              'ID_url': _model.uploadedFileUrls2
+                                  .map((e) => e)
+                                  .toList(),
+                            };
+                            await RegistrationRecord.collection
+                                .doc()
+                                .set(registrationCreateData);
+                            logFirebaseEvent('Button-Login_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: EmailConfirmationWidget(),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
+
+                            return;
+                          } else {
+                            return;
+                          }
                         },
                         text: 'Submit',
                         options: FFButtonOptions(

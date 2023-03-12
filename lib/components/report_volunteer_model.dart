@@ -48,6 +48,9 @@ class ReportVolunteerModel extends FlutterFlowModel {
   // State field(s) for CheckboxGroup widget.
   List<String>? checkboxGroupValues;
   DateTime? datePicked;
+  // State field(s) for DescriptionEvent widget.
+  TextEditingController? descriptionEventController;
+  String? Function(BuildContext, String?)? descriptionEventControllerValidator;
   bool isMediaUploading = false;
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -64,6 +67,7 @@ class ReportVolunteerModel extends FlutterFlowModel {
 
   void dispose() {
     textFieldController?.dispose();
+    descriptionEventController?.dispose();
   }
 
   /// Additional helper methods are added here.

@@ -1,4 +1,5 @@
 import '/auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -136,6 +137,8 @@ class EventCreateModel extends FlutterFlowModel {
   bool? isEventExist;
   // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.
   EventsRecord? isCreated1;
+  // Stores action output result for [Backend Call - API (SendEmail Copy)] action in ButtonSubmit widget.
+  ApiCallResponse? emailSent1;
   bool isMediaUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));

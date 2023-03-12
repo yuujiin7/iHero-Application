@@ -289,6 +289,19 @@ bool showSearchResult(
   // var search2 = searchOrgIn.toLowerCase().contains(searchOrgFor.toLowerCase());
 }
 
+String getImageAtIndex(
+  int? index,
+  List<String>? inputList,
+) {
+  if (inputList == null) {
+    throw 'Input list is null!';
+  } else if (index == null || index < 0 || index >= inputList.length) {
+    throw 'Index out of bounds!';
+  } else {
+    return inputList[index];
+  }
+}
+
 int rateSuggestion(int rateValue) {
   int result = rateValue - 1;
 
@@ -504,5 +517,32 @@ String? getStatusColor(
     return '#0051ff';
   } else {
     return '#ff0000';
+  }
+}
+
+String formatEmailList(List<String> emails) {
+  String formattedEmails = '';
+  for (int i = 0; i < emails.length; i++) {
+    if (i == 0) {
+      formattedEmails += emails[i];
+    } else {
+      formattedEmails += ', ${emails[i]}';
+    }
+  }
+  return formattedEmails;
+}
+
+String getStringAtIndex(
+  int? index,
+  List<String>? inputList,
+) {
+  if (inputList == null) {
+    throw 'Input list is null!';
+  } else if (index == null) {
+    throw 'Index is null!';
+  } else if (index < 0 || index >= inputList.length) {
+    throw 'Index out of bounds!';
+  } else {
+    return inputList[index];
   }
 }
