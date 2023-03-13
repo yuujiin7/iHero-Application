@@ -36,6 +36,8 @@ abstract class MemoralizationReportRecord
   @BuiltValueField(wireName: 'expiry_date')
   DateTime? get expiryDate;
 
+  DocumentReference? get isSeen;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -83,6 +85,7 @@ Map<String, dynamic> createMemoralizationReportRecordData({
   String? reason,
   String? isDeleted,
   DateTime? expiryDate,
+  DocumentReference? isSeen,
 }) {
   final firestoreData = serializers.toFirestore(
     MemoralizationReportRecord.serializer,
@@ -97,7 +100,8 @@ Map<String, dynamic> createMemoralizationReportRecordData({
         ..isDeclined = isDeclined
         ..reason = reason
         ..isDeleted = isDeleted
-        ..expiryDate = expiryDate,
+        ..expiryDate = expiryDate
+        ..isSeen = isSeen,
     ),
   );
 

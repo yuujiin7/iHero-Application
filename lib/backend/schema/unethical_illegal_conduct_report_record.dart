@@ -40,6 +40,8 @@ abstract class UnethicalIllegalConductReportRecord
 
   String? get reason;
 
+  DocumentReference? get isSeen;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -90,6 +92,7 @@ Map<String, dynamic> createUnethicalIllegalConductReportRecordData({
   DateTime? expiryDate,
   bool? isDeleted,
   String? reason,
+  DocumentReference? isSeen,
 }) {
   final firestoreData = serializers.toFirestore(
     UnethicalIllegalConductReportRecord.serializer,
@@ -105,7 +108,8 @@ Map<String, dynamic> createUnethicalIllegalConductReportRecordData({
         ..isDeclined = isDeclined
         ..expiryDate = expiryDate
         ..isDeleted = isDeleted
-        ..reason = reason,
+        ..reason = reason
+        ..isSeen = isSeen,
     ),
   );
 

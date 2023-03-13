@@ -10,6 +10,7 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:badges/badges.dart' as badges;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -78,6 +79,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         logFirebaseEvent('HomeScreen_custom_action');
         _model.report = await actions.checkUserReportType();
         if (_model.report == 'unethical') {
+          logFirebaseEvent('HomeScreen_custom_action');
+          _model.unethical = await actions.getUnethicalReportRef();
           logFirebaseEvent('HomeScreen_bottom_sheet');
           await showModalBottomSheet(
             isScrollControlled: true,
@@ -87,7 +90,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             builder: (context) {
               return Padding(
                 padding: MediaQuery.of(context).viewInsets,
-                child: FeedbackReportWidget(),
+                child: FeedbackReportWidget(
+                  unethical: _model.unethical,
+                ),
               );
             },
           ).then((value) => setState(() {}));
@@ -95,6 +100,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           return;
         } else {
           if (_model.report == 'memorialization') {
+            logFirebaseEvent('HomeScreen_custom_action');
+            _model.memo = await actions.getMemorializationReportRef();
             logFirebaseEvent('HomeScreen_bottom_sheet');
             await showModalBottomSheet(
               isScrollControlled: true,
@@ -104,7 +111,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               builder: (context) {
                 return Padding(
                   padding: MediaQuery.of(context).viewInsets,
-                  child: MemoralizationReportWidget(),
+                  child: MemoralizationReportWidget(
+                    memoRef: _model.memo,
+                  ),
                 );
               },
             ).then((value) => setState(() {}));
@@ -112,6 +121,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             return;
           } else {
             if (_model.report == 'falseInfo') {
+              logFirebaseEvent('HomeScreen_custom_action');
+              _model.falseinfo = await actions.getFalseInformationReportRef();
               logFirebaseEvent('HomeScreen_bottom_sheet');
               await showModalBottomSheet(
                 isScrollControlled: true,
@@ -121,7 +132,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 builder: (context) {
                   return Padding(
                     padding: MediaQuery.of(context).viewInsets,
-                    child: FeedbackReportWidget(),
+                    child: FeedbackReportWidget(
+                      falseInfo: _model.falseinfo,
+                    ),
                   );
                 },
               ).then((value) => setState(() {}));

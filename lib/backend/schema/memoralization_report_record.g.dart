@@ -97,6 +97,14 @@ class _$MemoralizationReportRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.isSeen;
+    if (value != null) {
+      result
+        ..add('isSeen')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -164,6 +172,12 @@ class _$MemoralizationReportRecordSerializer
           result.expiryDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'isSeen':
+          result.isSeen = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -199,6 +213,8 @@ class _$MemoralizationReportRecord extends MemoralizationReportRecord {
   @override
   final DateTime? expiryDate;
   @override
+  final DocumentReference<Object?>? isSeen;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$MemoralizationReportRecord(
@@ -216,6 +232,7 @@ class _$MemoralizationReportRecord extends MemoralizationReportRecord {
       this.reason,
       this.isDeleted,
       this.expiryDate,
+      this.isSeen,
       this.ffRef})
       : super._();
 
@@ -242,6 +259,7 @@ class _$MemoralizationReportRecord extends MemoralizationReportRecord {
         reason == other.reason &&
         isDeleted == other.isDeleted &&
         expiryDate == other.expiryDate &&
+        isSeen == other.isSeen &&
         ffRef == other.ffRef;
   }
 
@@ -256,16 +274,18 @@ class _$MemoralizationReportRecord extends MemoralizationReportRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, fullName.hashCode),
-                                            dateOfDeath.hashCode),
-                                        photoUrl.hashCode),
-                                    reportBy.hashCode),
-                                reportedAt.hashCode),
-                            isConfirmbySA.hashCode),
-                        isDeclined.hashCode),
-                    reason.hashCode),
-                isDeleted.hashCode),
-            expiryDate.hashCode),
+                                        $jc(
+                                            $jc($jc(0, fullName.hashCode),
+                                                dateOfDeath.hashCode),
+                                            photoUrl.hashCode),
+                                        reportBy.hashCode),
+                                    reportedAt.hashCode),
+                                isConfirmbySA.hashCode),
+                            isDeclined.hashCode),
+                        reason.hashCode),
+                    isDeleted.hashCode),
+                expiryDate.hashCode),
+            isSeen.hashCode),
         ffRef.hashCode));
   }
 
@@ -282,6 +302,7 @@ class _$MemoralizationReportRecord extends MemoralizationReportRecord {
           ..add('reason', reason)
           ..add('isDeleted', isDeleted)
           ..add('expiryDate', expiryDate)
+          ..add('isSeen', isSeen)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -335,6 +356,10 @@ class MemoralizationReportRecordBuilder
   DateTime? get expiryDate => _$this._expiryDate;
   set expiryDate(DateTime? expiryDate) => _$this._expiryDate = expiryDate;
 
+  DocumentReference<Object?>? _isSeen;
+  DocumentReference<Object?>? get isSeen => _$this._isSeen;
+  set isSeen(DocumentReference<Object?>? isSeen) => _$this._isSeen = isSeen;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -356,6 +381,7 @@ class MemoralizationReportRecordBuilder
       _reason = $v.reason;
       _isDeleted = $v.isDeleted;
       _expiryDate = $v.expiryDate;
+      _isSeen = $v.isSeen;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -391,6 +417,7 @@ class MemoralizationReportRecordBuilder
               reason: reason,
               isDeleted: isDeleted,
               expiryDate: expiryDate,
+              isSeen: isSeen,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

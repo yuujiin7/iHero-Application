@@ -39,6 +39,8 @@ abstract class FalseInformationReportRecord
   @BuiltValueField(wireName: 'expiry_date')
   DateTime? get expiryDate;
 
+  DocumentReference? get isSeen;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -90,6 +92,7 @@ Map<String, dynamic> createFalseInformationReportRecordData({
   String? reason,
   bool? isDeleted,
   DateTime? expiryDate,
+  DocumentReference? isSeen,
 }) {
   final firestoreData = serializers.toFirestore(
     FalseInformationReportRecord.serializer,
@@ -105,7 +108,8 @@ Map<String, dynamic> createFalseInformationReportRecordData({
         ..isDeclined = isDeclined
         ..reason = reason
         ..isDeleted = isDeleted
-        ..expiryDate = expiryDate,
+        ..expiryDate = expiryDate
+        ..isSeen = isSeen,
     ),
   );
 

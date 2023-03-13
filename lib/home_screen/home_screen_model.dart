@@ -10,6 +10,7 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:badges/badges.dart' as badges;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,6 +22,12 @@ class HomeScreenModel extends FlutterFlowModel {
 
   // Stores action output result for [Custom Action - checkUserReportType] action in HomeScreen widget.
   String? report;
+  // Stores action output result for [Custom Action - getUnethicalReportRef] action in HomeScreen widget.
+  DocumentReference? unethical;
+  // Stores action output result for [Custom Action - getMemorializationReportRef] action in HomeScreen widget.
+  DocumentReference? memo;
+  // Stores action output result for [Custom Action - getFalseInformationReportRef] action in HomeScreen widget.
+  DocumentReference? falseinfo;
 
   /// Initialization and disposal methods.
 

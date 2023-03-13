@@ -14,3 +14,7 @@ export 'get_user_emails.dart' show getUserEmails;
 export 'batch_update_restore_org.dart' show batchUpdateRestoreOrg;
 export 'change_password.dart' show changePassword;
 export 'check_user_report_type.dart' show checkUserReportType;
+export 'get_unethical_report_ref.dart' show getUnethicalReportRef;
+export 'get_memorialization_report_ref.dart' show getMemorializationReportRef;
+export 'get_false_information_report_ref.dart'
+    show getFalseInformationReportRef;
