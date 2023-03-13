@@ -101,6 +101,22 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                       expiryDate: functions.addExpiry(getCurrentTimestamp),
                     );
                     await widget.eventRef!.update(eventsUpdateData);
+                    logFirebaseEvent('Button_alert_dialog');
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          content: Text('Deleted'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     logFirebaseEvent('Button_backend_call');
 
@@ -110,6 +126,22 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                     );
                     await widget.aannouncementref!
                         .update(announcementUpdateData);
+                    logFirebaseEvent('Button_alert_dialog');
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          content: Text('Deleted'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
 
                   logFirebaseEvent('Button_navigate_to');

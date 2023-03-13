@@ -121,15 +121,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'appointmentPage',
-              path: 'appointmentPage',
-              builder: (context, params) => AppointmentPageWidget(),
-            ),
-            FFRoute(
               name: 'findEvents',
               path: 'findEvents',
               requireAuth: true,
               builder: (context, params) => FindEventsWidget(),
+            ),
+            FFRoute(
+              name: 'appointmentPage',
+              path: 'appointmentPage',
+              builder: (context, params) => AppointmentPageWidget(),
             ),
             FFRoute(
               name: 'journeyScreen',
@@ -300,19 +300,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'myAnnouncement',
-              path: 'myAnnouncement',
-              requireAuth: true,
-              builder: (context, params) => MyAnnouncementWidget(
-                tabIndex: params.getParam('tabIndex', ParamType.int),
-              ),
-            ),
-            FFRoute(
               name: 'myPerformance',
               path: 'myPerformance',
               requireAuth: true,
               builder: (context, params) => MyPerformanceWidget(
                 points: params.getParam('points', ParamType.int),
+              ),
+            ),
+            FFRoute(
+              name: 'myAnnouncement',
+              path: 'myAnnouncement',
+              requireAuth: true,
+              builder: (context, params) => MyAnnouncementWidget(
+                tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
