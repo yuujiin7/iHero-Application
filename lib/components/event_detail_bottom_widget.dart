@@ -438,9 +438,6 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                 Navigator.pop(context);
                                 return;
                               } else {
-                                logFirebaseEvent(
-                                    'Button_close_dialog,_drawer,_etc');
-                                Navigator.pop(context);
                                 logFirebaseEvent('Button_bottom_sheet');
                                 Navigator.pop(context);
                                 return;

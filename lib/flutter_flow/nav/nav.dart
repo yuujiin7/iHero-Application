@@ -95,16 +95,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => LoginWidget(),
             ),
             FFRoute(
-              name: 'VolunteerPhone',
-              path: 'volunteerPhone',
-              builder: (context, params) => VolunteerPhoneWidget(),
-            ),
-            FFRoute(
               name: 'OTPCode',
               path: 'oTPCode',
               builder: (context, params) => OTPCodeWidget(
                 phoneNumber: params.getParam('phoneNumber', ParamType.int),
               ),
+            ),
+            FFRoute(
+              name: 'VolunteerPhone',
+              path: 'volunteerPhone',
+              builder: (context, params) => VolunteerPhoneWidget(),
             ),
             FFRoute(
               name: 'RegistrationSteps',
@@ -126,16 +126,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AppointmentPageWidget(),
             ),
             FFRoute(
-              name: 'journeyScreen',
-              path: 'journeyScreen',
-              requireAuth: true,
-              builder: (context, params) => JourneyScreenWidget(),
-            ),
-            FFRoute(
               name: 'findEvents',
               path: 'findEvents',
               requireAuth: true,
               builder: (context, params) => FindEventsWidget(),
+            ),
+            FFRoute(
+              name: 'journeyScreen',
+              path: 'journeyScreen',
+              requireAuth: true,
+              builder: (context, params) => JourneyScreenWidget(),
             ),
             FFRoute(
               name: 'HomeScreen',

@@ -12,3 +12,5 @@ export 'update_session_logout.dart' show updateSessionLogout;
 export 'get_user_ids.dart' show getUserIds;
 export 'get_user_emails.dart' show getUserEmails;
 export 'batch_update_restore_org.dart' show batchUpdateRestoreOrg;
+export 'change_password.dart' show changePassword;
+export 'check_user_report_type.dart' show checkUserReportType;

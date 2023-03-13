@@ -1,6 +1,8 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/event_or_announcement_widget.dart';
+import '/components/feedback_report_widget.dart';
+import '/components/memoralization_report_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -15,6 +17,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenModel extends FlutterFlowModel {
+  ///  State fields for stateful widgets in this page.
+
+  // Stores action output result for [Custom Action - checkUserReportType] action in HomeScreen widget.
+  String? report;
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

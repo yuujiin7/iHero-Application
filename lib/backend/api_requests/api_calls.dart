@@ -166,22 +166,18 @@ class CountryCodeSearchCall {
   static dynamic name(dynamic response) => getJsonField(
         response,
         r'''$[:].name''',
-        true,
       );
   static dynamic alpha3Code(dynamic response) => getJsonField(
         response,
         r'''$[:].alpha3Code''',
-        true,
       );
   static dynamic callingCodes(dynamic response) => getJsonField(
         response,
         r'''$[:].callingCodes''',
-        true,
       );
   static dynamic flag(dynamic response) => getJsonField(
         response,
         r'''$[:].flags.png''',
-        true,
       );
 }
 

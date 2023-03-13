@@ -202,7 +202,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondaryText,
+                                                      .alternate,
                                               textStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .subtitle2
@@ -361,7 +361,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondaryText,
+                                                      .alternate,
                                               textStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .subtitle2

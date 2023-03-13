@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -433,199 +432,157 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                     Container(
                       width: 400.0,
                       decoration: BoxDecoration(),
-                      child: Builder(
-                        builder: (context) {
-                          final test =
-                              (_model.apiResultn0w?.jsonBody ?? '').toList();
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: List.generate(test.length, (testIndex) {
-                              final testItem = test[testIndex];
-                              return Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: InkWell(
-                                  onTap: () async {
-                                    logFirebaseEvent(
-                                        'COUNTRY_CODE_Container_d89zvhru_ON_TAP');
-                                    logFirebaseEvent(
-                                        'Container_update_app_state');
-                                    setState(() {
-                                      FFAppState().selectedCountryCode =
-                                          (CountryCodeSearchCall.callingCodes(
-                                        (_model.apiResultn0w?.jsonBody ?? ''),
-                                      ) as List)
-                                              .map<String>((s) => s.toString())
-                                              .toList()[testIndex];
-                                    });
-                                    logFirebaseEvent('Container_bottom_sheet');
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    height: 60.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5.0, 0.0, 5.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    5.0, 0.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    valueOrDefault<String>(
-                                                  functions.getImageAtIndex(
-                                                      testIndex,
-                                                      CountryCodeSearchCall
-                                                          .flag(
-                                                        (_model.apiResultn0w
-                                                                ?.jsonBody ??
-                                                            ''),
-                                                      )?.toList()),
-                                                  'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fno-image.png?alt=media&token=3789cfb4-dd33-4c94-8711-646cc5ff4fa7',
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'COUNTRY_CODE_Container_d89zvhru_ON_TAP');
+                                logFirebaseEvent('Container_update_app_state');
+                                setState(() {
+                                  FFAppState().selectedCountryCode =
+                                      CountryCodeSearchCall.callingCodes(
+                                    (_model.apiResultn0w?.jsonBody ?? ''),
+                                  ).toString();
+                                });
+                                logFirebaseEvent('Container_bottom_sheet');
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 60.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5.0, 0.0, 5.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            5.0, 0.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
                                           ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
-                                              child: Text(
-                                                functions
-                                                    .getStringAtIndex(
-                                                        testIndex,
-                                                        (_model.apiResultn0w
-                                                                ?.jsonBody ??
-                                                            ''))
-                                                    .maybeHandleOverflow(
-                                                        maxChars: 5),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyText1Family,
-                                                          fontSize: 12.0,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family),
-                                                        ),
+                                          child: CachedNetworkImage(
+                                            imageUrl: valueOrDefault<String>(
+                                              CountryCodeSearchCall.flag(
+                                                (_model.apiResultn0w
+                                                        ?.jsonBody ??
+                                                    ''),
                                               ),
+                                              'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fno-image.png?alt=media&token=3789cfb4-dd33-4c94-8711-646cc5ff4fa7',
                                             ),
+                                            fit: BoxFit.cover,
                                           ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
-                                              child: Text(
-                                                functions
-                                                    .getStringAtIndex(
-                                                        testIndex,
-                                                        (CountryCodeSearchCall
-                                                                .name(
-                                                          (_model.apiResultn0w
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                        ) as List)
-                                                            .map<String>((s) =>
-                                                                s.toString())
-                                                            .toList()
-                                                            ?.toList())
-                                                    .maybeHandleOverflow(
-                                                      maxChars: 15,
-                                                      replacement: '…',
-                                                    ),
-                                                maxLines: 2,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyText1Family,
-                                                          fontSize: 12.0,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family),
-                                                        ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 0.0, 10.0, 0.0),
-                                            child: Text(
-                                              functions
-                                                  .getStringAtIndex(
-                                                      testIndex,
-                                                      (CountryCodeSearchCall
-                                                              .callingCodes(
-                                                        (_model.apiResultn0w
-                                                                ?.jsonBody ??
-                                                            ''),
-                                                      ) as List)
-                                                          .map<String>((s) =>
-                                                              s.toString())
-                                                          .toList()
-                                                          ?.toList())
-                                                  .maybeHandleOverflow(
-                                                      maxChars: 5),
-                                              maxLines: 2,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1Family,
-                                                        fontSize: 12.0,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family),
-                                                      ),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 10.0, 0.0),
+                                          child: Text(
+                                            CountryCodeSearchCall.alpha3Code(
+                                              (_model.apiResultn0w?.jsonBody ??
+                                                  ''),
+                                            ).toString().maybeHandleOverflow(
+                                                maxChars: 5),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText1Family,
+                                                  fontSize: 12.0,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10.0, 0.0, 10.0, 0.0),
+                                          child: Text(
+                                            CountryCodeSearchCall.name(
+                                              (_model.apiResultn0w?.jsonBody ??
+                                                  ''),
+                                            ).toString().maybeHandleOverflow(
+                                                  maxChars: 15,
+                                                  replacement: '…',
+                                                ),
+                                            maxLines: 2,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText1Family,
+                                                  fontSize: 12.0,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 0.0, 10.0, 0.0),
+                                        child: Text(
+                                          CountryCodeSearchCall.callingCodes(
+                                            (_model.apiResultn0w?.jsonBody ??
+                                                ''),
+                                          )
+                                              .toString()
+                                              .maybeHandleOverflow(maxChars: 5),
+                                          maxLines: 2,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1Family,
+                                                fontSize: 12.0,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyText1Family),
+                                              ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            }),
-                          );
-                        },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                 ],

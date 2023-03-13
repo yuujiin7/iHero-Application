@@ -1,6 +1,8 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/event_or_announcement_widget.dart';
+import '/components/feedback_report_widget.dart';
+import '/components/memoralization_report_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -73,7 +75,67 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           }(),
           'Home Screen',
         );
-        return;
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.report = await actions.checkUserReportType();
+        if (_model.report == 'unethical') {
+          logFirebaseEvent('HomeScreen_bottom_sheet');
+          await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            enableDrag: false,
+            context: context,
+            builder: (context) {
+              return Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: FeedbackReportWidget(),
+              );
+            },
+          ).then((value) => setState(() {}));
+
+          return;
+        } else {
+          if (_model.report == 'memorialization') {
+            logFirebaseEvent('HomeScreen_bottom_sheet');
+            await showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              enableDrag: false,
+              context: context,
+              builder: (context) {
+                return Padding(
+                  padding: MediaQuery.of(context).viewInsets,
+                  child: MemoralizationReportWidget(),
+                );
+              },
+            ).then((value) => setState(() {}));
+
+            return;
+          } else {
+            if (_model.report == 'falseInfo') {
+              logFirebaseEvent('HomeScreen_bottom_sheet');
+              await showModalBottomSheet(
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                enableDrag: false,
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: MediaQuery.of(context).viewInsets,
+                    child: FeedbackReportWidget(),
+                  );
+                },
+              ).then((value) => setState(() {}));
+
+              return;
+            } else {
+              if (_model.report == 'null') {
+                return;
+              }
+
+              return;
+            }
+          }
+        }
       }
 
       _navigate();

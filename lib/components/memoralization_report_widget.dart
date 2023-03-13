@@ -6,18 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'feedback_report_model.dart';
-export 'feedback_report_model.dart';
+import 'memoralization_report_model.dart';
+export 'memoralization_report_model.dart';
 
-class FeedbackReportWidget extends StatefulWidget {
-  const FeedbackReportWidget({Key? key}) : super(key: key);
+class MemoralizationReportWidget extends StatefulWidget {
+  const MemoralizationReportWidget({Key? key}) : super(key: key);
 
   @override
-  _FeedbackReportWidgetState createState() => _FeedbackReportWidgetState();
+  _MemoralizationReportWidgetState createState() =>
+      _MemoralizationReportWidgetState();
 }
 
-class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
-  late FeedbackReportModel _model;
+class _MemoralizationReportWidgetState
+    extends State<MemoralizationReportWidget> {
+  late MemoralizationReportModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -28,7 +30,7 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => FeedbackReportModel());
+    _model = createModel(context, () => MemoralizationReportModel());
   }
 
   @override
@@ -87,7 +89,7 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                         ),
                         onPressed: () async {
                           logFirebaseEvent(
-                              'FEEDBACK_REPORT_close_rounded_ICN_ON_TAP');
+                              'MEMORALIZATION_REPORT_close_rounded_ICN_');
                           logFirebaseEvent('IconButton_bottom_sheet');
                           Navigator.pop(context);
                         },
@@ -100,7 +102,7 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'INSTANT FEEDBACK REPORT',
+                      'FEEDBACK REPORT',
                       textAlign: TextAlign.justify,
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily:
@@ -118,7 +120,7 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                   padding:
                       EdgeInsetsDirectional.fromSTEB(32.0, 10.0, 32.0, 0.0),
                   child: Text(
-                    'Your recent report to another volunteer was verified and a penalty was issued.',
+                    'Your recent report to request a memoraliztion was verified.',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Barlow',
@@ -133,7 +135,7 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                   padding:
                       EdgeInsetsDirectional.fromSTEB(32.0, 25.0, 32.0, 0.0),
                   child: Text(
-                    'One penalty prevents most volunteers from disrupting any more peace in the organization. Thanks for the assist!',
+                    'I\'m sorry to hear that you have received a memorialization feedback in your application. Losing a loved one is never easy, and it can be especially difficult when it affects our work or personal life. Please accept my deepest condolences for your loss and the impact it has had on your application.',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Barlow',
