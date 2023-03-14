@@ -203,18 +203,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ProfileScreenWidget(),
             ),
             FFRoute(
+              name: 'announcementFeed',
+              path: 'announcementFeed',
+              requireAuth: true,
+              builder: (context, params) => AnnouncementFeedWidget(),
+            ),
+            FFRoute(
               name: 'eventCreate',
               path: 'eventCreate',
               requireAuth: true,
               builder: (context, params) => EventCreateWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
-            ),
-            FFRoute(
-              name: 'announcementFeed',
-              path: 'announcementFeed',
-              requireAuth: true,
-              builder: (context, params) => AnnouncementFeedWidget(),
             ),
             FFRoute(
               name: 'volunteerToEvent',

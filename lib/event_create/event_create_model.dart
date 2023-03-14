@@ -117,6 +117,19 @@ class EventCreateModel extends FlutterFlowModel {
   // State field(s) for ageRequirement widget.
   TextEditingController? ageRequirementController;
   String? Function(BuildContext, String?)? ageRequirementControllerValidator;
+  String? _ageRequirementControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 3) {
+      return 'Max 3 character';
+    }
+
+    return null;
+  }
+
   // State field(s) for neededVolunteer widget.
   TextEditingController? neededVolunteerController;
   String? Function(BuildContext, String?)? neededVolunteerControllerValidator;
@@ -192,6 +205,7 @@ class EventCreateModel extends FlutterFlowModel {
     descriptionEventControllerValidator = _descriptionEventControllerValidator;
     personInChargeControllerValidator = _personInChargeControllerValidator;
     contactNumberControllerValidator = _contactNumberControllerValidator;
+    ageRequirementControllerValidator = _ageRequirementControllerValidator;
     neededVolunteerControllerValidator = _neededVolunteerControllerValidator;
     selectCauseCreateModel =
         createModel(context, () => SelectCauseCreateModel());

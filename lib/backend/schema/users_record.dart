@@ -52,6 +52,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   int? get age;
 
+  DateTime? get birthday;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -114,6 +116,7 @@ Map<String, dynamic> createUsersRecordData({
   String? screenName,
   int? duration,
   int? age,
+  DateTime? birthday,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -137,7 +140,8 @@ Map<String, dynamic> createUsersRecordData({
         ..deviceType = deviceType
         ..screenName = screenName
         ..duration = duration
-        ..age = age,
+        ..age = age
+        ..birthday = birthday,
     ),
   );
 

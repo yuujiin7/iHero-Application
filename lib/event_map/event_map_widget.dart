@@ -92,9 +92,8 @@ class _EventMapWidgetState extends State<EventMapWidget> {
       body: NestedScrollView(
         headerSliverBuilder: (context, _) => [
           SliverAppBar(
-            pinned: false,
-            floating: true,
-            snap: true,
+            pinned: true,
+            floating: false,
             backgroundColor: FlutterFlowTheme.of(context).primaryColor,
             automaticallyImplyLeading: true,
             title: Text(

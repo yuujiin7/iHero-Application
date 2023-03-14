@@ -19,9 +19,9 @@ export '/announcement_details/announcement_details_widget.dart'
     show AnnouncementDetailsWidget;
 export '/volunteer_list/volunteer_list_widget.dart' show VolunteerListWidget;
 export '/profile_screen/profile_screen_widget.dart' show ProfileScreenWidget;
-export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/announcement_feed/announcement_feed_widget.dart'
     show AnnouncementFeedWidget;
+export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/volunteer_to_event/volunteer_to_event_widget.dart'
     show VolunteerToEventWidget;
 export '/appointments/appointments_widget.dart' show AppointmentsWidget;
