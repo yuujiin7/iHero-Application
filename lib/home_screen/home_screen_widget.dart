@@ -2155,29 +2155,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       .bodyText1Family),
                                         ),
                                   ),
-                                  InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'HOME_SCREEN_PAGE_Text_fx1jzbva_ON_TAP');
-                                      logFirebaseEvent('Text_navigate_to');
-
-                                      context.goNamed('myAnnouncement');
-                                    },
-                                    child: Text(
-                                      'see all',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Barlow',
-                                            color: Color(0xFF0B266B),
-                                            decoration:
-                                                TextDecoration.underline,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
-                                          ),
-                                    ),
+                                  Text(
+                                    'more',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Barlow',
+                                          color: Color(0xFF0B266B),
+                                          decoration: TextDecoration.underline,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1Family),
+                                        ),
                                   ),
                                 ],
                               ),

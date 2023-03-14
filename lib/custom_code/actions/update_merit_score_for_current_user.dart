@@ -33,13 +33,13 @@ Future<String> updateMeritScoreForCurrentUser() async {
 
   // Query the events collection for finished events that reference the current user
   QuerySnapshot finishedEventsSnapshot = await eventsCollection
-      .where('finished', isEqualTo: true)
+      .where('isEnded', isEqualTo: true)
       .where('volunteer_ref', arrayContains: currentUserRef)
       .get();
 
   // If there are no finished events that reference the current user, return a message
   if (finishedEventsSnapshot.docs.length == 0) {
-    return "No finished events found for current user";
+    return "None";
   }
 
   // Update the current user's meritScore by 5
@@ -52,9 +52,9 @@ Future<String> updateMeritScoreForCurrentUser() async {
       transaction.update(currentUserRef, {'meritScore': newMeritScore});
     });
   } on PlatformException catch (error) {
-    return "Error updating user meritScore: ${error.message}";
+    return "Error";
   }
 
   // Return a success message
-  return "User meritScore updated successfully!";
+  return "Success";
 }
