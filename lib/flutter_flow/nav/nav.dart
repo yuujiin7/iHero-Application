@@ -314,6 +314,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => MyAnnouncementWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
               ),
+            ),
+            FFRoute(
+              name: 'InspiringVideos',
+              path: 'inspiringVideos',
+              builder: (context, params) => InspiringVideosWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

@@ -38,3 +38,5 @@ export '/my_events_volunteer/my_events_volunteer_widget.dart'
     show MyEventsVolunteerWidget;
 export '/my_performance/my_performance_widget.dart' show MyPerformanceWidget;
 export '/my_announcement/my_announcement_widget.dart' show MyAnnouncementWidget;
+export '/inspiring_videos/inspiring_videos_widget.dart'
+    show InspiringVideosWidget;

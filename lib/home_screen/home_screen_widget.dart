@@ -2195,7 +2195,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Story of Hope',
+                                      'Get Inspired',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -2206,6 +2206,32 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                         .bodyText1Family),
                                           ),
                                     ),
+                                    InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'HOME_SCREEN_PAGE_Text_g2z36swx_ON_TAP');
+                                        logFirebaseEvent('Text_navigate_to');
+
+                                        context.goNamed('myAnnouncement');
+                                      },
+                                      child: Text(
+                                        'more',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Barlow',
+                                              color: Color(0xFF0B266B),
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                            ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -2215,7 +2241,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                               AuthUserStreamWidget(
                                 builder: (context) => Container(
                                   width: double.infinity,
-                                  height: 200.0,
+                                  height: 250.0,
                                   decoration: BoxDecoration(
                                     color: Color(0xFFEEEEEE),
                                   ),
@@ -2239,7 +2265,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              width: 200.0,
+                                              width: 300.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFEBEFF7),
                                               ),
@@ -2248,11 +2274,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 5.0,
-                                                                0.0, 0.0),
+                                                  Expanded(
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
@@ -2264,17 +2286,34 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                           mainAxisSize:
                                                               MainAxisSize.max,
                                                           children: [
-                                                            FlutterFlowYoutubePlayer(
-                                                              url:
-                                                                  'https://www.youtube.com/watch?v=LRUZa5oTpZw',
-                                                              width: 200.0,
-                                                              autoPlay: false,
-                                                              looping: true,
-                                                              mute: false,
-                                                              showControls:
-                                                                  true,
-                                                              showFullScreen:
-                                                                  true,
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0),
+                                                              ),
+                                                              child:
+                                                                  FlutterFlowYoutubePlayer(
+                                                                url:
+                                                                    'https://www.youtube.com/watch?v=LRUZa5oTpZw',
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.8,
+                                                                autoPlay: false,
+                                                                looping: false,
+                                                                mute: false,
+                                                                showControls:
+                                                                    true,
+                                                                showFullScreen:
+                                                                    true,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -2342,7 +2381,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              width: 200.0,
+                                              width: 300.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFEBEFF7),
                                               ),
@@ -2351,11 +2390,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 5.0,
-                                                                0.0, 0.0),
+                                                  Expanded(
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
@@ -2370,9 +2405,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             FlutterFlowYoutubePlayer(
                                                               url:
                                                                   'https://www.youtube.com/watch?v=Dmm98zLAf98',
-                                                              width: 200.0,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.8,
                                                               autoPlay: false,
-                                                              looping: true,
+                                                              looping: false,
                                                               mute: false,
                                                               showControls:
                                                                   true,
@@ -2445,7 +2484,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              width: 200.0,
+                                              width: 300.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFEBEFF7),
                                               ),
@@ -2454,11 +2493,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 5.0,
-                                                                0.0, 0.0),
+                                                  Expanded(
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
@@ -2473,7 +2508,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             FlutterFlowYoutubePlayer(
                                                               url:
                                                                   'https://www.youtube.com/watch?v=W9URKckxvxU',
-                                                              width: 200.0,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.8,
                                                               autoPlay: false,
                                                               looping: true,
                                                               mute: false,
@@ -2548,7 +2587,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              width: 200.0,
+                                              width: 300.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFEBEFF7),
                                               ),
@@ -2557,11 +2596,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 5.0,
-                                                                0.0, 0.0),
+                                                  Expanded(
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
@@ -2576,9 +2611,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             FlutterFlowYoutubePlayer(
                                                               url:
                                                                   'https://www.youtube.com/watch?v=BTJDOdtNHD4',
-                                                              width: 200.0,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.8,
                                                               autoPlay: false,
-                                                              looping: true,
+                                                              looping: false,
                                                               mute: false,
                                                               showControls:
                                                                   true,
@@ -2651,7 +2690,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             child: Container(
-                                              width: 200.0,
+                                              width: 300.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFEBEFF7),
                                               ),
@@ -2660,11 +2699,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 5.0,
-                                                                0.0, 0.0),
+                                                  Expanded(
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
@@ -2679,9 +2714,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             FlutterFlowYoutubePlayer(
                                                               url:
                                                                   'https://www.youtube.com/watch?v=k72fFgidkYo',
-                                                              width: 200.0,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.8,
                                                               autoPlay: false,
-                                                              looping: true,
+                                                              looping: false,
                                                               mute: false,
                                                               showControls:
                                                                   true,
