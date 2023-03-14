@@ -51,7 +51,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
         logFirebaseEvent('findEvents_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
         logFirebaseEvent('findEvents_update_app_state');

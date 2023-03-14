@@ -113,6 +113,9 @@ class EventCreateModel extends FlutterFlowModel {
     return null;
   }
 
+  // State field(s) for ageRequirement widget.
+  TextEditingController? ageRequirementController;
+  String? Function(BuildContext, String?)? ageRequirementControllerValidator;
   // State field(s) for neededVolunteer widget.
   TextEditingController? neededVolunteerController;
   String? Function(BuildContext, String?)? neededVolunteerControllerValidator;
@@ -204,6 +207,7 @@ class EventCreateModel extends FlutterFlowModel {
     descriptionEventController?.dispose();
     personInChargeController?.dispose();
     contactNumberController?.dispose();
+    ageRequirementController?.dispose();
     neededVolunteerController?.dispose();
     selectCauseCreateModel.dispose();
     titleAnnouncementController?.dispose();

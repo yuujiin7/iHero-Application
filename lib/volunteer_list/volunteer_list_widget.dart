@@ -49,7 +49,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
         logFirebaseEvent('volunteerList_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
         logFirebaseEvent('volunteerList_custom_action');
@@ -126,9 +126,8 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
               ),
               onPressed: () async {
                 logFirebaseEvent('VOLUNTEER_LIST_keyboard_backspace_ICN_ON');
-                logFirebaseEvent('IconButton_navigate_to');
-
-                context.goNamed('HomeScreen');
+                logFirebaseEvent('IconButton_navigate_back');
+                context.safePop();
               },
             ),
             title: Text(

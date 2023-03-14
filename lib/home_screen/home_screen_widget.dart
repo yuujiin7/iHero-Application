@@ -53,7 +53,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         logFirebaseEvent('HomeScreen_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
         logFirebaseEvent('HomeScreen_backend_call');

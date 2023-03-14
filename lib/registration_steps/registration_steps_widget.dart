@@ -46,550 +46,619 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
-      appBar: AppBar(
-        backgroundColor: Color(0xFFFFA534),
-        iconTheme:
-            IconThemeData(color: FlutterFlowTheme.of(context).primaryBtnText),
-        automaticallyImplyLeading: true,
-        actions: [],
-        centerTitle: true,
-        elevation: 4.0,
-      ),
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).primaryColor,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  height: 500.0,
-                  child: Stack(
-                    children: [
-                      PageView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: _model.pageViewController ??=
-                            PageController(initialPage: 0),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 70.0, 0.0, 50.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 300.0,
-                                  decoration: BoxDecoration(),
-                                  child: Image.asset(
-                                    'assets/images/20943447.png',
-                                    width: 100.0,
-                                    height: 100.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 1.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(35.0),
-                                      topRight: Radius.circular(35.0),
-                                    ),
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(35.0),
-                                        topRight: Radius.circular(35.0),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, _) => [
+          SliverAppBar(
+            pinned: false,
+            floating: true,
+            snap: true,
+            backgroundColor: Color(0xFFFFA534),
+            iconTheme: IconThemeData(
+                color: FlutterFlowTheme.of(context).primaryBtnText),
+            automaticallyImplyLeading: true,
+            actions: [],
+            centerTitle: true,
+            elevation: 4.0,
+          )
+        ],
+        body: Builder(
+          builder: (context) {
+            return SafeArea(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 500.0,
+                        child: Stack(
+                          children: [
+                            PageView(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: _model.pageViewController ??=
+                                  PageController(initialPage: 0),
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 70.0, 0.0, 50.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 300.0,
+                                        decoration: BoxDecoration(),
+                                        child: Image.asset(
+                                          'assets/images/20943447.png',
+                                          width: 100.0,
+                                          height: 100.0,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          30.0, 85.0, 30.0, 30.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                'REGISTER',
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1
-                                                        .override(
-                                                          fontFamily: 'Ubuntu',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 25.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title1Family),
-                                                        ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 45.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Fill up the form. Let us get to know you more, so we can work better together.',
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Barlow',
-                                                        fontSize: 16.0,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family),
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
+                                    Expanded(
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 1.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(0.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(35.0),
+                                            topRight: Radius.circular(35.0),
                                           ),
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              logFirebaseEvent(
-                                                  'REGISTRATION_STEPS_PAGE_NEXT_BTN_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Button_page_view');
-                                              await _model.pageViewController
-                                                  ?.nextPage(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                curve: Curves.ease,
-                                              );
-                                            },
-                                            text: 'Next',
-                                            options: FFButtonOptions(
-                                              width: double.infinity,
-                                              height: 40.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .subtitle2Family,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle2Family),
-                                                      ),
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
+                                        ),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 100.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(0.0),
+                                              topLeft: Radius.circular(35.0),
+                                              topRight: Radius.circular(35.0),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    15.0, 70.0, 16.0, 50.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 300.0,
-                                  decoration: BoxDecoration(),
-                                  child: Image.asset(
-                                    'assets/images/email.png',
-                                    width: 100.0,
-                                    height: 100.0,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 1.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(35.0),
-                                      topRight: Radius.circular(35.0),
-                                    ),
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(35.0),
-                                        topRight: Radius.circular(35.0),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          30.0, 85.0, 30.0, 30.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                'EMAIL CONFIRMATION',
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1
-                                                        .override(
-                                                          fontFamily: 'Ubuntu',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 25.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title1Family),
-                                                        ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 45.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'A confirmation will be sent to your registered email address for an interview appointment with us. Be sure to bring the requested documents on your appointment date.',
-                                                  textAlign: TextAlign.justify,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Barlow',
-                                                        fontSize: 16.0,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30.0, 85.0, 30.0, 30.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      'REGISTER',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Ubuntu',
+                                                                color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              logFirebaseEvent(
-                                                  'REGISTRATION_STEPS_PAGE_NEXT_BTN_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Button_page_view');
-                                              await _model.pageViewController
-                                                  ?.nextPage(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                curve: Curves.ease,
-                                              );
-                                            },
-                                            text: 'Next',
-                                            options: FFButtonOptions(
-                                              width: double.infinity,
-                                              height: 40.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
+                                                                    .primaryText,
+                                                                fontSize: 25.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .title1Family),
+                                                              ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  45.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Fill up the form. Let us get to know you more, so we can work better together.',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .subtitle2Family,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle2Family),
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyText1Family),
+                                                                ),
                                                       ),
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 70.0, 0.0, 50.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 300.0,
-                                  decoration: BoxDecoration(),
-                                  child: Image.asset(
-                                    'assets/images/work.png',
-                                    width: 100.0,
-                                    height: 100.0,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 1.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(35.0),
-                                      topRight: Radius.circular(35.0),
-                                    ),
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(35.0),
-                                        topRight: Radius.circular(35.0),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          30.0, 85.0, 30.0, 30.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text(
-                                                'START WORKING',
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1
+                                                    ),
+                                                  ],
+                                                ),
+                                                FFButtonWidget(
+                                                  onPressed: () async {
+                                                    logFirebaseEvent(
+                                                        'REGISTRATION_STEPS_PAGE_NEXT_BTN_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Button_page_view');
+                                                    await _model
+                                                        .pageViewController
+                                                        ?.nextPage(
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.ease,
+                                                    );
+                                                  },
+                                                  text: 'Next',
+                                                  options: FFButtonOptions(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    iconPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .subtitle2
                                                         .override(
-                                                          fontFamily: 'Ubuntu',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 25.0,
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .subtitle2Family,
+                                                          color: Colors.white,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w500,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .title1Family),
+                                                                      .subtitle2Family),
                                                         ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 45.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Once your profile is approved. You will be automatically listed and may be called to be mobilized during disasters and for other volunteer activities.',
-                                                  textAlign: TextAlign.justify,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Barlow',
-                                                        fontSize: 16.0,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family),
-                                                      ),
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              logFirebaseEvent(
-                                                  'REGISTRATION_STEPS_APPLY_FOR_APPOINTMENT');
-                                              logFirebaseEvent(
-                                                  'Button_navigate_to');
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          15.0, 70.0, 16.0, 50.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 300.0,
+                                        decoration: BoxDecoration(),
+                                        child: Image.asset(
+                                          'assets/images/email.png',
+                                          width: 100.0,
+                                          height: 100.0,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 1.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(0.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(35.0),
+                                            topRight: Radius.circular(35.0),
+                                          ),
+                                        ),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 100.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(0.0),
+                                              topLeft: Radius.circular(35.0),
+                                              topRight: Radius.circular(35.0),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30.0, 85.0, 30.0, 30.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      'EMAIL CONFIRMATION',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Ubuntu',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 25.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .title1Family),
+                                                              ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  45.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'A confirmation will be sent to your registered email address for an interview appointment with us. Be sure to bring the requested documents on your appointment date.',
+                                                        textAlign:
+                                                            TextAlign.justify,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyText1Family),
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                FFButtonWidget(
+                                                  onPressed: () async {
+                                                    logFirebaseEvent(
+                                                        'REGISTRATION_STEPS_PAGE_NEXT_BTN_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Button_page_view');
+                                                    await _model
+                                                        .pageViewController
+                                                        ?.nextPage(
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.ease,
+                                                    );
+                                                  },
+                                                  text: 'Next',
+                                                  options: FFButtonOptions(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    iconPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .subtitle2Family,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .subtitle2Family),
+                                                        ),
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 70.0, 0.0, 50.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 300.0,
+                                        decoration: BoxDecoration(),
+                                        child: Image.asset(
+                                          'assets/images/work.png',
+                                          width: 100.0,
+                                          height: 100.0,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 1.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(0.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(35.0),
+                                            topRight: Radius.circular(35.0),
+                                          ),
+                                        ),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 100.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(0.0),
+                                              topLeft: Radius.circular(35.0),
+                                              topRight: Radius.circular(35.0),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30.0, 85.0, 30.0, 30.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      'START WORKING',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Ubuntu',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 25.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .title1Family),
+                                                              ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  45.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Once your profile is approved. You will be automatically listed and may be called to be mobilized during disasters and for other volunteer activities.',
+                                                        textAlign:
+                                                            TextAlign.justify,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  fontSize:
+                                                                      16.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyText1Family),
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                FFButtonWidget(
+                                                  onPressed: () async {
+                                                    logFirebaseEvent(
+                                                        'REGISTRATION_STEPS_APPLY_FOR_APPOINTMENT');
+                                                    logFirebaseEvent(
+                                                        'Button_navigate_to');
 
-                                              context
-                                                  .goNamed('appointmentPage');
-                                            },
-                                            text: 'Apply for Appointment',
-                                            options: FFButtonOptions(
-                                              width: double.infinity,
-                                              height: 40.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .subtitle2Family,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .subtitle2Family),
-                                                      ),
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
+                                                    context.goNamed(
+                                                        'appointmentPage');
+                                                  },
+                                                  text: 'Apply for Appointment',
+                                                  options: FFButtonOptions(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    iconPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .subtitle2Family,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .subtitle2Family),
+                                                        ),
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.2),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 10.0),
+                                child:
+                                    smooth_page_indicator.SmoothPageIndicator(
+                                  controller: _model.pageViewController ??=
+                                      PageController(initialPage: 0),
+                                  count: 3,
+                                  axisDirection: Axis.horizontal,
+                                  onDotClicked: (i) {
+                                    _model.pageViewController!.animateToPage(
+                                      i,
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.ease,
+                                    );
+                                  },
+                                  effect:
+                                      smooth_page_indicator.ExpandingDotsEffect(
+                                    expansionFactor: 3.0,
+                                    spacing: 8.0,
+                                    radius: 16.0,
+                                    dotWidth: 16.0,
+                                    dotHeight: 6.0,
+                                    dotColor: Color(0xFF9E9E9E),
+                                    activeDotColor: Color(0xFF0B266B),
+                                    paintStyle: PaintingStyle.fill,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(0.0, 0.2),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 10.0),
-                          child: smooth_page_indicator.SmoothPageIndicator(
-                            controller: _model.pageViewController ??=
-                                PageController(initialPage: 0),
-                            count: 3,
-                            axisDirection: Axis.horizontal,
-                            onDotClicked: (i) {
-                              _model.pageViewController!.animateToPage(
-                                i,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            },
-                            effect: smooth_page_indicator.ExpandingDotsEffect(
-                              expansionFactor: 3.0,
-                              spacing: 8.0,
-                              radius: 16.0,
-                              dotWidth: 16.0,
-                              dotHeight: 6.0,
-                              dotColor: Color(0xFF9E9E9E),
-                              activeDotColor: Color(0xFF0B266B),
-                              paintStyle: PaintingStyle.fill,
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

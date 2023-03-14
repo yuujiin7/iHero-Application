@@ -86,7 +86,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
           onTap: () async {
             logFirebaseEvent('MY_EVENTS_ADMIN_Icon_hnoqmglp_ON_TAP');
             logFirebaseEvent('Icon_navigate_back');
-            context.pop();
+            context.safePop();
           },
           child: Icon(
             Icons.arrow_back_rounded,

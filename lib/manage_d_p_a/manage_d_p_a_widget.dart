@@ -132,9 +132,8 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                           logFirebaseEvent(
                                               'MANAGE_D_P_A_keyboard_backspace_ICN_ON_T');
                                           logFirebaseEvent(
-                                              'IconButton_navigate_to');
-
-                                          context.pushNamed('profileScreen');
+                                              'IconButton_navigate_back');
+                                          context.safePop();
                                         },
                                       ),
                                       Text(

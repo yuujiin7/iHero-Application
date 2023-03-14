@@ -1720,6 +1720,111 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: TextFormField(
+                                  controller:
+                                      _model.ageRequirementController ??=
+                                          TextEditingController(
+                                    text: containerEventsRecord.ageRequirement
+                                        .toString(),
+                                  ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText: 'Age Requirement',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1Family,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1Family),
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Barlow',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontWeight: FontWeight.w500,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family),
+                                      ),
+                                  keyboardType: TextInputType.number,
+                                  validator: _model
+                                      .ageRequirementControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('[0-9]'))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 10.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,

@@ -117,7 +117,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                 logFirebaseEvent(
                                     'MY_PERFORMANCE_keyboard_backspace_ICN_ON');
                                 logFirebaseEvent('IconButton_navigate_back');
-                                context.pop();
+                                context.safePop();
                               },
                             ),
                             Text(
@@ -309,81 +309,98 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                             color: FlutterFlowTheme.of(context).primaryBtnText,
                             borderRadius: BorderRadius.circular(12.0),
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 10.0, 0.0, 0.0),
-                                child: AuthUserStreamWidget(
-                                  builder: (context) =>
-                                      CircularPercentIndicator(
-                                    percent: functions.meritCounter(
-                                        valueOrDefault(
-                                            currentUserDocument?.meritScore,
-                                            0)),
-                                    radius: 150.0,
-                                    lineWidth: 50.0,
-                                    animation: true,
-                                    progressColor: colorFromCssString(
-                                      functions.customColorRating(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                5.0, 5.0, 5.0, 5.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: AuthUserStreamWidget(
+                                    builder: (context) =>
+                                        CircularPercentIndicator(
+                                      percent: functions.meritCounter(
                                           valueOrDefault(
                                               currentUserDocument?.meritScore,
                                               0)),
-                                      defaultColor: Colors.black,
-                                    ),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).lineColor,
-                                    center: Text(
-                                      '${valueOrDefault(currentUserDocument?.meritScore, 0).toString()}%'
-                                          .maybeHandleOverflow(maxChars: 3),
-                                      style: FlutterFlowTheme.of(context)
-                                          .title1
-                                          .override(
-                                            fontFamily: 'Ubuntu',
-                                            color: colorFromCssString(
-                                              functions.customColorRating(
-                                                  valueOrDefault(
-                                                      currentUserDocument
-                                                          ?.meritScore,
-                                                      0)),
-                                              defaultColor: Colors.black,
+                                      radius: 150.0,
+                                      lineWidth: 50.0,
+                                      animation: true,
+                                      progressColor: colorFromCssString(
+                                        functions.customColorRating(
+                                            valueOrDefault(
+                                                currentUserDocument?.meritScore,
+                                                0)),
+                                        defaultColor: Colors.black,
+                                      ),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .lineColor,
+                                      center: Text(
+                                        '${valueOrDefault(currentUserDocument?.meritScore, 0).toString()}%'
+                                            .maybeHandleOverflow(maxChars: 3),
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'Ubuntu',
+                                              color: colorFromCssString(
+                                                functions.customColorRating(
+                                                    valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.meritScore,
+                                                        0)),
+                                                defaultColor: Colors.black,
+                                              ),
+                                              fontSize: 40.0,
+                                              letterSpacing: 1.0,
+                                              fontWeight: FontWeight.bold,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title1Family),
                                             ),
-                                            fontSize: 40.0,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.bold,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .title1Family),
-                                          ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Divider(
-                                thickness: 1.0,
-                              ),
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  functions.pointEquivalent(valueOrDefault(
-                                          currentUserDocument?.meritScore, 0)
-                                      .toDouble()),
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        fontSize: 15.0,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
+                                Divider(
+                                  thickness: 1.0,
                                 ),
-                              ),
-                            ],
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        functions.pointEquivalent(
+                                            valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.meritScore,
+                                                    0)
+                                                .toDouble()),
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Barlow',
+                                              fontSize: 15.0,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

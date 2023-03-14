@@ -59,7 +59,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
         return;
       }
 
-      context.goNamedAuth('splashScreen', mounted);
+      context.goNamedAuth('Onboarding', mounted);
     });
 
     _model.fullNameController ??= TextEditingController();
@@ -88,7 +88,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           actions: [],
           flexibleSpace: FlexibleSpaceBar(
@@ -103,12 +103,13 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                   child: BackComponentWidget(),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 0.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 0.0, 10.0),
                   child: Text(
                     'Step 1',
                     style: FlutterFlowTheme.of(context).title1.override(
                           fontFamily: 'Ubuntu',
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: Color(0xFFF1F4F8),
                           fontSize: 32.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
                               FlutterFlowTheme.of(context).title1Family),

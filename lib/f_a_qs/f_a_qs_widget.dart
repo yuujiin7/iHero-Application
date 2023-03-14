@@ -131,9 +131,8 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                           logFirebaseEvent(
                                               'F_A_QS_keyboard_backspace_ICN_ON_TAP');
                                           logFirebaseEvent(
-                                              'IconButton_navigate_to');
-
-                                          context.pushNamed('profileScreen');
+                                              'IconButton_navigate_back');
+                                          context.safePop();
                                         },
                                       ),
                                       Text(

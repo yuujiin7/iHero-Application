@@ -50,7 +50,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         logFirebaseEvent('profileScreen_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
         logFirebaseEvent('profileScreen_custom_action');
@@ -149,9 +149,19 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'PROFILE_SCREEN_keyboard_backspace_ICN_ON');
-                                    logFirebaseEvent(
-                                        'IconButton_navigate_back');
-                                    context.safePop();
+                                    logFirebaseEvent('IconButton_navigate_to');
+
+                                    context.goNamed(
+                                      'HomeScreen',
+                                      extra: <String, dynamic>{
+                                        kTransitionInfoKey: TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 0),
+                                        ),
+                                      },
+                                    );
                                   },
                                 ),
                                 FlutterFlowIconButton(
@@ -872,6 +882,17 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                         ParamType.int,
                                                       ),
                                                     }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      kTransitionInfoKey:
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                      ),
+                                                    },
                                                   );
                                                 },
                                                 child: Row(

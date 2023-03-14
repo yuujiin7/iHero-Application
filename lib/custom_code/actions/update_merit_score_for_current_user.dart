@@ -51,7 +51,7 @@ Future<String> updateMeritScoreForCurrentUser() async {
       int newMeritScore = currentMeritScore + 5;
       transaction.update(currentUserRef, {'meritScore': newMeritScore});
     });
-  } on PlatformException catch (error) {
+  } on PlatformException {
     return "Error";
   }
 

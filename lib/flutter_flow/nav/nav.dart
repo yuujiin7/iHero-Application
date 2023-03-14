@@ -70,14 +70,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? HomeScreenWidget() : SplashScreenWidget(),
+          appStateNotifier.loggedIn ? HomeScreenWidget() : OnboardingWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? HomeScreenWidget()
-              : SplashScreenWidget(),
+              : OnboardingWidget(),
           routes: [
             FFRoute(
               name: 'Onboarding',
@@ -121,15 +121,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'appointmentPage',
+              path: 'appointmentPage',
+              builder: (context, params) => AppointmentPageWidget(),
+            ),
+            FFRoute(
               name: 'findEvents',
               path: 'findEvents',
               requireAuth: true,
               builder: (context, params) => FindEventsWidget(),
-            ),
-            FFRoute(
-              name: 'appointmentPage',
-              path: 'appointmentPage',
-              builder: (context, params) => AppointmentPageWidget(),
             ),
             FFRoute(
               name: 'journeyScreen',
@@ -283,6 +283,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ForgotPasswordWidget(),
             ),
             FFRoute(
+              name: 'myPerformance',
+              path: 'myPerformance',
+              requireAuth: true,
+              builder: (context, params) => MyPerformanceWidget(
+                points: params.getParam('points', ParamType.int),
+              ),
+            ),
+            FFRoute(
               name: 'MyEventsAdmin',
               path: 'myEventsAdmin',
               requireAuth: true,
@@ -296,14 +304,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               requireAuth: true,
               builder: (context, params) => MyEventsVolunteerWidget(
                 tabIndex: params.getParam('tabIndex', ParamType.int),
-              ),
-            ),
-            FFRoute(
-              name: 'myPerformance',
-              path: 'myPerformance',
-              requireAuth: true,
-              builder: (context, params) => MyPerformanceWidget(
-                points: params.getParam('points', ParamType.int),
               ),
             ),
             FFRoute(
@@ -487,7 +487,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/splashScreen';
+            return '/onboarding';
           }
           return null;
         },

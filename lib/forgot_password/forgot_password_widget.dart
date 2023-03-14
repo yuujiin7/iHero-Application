@@ -86,8 +86,18 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       onPressed: () async {
                         logFirebaseEvent(
                             'FORGOT_PASSWORD_arrow_back_rounded_ICN_O');
-                        logFirebaseEvent('IconButton_navigate_back');
-                        context.pop();
+                        logFirebaseEvent('IconButton_navigate_to');
+
+                        context.goNamed(
+                          'Login',
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 0),
+                            ),
+                          },
+                        );
                       },
                     ),
                     Padding(

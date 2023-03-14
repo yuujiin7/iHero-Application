@@ -141,6 +141,9 @@ class EditEventsModel extends FlutterFlowModel {
   late SelectCauseEditModel selectCauseEditModel;
   // State field(s) for PartnerDropDown widget.
   String? partnerDropDownValue;
+  // State field(s) for ageRequirement widget.
+  TextEditingController? ageRequirementController;
+  String? Function(BuildContext, String?)? ageRequirementControllerValidator;
   // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
   bool? isEventExist;
 
@@ -162,6 +165,7 @@ class EditEventsModel extends FlutterFlowModel {
     contactNumberController?.dispose();
     neededVolunteerController?.dispose();
     selectCauseEditModel.dispose();
+    ageRequirementController?.dispose();
   }
 
   /// Additional helper methods are added here.

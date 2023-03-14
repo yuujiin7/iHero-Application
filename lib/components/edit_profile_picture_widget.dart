@@ -163,7 +163,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                 height: 60.0,
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                color: FlutterFlowTheme.of(context).tertiaryColor,
+                color: FlutterFlowTheme.of(context).primaryColor,
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                       fontFamily: 'Ubuntu',
                       color: Colors.white,

@@ -632,6 +632,54 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                     ],
                                   ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      45.0, 35.0, 45.0, 0.0),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    elevation: 2.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(45.0),
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 70.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(45.0),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'How Can We Help You?',
+                                            textAlign: TextAlign.center,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText1Family,
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -639,7 +687,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 110.0, 0.0, 0.0),
+                            0.0, 200.0, 0.0, 0.0),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -647,53 +695,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    45.0, 0.0, 45.0, 0.0),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(45.0),
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 70.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(45.0),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'How Can We Help You?',
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1Family,
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w600,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyText1Family),
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 25.0, 20.0, 0.0),
+                                    20.0, 10.0, 20.0, 0.0),
                                 child: Material(
                                   color: Colors.transparent,
                                   elevation: 1.0,
@@ -745,7 +747,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             child: InkWell(
                                               onTap: () async {
                                                 logFirebaseEvent(
-                                                    'HELP_CENTER_Container_jplvesed_ON_TAP');
+                                                    'HELP_CENTER_Container_16m7vuzb_ON_TAP');
                                                 logFirebaseEvent(
                                                     'Container_navigate_to');
 
@@ -829,7 +831,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             child: InkWell(
                                               onTap: () async {
                                                 logFirebaseEvent(
-                                                    'HELP_CENTER_Container_o51nz75r_ON_TAP');
+                                                    'HELP_CENTER_Container_f0alh2v5_ON_TAP');
                                                 logFirebaseEvent(
                                                     'Container_navigate_to');
 
@@ -915,7 +917,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 25.0, 20.0, 0.0),
+                                    20.0, 10.0, 20.0, 0.0),
                                 child: Material(
                                   color: Colors.transparent,
                                   elevation: 1.0,
@@ -967,7 +969,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             child: InkWell(
                                               onTap: () async {
                                                 logFirebaseEvent(
-                                                    'HELP_CENTER_Container_f2920y5p_ON_TAP');
+                                                    'HELP_CENTER_Container_qidtkwls_ON_TAP');
                                                 logFirebaseEvent(
                                                     'Container_navigate_to');
 
@@ -1052,7 +1054,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             child: InkWell(
                                               onTap: () async {
                                                 logFirebaseEvent(
-                                                    'HELP_CENTER_Container_src68h6n_ON_TAP');
+                                                    'HELP_CENTER_Container_oy67vm7y_ON_TAP');
                                                 logFirebaseEvent(
                                                     'Container_navigate_to');
 
@@ -1149,7 +1151,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 25.0, 20.0, 25.0),
+                                    20.0, 10.0, 20.0, 25.0),
                                 child: Material(
                                   color: Colors.transparent,
                                   elevation: 1.0,

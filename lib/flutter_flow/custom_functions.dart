@@ -546,3 +546,15 @@ String getStringAtIndex(
     return inputList[index];
   }
 }
+
+String getFileNamesFromUrls(List<String> urls) {
+  List<String> fileNames = [];
+  String delimiter = ",";
+
+  for (String url in urls) {
+    String fileName = getFileNameFromUrl(url);
+    fileNames.add(fileName);
+  }
+
+  return fileNames.join(delimiter);
+}

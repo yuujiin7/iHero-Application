@@ -134,9 +134,8 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
                                           logFirebaseEvent(
                                               'REPORTING_ABUSE_keyboard_backspace_ICN_O');
                                           logFirebaseEvent(
-                                              'IconButton_navigate_to');
-
-                                          context.pushNamed('profileScreen');
+                                              'IconButton_navigate_back');
+                                          context.safePop();
                                         },
                                       ),
                                       Text(
