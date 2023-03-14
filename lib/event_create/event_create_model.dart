@@ -1,5 +1,4 @@
 import '/auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -44,11 +43,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+    if (val.length < 5) {
+      return 'Min 65 character';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 65) {
+      return 'Max 65 character';
     }
 
     return null;
@@ -63,11 +62,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+    if (val.length < 5) {
+      return 'Min. 5 character';
     }
-    if (val.length > 2200) {
-      return 'Max 2200 character';
+    if (val.length > 500) {
+      return 'Max 500 character';
     }
 
     return null;
@@ -106,10 +105,12 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 15) {
-      return 'Max 15 character';
+    if (val.length > 13) {
+      return 'Max 13 character';
     }
-
+    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+      return 'Include the + symbol, country code (63). ';
+    }
     return null;
   }
 
@@ -125,8 +126,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 6) {
-      return 'Max 6 character';
+    if (val.length > 5) {
+      return 'Max 5 character';
     }
 
     return null;
@@ -140,8 +141,6 @@ class EventCreateModel extends FlutterFlowModel {
   bool? isEventExist;
   // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.
   EventsRecord? isCreated1;
-  // Stores action output result for [Backend Call - API (SendEmail Copy)] action in ButtonSubmit widget.
-  ApiCallResponse? emailSent1;
   bool isMediaUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -159,8 +158,8 @@ class EventCreateModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 65) {
+      return 'Max 65 character';
     }
 
     return null;
@@ -179,8 +178,8 @@ class EventCreateModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 2200) {
-      return 'Max 2200 character';
+    if (val.length > 500) {
+      return 'Max 500 character';
     }
 
     return null;

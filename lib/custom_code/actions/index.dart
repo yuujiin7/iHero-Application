@@ -23,3 +23,5 @@ export 'get_unseen_report_by_current_user.dart'
 export 'is_user18_or_older.dart' show isUser18OrOlder;
 export 'update_merit_score_for_current_user.dart'
     show updateMeritScoreForCurrentUser;
+export 'update_merit_score_for_current_user1.dart'
+    show updateMeritScoreForCurrentUser1;

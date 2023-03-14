@@ -22,8 +22,8 @@ import 'package:provider/provider.dart';
 class HomeScreenModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - updateMeritScoreForCurrentUser] action in HomeScreen widget.
-  String? result;
+  // Stores action output result for [Custom Action - updateMeritScoreForCurrentUser1] action in HomeScreen widget.
+  String? updateMerit;
   // Stores action output result for [Custom Action - getUnseenReportByCurrentUser] action in HomeScreen widget.
   DocumentReference? unethical;
   // Stores action output result for [Custom Action - getUnseenReportByCurrentUserFalseInfo] action in HomeScreen widget.

@@ -197,7 +197,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.fullNameController,
-                                textCapitalization: TextCapitalization.none,
+                                textCapitalization: TextCapitalization.words,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Full Name',
@@ -296,7 +296,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.descriptionEventController,
-                                textCapitalization: TextCapitalization.none,
+                                textCapitalization: TextCapitalization.words,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Description',

@@ -1,5 +1,4 @@
 import '/auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -449,6 +448,9 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                 setState(() {});
                                                               },
                                                             ),
+                                                            textCapitalization:
+                                                                TextCapitalization
+                                                                    .words,
                                                             obscureText: false,
                                                             decoration:
                                                                 InputDecoration(
@@ -614,6 +616,9 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           child: TextFormField(
                                                             controller: _model
                                                                 .descriptionEventController,
+                                                            textCapitalization:
+                                                                TextCapitalization
+                                                                    .words,
                                                             obscureText: false,
                                                             decoration:
                                                                 InputDecoration(
@@ -1816,6 +1821,9 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           child: TextFormField(
                                                             controller: _model
                                                                 .personInChargeController,
+                                                            textCapitalization:
+                                                                TextCapitalization
+                                                                    .words,
                                                             obscureText: false,
                                                             decoration:
                                                                 InputDecoration(
@@ -1972,6 +1980,16 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           child: TextFormField(
                                                             controller: _model
                                                                 .contactNumberController,
+                                                            onChanged: (_) =>
+                                                                EasyDebounce
+                                                                    .debounce(
+                                                              '_model.contactNumberController',
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      200),
+                                                              () => setState(
+                                                                  () {}),
+                                                            ),
                                                             obscureText: false,
                                                             decoration:
                                                                 InputDecoration(
@@ -2098,7 +2116,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                             inputFormatters: [
                                                               FilteringTextInputFormatter
                                                                   .allow(RegExp(
-                                                                      '[0-9]'))
+                                                                      '^[\\d+\\-\\s]*\$'))
                                                             ],
                                                           ),
                                                         ),
@@ -2144,7 +2162,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                             decoration:
                                                                 InputDecoration(
                                                               hintText:
-                                                                  'Age Requirement',
+                                                                  'Age Requirement (Leave blank if none)...',
                                                               hintStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
@@ -2643,10 +2661,39 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                           }
                                                                           if (_model.selectCauseCreateModel.dropDownValue ==
                                                                               null) {
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  content: Text('Pick atleast 1 cause'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
                                                                             return;
                                                                           }
                                                                           if (_model.partnerDropDownValue ==
                                                                               null) {
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Pick a partner organiztaion'),
+                                                                                  content: Text('Pick Philippine Red Cross if none'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
                                                                             return;
                                                                           }
                                                                           logFirebaseEvent(
@@ -2736,6 +2783,8 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     volunteerCount: null,
                                                                                     expiryDate: null,
                                                                                     reason: null,
+                                                                                    ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                                    isMeritScoreUpdated: false,
                                                                                   ),
                                                                                   'admin_ref': [
                                                                                     currentUserReference
@@ -2750,23 +2799,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                 _model.isCreated1 = EventsRecord.getDocumentFromData(eventsCreateData1, eventsRecordReference1);
                                                                                 _shouldSetState = true;
                                                                                 if (_model.isCreated1!.reference != null) {
-                                                                                  logFirebaseEvent('ButtonSubmit_backend_call');
-                                                                                  _model.emailSent1 = await SendEmailCopyCall.call(
-                                                                                    serviceId: 'service_db1x3jm',
-                                                                                    userId: '7F9iSMHhFAfXWrKTV',
-                                                                                    accessToken: 'eIEFG19Do2TPYCGeyzeiZ',
-                                                                                    templateId: 'template_ykcpvtd',
-                                                                                    toEmail: functions.formatEmailList(_model.emailList!.toList()),
-                                                                                    title: _model.titleEventController.text,
-                                                                                    decription: _model.descriptionEventController.text,
-                                                                                    eventDateStart: FFAppState().startDate?.toString(),
-                                                                                    eventDateEnd: FFAppState().endDate?.toString(),
-                                                                                    personInCharge: _model.personInChargeController.text,
-                                                                                    contactNumber: _model.contactNumberController.text,
-                                                                                    startTime: FFAppState().startTime?.toString(),
-                                                                                    endTime: FFAppState().endTime?.toString(),
-                                                                                  );
-                                                                                  _shouldSetState = true;
                                                                                   logFirebaseEvent('ButtonSubmit_alert_dialog');
                                                                                   await showDialog(
                                                                                     context: context,
@@ -2856,6 +2888,8 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     rateTotal: 0.0,
                                                                                     rateCount: 0.0,
                                                                                     reason: null,
+                                                                                    ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                                    isMeritScoreUpdated: false,
                                                                                   ),
                                                                                   'admin_ref': [
                                                                                     currentUserReference

@@ -479,8 +479,8 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
                                       title: Text('Failed'),
-                                      content:
-                                          Text('Your Password is not changed'),
+                                      content: Text(
+                                          'Failed to change password. Current Password night be incorrect'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>

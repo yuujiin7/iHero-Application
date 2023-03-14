@@ -51,6 +51,19 @@ class ReportVolunteerModel extends FlutterFlowModel {
   // State field(s) for DescriptionEvent widget.
   TextEditingController? descriptionEventController;
   String? Function(BuildContext, String?)? descriptionEventControllerValidator;
+  String? _descriptionEventControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 255) {
+      return 'Max 255 character';
+    }
+
+    return null;
+  }
+
   bool isMediaUploading = false;
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -63,6 +76,7 @@ class ReportVolunteerModel extends FlutterFlowModel {
 
   void initState(BuildContext context) {
     textFieldControllerValidator = _textFieldControllerValidator;
+    descriptionEventControllerValidator = _descriptionEventControllerValidator;
   }
 
   void dispose() {

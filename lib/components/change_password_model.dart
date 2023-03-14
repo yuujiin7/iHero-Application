@@ -21,14 +21,67 @@ class ChangePasswordModel extends FlutterFlowModel {
   TextEditingController? currentPasswordController;
   late bool currentPasswordVisibility;
   String? Function(BuildContext, String?)? currentPasswordControllerValidator;
+  String? _currentPasswordControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 10) {
+      return 'Min 10 character';
+    }
+    if (val.length > 25) {
+      return 'Max 25 character';
+    }
+
+    return null;
+  }
+
   // State field(s) for newPassword widget.
   TextEditingController? newPasswordController;
   late bool newPasswordVisibility;
   String? Function(BuildContext, String?)? newPasswordControllerValidator;
+  String? _newPasswordControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 10) {
+      return 'Requires at least 10 characters.';
+    }
+    if (val.length > 25) {
+      return 'Max 25 character';
+    }
+    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{10,25}\$')
+        .hasMatch(val)) {
+      return 'Password must be 10-25 characters long and contain at least one uppercase letter, one digit, and one special character.';
+    }
+    return null;
+  }
+
   // State field(s) for confirmNewPsswrod widget.
   TextEditingController? confirmNewPsswrodController;
   late bool confirmNewPsswrodVisibility;
   String? Function(BuildContext, String?)? confirmNewPsswrodControllerValidator;
+  String? _confirmNewPsswrodControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 10) {
+      return 'Min 10 character';
+    }
+    if (val.length > 52) {
+      return 'Max 25 character';
+    }
+    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{10,25}\$')
+        .hasMatch(val)) {
+      return 'Password must be 10-25 characters long and contain at least one uppercase letter, one digit, and one special character.';
+    }
+    return null;
+  }
+
   // Stores action output result for [Custom Action - changePassword] action in Button widget.
   bool? success;
 
@@ -36,8 +89,12 @@ class ChangePasswordModel extends FlutterFlowModel {
 
   void initState(BuildContext context) {
     currentPasswordVisibility = false;
+    currentPasswordControllerValidator = _currentPasswordControllerValidator;
     newPasswordVisibility = false;
+    newPasswordControllerValidator = _newPasswordControllerValidator;
     confirmNewPsswrodVisibility = false;
+    confirmNewPsswrodControllerValidator =
+        _confirmNewPsswrodControllerValidator;
   }
 
   void dispose() {

@@ -491,7 +491,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                             ),
                             child: TextFormField(
                               controller: _model.descriptionEventController,
-                              textCapitalization: TextCapitalization.none,
+                              textCapitalization: TextCapitalization.words,
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Description',
@@ -786,13 +786,6 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                             logFirebaseEvent('Button_validate_form');
                             if (_model.formKey.currentState == null ||
                                 !_model.formKey.currentState!.validate()) {
-                              return;
-                            }
-                            if (_model.datePicked == null) {
-                              return;
-                            }
-                            if (_model.uploadedFileUrl == null ||
-                                _model.uploadedFileUrl.isEmpty) {
                               return;
                             }
                             logFirebaseEvent('Button_backend_call');

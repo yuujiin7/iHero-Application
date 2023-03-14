@@ -77,7 +77,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           FFAppState().userlocation = currentUserLocationValue;
         });
         logFirebaseEvent('HomeScreen_custom_action');
-        _model.result = await actions.updateMeritScoreForCurrentUser();
+        _model.updateMerit = await actions.updateMeritScoreForCurrentUser1();
         logFirebaseEvent('HomeScreen_custom_action');
         _model.unethical = await actions.getUnseenReportByCurrentUser();
         logFirebaseEvent('HomeScreen_custom_action');
@@ -2898,7 +2898,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   ],
                 ),
               ),
-              if (_model.result == 'Success')
+              if (_model.updateMerit == 'Success')
                 Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -2906,7 +2906,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     width: double.infinity,
                     height: double.infinity,
                     loop: false,
-                    particleCount: 50,
+                    particleCount: 15,
                     gravity: 1.0,
                   ),
                 ),
