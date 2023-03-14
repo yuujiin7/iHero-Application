@@ -19,6 +19,7 @@ import 'schema/false_information_report_record.dart';
 import 'schema/memoralization_report_record.dart';
 import 'schema/monthly_created_event_record.dart';
 import 'schema/active_user_counts_record.dart';
+import 'schema/inspiring_videos_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -40,6 +41,7 @@ export 'schema/false_information_report_record.dart';
 export 'schema/memoralization_report_record.dart';
 export 'schema/monthly_created_event_record.dart';
 export 'schema/active_user_counts_record.dart';
+export 'schema/inspiring_videos_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -784,6 +786,58 @@ Future<FFFirestorePage<ActiveUserCountsRecord>>
           pageSize: pageSize,
           isStream: isStream,
         );
+
+/// Functions to query InspiringVideosRecords (as a Stream and as a Future).
+Future<int> queryInspiringVideosRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      InspiringVideosRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<InspiringVideosRecord>> queryInspiringVideosRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      InspiringVideosRecord.collection,
+      InspiringVideosRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<InspiringVideosRecord>> queryInspiringVideosRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      InspiringVideosRecord.collection,
+      InspiringVideosRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<InspiringVideosRecord>> queryInspiringVideosRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      InspiringVideosRecord.collection,
+      InspiringVideosRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
 
 Future<int> queryCollectionCount(
   Query collection, {

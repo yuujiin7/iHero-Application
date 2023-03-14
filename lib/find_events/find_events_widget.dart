@@ -1322,7 +1322,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                               backgroundColor:
                                                                   Colors
                                                                       .transparent,
-                                                              enableDrag: false,
                                                               context: context,
                                                               builder:
                                                                   (context) {
