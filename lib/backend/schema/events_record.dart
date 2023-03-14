@@ -96,6 +96,8 @@ abstract class EventsRecord
   @BuiltValueField(wireName: 'rate_ref')
   BuiltList<DocumentReference>? get rateRef;
 
+  int? get ageRequirement;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -128,7 +130,8 @@ abstract class EventsRecord
     ..rateCount = 0.0
     ..reason = ''
     ..isDeclined = false
-    ..rateRef = ListBuilder();
+    ..rateRef = ListBuilder()
+    ..ageRequirement = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -197,6 +200,7 @@ abstract class EventsRecord
           ..isDeclined = snapshot.data['isDeclined']
           ..rateRef = safeGet(
               () => ListBuilder(snapshot.data['rate_ref'].map((s) => toRef(s))))
+          ..ageRequirement = snapshot.data['ageRequirement']?.round()
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -255,6 +259,7 @@ Map<String, dynamic> createEventsRecordData({
   double? rateCount,
   String? reason,
   bool? isDeclined,
+  int? ageRequirement,
 }) {
   final firestoreData = serializers.toFirestore(
     EventsRecord.serializer,
@@ -295,7 +300,8 @@ Map<String, dynamic> createEventsRecordData({
         ..rateCount = rateCount
         ..reason = reason
         ..isDeclined = isDeclined
-        ..rateRef = null,
+        ..rateRef = null
+        ..ageRequirement = ageRequirement,
     ),
   );
 

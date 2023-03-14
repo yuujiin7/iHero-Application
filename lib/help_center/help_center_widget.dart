@@ -616,7 +616,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 'HELP_CENTER_keyboard_backspace_ICN_ON_TA');
                                             logFirebaseEvent(
                                                 'IconButton_navigate_back');
-                                            context.pop();
+                                            context.safePop();
                                           },
                                         ),
                                         Expanded(

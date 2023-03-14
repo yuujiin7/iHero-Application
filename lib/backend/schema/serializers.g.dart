@@ -7,7 +7,6 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
-      ..add(ActiveUserCountsRecord.serializer)
       ..add(AnnouncementRecord.serializer)
       ..add(ChatMessagesRecord.serializer)
       ..add(ChatsRecord.serializer)
@@ -15,7 +14,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CommentsRecord.serializer)
       ..add(EventsRecord.serializer)
       ..add(FalseInformationReportRecord.serializer)
-      ..add(InspiringVideosRecord.serializer)
       ..add(MemoralizationReportRecord.serializer)
       ..add(MonthlyCreatedEventRecord.serializer)
       ..add(PartnerOrgRecord.serializer)

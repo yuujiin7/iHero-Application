@@ -139,7 +139,7 @@ class _MemoralizationReportWidgetState
 
                           final memoralizationReportUpdateData =
                               createMemoralizationReportRecordData(
-                            isSeen: currentUserReference,
+                            isSeen: true,
                           );
                           await widget.memoRef!
                               .update(memoralizationReportUpdateData);

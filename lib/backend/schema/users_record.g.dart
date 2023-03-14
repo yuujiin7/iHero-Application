@@ -143,6 +143,12 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add('duration')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.age;
+    if (value != null) {
+      result
+        ..add('age')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -237,6 +243,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.duration = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'age':
+          result.age = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -288,6 +298,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final int? duration;
   @override
+  final int? age;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -312,6 +324,7 @@ class _$UsersRecord extends UsersRecord {
       this.deviceType,
       this.screenName,
       this.duration,
+      this.age,
       this.ffRef})
       : super._();
 
@@ -344,6 +357,7 @@ class _$UsersRecord extends UsersRecord {
         deviceType == other.deviceType &&
         screenName == other.screenName &&
         duration == other.duration &&
+        age == other.age &&
         ffRef == other.ffRef;
   }
 
@@ -367,32 +381,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                email
-                                                                                    .hashCode),
-                                                                            displayName
-                                                                                .hashCode),
-                                                                        photoUrl
-                                                                            .hashCode),
-                                                                    uid
-                                                                        .hashCode),
-                                                                createdTime
-                                                                    .hashCode),
-                                                            phoneNumber
-                                                                .hashCode),
-                                                        userType.hashCode),
-                                                    gender.hashCode),
-                                                location.hashCode),
-                                            isDeceased.hashCode),
-                                        meritScore.hashCode),
-                                    isDeleted.hashCode),
-                                expiryDate.hashCode),
-                            startTime.hashCode),
-                        endTime.hashCode),
-                    deviceType.hashCode),
-                screenName.hashCode),
-            duration.hashCode),
+                                                                            $jc($jc(0, email.hashCode),
+                                                                                displayName.hashCode),
+                                                                            photoUrl.hashCode),
+                                                                        uid.hashCode),
+                                                                    createdTime.hashCode),
+                                                                phoneNumber.hashCode),
+                                                            userType.hashCode),
+                                                        gender.hashCode),
+                                                    location.hashCode),
+                                                isDeceased.hashCode),
+                                            meritScore.hashCode),
+                                        isDeleted.hashCode),
+                                    expiryDate.hashCode),
+                                startTime.hashCode),
+                            endTime.hashCode),
+                        deviceType.hashCode),
+                    screenName.hashCode),
+                duration.hashCode),
+            age.hashCode),
         ffRef.hashCode));
   }
 
@@ -417,6 +424,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('deviceType', deviceType)
           ..add('screenName', screenName)
           ..add('duration', duration)
+          ..add('age', age)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -497,6 +505,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   int? get duration => _$this._duration;
   set duration(int? duration) => _$this._duration = duration;
 
+  int? _age;
+  int? get age => _$this._age;
+  set age(int? age) => _$this._age = age;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -526,6 +538,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _deviceType = $v.deviceType;
       _screenName = $v.screenName;
       _duration = $v.duration;
+      _age = $v.age;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -567,6 +580,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             deviceType: deviceType,
             screenName: screenName,
             duration: duration,
+            age: age,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

@@ -401,42 +401,107 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                       ) ??
                                       false;
                               if (confirmDialogResponse) {
-                                logFirebaseEvent('Button_backend_call');
+                                if (widget.eventDetails!.ageRequirement ==
+                                    null) {
+                                  logFirebaseEvent('Button_backend_call');
 
-                                final eventsUpdateData = {
-                                  'volunteer_names': FieldValue.arrayUnion(
-                                      [currentUserDisplayName]),
-                                  'needed_volunteer_count':
-                                      FieldValue.increment(-(1.0)),
-                                  'volunteer_count': FieldValue.increment(1.0),
-                                  'volunteer_ref': FieldValue.arrayUnion(
-                                      [currentUserReference]),
-                                  'volunteer_list':
-                                      FieldValue.arrayUnion([currentUserUid]),
-                                };
-                                await widget.eventDetails!.reference
-                                    .update(eventsUpdateData);
-                                logFirebaseEvent('Button_alert_dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Success'),
-                                      content: Text(
-                                          'Great! Thank you for registering to this event!'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
+                                  final eventsUpdateData1 = {
+                                    'volunteer_names': FieldValue.arrayUnion(
+                                        [currentUserDisplayName]),
+                                    'needed_volunteer_count':
+                                        FieldValue.increment(-(1.0)),
+                                    'volunteer_count':
+                                        FieldValue.increment(1.0),
+                                    'volunteer_ref': FieldValue.arrayUnion(
+                                        [currentUserReference]),
+                                    'volunteer_list':
+                                        FieldValue.arrayUnion([currentUserUid]),
+                                  };
+                                  await widget.eventDetails!.reference
+                                      .update(eventsUpdateData1);
+                                  logFirebaseEvent('Button_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('Success'),
+                                        content: Text(
+                                            'Great! Thank you for registering to this event!'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  logFirebaseEvent('Button_bottom_sheet');
+                                  Navigator.pop(context);
+                                  return;
+                                } else {
+                                  if (valueOrDefault(
+                                          currentUserDocument?.age, 0) <
+                                      widget.eventDetails!.ageRequirement!) {
+                                    logFirebaseEvent('Button_alert_dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          content: Text(
+                                              'Sorry, you do not meet the age requirement for this event'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
-                                logFirebaseEvent('Button_bottom_sheet');
-                                Navigator.pop(context);
-                                return;
+                                    return;
+                                  } else {
+                                    logFirebaseEvent('Button_backend_call');
+
+                                    final eventsUpdateData2 = {
+                                      'volunteer_names': FieldValue.arrayUnion(
+                                          [currentUserDisplayName]),
+                                      'needed_volunteer_count':
+                                          FieldValue.increment(-(1.0)),
+                                      'volunteer_count':
+                                          FieldValue.increment(1.0),
+                                      'volunteer_ref': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                      'volunteer_list': FieldValue.arrayUnion(
+                                          [currentUserUid]),
+                                    };
+                                    await widget.eventDetails!.reference
+                                        .update(eventsUpdateData2);
+                                    logFirebaseEvent('Button_alert_dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: Text('Success'),
+                                          content: Text(
+                                              'Great! Thank you for registering to this event!'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    logFirebaseEvent('Button_bottom_sheet');
+                                    Navigator.pop(context);
+                                    return;
+                                  }
+                                }
                               } else {
                                 logFirebaseEvent('Button_bottom_sheet');
                                 Navigator.pop(context);

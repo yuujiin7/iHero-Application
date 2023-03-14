@@ -109,9 +109,8 @@ class _$UnethicalIllegalConductReportRecordSerializer
     if (value != null) {
       result
         ..add('isSeen')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -186,9 +185,7 @@ class _$UnethicalIllegalConductReportRecordSerializer
           break;
         case 'isSeen':
           result.isSeen = serializers.deserialize(value,
-              specifiedType: const FullType(DocumentReference, const [
-                const FullType.nullable(Object)
-              ])) as DocumentReference<Object?>?;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -228,7 +225,7 @@ class _$UnethicalIllegalConductReportRecord
   @override
   final String? reason;
   @override
-  final DocumentReference<Object?>? isSeen;
+  final bool? isSeen;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -385,9 +382,9 @@ class UnethicalIllegalConductReportRecordBuilder
   String? get reason => _$this._reason;
   set reason(String? reason) => _$this._reason = reason;
 
-  DocumentReference<Object?>? _isSeen;
-  DocumentReference<Object?>? get isSeen => _$this._isSeen;
-  set isSeen(DocumentReference<Object?>? isSeen) => _$this._isSeen = isSeen;
+  bool? _isSeen;
+  bool? get isSeen => _$this._isSeen;
+  set isSeen(bool? isSeen) => _$this._isSeen = isSeen;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;

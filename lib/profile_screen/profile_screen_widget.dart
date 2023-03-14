@@ -149,9 +149,9 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'PROFILE_SCREEN_keyboard_backspace_ICN_ON');
-                                    logFirebaseEvent('IconButton_navigate_to');
-
-                                    context.goNamed('HomeScreen');
+                                    logFirebaseEvent(
+                                        'IconButton_navigate_back');
+                                    context.safePop();
                                   },
                                 ),
                                 FlutterFlowIconButton(
@@ -626,7 +626,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     logFirebaseEvent(
                                                         'Row_navigate_to');
 
-                                                    context.pushNamed(
+                                                    context.goNamed(
                                                         'appointments');
                                                   },
                                                   child: Row(
@@ -863,7 +863,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                   logFirebaseEvent(
                                                       'Row_navigate_to');
 
-                                                  context.pushNamed(
+                                                  context.goNamed(
                                                     'myPerformance',
                                                     queryParams: {
                                                       'points': serializeParam(
@@ -1072,7 +1072,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                               logFirebaseEvent(
                                                   'Row_navigate_to');
 
-                                              context.pushNamed('helpCenter');
+                                              context.goNamed('helpCenter');
                                             },
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,

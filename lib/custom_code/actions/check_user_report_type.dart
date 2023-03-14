@@ -34,7 +34,7 @@ Future<String?> checkUserReportType() async {
   }
 
   final memorializationReportSnapshot = await FirebaseFirestore.instance
-      .collection('memorialization_report')
+      .collection('memoralization_report')
       .where('isDeclined', isEqualTo: false)
       .where('isConfirmedbySA', isEqualTo: true)
       .where('reported_by', isEqualTo: currentUserRef)
@@ -55,5 +55,5 @@ Future<String?> checkUserReportType() async {
     return 'falseInfo';
   }
 
-  return ''; // no matching report found
+  return 'nothing'; // no matching report found
 }

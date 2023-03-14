@@ -127,14 +127,35 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                   }
                 }
 
-                logFirebaseEvent('Button_backend_call');
+                if (_model.uploadedFileUrl != null &&
+                    _model.uploadedFileUrl != '') {
+                  logFirebaseEvent('Button_backend_call');
 
-                final usersUpdateData = createUsersRecordData(
-                  photoUrl: _model.uploadedFileUrl,
-                );
-                await currentUserReference!.update(usersUpdateData);
-                logFirebaseEvent('Button_bottom_sheet');
-                Navigator.pop(context);
+                  final usersUpdateData = createUsersRecordData(
+                    photoUrl: _model.uploadedFileUrl,
+                  );
+                  await currentUserReference!.update(usersUpdateData);
+                  logFirebaseEvent('Button_bottom_sheet');
+                  Navigator.pop(context);
+                  return;
+                } else {
+                  logFirebaseEvent('Button_alert_dialog');
+                  await showDialog(
+                    context: context,
+                    builder: (alertDialogContext) {
+                      return AlertDialog(
+                        content: Text('No Uploaded photo'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(alertDialogContext),
+                            child: Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  return;
+                }
               },
               text: 'Select Profile Picture',
               options: FFButtonOptions(

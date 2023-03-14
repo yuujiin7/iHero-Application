@@ -142,10 +142,12 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
 
                             final falseInformationReportUpdateData =
                                 createFalseInformationReportRecordData(
-                              isSeen: currentUserReference,
+                              isSeen: true,
                             );
                             await widget.falseInfo!
                                 .update(falseInformationReportUpdateData);
+                            logFirebaseEvent('Button_bottom_sheet');
+                            Navigator.pop(context);
                             return;
                           } else {
                             if (widget.memoralization != null) {
@@ -153,10 +155,12 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
 
                               final memoralizationReportUpdateData =
                                   createMemoralizationReportRecordData(
-                                isSeen: currentUserReference,
+                                isSeen: true,
                               );
                               await widget.memoralization!
                                   .update(memoralizationReportUpdateData);
+                              logFirebaseEvent('Button_bottom_sheet');
+                              Navigator.pop(context);
                               return;
                             } else {
                               if (widget.unethical != null) {
@@ -164,10 +168,12 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
 
                                 final unethicalIllegalConductReportUpdateData =
                                     createUnethicalIllegalConductReportRecordData(
-                                  isSeen: currentUserReference,
+                                  isSeen: true,
                                 );
                                 await widget.unethical!.update(
                                     unethicalIllegalConductReportUpdateData);
+                                logFirebaseEvent('Button_bottom_sheet');
+                                Navigator.pop(context);
                                 return;
                               } else {
                                 return;

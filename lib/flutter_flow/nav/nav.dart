@@ -138,11 +138,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => JourneyScreenWidget(),
             ),
             FFRoute(
-              name: 'HomeScreen',
-              path: 'HomeScreen',
-              builder: (context, params) => HomeScreenWidget(),
-            ),
-            FFRoute(
               name: 'allChat',
               path: 'allChat',
               requireAuth: true,
@@ -154,6 +149,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     'userref', ParamType.DocumentReference, false, ['users']),
                 userRecord: params.getParam('userRecord', ParamType.Document),
               ),
+            ),
+            FFRoute(
+              name: 'HomeScreen',
+              path: 'HomeScreen',
+              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'chatPage',
@@ -254,16 +254,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => FAQsWidget(),
             ),
             FFRoute(
-              name: 'helpCenter',
-              path: 'helpCenter',
-              requireAuth: true,
-              builder: (context, params) => HelpCenterWidget(),
-            ),
-            FFRoute(
               name: 'ReportingAbuse',
               path: 'reportingAbuse',
               requireAuth: true,
               builder: (context, params) => ReportingAbuseWidget(),
+            ),
+            FFRoute(
+              name: 'helpCenter',
+              path: 'helpCenter',
+              requireAuth: true,
+              builder: (context, params) => HelpCenterWidget(),
             ),
             FFRoute(
               name: 'CreditScore',
@@ -280,7 +280,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'forgotPassword',
               path: 'forgotPassword',
-              requireAuth: true,
               builder: (context, params) => ForgotPasswordWidget(),
             ),
             FFRoute(

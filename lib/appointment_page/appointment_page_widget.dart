@@ -100,7 +100,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                 wrapWithModel(
                   model: _model.backComponentModel,
                   updateCallback: () => setState(() {}),
-                  updateOnChange: true,
                   child: BackComponentWidget(),
                 ),
                 Padding(

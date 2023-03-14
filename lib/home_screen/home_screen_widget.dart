@@ -54,18 +54,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         _navigate = () => context.goNamedAuth('splashScreen', mounted);
         return;
       } else {
-        logFirebaseEvent('HomeScreen_update_app_state');
-        FFAppState().update(() {
-          FFAppState().userlocation = currentUserLocationValue;
-        });
-        logFirebaseEvent('HomeScreen_custom_action');
-        await actions.batchUpdateEndedEvents();
-        logFirebaseEvent('HomeScreen_custom_action');
-        await actions.updateSession(
-          currentUserReference!.id,
-          getCurrentTimestamp,
-          null,
-          () {
+        logFirebaseEvent('HomeScreen_backend_call');
+
+        final usersUpdateData = createUsersRecordData(
+          startTime: getCurrentTimestamp,
+          screenName: 'Home Screen',
+          deviceType: () {
             if (isAndroid) {
               return 'Android';
             } else if (isiOS) {
@@ -74,13 +68,21 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               return 'iOS';
             }
           }(),
-          'Home Screen',
         );
+        await currentUserReference!.update(usersUpdateData);
+        logFirebaseEvent('HomeScreen_update_app_state');
+        FFAppState().update(() {
+          FFAppState().userlocation = currentUserLocationValue;
+        });
         logFirebaseEvent('HomeScreen_custom_action');
-        _model.report = await actions.checkUserReportType();
-        if (_model.report == 'unethical') {
-          logFirebaseEvent('HomeScreen_custom_action');
-          _model.unethical = await actions.getUnethicalReportRef();
+        _model.unethical = await actions.getUnseenReportByCurrentUser();
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.falseInfo =
+            await actions.getUnseenReportByCurrentUserFalseInfo();
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.memo =
+            await actions.getUnseenReportByCurrentUserMemorialization();
+        if (_model.unethical?.id != null && _model.unethical?.id != '') {
           logFirebaseEvent('HomeScreen_bottom_sheet');
           await showModalBottomSheet(
             isScrollControlled: true,
@@ -99,9 +101,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
           return;
         } else {
-          if (_model.report == 'memorialization') {
-            logFirebaseEvent('HomeScreen_custom_action');
-            _model.memo = await actions.getMemorializationReportRef();
+          if (_model.falseInfo?.id != null && _model.falseInfo?.id != '') {
             logFirebaseEvent('HomeScreen_bottom_sheet');
             await showModalBottomSheet(
               isScrollControlled: true,
@@ -111,8 +111,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               builder: (context) {
                 return Padding(
                   padding: MediaQuery.of(context).viewInsets,
-                  child: MemoralizationReportWidget(
-                    memoRef: _model.memo,
+                  child: FeedbackReportWidget(
+                    falseInfo: _model.falseInfo,
                   ),
                 );
               },
@@ -120,9 +120,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
             return;
           } else {
-            if (_model.report == 'falseInfo') {
-              logFirebaseEvent('HomeScreen_custom_action');
-              _model.falseinfo = await actions.getFalseInformationReportRef();
+            if (_model.memo?.id != null && _model.memo?.id != '') {
               logFirebaseEvent('HomeScreen_bottom_sheet');
               await showModalBottomSheet(
                 isScrollControlled: true,
@@ -132,8 +130,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 builder: (context) {
                   return Padding(
                     padding: MediaQuery.of(context).viewInsets,
-                    child: FeedbackReportWidget(
-                      falseInfo: _model.falseinfo,
+                    child: MemoralizationReportWidget(
+                      memoRef: _model.memo,
                     ),
                   );
                 },
@@ -141,10 +139,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
               return;
             } else {
-              if (_model.report == 'null') {
-                return;
-              }
-
               return;
             }
           }

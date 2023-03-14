@@ -20,14 +20,12 @@ import 'package:provider/provider.dart';
 class HomeScreenModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - checkUserReportType] action in HomeScreen widget.
-  String? report;
-  // Stores action output result for [Custom Action - getUnethicalReportRef] action in HomeScreen widget.
+  // Stores action output result for [Custom Action - getUnseenReportByCurrentUser] action in HomeScreen widget.
   DocumentReference? unethical;
-  // Stores action output result for [Custom Action - getMemorializationReportRef] action in HomeScreen widget.
+  // Stores action output result for [Custom Action - getUnseenReportByCurrentUserFalseInfo] action in HomeScreen widget.
+  DocumentReference? falseInfo;
+  // Stores action output result for [Custom Action - getUnseenReportByCurrentUserMemorialization] action in HomeScreen widget.
   DocumentReference? memo;
-  // Stores action output result for [Custom Action - getFalseInformationReportRef] action in HomeScreen widget.
-  DocumentReference? falseinfo;
 
   /// Initialization and disposal methods.
 

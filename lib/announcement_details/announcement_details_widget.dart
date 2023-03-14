@@ -130,7 +130,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
               onPressed: () async {
                 logFirebaseEvent('ANNOUNCEMENT_DETAILS_arrow_back_rounded_');
                 logFirebaseEvent('IconButton_navigate_back');
-                context.pop();
+                context.safePop();
               },
             ),
             title: AutoSizeText(

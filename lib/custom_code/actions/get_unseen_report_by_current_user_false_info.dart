@@ -13,26 +13,32 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future<DocumentReference?> getFalseInformationReportRef() async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  if (currentUser == null) {
+Future<DocumentReference<Map<String, dynamic>>?>
+    getUnseenReportByCurrentUserFalseInfo() async {
+  final user = FirebaseAuth.instance.currentUser;
+
+  if (user == null) {
+    // User not logged in
     return null;
   }
 
   final currentUserRef =
-      FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+      FirebaseFirestore.instance.collection('users').doc(user.uid);
 
-  final falseReportSnapshot = await FirebaseFirestore.instance
-      .collection('false_information_report')
-      .where('isDeclined', isEqualTo: false)
-      .where('isConfirmedbySA', isEqualTo: true)
-      .where('reported_by', isEqualTo: currentUserRef)
+  final snapshot = await FirebaseFirestore.instance
+      .collection('unethical_illegal_conduct_report')
       .where('isSeen', isEqualTo: false)
+      .where('isConfirmbySA', isEqualTo: true)
+      .where('report_by', isEqualTo: currentUserRef)
+      .where('isDeclined', isEqualTo: false)
+      .limit(1) // Limit to 1 document
       .get();
 
-  if (falseReportSnapshot.docs.isEmpty) {
+  if (snapshot.docs.isEmpty) {
+    // No matching document found
     return null;
   }
 
-  return falseReportSnapshot.docs.first.reference;
+  // Return the document reference of the first matching document
+  return snapshot.docs.first.reference;
 }

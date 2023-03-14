@@ -308,7 +308,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       'LOGIN_PAGE_Text_ncc5pr6b_ON_TAP');
                                   logFirebaseEvent('Text_navigate_to');
 
-                                  context.pushNamed('forgotPassword');
+                                  context.goNamed(
+                                    'forgotPassword',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
                                 },
                                 child: Text(
                                   'Forgot Password?',

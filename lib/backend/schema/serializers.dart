@@ -14,7 +14,6 @@ import 'unethical_illegal_conduct_report_record.dart';
 import 'false_information_report_record.dart';
 import 'memoralization_report_record.dart';
 import 'monthly_created_event_record.dart';
-import 'active_user_counts_record.dart';
 
 import 'index.dart';
 
@@ -39,7 +38,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   FalseInformationReportRecord,
   MemoralizationReportRecord,
   MonthlyCreatedEventRecord,
-  ActiveUserCountsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

@@ -50,6 +50,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   int? get duration;
 
+  int? get age;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -68,7 +70,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..isDeleted = false
     ..deviceType = ''
     ..screenName = ''
-    ..duration = 0;
+    ..duration = 0
+    ..age = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -110,6 +113,7 @@ Map<String, dynamic> createUsersRecordData({
   String? deviceType,
   String? screenName,
   int? duration,
+  int? age,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -132,7 +136,8 @@ Map<String, dynamic> createUsersRecordData({
         ..endTime = endTime
         ..deviceType = deviceType
         ..screenName = screenName
-        ..duration = duration,
+        ..duration = duration
+        ..age = age,
     ),
   );
 

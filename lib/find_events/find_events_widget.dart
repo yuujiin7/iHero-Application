@@ -605,9 +605,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'FIND_EVENTS_keyboard_backspace_ICN_ON_TA');
-                                  logFirebaseEvent('IconButton_navigate_to');
-
-                                  context.goNamed('HomeScreen');
+                                  logFirebaseEvent('IconButton_navigate_back');
+                                  context.safePop();
                                 },
                               ),
                               Text(

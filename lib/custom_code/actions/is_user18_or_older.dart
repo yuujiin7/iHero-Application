@@ -17,5 +17,5 @@ bool isUser18OrOlder(DateTime selectedDate) {
       (selectedDate.month == now.month && selectedDate.day > now.day)) {
     age--;
   }
-  return age >= 7;
+  return age >= 18;
 }
