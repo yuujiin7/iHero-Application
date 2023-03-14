@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/flutter_flow_youtube_player.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:badges/badges.dart' as badges;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,6 +22,8 @@ import 'package:provider/provider.dart';
 class HomeScreenModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - updateMeritScoreForCurrentUser] action in HomeScreen widget.
+  String? result;
   // Stores action output result for [Custom Action - getUnseenReportByCurrentUser] action in HomeScreen widget.
   DocumentReference? unethical;
   // Stores action output result for [Custom Action - getUnseenReportByCurrentUserFalseInfo] action in HomeScreen widget.

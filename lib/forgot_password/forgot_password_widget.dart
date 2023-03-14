@@ -37,22 +37,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
       logFirebaseEvent('FORGOT_PASSWORD_forgotPassword_ON_LOAD');
       logFirebaseEvent('forgotPassword_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('forgotPassword_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Forgot Password',
-      );
     });
 
     _model.emailAddressController ??= TextEditingController();

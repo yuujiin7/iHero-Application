@@ -267,7 +267,18 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                             'ONBOARDING_PAGE_CONTINUE_BTN_ON_TAP');
                                         logFirebaseEvent('Button_navigate_to');
 
-                                        context.goNamed('Login');
+                                        context.goNamed(
+                                          'Login',
+                                          extra: <String, dynamic>{
+                                            kTransitionInfoKey: TransitionInfo(
+                                              hasTransition: true,
+                                              transitionType:
+                                                  PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 0),
+                                            ),
+                                          },
+                                        );
                                       },
                                       text: 'Continue',
                                       options: FFButtonOptions(
