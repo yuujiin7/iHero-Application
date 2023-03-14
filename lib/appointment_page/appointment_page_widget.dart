@@ -13,6 +13,7 @@ import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -99,6 +100,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                 wrapWithModel(
                   model: _model.backComponentModel,
                   updateCallback: () => setState(() {}),
+                  updateOnChange: true,
                   child: BackComponentWidget(),
                 ),
                 Padding(
@@ -425,6 +427,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'APPOINTMENT_date_range_outlined_ICN_ON_T');
+                                var _shouldSetState = false;
                                 logFirebaseEvent('IconButton_date_time_picker');
                                 final _datePickedDate = await showDatePicker(
                                   context: context,
@@ -442,6 +445,78 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                     );
                                   });
                                 }
+                                logFirebaseEvent('IconButton_custom_action');
+                                _model.age = await actions.isUser18OrOlder(
+                                  _model.datePicked!,
+                                );
+                                _shouldSetState = true;
+                                if (_model.age!) {
+                                  logFirebaseEvent('IconButton_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('Congratulations!'),
+                                        content: Text(
+                                            'You are eligible to register.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) setState(() {});
+                                  return;
+                                } else {
+                                  logFirebaseEvent('IconButton_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(
+                                            'You are not eligible to register.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  logFirebaseEvent(
+                                      'IconButton_clear_text_fields');
+                                  setState(() {
+                                    _model.fullNameController?.clear();
+                                    _model.nationalityController?.clear();
+                                    _model.civilStatusController?.clear();
+                                    _model.addressController?.clear();
+                                    _model.contactNumberController?.clear();
+                                    _model.emailController?.clear();
+                                  });
+                                  logFirebaseEvent('IconButton_delete_media');
+                                  await FirebaseStorage.instance
+                                      .refFromURL(_model.uploadedFileUrl1)
+                                      .delete();
+                                  logFirebaseEvent('IconButton_delete_media');
+                                  await FirebaseStorage.instance
+                                      .refFromURL(
+                                          _model.uploadedFileUrls2.first)
+                                      .delete();
+                                  logFirebaseEvent('IconButton_delete_media');
+                                  await FirebaseStorage.instance
+                                      .refFromURL(_model.uploadedFileUrls2.last)
+                                      .delete();
+                                  if (_shouldSetState) setState(() {});
+                                  return;
+                                }
+
+                                if (_shouldSetState) setState(() {});
                               },
                             ),
                           ],
@@ -467,7 +542,12 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: FlutterFlowDropDown<String>(
-                          options: ['Male', 'Female'],
+                          options: [
+                            'Male',
+                            'Female',
+                            'Non-Binary',
+                            'Prefer not to say'
+                          ],
                           onChanged: (val) =>
                               setState(() => _model.genderValue = val),
                           width: 180.0,

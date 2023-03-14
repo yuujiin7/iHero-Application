@@ -18,3 +18,4 @@ export 'get_unethical_report_ref.dart' show getUnethicalReportRef;
 export 'get_memorialization_report_ref.dart' show getMemorializationReportRef;
 export 'get_false_information_report_ref.dart'
     show getFalseInformationReportRef;
+export 'is_user18_or_older.dart' show isUser18OrOlder;

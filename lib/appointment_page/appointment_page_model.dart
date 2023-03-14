@@ -13,6 +13,7 @@ import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -52,6 +53,8 @@ class AppointmentPageModel extends FlutterFlowModel {
   }
 
   DateTime? datePicked;
+  // Stores action output result for [Custom Action - isUser18OrOlder] action in IconButton widget.
+  bool? age;
   // State field(s) for gender widget.
   String? genderValue;
   // State field(s) for nationality widget.
