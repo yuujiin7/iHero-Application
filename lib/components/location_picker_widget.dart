@@ -106,8 +106,51 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
                     action: () async {
                       logFirebaseEvent(
                           'LOCATION_PICKER_Container_o679gi5k_CALLB');
-                      logFirebaseEvent('PlacePicker_bottom_sheet');
-                      Navigator.pop(context);
+                      logFirebaseEvent('PlacePicker_alert_dialog');
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                content: Text('Are you sure?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Confirm'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
+                      if (confirmDialogResponse) {
+                        logFirebaseEvent('PlacePicker_alert_dialog');
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              content: Text('Location is picked.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        logFirebaseEvent('PlacePicker_bottom_sheet');
+                        Navigator.pop(context);
+                        return;
+                      } else {
+                        return;
+                      }
                     },
                   ),
                 ),

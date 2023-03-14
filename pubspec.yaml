@@ -112,11 +112,17 @@ dependencies:
   video_player_avfoundation: 2.3.5
   video_player_platform_interface: 5.1.3
   video_player_web: 2.0.12
+  youtube_player_iframe: 3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+
+dependency_overrides:
+  webview_flutter_android: 2.10.3
+  webview_flutter_platform_interface: 1.9.5
+  webview_flutter_wkwebview: 2.9.5
 
 dev_dependencies:
   build_runner: 2.2.0

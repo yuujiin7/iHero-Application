@@ -113,8 +113,40 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                     onPressed: () async {
                                       logFirebaseEvent(
                                           'CALENDAR_COMP_CANCEL_BTN_ON_TAP');
-                                      logFirebaseEvent('Button_bottom_sheet');
-                                      Navigator.pop(context);
+                                      logFirebaseEvent('Button_alert_dialog');
+                                      var confirmDialogResponse =
+                                          await showDialog<bool>(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    content: Text('Cancel?'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                false),
+                                                        child: Text('No'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                true),
+                                                        child: Text('Yes'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ) ??
+                                              false;
+                                      if (confirmDialogResponse) {
+                                        logFirebaseEvent('Button_bottom_sheet');
+                                        Navigator.pop(context);
+                                        return;
+                                      } else {
+                                        return;
+                                      }
                                     },
                                     text: 'CANCEL',
                                     options: FFButtonOptions(
@@ -151,23 +183,57 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'CALENDAR_COMP_SUBMIT_BTN_ON_TAP');
-                                    if (FFAppState().endDate == null) {
-                                      logFirebaseEvent(
-                                          'Button_update_app_state');
-                                      FFAppState().update(() {
-                                        FFAppState().endDate =
-                                            functions.futureDate(
-                                                FFAppState().startDate,
-                                                0,
-                                                0,
-                                                0,
-                                                1);
-                                      });
-                                      logFirebaseEvent('Button_bottom_sheet');
-                                      Navigator.pop(context);
+                                    logFirebaseEvent('Button_alert_dialog');
+                                    var confirmDialogResponse =
+                                        await showDialog<bool>(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  content:
+                                                      Text('Pick this date?'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext,
+                                                              false),
+                                                      child: Text('No'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext,
+                                                              true),
+                                                      child: Text('Yes'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ) ??
+                                            false;
+                                    if (confirmDialogResponse) {
+                                      if (FFAppState().endDate == null) {
+                                        logFirebaseEvent(
+                                            'Button_update_app_state');
+                                        FFAppState().update(() {
+                                          FFAppState().endDate =
+                                              functions.futureDate(
+                                                  FFAppState().startDate,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1);
+                                        });
+                                        logFirebaseEvent('Button_bottom_sheet');
+                                        Navigator.pop(context);
+                                        return;
+                                      } else {
+                                        logFirebaseEvent('Button_bottom_sheet');
+                                        Navigator.pop(context);
+                                        return;
+                                      }
                                     } else {
-                                      logFirebaseEvent('Button_bottom_sheet');
-                                      Navigator.pop(context);
+                                      return;
                                     }
                                   },
                                   text: 'SUBMIT',

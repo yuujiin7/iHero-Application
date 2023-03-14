@@ -248,16 +248,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'helpCenter',
-              path: 'helpCenter',
-              requireAuth: true,
-              builder: (context, params) => HelpCenterWidget(),
-            ),
-            FFRoute(
               name: 'FAQs',
               path: 'fAQs',
               requireAuth: true,
               builder: (context, params) => FAQsWidget(),
+            ),
+            FFRoute(
+              name: 'helpCenter',
+              path: 'helpCenter',
+              requireAuth: true,
+              builder: (context, params) => HelpCenterWidget(),
             ),
             FFRoute(
               name: 'ReportingAbuse',

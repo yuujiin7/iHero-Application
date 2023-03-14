@@ -27,8 +27,8 @@ export '/volunteer_to_event/volunteer_to_event_widget.dart'
 export '/appointments/appointments_widget.dart' show AppointmentsWidget;
 export '/event_full_detail/event_full_detail_widget.dart'
     show EventFullDetailWidget;
-export '/help_center/help_center_widget.dart' show HelpCenterWidget;
 export '/f_a_qs/f_a_qs_widget.dart' show FAQsWidget;
+export '/help_center/help_center_widget.dart' show HelpCenterWidget;
 export '/reporting_abuse/reporting_abuse_widget.dart' show ReportingAbuseWidget;
 export '/credit_score/credit_score_widget.dart' show CreditScoreWidget;
 export '/manage_d_p_a/manage_d_p_a_widget.dart' show ManageDPAWidget;
