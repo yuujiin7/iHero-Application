@@ -209,9 +209,11 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.textFieldController,
+                                maxLength: 50,
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -491,9 +493,11 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                             ),
                             child: TextFormField(
                               controller: _model.descriptionEventController,
+                              maxLength: 500,
                               textCapitalization: TextCapitalization.words,
                               obscureText: false,
                               decoration: InputDecoration(
+                                counterText: "",
                                 hintText: 'Description',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .bodyText1

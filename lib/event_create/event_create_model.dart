@@ -63,7 +63,7 @@ class EventCreateModel extends FlutterFlowModel {
     }
 
     if (val.length < 5) {
-      return 'Min. 5 character';
+      return 'Min 5 character';
     }
     if (val.length > 500) {
       return 'Max 500 character';
@@ -139,8 +139,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 5) {
-      return 'Max 5 character';
+    if (val.length > 4) {
+      return 'Max 4 character';
     }
 
     return null;

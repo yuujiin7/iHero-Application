@@ -27,11 +27,11 @@ class ChangePasswordModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 10) {
-      return 'Min 10 character';
+    if (val.length < 8) {
+      return 'Min 8 character';
     }
-    if (val.length > 25) {
-      return 'Max 25 character';
+    if (val.length > 100) {
+      return 'Max 100 character';
     }
 
     return null;
@@ -46,15 +46,15 @@ class ChangePasswordModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 10) {
-      return 'Requires at least 10 characters.';
+    if (val.length < 8) {
+      return 'Requires at least 8 characters.';
     }
-    if (val.length > 25) {
-      return 'Max 25 character';
+    if (val.length > 100) {
+      return 'Max 100 character';
     }
-    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{10,25}\$')
+    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{8,100}\$')
         .hasMatch(val)) {
-      return 'Password must be 10-25 characters long and contain at least one uppercase letter, one digit, and one special character.';
+      return 'Password must be 8-100 characters long and contain at least one uppercase letter, one digit, and one special character.';
     }
     return null;
   }
@@ -69,15 +69,15 @@ class ChangePasswordModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 10) {
-      return 'Min 10 character';
+    if (val.length < 8) {
+      return 'Min 8 character';
     }
-    if (val.length > 52) {
-      return 'Max 25 character';
+    if (val.length > 100) {
+      return 'Max 100 character';
     }
-    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{10,25}\$')
+    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{8,100}\$')
         .hasMatch(val)) {
-      return 'Password must be 10-25 characters long and contain at least one uppercase letter, one digit, and one special character.';
+      return 'Password must be 8-100 characters long and contain at least one uppercase letter, one digit, and one special character.';
     }
     return null;
   }

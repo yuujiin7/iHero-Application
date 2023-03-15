@@ -53,8 +53,8 @@ class ReportFalseInfoModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 500) {
+      return 'Max 500 character';
     }
 
     return null;

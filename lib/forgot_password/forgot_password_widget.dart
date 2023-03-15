@@ -207,8 +207,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       ),
                       child: TextFormField(
                         controller: _model.emailAddressController,
+                        maxLength: 50,
                         obscureText: false,
                         decoration: InputDecoration(
+                          counterText: "",
                           hintText: 'Enter your email...',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyText1

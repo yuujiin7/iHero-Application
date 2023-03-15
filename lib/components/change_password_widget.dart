@@ -111,6 +111,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 0.0, 5.0, 0.0, 5.0),
                             child: TextFormField(
                               controller: _model.currentPasswordController,
+                              maxLength: 100,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.currentPasswordController',
                                 Duration(milliseconds: 200),
@@ -120,6 +121,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               autofillHints: [AutofillHints.password],
                               obscureText: !_model.currentPasswordVisibility,
                               decoration: InputDecoration(
+                                counterText: "",
                                 labelText: 'Current Password',
                                 hintText: 'Current password...',
                                 hintStyle:
@@ -180,6 +182,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 0.0, 5.0, 0.0, 5.0),
                             child: TextFormField(
                               controller: _model.newPasswordController,
+                              maxLength: 100,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.newPasswordController',
                                 Duration(milliseconds: 200),
@@ -189,6 +192,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               autofillHints: [AutofillHints.password],
                               obscureText: !_model.newPasswordVisibility,
                               decoration: InputDecoration(
+                                counterText: "",
                                 labelText: 'New Password',
                                 hintText: 'New password...',
                                 hintStyle:
@@ -248,6 +252,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 0.0, 5.0, 0.0, 5.0),
                             child: TextFormField(
                               controller: _model.confirmNewPsswrodController,
+                              maxLength: 100,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.confirmNewPsswrodController',
                                 Duration(milliseconds: 200),
@@ -276,6 +281,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               autofillHints: [AutofillHints.password],
                               obscureText: !_model.confirmNewPsswrodVisibility,
                               decoration: InputDecoration(
+                                counterText: "",
                                 labelText: 'Confirm new password',
                                 hintText: 'Confirm new password',
                                 hintStyle:
