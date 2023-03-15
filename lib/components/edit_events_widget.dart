@@ -237,6 +237,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       TextEditingController(
                                     text: containerEventsRecord.eventTitle,
                                   ),
+                                  maxLength: 65,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.titleEventController',
                                     Duration(milliseconds: 2000),
@@ -250,6 +251,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   ),
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Event Title',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -356,8 +358,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text:
                                         containerEventsRecord.eventDescription,
                                   ),
+                                  maxLength: 500,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Event Description',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1285,8 +1289,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventInChargePerson,
                                   ),
+                                  maxLength: 50,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Who is in charge?',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1388,8 +1394,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventContactNumber,
                                   ),
+                                  maxLength: 13,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Contact Number',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1493,8 +1501,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord.ageRequirement
                                         .toString(),
                                   ),
+                                  maxLength: 3,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Age Requirement',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1600,8 +1610,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       formatType: FormatType.compact,
                                     ),
                                   ),
+                                  maxLength: 4,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'No. of volunteer needed',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
