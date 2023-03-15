@@ -57,6 +57,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.updateMerit = await actions.updateMeritScoreForCurrentUser1();
         logFirebaseEvent('HomeScreen_backend_call');
 
         final usersUpdateData = createUsersRecordData(
@@ -79,15 +81,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           FFAppState().userlocation = currentUserLocationValue;
         });
         logFirebaseEvent('HomeScreen_custom_action');
-        _model.updateMerit = await actions.updateMeritScoreForCurrentUser1();
-        logFirebaseEvent('HomeScreen_custom_action');
         _model.unethical = await actions.getUnseenReportByCurrentUser();
-        logFirebaseEvent('HomeScreen_custom_action');
-        _model.falseInfo =
-            await actions.getUnseenReportByCurrentUserFalseInfo();
-        logFirebaseEvent('HomeScreen_custom_action');
-        _model.memo =
-            await actions.getUnseenReportByCurrentUserMemorialization();
         if (_model.unethical != null) {
           logFirebaseEvent('HomeScreen_bottom_sheet');
           await showModalBottomSheet(
@@ -104,7 +98,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               );
             },
           ).then((value) => setState(() {}));
+
+          return;
         } else {
+          logFirebaseEvent('HomeScreen_custom_action');
+          _model.falseInfo =
+              await actions.getUnseenReportByCurrentUserFalseInfo();
           if (_model.falseInfo != null) {
             logFirebaseEvent('HomeScreen_bottom_sheet');
             await showModalBottomSheet(
@@ -121,7 +120,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 );
               },
             ).then((value) => setState(() {}));
+
+            return;
           } else {
+            logFirebaseEvent('HomeScreen_custom_action');
+            _model.memo =
+                await actions.getUnseenReportByCurrentUserMemorialization();
             if (_model.memo != null) {
               logFirebaseEvent('HomeScreen_bottom_sheet');
               await showModalBottomSheet(
@@ -138,6 +142,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   );
                 },
               ).then((value) => setState(() {}));
+
+              return;
+            } else {
+              return;
             }
           }
         }

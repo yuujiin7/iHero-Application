@@ -2113,7 +2113,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                           return AlertDialog(
                                                             title: Text('Done'),
                                                             content: Text(
-                                                                'Event is to be confirmed.'),
+                                                                'Event has been edited.'),
                                                             actions: [
                                                               TextButton(
                                                                 onPressed: () =>
@@ -2236,7 +2236,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                           return AlertDialog(
                                                             title: Text('Done'),
                                                             content: Text(
-                                                                'Event is to be confirmed.'),
+                                                                'Event has been edited.'),
                                                             actions: [
                                                               TextButton(
                                                                 onPressed: () =>
