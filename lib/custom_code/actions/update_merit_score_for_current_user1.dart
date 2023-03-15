@@ -8,56 +8,56 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 Future<String> updateMeritScoreForCurrentUser1() async {
-  // Get a reference to the Firestore collection for events
-  final eventsCollection = FirebaseFirestore.instance.collection('events');
+  CollectionReference eventsCollection =
+      FirebaseFirestore.instance.collection('events');
+  CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  String currentUserID = FirebaseAuth.instance.currentUser!.uid;
+  DocumentReference currentUserRef =
+      FirebaseFirestore.instance.collection('users').doc(currentUserID);
 
-  // Get a reference to the Firestore collection for users
-  final usersCollection = FirebaseFirestore.instance.collection('users');
-
-  // Get the current user ID
-  final currentUserID = FirebaseAuth.instance.currentUser!.uid;
-
-  // Get the current user document reference
-  final currentUserRef = usersCollection.doc(currentUserID);
-
-  // Query the events collection for finished events that reference the current user
-  final finishedEventsSnapshot = await eventsCollection
+  QuerySnapshot finishedEventsSnapshot = await eventsCollection
       .where('isEnded', isEqualTo: true)
       .where('volunteer_ref', arrayContains: currentUserRef)
       .where('isMeritScoreUpdated', isEqualTo: false)
       .get();
 
-  // If there are no finished events that reference the current user, return a message
-  if (finishedEventsSnapshot.docs.isEmpty) {
+  if (finishedEventsSnapshot.docs.length == 0) {
     return "None";
   }
 
-  // Update the current user's meritScore by 5
   try {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
-      final currentUserSnapshot = await transaction.get(currentUserRef);
-      final currentMeritScore = currentUserSnapshot['meritScore'] as int;
-      final newMeritScore = currentMeritScore + 5;
-      transaction.update(currentUserRef, {'meritScore': newMeritScore});
+      DocumentSnapshot currentUserSnapshot =
+          await transaction.get(currentUserRef);
+      int currentMeritScore = currentUserSnapshot['meritScore'];
 
-      // Update the 'isMeritScoreUpdated' field for each finished event that references the current user
-      for (final eventSnapshot in finishedEventsSnapshot.docs) {
-        final eventRef = eventSnapshot.reference;
+      if (currentMeritScore < 100) {
+        int newMeritScore = currentMeritScore + 5;
+
+        // Limit the merit score to a maximum of 100
+        if (newMeritScore > 100) {
+          newMeritScore = 100;
+        }
+
+        transaction.update(currentUserRef, {'meritScore': newMeritScore});
+      }
+
+      for (DocumentSnapshot eventSnapshot in finishedEventsSnapshot.docs) {
+        DocumentReference eventRef = eventSnapshot.reference;
         transaction.update(eventRef, {'isMeritScoreUpdated': true});
       }
     });
-  } on FirebaseException catch (e) {
-    // Handle any Firebase related errors
-    return "FirebaseError: ${e.message}";
-  } catch (e) {
-    // Handle any other errors
-    return "Error: $e";
+  } on PlatformException {
+    return "Error";
   }
 
-  // Return a success message
   return "Success";
 }

@@ -215,64 +215,65 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                       Divider(
                                         thickness: 1.0,
                                       ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 72.0,
-                                        decoration: BoxDecoration(
-                                          color: colorFromCssString(
-                                            functions.customColorRating(
-                                                widget.points!),
-                                            defaultColor: Colors.black,
+                                      Expanded(
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: colorFromCssString(
+                                              functions.customColorRating(
+                                                  widget.points!),
+                                              defaultColor: Colors.black,
+                                            ),
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(12.0),
+                                              bottomRight:
+                                                  Radius.circular(12.0),
+                                              topLeft: Radius.circular(0.0),
+                                              topRight: Radius.circular(0.0),
+                                            ),
                                           ),
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(12.0),
-                                            bottomRight: Radius.circular(12.0),
-                                            topLeft: Radius.circular(0.0),
-                                            topRight: Radius.circular(0.0),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 10.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              AuthUserStreamWidget(
-                                                builder: (context) => Text(
-                                                  valueOrDefault<String>(
-                                                    functions.ratingFunction(
-                                                        valueOrDefault(
-                                                            currentUserDocument
-                                                                ?.meritScore,
-                                                            0)),
-                                                    '0',
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10.0, 0.0, 10.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                AuthUserStreamWidget(
+                                                  builder: (context) => Text(
+                                                    valueOrDefault<String>(
+                                                      functions.ratingFunction(
+                                                          valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.meritScore,
+                                                              0)),
+                                                      '0',
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Ubuntu',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryBtnText,
+                                                          fontSize: 32.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family),
+                                                        ),
                                                   ),
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Ubuntu',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryBtnText,
-                                                        fontSize: 32.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1Family),
-                                                      ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
