@@ -51,24 +51,6 @@
       ]
     },
     {
-      "collectionGroup": "registration",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "isDeleted",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "isConfirmbySA",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "display_name",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "comments_and_rate",
       "queryScope": "COLLECTION_GROUP",
       "fields": [

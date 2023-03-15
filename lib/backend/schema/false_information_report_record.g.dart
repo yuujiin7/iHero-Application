@@ -76,6 +76,41 @@ class _$FalseInformationReportRecordSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.isDeclined;
+    if (value != null) {
+      result
+        ..add('isDeclined')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.reason;
+    if (value != null) {
+      result
+        ..add('reason')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isDeleted;
+    if (value != null) {
+      result
+        ..add('isDeleted')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.expiryDate;
+    if (value != null) {
+      result
+        ..add('expiry_date')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.isSeen;
+    if (value != null) {
+      result
+        ..add('isSeen')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -129,6 +164,26 @@ class _$FalseInformationReportRecordSerializer
           result.isConfirmbySA = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'isDeclined':
+          result.isDeclined = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'reason':
+          result.reason = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isDeleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'expiry_date':
+          result.expiryDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'isSeen':
+          result.isSeen = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -158,6 +213,16 @@ class _$FalseInformationReportRecord extends FalseInformationReportRecord {
   @override
   final bool? isConfirmbySA;
   @override
+  final bool? isDeclined;
+  @override
+  final String? reason;
+  @override
+  final bool? isDeleted;
+  @override
+  final DateTime? expiryDate;
+  @override
+  final bool? isSeen;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$FalseInformationReportRecord(
@@ -172,6 +237,11 @@ class _$FalseInformationReportRecord extends FalseInformationReportRecord {
       this.reportBy,
       this.reportedAt,
       this.isConfirmbySA,
+      this.isDeclined,
+      this.reason,
+      this.isDeleted,
+      this.expiryDate,
+      this.isSeen,
       this.ffRef})
       : super._();
 
@@ -195,6 +265,11 @@ class _$FalseInformationReportRecord extends FalseInformationReportRecord {
         reportBy == other.reportBy &&
         reportedAt == other.reportedAt &&
         isConfirmbySA == other.isConfirmbySA &&
+        isDeclined == other.isDeclined &&
+        reason == other.reason &&
+        isDeleted == other.isDeleted &&
+        expiryDate == other.expiryDate &&
+        isSeen == other.isSeen &&
         ffRef == other.ffRef;
   }
 
@@ -205,12 +280,24 @@ class _$FalseInformationReportRecord extends FalseInformationReportRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, fullName.hashCode), email.hashCode),
-                            reportDetail.hashCode),
-                        photoUrl.hashCode),
-                    reportBy.hashCode),
-                reportedAt.hashCode),
-            isConfirmbySA.hashCode),
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, fullName.hashCode),
+                                                    email.hashCode),
+                                                reportDetail.hashCode),
+                                            photoUrl.hashCode),
+                                        reportBy.hashCode),
+                                    reportedAt.hashCode),
+                                isConfirmbySA.hashCode),
+                            isDeclined.hashCode),
+                        reason.hashCode),
+                    isDeleted.hashCode),
+                expiryDate.hashCode),
+            isSeen.hashCode),
         ffRef.hashCode));
   }
 
@@ -224,6 +311,11 @@ class _$FalseInformationReportRecord extends FalseInformationReportRecord {
           ..add('reportBy', reportBy)
           ..add('reportedAt', reportedAt)
           ..add('isConfirmbySA', isConfirmbySA)
+          ..add('isDeclined', isDeclined)
+          ..add('reason', reason)
+          ..add('isDeleted', isDeleted)
+          ..add('expiryDate', expiryDate)
+          ..add('isSeen', isSeen)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -265,6 +357,26 @@ class FalseInformationReportRecordBuilder
   set isConfirmbySA(bool? isConfirmbySA) =>
       _$this._isConfirmbySA = isConfirmbySA;
 
+  bool? _isDeclined;
+  bool? get isDeclined => _$this._isDeclined;
+  set isDeclined(bool? isDeclined) => _$this._isDeclined = isDeclined;
+
+  String? _reason;
+  String? get reason => _$this._reason;
+  set reason(String? reason) => _$this._reason = reason;
+
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
+
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _$this._expiryDate;
+  set expiryDate(DateTime? expiryDate) => _$this._expiryDate = expiryDate;
+
+  bool? _isSeen;
+  bool? get isSeen => _$this._isSeen;
+  set isSeen(bool? isSeen) => _$this._isSeen = isSeen;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -283,6 +395,11 @@ class FalseInformationReportRecordBuilder
       _reportBy = $v.reportBy;
       _reportedAt = $v.reportedAt;
       _isConfirmbySA = $v.isConfirmbySA;
+      _isDeclined = $v.isDeclined;
+      _reason = $v.reason;
+      _isDeleted = $v.isDeleted;
+      _expiryDate = $v.expiryDate;
+      _isSeen = $v.isSeen;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -313,6 +430,11 @@ class FalseInformationReportRecordBuilder
             reportBy: reportBy,
             reportedAt: reportedAt,
             isConfirmbySA: isConfirmbySA,
+            isDeclined: isDeclined,
+            reason: reason,
+            isDeleted: isDeleted,
+            expiryDate: expiryDate,
+            isSeen: isSeen,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

@@ -63,14 +63,6 @@ class _$PartnerOrgRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.orgType;
-    if (value != null) {
-      result
-        ..add('orgType')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
-    }
     value = object.email;
     if (value != null) {
       result
@@ -113,6 +105,27 @@ class _$PartnerOrgRecordSerializer
         ..add('expiry_date')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
+    }
+    value = object.createdBy;
+    if (value != null) {
+      result
+        ..add('created_by')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.createdAt;
+    if (value != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.orgType;
+    if (value != null) {
+      result
+        ..add('orgType')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -161,12 +174,6 @@ class _$PartnerOrgRecordSerializer
           result.mission = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'orgType':
-          result.orgType.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
-          break;
         case 'email':
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -192,6 +199,18 @@ class _$PartnerOrgRecordSerializer
         case 'expiry_date':
           result.expiryDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'created_by':
+          result.createdBy = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'orgType':
+          result.orgType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -220,8 +239,6 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
   @override
   final String? mission;
   @override
-  final BuiltList<String>? orgType;
-  @override
   final String? email;
   @override
   final String? address;
@@ -233,6 +250,12 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
   final bool? isDeleted;
   @override
   final DateTime? expiryDate;
+  @override
+  final DateTime? createdBy;
+  @override
+  final DateTime? createdAt;
+  @override
+  final String? orgType;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -247,13 +270,15 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
       this.contactPerson,
       this.contactNumber,
       this.mission,
-      this.orgType,
       this.email,
       this.address,
       this.photoUrl,
       this.adminRef,
       this.isDeleted,
       this.expiryDate,
+      this.createdBy,
+      this.createdAt,
+      this.orgType,
       this.ffRef})
       : super._();
 
@@ -275,13 +300,15 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
         contactPerson == other.contactPerson &&
         contactNumber == other.contactNumber &&
         mission == other.mission &&
-        orgType == other.orgType &&
         email == other.email &&
         address == other.address &&
         photoUrl == other.photoUrl &&
         adminRef == other.adminRef &&
         isDeleted == other.isDeleted &&
         expiryDate == other.expiryDate &&
+        createdBy == other.createdBy &&
+        createdAt == other.createdAt &&
+        orgType == other.orgType &&
         ffRef == other.ffRef;
   }
 
@@ -301,21 +328,27 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            0,
-                                                            websiteUrl
+                                                            $jc(
+                                                                $jc(
+                                                                    0,
+                                                                    websiteUrl
+                                                                        .hashCode),
+                                                                orgName
+                                                                    .hashCode),
+                                                            description
                                                                 .hashCode),
-                                                        orgName.hashCode),
-                                                    description.hashCode),
-                                                contactPerson.hashCode),
-                                            contactNumber.hashCode),
-                                        mission.hashCode),
-                                    orgType.hashCode),
-                                email.hashCode),
-                            address.hashCode),
-                        photoUrl.hashCode),
-                    adminRef.hashCode),
-                isDeleted.hashCode),
-            expiryDate.hashCode),
+                                                        contactPerson.hashCode),
+                                                    contactNumber.hashCode),
+                                                mission.hashCode),
+                                            email.hashCode),
+                                        address.hashCode),
+                                    photoUrl.hashCode),
+                                adminRef.hashCode),
+                            isDeleted.hashCode),
+                        expiryDate.hashCode),
+                    createdBy.hashCode),
+                createdAt.hashCode),
+            orgType.hashCode),
         ffRef.hashCode));
   }
 
@@ -328,13 +361,15 @@ class _$PartnerOrgRecord extends PartnerOrgRecord {
           ..add('contactPerson', contactPerson)
           ..add('contactNumber', contactNumber)
           ..add('mission', mission)
-          ..add('orgType', orgType)
           ..add('email', email)
           ..add('address', address)
           ..add('photoUrl', photoUrl)
           ..add('adminRef', adminRef)
           ..add('isDeleted', isDeleted)
           ..add('expiryDate', expiryDate)
+          ..add('createdBy', createdBy)
+          ..add('createdAt', createdAt)
+          ..add('orgType', orgType)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -370,11 +405,6 @@ class PartnerOrgRecordBuilder
   String? get mission => _$this._mission;
   set mission(String? mission) => _$this._mission = mission;
 
-  ListBuilder<String>? _orgType;
-  ListBuilder<String> get orgType =>
-      _$this._orgType ??= new ListBuilder<String>();
-  set orgType(ListBuilder<String>? orgType) => _$this._orgType = orgType;
-
   String? _email;
   String? get email => _$this._email;
   set email(String? email) => _$this._email = email;
@@ -400,6 +430,18 @@ class PartnerOrgRecordBuilder
   DateTime? get expiryDate => _$this._expiryDate;
   set expiryDate(DateTime? expiryDate) => _$this._expiryDate = expiryDate;
 
+  DateTime? _createdBy;
+  DateTime? get createdBy => _$this._createdBy;
+  set createdBy(DateTime? createdBy) => _$this._createdBy = createdBy;
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _$this._createdAt;
+  set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
+
+  String? _orgType;
+  String? get orgType => _$this._orgType;
+  set orgType(String? orgType) => _$this._orgType = orgType;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -417,13 +459,15 @@ class PartnerOrgRecordBuilder
       _contactPerson = $v.contactPerson;
       _contactNumber = $v.contactNumber;
       _mission = $v.mission;
-      _orgType = $v.orgType?.toBuilder();
       _email = $v.email;
       _address = $v.address;
       _photoUrl = $v.photoUrl;
       _adminRef = $v.adminRef;
       _isDeleted = $v.isDeleted;
       _expiryDate = $v.expiryDate;
+      _createdBy = $v.createdBy;
+      _createdAt = $v.createdAt;
+      _orgType = $v.orgType;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -445,35 +489,24 @@ class PartnerOrgRecordBuilder
   PartnerOrgRecord build() => _build();
 
   _$PartnerOrgRecord _build() {
-    _$PartnerOrgRecord _$result;
-    try {
-      _$result = _$v ??
-          new _$PartnerOrgRecord._(
-              websiteUrl: websiteUrl,
-              orgName: orgName,
-              description: description,
-              contactPerson: contactPerson,
-              contactNumber: contactNumber,
-              mission: mission,
-              orgType: _orgType?.build(),
-              email: email,
-              address: address,
-              photoUrl: photoUrl,
-              adminRef: adminRef,
-              isDeleted: isDeleted,
-              expiryDate: expiryDate,
-              ffRef: ffRef);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'orgType';
-        _orgType?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'PartnerOrgRecord', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$PartnerOrgRecord._(
+            websiteUrl: websiteUrl,
+            orgName: orgName,
+            description: description,
+            contactPerson: contactPerson,
+            contactNumber: contactNumber,
+            mission: mission,
+            email: email,
+            address: address,
+            photoUrl: photoUrl,
+            adminRef: adminRef,
+            isDeleted: isDeleted,
+            expiryDate: expiryDate,
+            createdBy: createdBy,
+            createdAt: createdAt,
+            orgType: orgType,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

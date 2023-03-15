@@ -106,12 +106,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.numberOfRemainingDays;
-    if (value != null) {
-      result
-        ..add('numberOfRemainingDays')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.volunteerCount;
     if (value != null) {
       result
@@ -132,13 +126,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add('eventContactNumber')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
-    }
-    value = object.archiveDate;
-    if (value != null) {
-      result
-        ..add('archive_date')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DateTime)));
     }
     value = object.isConfirmbySA;
     if (value != null) {
@@ -185,20 +172,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add(serializers.serialize(value,
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
-    }
-    value = object.eventStartDate;
-    if (value != null) {
-      result
-        ..add('eventStartDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.eventEndDate;
-    if (value != null) {
-      result
-        ..add('eventEndDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
     }
     value = object.isReqCancel;
     if (value != null) {
@@ -289,6 +262,29 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.rateRef;
+    if (value != null) {
+      result
+        ..add('rate_ref')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(
+                  DocumentReference, const [const FullType.nullable(Object)])
+            ])));
+    }
+    value = object.ageRequirement;
+    if (value != null) {
+      result
+        ..add('ageRequirement')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.isMeritScoreUpdated;
+    if (value != null) {
+      result
+        ..add('isMeritScoreUpdated')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -364,10 +360,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
           result.isEnded = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
-        case 'numberOfRemainingDays':
-          result.numberOfRemainingDays = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'volunteer_count':
           result.volunteerCount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
@@ -379,10 +371,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         case 'eventContactNumber':
           result.eventContactNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
-          break;
-        case 'archive_date':
-          result.archiveDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'isConfirmbySA':
           result.isConfirmbySA = serializers.deserialize(value,
@@ -412,14 +400,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
-          break;
-        case 'eventStartDate':
-          result.eventStartDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'eventEndDate':
-          result.eventEndDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
         case 'isReqCancel':
           result.isReqCancel = serializers.deserialize(value,
@@ -476,6 +456,21 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
           result.isDeclined = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'rate_ref':
+          result.rateRef.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(
+                    DocumentReference, const [const FullType.nullable(Object)])
+              ]))! as BuiltList<Object?>);
+          break;
+        case 'ageRequirement':
+          result.ageRequirement = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'isMeritScoreUpdated':
+          result.isMeritScoreUpdated = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -515,15 +510,11 @@ class _$EventsRecord extends EventsRecord {
   @override
   final bool? isEnded;
   @override
-  final int? numberOfRemainingDays;
-  @override
   final double? volunteerCount;
   @override
   final bool? isDeleted;
   @override
   final String? eventContactNumber;
-  @override
-  final DateTime? archiveDate;
   @override
   final bool? isConfirmbySA;
   @override
@@ -536,10 +527,6 @@ class _$EventsRecord extends EventsRecord {
   final DateTime? eventDateEnd;
   @override
   final BuiltList<String>? organizationPartner;
-  @override
-  final String? eventStartDate;
-  @override
-  final String? eventEndDate;
   @override
   final bool? isReqCancel;
   @override
@@ -565,6 +552,12 @@ class _$EventsRecord extends EventsRecord {
   @override
   final bool? isDeclined;
   @override
+  final BuiltList<DocumentReference<Object?>>? rateRef;
+  @override
+  final int? ageRequirement;
+  @override
+  final bool? isMeritScoreUpdated;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$EventsRecord([void Function(EventsRecordBuilder)? updates]) =>
@@ -583,19 +576,15 @@ class _$EventsRecord extends EventsRecord {
       this.createdDate,
       this.eventTag,
       this.isEnded,
-      this.numberOfRemainingDays,
       this.volunteerCount,
       this.isDeleted,
       this.eventContactNumber,
-      this.archiveDate,
       this.isConfirmbySA,
       this.expiryDate,
       this.adminRef,
       this.eventDateStart,
       this.eventDateEnd,
       this.organizationPartner,
-      this.eventStartDate,
-      this.eventEndDate,
       this.isReqCancel,
       this.volunteerRef,
       this.partnerOrgRef,
@@ -608,6 +597,9 @@ class _$EventsRecord extends EventsRecord {
       this.rateCount,
       this.reason,
       this.isDeclined,
+      this.rateRef,
+      this.ageRequirement,
+      this.isMeritScoreUpdated,
       this.ffRef})
       : super._();
 
@@ -634,19 +626,15 @@ class _$EventsRecord extends EventsRecord {
         createdDate == other.createdDate &&
         eventTag == other.eventTag &&
         isEnded == other.isEnded &&
-        numberOfRemainingDays == other.numberOfRemainingDays &&
         volunteerCount == other.volunteerCount &&
         isDeleted == other.isDeleted &&
         eventContactNumber == other.eventContactNumber &&
-        archiveDate == other.archiveDate &&
         isConfirmbySA == other.isConfirmbySA &&
         expiryDate == other.expiryDate &&
         adminRef == other.adminRef &&
         eventDateStart == other.eventDateStart &&
         eventDateEnd == other.eventDateEnd &&
         organizationPartner == other.organizationPartner &&
-        eventStartDate == other.eventStartDate &&
-        eventEndDate == other.eventEndDate &&
         isReqCancel == other.isReqCancel &&
         volunteerRef == other.volunteerRef &&
         partnerOrgRef == other.partnerOrgRef &&
@@ -659,6 +647,9 @@ class _$EventsRecord extends EventsRecord {
         rateCount == other.rateCount &&
         reason == other.reason &&
         isDeclined == other.isDeclined &&
+        rateRef == other.rateRef &&
+        ageRequirement == other.ageRequirement &&
+        isMeritScoreUpdated == other.isMeritScoreUpdated &&
         ffRef == other.ffRef;
   }
 
@@ -682,25 +673,25 @@ class _$EventsRecord extends EventsRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), numberOfRemainingDays.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), archiveDate.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode),
-                                                                                adminRef.hashCode),
-                                                                            eventDateStart.hashCode),
-                                                                        eventDateEnd.hashCode),
-                                                                    organizationPartner.hashCode),
-                                                                eventStartDate.hashCode),
-                                                            eventEndDate.hashCode),
-                                                        isReqCancel.hashCode),
-                                                    volunteerRef.hashCode),
-                                                partnerOrgRef.hashCode),
-                                            volunteerList.hashCode),
-                                        startTime.hashCode),
-                                    endTime.hashCode),
-                                isRecurring.hashCode),
-                            recurranceDate.hashCode),
-                        rateTotal.hashCode),
-                    rateCount.hashCode),
-                reason.hashCode),
-            isDeclined.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode), adminRef.hashCode),
+                                                                                eventDateStart.hashCode),
+                                                                            eventDateEnd.hashCode),
+                                                                        organizationPartner.hashCode),
+                                                                    isReqCancel.hashCode),
+                                                                volunteerRef.hashCode),
+                                                            partnerOrgRef.hashCode),
+                                                        volunteerList.hashCode),
+                                                    startTime.hashCode),
+                                                endTime.hashCode),
+                                            isRecurring.hashCode),
+                                        recurranceDate.hashCode),
+                                    rateTotal.hashCode),
+                                rateCount.hashCode),
+                            reason.hashCode),
+                        isDeclined.hashCode),
+                    rateRef.hashCode),
+                ageRequirement.hashCode),
+            isMeritScoreUpdated.hashCode),
         ffRef.hashCode));
   }
 
@@ -719,19 +710,15 @@ class _$EventsRecord extends EventsRecord {
           ..add('createdDate', createdDate)
           ..add('eventTag', eventTag)
           ..add('isEnded', isEnded)
-          ..add('numberOfRemainingDays', numberOfRemainingDays)
           ..add('volunteerCount', volunteerCount)
           ..add('isDeleted', isDeleted)
           ..add('eventContactNumber', eventContactNumber)
-          ..add('archiveDate', archiveDate)
           ..add('isConfirmbySA', isConfirmbySA)
           ..add('expiryDate', expiryDate)
           ..add('adminRef', adminRef)
           ..add('eventDateStart', eventDateStart)
           ..add('eventDateEnd', eventDateEnd)
           ..add('organizationPartner', organizationPartner)
-          ..add('eventStartDate', eventStartDate)
-          ..add('eventEndDate', eventEndDate)
           ..add('isReqCancel', isReqCancel)
           ..add('volunteerRef', volunteerRef)
           ..add('partnerOrgRef', partnerOrgRef)
@@ -744,6 +731,9 @@ class _$EventsRecord extends EventsRecord {
           ..add('rateCount', rateCount)
           ..add('reason', reason)
           ..add('isDeclined', isDeclined)
+          ..add('rateRef', rateRef)
+          ..add('ageRequirement', ageRequirement)
+          ..add('isMeritScoreUpdated', isMeritScoreUpdated)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -810,11 +800,6 @@ class EventsRecordBuilder
   bool? get isEnded => _$this._isEnded;
   set isEnded(bool? isEnded) => _$this._isEnded = isEnded;
 
-  int? _numberOfRemainingDays;
-  int? get numberOfRemainingDays => _$this._numberOfRemainingDays;
-  set numberOfRemainingDays(int? numberOfRemainingDays) =>
-      _$this._numberOfRemainingDays = numberOfRemainingDays;
-
   double? _volunteerCount;
   double? get volunteerCount => _$this._volunteerCount;
   set volunteerCount(double? volunteerCount) =>
@@ -828,10 +813,6 @@ class EventsRecordBuilder
   String? get eventContactNumber => _$this._eventContactNumber;
   set eventContactNumber(String? eventContactNumber) =>
       _$this._eventContactNumber = eventContactNumber;
-
-  DateTime? _archiveDate;
-  DateTime? get archiveDate => _$this._archiveDate;
-  set archiveDate(DateTime? archiveDate) => _$this._archiveDate = archiveDate;
 
   bool? _isConfirmbySA;
   bool? get isConfirmbySA => _$this._isConfirmbySA;
@@ -863,15 +844,6 @@ class EventsRecordBuilder
       _$this._organizationPartner ??= new ListBuilder<String>();
   set organizationPartner(ListBuilder<String>? organizationPartner) =>
       _$this._organizationPartner = organizationPartner;
-
-  String? _eventStartDate;
-  String? get eventStartDate => _$this._eventStartDate;
-  set eventStartDate(String? eventStartDate) =>
-      _$this._eventStartDate = eventStartDate;
-
-  String? _eventEndDate;
-  String? get eventEndDate => _$this._eventEndDate;
-  set eventEndDate(String? eventEndDate) => _$this._eventEndDate = eventEndDate;
 
   bool? _isReqCancel;
   bool? get isReqCancel => _$this._isReqCancel;
@@ -927,6 +899,22 @@ class EventsRecordBuilder
   bool? get isDeclined => _$this._isDeclined;
   set isDeclined(bool? isDeclined) => _$this._isDeclined = isDeclined;
 
+  ListBuilder<DocumentReference<Object?>>? _rateRef;
+  ListBuilder<DocumentReference<Object?>> get rateRef =>
+      _$this._rateRef ??= new ListBuilder<DocumentReference<Object?>>();
+  set rateRef(ListBuilder<DocumentReference<Object?>>? rateRef) =>
+      _$this._rateRef = rateRef;
+
+  int? _ageRequirement;
+  int? get ageRequirement => _$this._ageRequirement;
+  set ageRequirement(int? ageRequirement) =>
+      _$this._ageRequirement = ageRequirement;
+
+  bool? _isMeritScoreUpdated;
+  bool? get isMeritScoreUpdated => _$this._isMeritScoreUpdated;
+  set isMeritScoreUpdated(bool? isMeritScoreUpdated) =>
+      _$this._isMeritScoreUpdated = isMeritScoreUpdated;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -950,19 +938,15 @@ class EventsRecordBuilder
       _createdDate = $v.createdDate;
       _eventTag = $v.eventTag?.toBuilder();
       _isEnded = $v.isEnded;
-      _numberOfRemainingDays = $v.numberOfRemainingDays;
       _volunteerCount = $v.volunteerCount;
       _isDeleted = $v.isDeleted;
       _eventContactNumber = $v.eventContactNumber;
-      _archiveDate = $v.archiveDate;
       _isConfirmbySA = $v.isConfirmbySA;
       _expiryDate = $v.expiryDate;
       _adminRef = $v.adminRef?.toBuilder();
       _eventDateStart = $v.eventDateStart;
       _eventDateEnd = $v.eventDateEnd;
       _organizationPartner = $v.organizationPartner?.toBuilder();
-      _eventStartDate = $v.eventStartDate;
-      _eventEndDate = $v.eventEndDate;
       _isReqCancel = $v.isReqCancel;
       _volunteerRef = $v.volunteerRef?.toBuilder();
       _partnerOrgRef = $v.partnerOrgRef;
@@ -975,6 +959,9 @@ class EventsRecordBuilder
       _rateCount = $v.rateCount;
       _reason = $v.reason;
       _isDeclined = $v.isDeclined;
+      _rateRef = $v.rateRef?.toBuilder();
+      _ageRequirement = $v.ageRequirement;
+      _isMeritScoreUpdated = $v.isMeritScoreUpdated;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -1012,19 +999,15 @@ class EventsRecordBuilder
               createdDate: createdDate,
               eventTag: _eventTag?.build(),
               isEnded: isEnded,
-              numberOfRemainingDays: numberOfRemainingDays,
               volunteerCount: volunteerCount,
               isDeleted: isDeleted,
               eventContactNumber: eventContactNumber,
-              archiveDate: archiveDate,
               isConfirmbySA: isConfirmbySA,
               expiryDate: expiryDate,
               adminRef: _adminRef?.build(),
               eventDateStart: eventDateStart,
               eventDateEnd: eventDateEnd,
               organizationPartner: _organizationPartner?.build(),
-              eventStartDate: eventStartDate,
-              eventEndDate: eventEndDate,
               isReqCancel: isReqCancel,
               volunteerRef: _volunteerRef?.build(),
               partnerOrgRef: partnerOrgRef,
@@ -1037,6 +1020,9 @@ class EventsRecordBuilder
               rateCount: rateCount,
               reason: reason,
               isDeclined: isDeclined,
+              rateRef: _rateRef?.build(),
+              ageRequirement: ageRequirement,
+              isMeritScoreUpdated: isMeritScoreUpdated,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -1058,6 +1044,9 @@ class EventsRecordBuilder
 
         _$failedField = 'volunteerList';
         _volunteerList?.build();
+
+        _$failedField = 'rateRef';
+        _rateRef?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'EventsRecord', _$failedField, e.toString());

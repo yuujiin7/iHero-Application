@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -292,7 +293,15 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                       .fromSTEB(
                                                           0.0, 10.0, 0.0, 5.0),
                                                   child: Text(
-                                                    'When did they passed away?',
+                                                    _model.date != null
+                                                        ? dateTimeFormat(
+                                                            'yMMMd',
+                                                            _model.date,
+                                                            locale: FFLocalizations
+                                                                    .of(context)
+                                                                .languageCode,
+                                                          )
+                                                        : 'Date of Death',
                                                     textAlign:
                                                         TextAlign.justify,
                                                     style: FlutterFlowTheme.of(
@@ -344,7 +353,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                             await showDatePicker(
                                           context: context,
                                           initialDate: getCurrentTimestamp,
-                                          firstDate: getCurrentTimestamp,
+                                          firstDate: DateTime(1900),
                                           lastDate: DateTime(2050),
                                         );
 
@@ -369,6 +378,40 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                               _datePickedTime.minute,
                                             );
                                           });
+                                        }
+                                        logFirebaseEvent(
+                                            'IconButton_update_widget_state');
+                                        setState(() {
+                                          _model.date = _model.datePicked;
+                                        });
+                                        if (_model.date! >
+                                            getCurrentTimestamp) {
+                                          logFirebaseEvent(
+                                              'IconButton_alert_dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                content: Text('Invalid date.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          logFirebaseEvent(
+                                              'IconButton_update_widget_state');
+                                          setState(() {
+                                            _model.date = null;
+                                          });
+                                          return;
+                                        } else {
+                                          return;
                                         }
                                       },
                                     ),
@@ -470,7 +513,13 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Upload Photo',
+                                                  valueOrDefault<String>(
+                                                    _model.imgName != null &&
+                                                            _model.imgName != ''
+                                                        ? _model.imgName
+                                                        : 'Upload Photo/Video',
+                                                    'Upload Photo/Video',
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
@@ -581,6 +630,17 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                             return;
                                           }
                                         }
+
+                                        logFirebaseEvent(
+                                            'IconButton_update_widget_state');
+                                        setState(() {
+                                          _model.imgName =
+                                              functions.getFileNamesFromUrls(
+                                                  _model.uploadedFileUrls
+                                                      .toList());
+                                          _model.imageUrl =
+                                              _model.uploadedFileUrls.toList();
+                                        });
                                       },
                                     ),
                                   ),
@@ -648,6 +708,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                 reportBy: currentUserReference,
                                 reportedAt: getCurrentTimestamp,
                                 isConfirmbySA: false,
+                                isDeclined: false,
                               ),
                               'photo_url': _model.uploadedFileUrls,
                             };

@@ -22,9 +22,8 @@ Future<void> batchUpdateEndedEvents() async {
 
   final batch = firestore.batch();
   for (final document in querySnapshot.docs) {
-    final expiryDate = now.toDate().add(Duration(days: 30));
-    batch.update(
-        document.reference, {"isEnded": true, "expiry_date": expiryDate});
+    //final expiryDate = now.toDate().add(Duration(days: 30));
+    batch.update(document.reference, {"isEnded": true});
   }
   await batch.commit();
 }

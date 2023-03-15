@@ -109,7 +109,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
               onTap: () async {
                 logFirebaseEvent('MY_EVENTS_VOLUNTEER_Icon_c52h4iaz_ON_TAP');
                 logFirebaseEvent('Icon_navigate_back');
-                context.pop();
+                context.safePop();
               },
               child: Icon(
                 Icons.arrow_back_rounded,

@@ -70,14 +70,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? HomeScreenWidget() : SplashScreenWidget(),
+          appStateNotifier.loggedIn ? HomeScreenWidget() : OnboardingWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? HomeScreenWidget()
-              : SplashScreenWidget(),
+              : OnboardingWidget(),
           routes: [
             FFRoute(
               name: 'Onboarding',
@@ -95,16 +95,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => LoginWidget(),
             ),
             FFRoute(
-              name: 'VolunteerPhone',
-              path: 'volunteerPhone',
-              builder: (context, params) => VolunteerPhoneWidget(),
-            ),
-            FFRoute(
               name: 'OTPCode',
               path: 'oTPCode',
               builder: (context, params) => OTPCodeWidget(
                 phoneNumber: params.getParam('phoneNumber', ParamType.int),
               ),
+            ),
+            FFRoute(
+              name: 'VolunteerPhone',
+              path: 'volunteerPhone',
+              builder: (context, params) => VolunteerPhoneWidget(),
             ),
             FFRoute(
               name: 'RegistrationSteps',
@@ -126,21 +126,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AppointmentPageWidget(),
             ),
             FFRoute(
-              name: 'journeyScreen',
-              path: 'journeyScreen',
-              requireAuth: true,
-              builder: (context, params) => JourneyScreenWidget(),
-            ),
-            FFRoute(
               name: 'findEvents',
               path: 'findEvents',
               requireAuth: true,
               builder: (context, params) => FindEventsWidget(),
             ),
             FFRoute(
-              name: 'HomeScreen',
-              path: 'HomeScreen',
-              builder: (context, params) => HomeScreenWidget(),
+              name: 'journeyScreen',
+              path: 'journeyScreen',
+              requireAuth: true,
+              builder: (context, params) => JourneyScreenWidget(),
             ),
             FFRoute(
               name: 'allChat',
@@ -154,6 +149,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     'userref', ParamType.DocumentReference, false, ['users']),
                 userRecord: params.getParam('userRecord', ParamType.Document),
               ),
+            ),
+            FFRoute(
+              name: 'HomeScreen',
+              path: 'HomeScreen',
+              requireAuth: true,
+              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'chatPage',
@@ -188,14 +189,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'eventCreate',
-              path: 'eventCreate',
-              requireAuth: true,
-              builder: (context, params) => EventCreateWidget(
-                tabIndex: params.getParam('tabIndex', ParamType.int),
-              ),
-            ),
-            FFRoute(
               name: 'volunteerList',
               path: 'volunteerList',
               requireAuth: true,
@@ -203,12 +196,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 volunteerList: params.getParam('volunteerList',
                     ParamType.DocumentReference, false, ['users']),
               ),
-            ),
-            FFRoute(
-              name: 'pendingRegistration',
-              path: 'pendingRegistration',
-              requireAuth: true,
-              builder: (context, params) => PendingRegistrationWidget(),
             ),
             FFRoute(
               name: 'profileScreen',
@@ -221,6 +208,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'announcementFeed',
               requireAuth: true,
               builder: (context, params) => AnnouncementFeedWidget(),
+            ),
+            FFRoute(
+              name: 'eventCreate',
+              path: 'eventCreate',
+              requireAuth: true,
+              builder: (context, params) => EventCreateWidget(
+                tabIndex: params.getParam('tabIndex', ParamType.int),
+              ),
             ),
             FFRoute(
               name: 'volunteerToEvent',
@@ -254,12 +249,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'helpCenter',
-              path: 'helpCenter',
-              requireAuth: true,
-              builder: (context, params) => HelpCenterWidget(),
-            ),
-            FFRoute(
               name: 'FAQs',
               path: 'fAQs',
               requireAuth: true,
@@ -270,6 +259,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'reportingAbuse',
               requireAuth: true,
               builder: (context, params) => ReportingAbuseWidget(),
+            ),
+            FFRoute(
+              name: 'helpCenter',
+              path: 'helpCenter',
+              requireAuth: true,
+              builder: (context, params) => HelpCenterWidget(),
             ),
             FFRoute(
               name: 'CreditScore',
@@ -286,8 +281,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'forgotPassword',
               path: 'forgotPassword',
-              requireAuth: true,
               builder: (context, params) => ForgotPasswordWidget(),
+            ),
+            FFRoute(
+              name: 'myPerformance',
+              path: 'myPerformance',
+              requireAuth: true,
+              builder: (context, params) => MyPerformanceWidget(
+                points: params.getParam('points', ParamType.int),
+              ),
             ),
             FFRoute(
               name: 'MyEventsAdmin',
@@ -314,12 +316,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'myPerformance',
-              path: 'myPerformance',
-              requireAuth: true,
-              builder: (context, params) => MyPerformanceWidget(
-                points: params.getParam('points', ParamType.int),
-              ),
+              name: 'InspiringVideos',
+              path: 'inspiringVideos',
+              builder: (context, params) => InspiringVideosWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -489,7 +488,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/splashScreen';
+            return '/onboarding';
           }
           return null;
         },

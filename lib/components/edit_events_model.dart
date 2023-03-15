@@ -12,7 +12,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
@@ -114,10 +113,28 @@ class EditEventsModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 15) {
-      return 'Max 15 character';
+    if (val.length > 13) {
+      return 'Max 13 character';
     }
 
+    return null;
+  }
+
+  // State field(s) for ageRequirement widget.
+  TextEditingController? ageRequirementController;
+  String? Function(BuildContext, String?)? ageRequirementControllerValidator;
+  String? _ageRequirementControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 3) {
+      return 'Max 3 character';
+    }
+    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+      return 'Invalid text';
+    }
     return null;
   }
 
@@ -130,8 +147,8 @@ class EditEventsModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 6) {
-      return 'Max 6 character';
+    if (val.length > 5) {
+      return 'Max 5 character';
     }
 
     return null;
@@ -151,6 +168,7 @@ class EditEventsModel extends FlutterFlowModel {
     descriptionEventControllerValidator = _descriptionEventControllerValidator;
     personInChargeControllerValidator = _personInChargeControllerValidator;
     contactNumberControllerValidator = _contactNumberControllerValidator;
+    ageRequirementControllerValidator = _ageRequirementControllerValidator;
     neededVolunteerControllerValidator = _neededVolunteerControllerValidator;
     selectCauseEditModel = createModel(context, () => SelectCauseEditModel());
   }
@@ -160,6 +178,7 @@ class EditEventsModel extends FlutterFlowModel {
     descriptionEventController?.dispose();
     personInChargeController?.dispose();
     contactNumberController?.dispose();
+    ageRequirementController?.dispose();
     neededVolunteerController?.dispose();
     selectCauseEditModel.dispose();
   }

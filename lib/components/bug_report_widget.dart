@@ -297,7 +297,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                               child: Image.network(
                                 valueOrDefault<String>(
                                   _model.uploadedFileUrl,
-                                  'https://images.unsplash.com/photo-1654569382810-49bd3bdf611d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMTh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
+                                  'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
                                 ),
                                 width: double.infinity,
                                 height: 170.0,

@@ -13,6 +13,7 @@ import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -58,7 +59,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
         return;
       }
 
-      context.goNamedAuth('splashScreen', mounted);
+      context.goNamedAuth('Onboarding', mounted);
     });
 
     _model.fullNameController ??= TextEditingController();
@@ -87,7 +88,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           actions: [],
           flexibleSpace: FlexibleSpaceBar(
@@ -102,12 +103,13 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                   child: BackComponentWidget(),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 0.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 0.0, 10.0),
                   child: Text(
                     'Step 1',
                     style: FlutterFlowTheme.of(context).title1.override(
                           fontFamily: 'Ubuntu',
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: Color(0xFFF1F4F8),
                           fontSize: 32.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
                               FlutterFlowTheme.of(context).title1Family),
@@ -276,8 +278,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.fullNameController,
+                          maxLength: 50,
                           obscureText: false,
                           decoration: InputDecoration(
+                            counterText: "",
                             hintText: 'Enter Full Name',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -425,6 +429,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'APPOINTMENT_date_range_outlined_ICN_ON_T');
+                                var _shouldSetState = false;
                                 logFirebaseEvent('IconButton_date_time_picker');
                                 final _datePickedDate = await showDatePicker(
                                   context: context,
@@ -442,6 +447,78 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                     );
                                   });
                                 }
+                                logFirebaseEvent('IconButton_custom_action');
+                                _model.age = await actions.isUser18OrOlder(
+                                  _model.datePicked!,
+                                );
+                                _shouldSetState = true;
+                                if (_model.age!) {
+                                  logFirebaseEvent('IconButton_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('Congratulations!'),
+                                        content: Text(
+                                            'You are eligible to register.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) setState(() {});
+                                  return;
+                                } else {
+                                  logFirebaseEvent('IconButton_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(
+                                            'You are not eligible to register.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  logFirebaseEvent(
+                                      'IconButton_clear_text_fields');
+                                  setState(() {
+                                    _model.fullNameController?.clear();
+                                    _model.nationalityController?.clear();
+                                    _model.civilStatusController?.clear();
+                                    _model.addressController?.clear();
+                                    _model.contactNumberController?.clear();
+                                    _model.emailController?.clear();
+                                  });
+                                  logFirebaseEvent('IconButton_delete_media');
+                                  await FirebaseStorage.instance
+                                      .refFromURL(_model.uploadedFileUrl1)
+                                      .delete();
+                                  logFirebaseEvent('IconButton_delete_media');
+                                  await FirebaseStorage.instance
+                                      .refFromURL(
+                                          _model.uploadedFileUrls2.first)
+                                      .delete();
+                                  logFirebaseEvent('IconButton_delete_media');
+                                  await FirebaseStorage.instance
+                                      .refFromURL(_model.uploadedFileUrls2.last)
+                                      .delete();
+                                  if (_shouldSetState) setState(() {});
+                                  return;
+                                }
+
+                                if (_shouldSetState) setState(() {});
                               },
                             ),
                           ],
@@ -467,7 +544,12 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: FlutterFlowDropDown<String>(
-                          options: ['Male', 'Female'],
+                          options: [
+                            'Male',
+                            'Female',
+                            'Non-Binary',
+                            'Prefer not to say'
+                          ],
                           onChanged: (val) =>
                               setState(() => _model.genderValue = val),
                           width: 180.0,
@@ -514,8 +596,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.nationalityController,
+                          maxLength: 65,
                           obscureText: false,
                           decoration: InputDecoration(
+                            counterText: "",
                             hintText: 'Nationality',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -614,8 +698,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.civilStatusController,
+                          maxLength: 25,
                           obscureText: false,
                           decoration: InputDecoration(
+                            counterText: "",
                             hintText: 'Civil Status',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -714,8 +800,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.addressController,
+                          maxLength: 100,
                           obscureText: false,
                           decoration: InputDecoration(
+                            counterText: "",
                             hintText: 'Full Address',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -827,9 +915,11 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                 Expanded(
                                   child: TextFormField(
                                     controller: _model.contactNumberController,
+                                    maxLength: 13,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       hintText: 'Contact Number',
+                                      counterText: "",
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -942,8 +1032,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.emailController,
+                          maxLength: 50,
                           obscureText: false,
                           decoration: InputDecoration(
+                            counterText: "",
                             hintText: 'Email Address',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -1129,10 +1221,16 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                             ),
                           ),
-                          if (_model.uploadedFileUrls2.length != null)
+                          if (_model.uploadedFileUrls2.length > 0)
                             Icon(
                               Icons.check_rounded,
-                              color: Color(0xFF39D2C0),
+                              color: valueOrDefault<Color>(
+                                _model.uploadedFileUrls2.length > 0
+                                    ? FlutterFlowTheme.of(context).customColor1
+                                    : FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                FlutterFlowTheme.of(context).secondaryText,
+                              ),
                               size: 24.0,
                             ),
                         ],
@@ -1171,43 +1269,73 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                             );
                             return;
                           }
-                          logFirebaseEvent('Button-Login_backend_call');
+                          logFirebaseEvent('Button-Login_alert_dialog');
+                          var confirmDialogResponse = await showDialog<bool>(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Submit'),
+                                    content: Text('Do you want to submit?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, false),
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, true),
+                                        child: Text('Confirm'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ) ??
+                              false;
+                          if (confirmDialogResponse) {
+                            logFirebaseEvent('Button-Login_backend_call');
 
-                          final registrationCreateData = {
-                            ...createRegistrationRecordData(
-                              displayName: _model.fullNameController.text,
-                              address: _model.addressController.text,
-                              phoneNumber:
-                                  '+${FFAppState().selectedCountryCode}${_model.contactNumberController.text}',
-                              email: _model.emailController.text,
-                              photoUrl: _model.uploadedFileUrl1,
-                              birthDate: _model.datePicked,
-                              gender: _model.genderValue,
-                              nationality: _model.nationalityController.text,
-                              civilStatus: _model.civilStatusController.text,
-                              createdTime: getCurrentTimestamp,
-                              isDeleted: false,
-                              isConfirmbySA: false,
-                              isDeclined: false,
-                            ),
-                            'ID_url':
-                                _model.uploadedFileUrls2.map((e) => e).toList(),
-                          };
-                          await RegistrationRecord.collection
-                              .doc()
-                              .set(registrationCreateData);
-                          logFirebaseEvent('Button-Login_bottom_sheet');
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: EmailConfirmationWidget(),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
+                            final registrationCreateData = {
+                              ...createRegistrationRecordData(
+                                displayName: _model.fullNameController.text,
+                                address: _model.addressController.text,
+                                phoneNumber:
+                                    '+${FFAppState().selectedCountryCode}${_model.contactNumberController.text}',
+                                email: _model.emailController.text,
+                                photoUrl: _model.uploadedFileUrl1,
+                                birthDate: _model.datePicked,
+                                gender: _model.genderValue,
+                                nationality: _model.nationalityController.text,
+                                civilStatus: _model.civilStatusController.text,
+                                createdTime: getCurrentTimestamp,
+                                isDeleted: false,
+                                isConfirmbySA: false,
+                                isDeclined: false,
+                              ),
+                              'ID_url': _model.uploadedFileUrls2
+                                  .map((e) => e)
+                                  .toList(),
+                            };
+                            await RegistrationRecord.collection
+                                .doc()
+                                .set(registrationCreateData);
+                            logFirebaseEvent('Button-Login_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: EmailConfirmationWidget(),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
+
+                            return;
+                          } else {
+                            return;
+                          }
                         },
                         text: 'Submit',
                         options: FFButtonOptions(

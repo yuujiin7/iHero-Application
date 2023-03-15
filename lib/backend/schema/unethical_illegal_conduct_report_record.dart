@@ -31,6 +31,17 @@ abstract class UnethicalIllegalConductReportRecord
 
   bool? get isConfirmbySA;
 
+  bool? get isDeclined;
+
+  @BuiltValueField(wireName: 'expiry_date')
+  DateTime? get expiryDate;
+
+  bool? get isDeleted;
+
+  String? get reason;
+
+  bool? get isSeen;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -41,7 +52,11 @@ abstract class UnethicalIllegalConductReportRecord
         ..fullName = ''
         ..reportBehavior = ListBuilder()
         ..photoUrl = ''
-        ..isConfirmbySA = false;
+        ..isConfirmbySA = false
+        ..isDeclined = false
+        ..isDeleted = false
+        ..reason = ''
+        ..isSeen = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('unethical_illegal_conduct_report');
@@ -74,6 +89,11 @@ Map<String, dynamic> createUnethicalIllegalConductReportRecordData({
   DocumentReference? reportBy,
   DateTime? reportedAt,
   bool? isConfirmbySA,
+  bool? isDeclined,
+  DateTime? expiryDate,
+  bool? isDeleted,
+  String? reason,
+  bool? isSeen,
 }) {
   final firestoreData = serializers.toFirestore(
     UnethicalIllegalConductReportRecord.serializer,
@@ -85,7 +105,12 @@ Map<String, dynamic> createUnethicalIllegalConductReportRecordData({
         ..photoUrl = photoUrl
         ..reportBy = reportBy
         ..reportedAt = reportedAt
-        ..isConfirmbySA = isConfirmbySA,
+        ..isConfirmbySA = isConfirmbySA
+        ..isDeclined = isDeclined
+        ..expiryDate = expiryDate
+        ..isDeleted = isDeleted
+        ..reason = reason
+        ..isSeen = isSeen,
     ),
   );
 

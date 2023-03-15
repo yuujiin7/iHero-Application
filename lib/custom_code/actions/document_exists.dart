@@ -9,20 +9,20 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 Future<bool> documentExists(
-    String eventAddress, String eventStartDate, String eventEndDate) async {
-  var query = await queryEventsRecordOnce(
-      queryBuilder: (EventsRecord) =>
-          EventsRecord.where("eventStartDate", isEqualTo: eventStartDate)
-              .where("eventAddress", isEqualTo: eventAddress)
-              .where("eventEndDate", isEqualTo: eventEndDate));
+    String eventAddress, DateTime eventStartDate, DateTime eventEndDate) async {
+  var query = await FirebaseFirestore.instance
+      .collection("events")
+      .where("eventAddress", isEqualTo: eventAddress)
+      .orderBy("eventDateStart")
+      .orderBy("eventDateEnd")
+      .limit(1)
+      .startAt([eventStartDate]).endAt([eventEndDate]).get();
 
-  if (query.isNotEmpty) {
-    print(query.isNotEmpty);
+  if (query.docs.isNotEmpty) {
+    print(query.docs.isNotEmpty);
     return true;
   } else {
-    print(query.isNotEmpty);
+    print(query.docs.isNotEmpty);
     return false;
   }
 }
-// Set your action name, define your arguments and return parameter,
-// and then add the boilerplate code using the button on the right!

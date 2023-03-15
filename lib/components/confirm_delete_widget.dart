@@ -101,6 +101,22 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                       expiryDate: functions.addExpiry(getCurrentTimestamp),
                     );
                     await widget.eventRef!.update(eventsUpdateData);
+                    logFirebaseEvent('Button_alert_dialog');
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          content: Text('Deleted'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     logFirebaseEvent('Button_backend_call');
 
@@ -110,6 +126,22 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                     );
                     await widget.aannouncementref!
                         .update(announcementUpdateData);
+                    logFirebaseEvent('Button_alert_dialog');
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          content: Text('Deleted'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
 
                   logFirebaseEvent('Button_navigate_to');
@@ -123,7 +155,7 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).tertiaryColor,
+                  color: FlutterFlowTheme.of(context).primaryColor,
                   textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                         fontFamily: 'Ubuntu',
                         color: Colors.white,

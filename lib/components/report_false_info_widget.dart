@@ -197,9 +197,11 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.fullNameController,
-                                textCapitalization: TextCapitalization.none,
+                                maxLength: 50,
+                                textCapitalization: TextCapitalization.words,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -296,9 +298,11 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.descriptionEventController,
-                                textCapitalization: TextCapitalization.none,
+                                maxLength: 500,
+                                textCapitalization: TextCapitalization.words,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: 'Description',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -624,10 +628,6 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                 !_model.formKey.currentState!.validate()) {
                               return;
                             }
-                            if (_model.uploadedFileUrl == null ||
-                                _model.uploadedFileUrl.isEmpty) {
-                              return;
-                            }
                             logFirebaseEvent('Button_backend_call');
 
                             final falseInformationReportCreateData =
@@ -639,6 +639,8 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               reportBy: currentUserReference,
                               reportedAt: getCurrentTimestamp,
                               isConfirmbySA: false,
+                              isDeclined: false,
+                              isSeen: false,
                             );
                             await FalseInformationReportRecord.collection
                                 .doc()

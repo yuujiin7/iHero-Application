@@ -39,6 +39,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
     _model = createModel(context, () => ReportVolunteerModel());
 
     _model.textFieldController ??= TextEditingController();
+    _model.descriptionEventController ??= TextEditingController();
   }
 
   @override
@@ -208,9 +209,11 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               ),
                               child: TextFormField(
                                 controller: _model.textFieldController,
+                                maxLength: 50,
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -369,17 +372,17 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                   15.0, 0.0, 0.0, 0.0),
                                           child: Text(
                                             valueOrDefault<String>(
-                                              _model.date != null
-                                                  ? dateTimeFormat(
-                                                      'MMMMEEEEd',
+                                              _model.date == null
+                                                  ? 'Date occured'
+                                                  : dateTimeFormat(
+                                                      'yMMMd',
                                                       _model.date,
                                                       locale:
                                                           FFLocalizations.of(
                                                                   context)
                                                               .languageCode,
-                                                    )
-                                                  : 'Date of Occurence',
-                                              'Date of Occurence',
+                                                    ),
+                                              'Date occured',
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
@@ -460,7 +463,106 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 5.0, 0.0, 0.0),
+                                0.0, 15.0, 0.0, 5.0),
+                            child: Text(
+                              'Please explain where the alleged absenteeism, tardiness, bullying, harassment, or intimidation appears to support your claim.',
+                              textAlign: TextAlign.justify,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyText1Family,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyText1Family),
+                                  ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 200.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: TextFormField(
+                              controller: _model.descriptionEventController,
+                              maxLength: 500,
+                              textCapitalization: TextCapitalization.words,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                counterText: "",
+                                hintText: 'Description',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Ubuntu',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1Family),
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0xFFB51E1E),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyText1Family),
+                                  ),
+                              maxLines: 12,
+                              keyboardType: TextInputType.multiline,
+                              validator: _model
+                                  .descriptionEventControllerValidator
+                                  .asValidator(context),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               'Please provide a photo of the incident/behavior that supports your claim',
                               style: FlutterFlowTheme.of(context)
@@ -481,7 +583,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
+                                0.0, 5.0, 0.0, 0.0),
                             child: Container(
                               width: double.infinity,
                               height: 50.0,
@@ -690,13 +792,6 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 !_model.formKey.currentState!.validate()) {
                               return;
                             }
-                            if (_model.datePicked == null) {
-                              return;
-                            }
-                            if (_model.uploadedFileUrl == null ||
-                                _model.uploadedFileUrl.isEmpty) {
-                              return;
-                            }
                             logFirebaseEvent('Button_backend_call');
 
                             final unethicalIllegalConductReportCreateData = {
@@ -707,6 +802,8 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 reportBy: currentUserReference,
                                 reportedAt: getCurrentTimestamp,
                                 isConfirmbySA: false,
+                                isDeclined: false,
+                                isSeen: false,
                               ),
                               'report_behavior': _model.checkboxGroupValues,
                             };

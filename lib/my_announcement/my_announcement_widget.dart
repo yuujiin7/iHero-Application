@@ -82,9 +82,8 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
         leading: InkWell(
           onTap: () async {
             logFirebaseEvent('MY_ANNOUNCEMENT_Icon_tq75n70h_ON_TAP');
-            logFirebaseEvent('Icon_navigate_to');
-
-            context.goNamed('profileScreen');
+            logFirebaseEvent('Icon_navigate_back');
+            context.safePop();
           },
           child: Icon(
             Icons.arrow_back_rounded,
@@ -825,20 +824,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                   ),
                                 ),
                               ),
-                              Text(
-                                'Tab View 3',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .bodyText1Family,
-                                      fontSize: 32.0,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
-                                    ),
-                              ),
+                              Container(),
                             ],
                           ),
                         ),

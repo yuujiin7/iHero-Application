@@ -1,7 +1,9 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +12,16 @@ import 'feedback_report_model.dart';
 export 'feedback_report_model.dart';
 
 class FeedbackReportWidget extends StatefulWidget {
-  const FeedbackReportWidget({Key? key}) : super(key: key);
+  const FeedbackReportWidget({
+    Key? key,
+    this.falseInfo,
+    this.memoralization,
+    this.unethical,
+  }) : super(key: key);
+
+  final DocumentReference? falseInfo;
+  final DocumentReference? memoralization;
+  final DocumentReference? unethical;
 
   @override
   _FeedbackReportWidgetState createState() => _FeedbackReportWidgetState();
@@ -61,40 +72,13 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(20.0, 2.0, 15.0, 20.0),
+          padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 15.0, 20.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 30.0,
-                        borderWidth: 1.0,
-                        buttonSize: 44.0,
-                        icon: Icon(
-                          Icons.close_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 35.0,
-                        ),
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'FEEDBACK_REPORT_close_rounded_ICN_ON_TAP');
-                          logFirebaseEvent('IconButton_bottom_sheet');
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -118,7 +102,7 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                   padding:
                       EdgeInsetsDirectional.fromSTEB(32.0, 10.0, 32.0, 0.0),
                   child: Text(
-                    'Your recent report of an  ill-mannered volunteer was verified and a penalty was issued.',
+                    'Your recent report to another volunteer was verified and a penalty was issued.',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Barlow',
@@ -150,8 +134,52 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'FEEDBACK_REPORT_COMP_OK_BTN_ON_TAP');
+                          if (widget.falseInfo != null) {
+                            logFirebaseEvent('Button_backend_call');
+
+                            final falseInformationReportUpdateData =
+                                createFalseInformationReportRecordData(
+                              isSeen: true,
+                            );
+                            await widget.falseInfo!
+                                .update(falseInformationReportUpdateData);
+                            logFirebaseEvent('Button_bottom_sheet');
+                            Navigator.pop(context);
+                            return;
+                          } else {
+                            if (widget.memoralization != null) {
+                              logFirebaseEvent('Button_backend_call');
+
+                              final memoralizationReportUpdateData =
+                                  createMemoralizationReportRecordData(
+                                isSeen: true,
+                              );
+                              await widget.memoralization!
+                                  .update(memoralizationReportUpdateData);
+                              logFirebaseEvent('Button_bottom_sheet');
+                              Navigator.pop(context);
+                              return;
+                            } else {
+                              if (widget.unethical != null) {
+                                logFirebaseEvent('Button_backend_call');
+
+                                final unethicalIllegalConductReportUpdateData =
+                                    createUnethicalIllegalConductReportRecordData(
+                                  isSeen: true,
+                                );
+                                await widget.unethical!.update(
+                                    unethicalIllegalConductReportUpdateData);
+                                logFirebaseEvent('Button_bottom_sheet');
+                                Navigator.pop(context);
+                                return;
+                              } else {
+                                return;
+                              }
+                            }
+                          }
                         },
                         text: 'Ok',
                         options: FFButtonOptions(

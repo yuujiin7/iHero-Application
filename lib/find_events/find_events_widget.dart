@@ -51,7 +51,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
         logFirebaseEvent('findEvents_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
         logFirebaseEvent('findEvents_update_app_state');
@@ -605,9 +605,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'FIND_EVENTS_keyboard_backspace_ICN_ON_TA');
-                                  logFirebaseEvent('IconButton_navigate_to');
-
-                                  context.goNamed('HomeScreen');
+                                  logFirebaseEvent('IconButton_navigate_back');
+                                  context.safePop();
                                 },
                               ),
                               Text(
@@ -683,6 +682,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                           child: TextFormField(
                                             controller:
                                                 _model.searchFieldController,
+                                            maxLength: 100,
                                             onChanged: (_) =>
                                                 EasyDebounce.debounce(
                                               '_model.searchFieldController',
@@ -702,6 +702,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                             ),
                                             obscureText: false,
                                             decoration: InputDecoration(
+                                              counterText: "",
                                               hintText:
                                                   'Search Events Title Here...',
                                               hintStyle:
@@ -1322,7 +1323,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                               backgroundColor:
                                                                   Colors
                                                                       .transparent,
-                                                              enableDrag: false,
                                                               context: context,
                                                               builder:
                                                                   (context) {

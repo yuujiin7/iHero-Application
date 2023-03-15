@@ -40,17 +40,12 @@ abstract class EventsRecord
 
   bool? get isEnded;
 
-  int? get numberOfRemainingDays;
-
   @BuiltValueField(wireName: 'volunteer_count')
   double? get volunteerCount;
 
   bool? get isDeleted;
 
   String? get eventContactNumber;
-
-  @BuiltValueField(wireName: 'archive_date')
-  DateTime? get archiveDate;
 
   bool? get isConfirmbySA;
 
@@ -66,10 +61,6 @@ abstract class EventsRecord
 
   @BuiltValueField(wireName: 'organization_partner')
   BuiltList<String>? get organizationPartner;
-
-  String? get eventStartDate;
-
-  String? get eventEndDate;
 
   bool? get isReqCancel;
 
@@ -98,6 +89,13 @@ abstract class EventsRecord
 
   bool? get isDeclined;
 
+  @BuiltValueField(wireName: 'rate_ref')
+  BuiltList<DocumentReference>? get rateRef;
+
+  int? get ageRequirement;
+
+  bool? get isMeritScoreUpdated;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -113,15 +111,12 @@ abstract class EventsRecord
     ..neededVolunteer = 0.0
     ..eventTag = ListBuilder()
     ..isEnded = false
-    ..numberOfRemainingDays = 0
     ..volunteerCount = 0.0
     ..isDeleted = false
     ..eventContactNumber = ''
     ..isConfirmbySA = false
     ..adminRef = ListBuilder()
     ..organizationPartner = ListBuilder()
-    ..eventStartDate = ''
-    ..eventEndDate = ''
     ..isReqCancel = false
     ..volunteerRef = ListBuilder()
     ..volunteerList = ListBuilder()
@@ -130,7 +125,10 @@ abstract class EventsRecord
     ..rateTotal = 0.0
     ..rateCount = 0.0
     ..reason = ''
-    ..isDeclined = false;
+    ..isDeclined = false
+    ..rateRef = ListBuilder()
+    ..ageRequirement = 0
+    ..isMeritScoreUpdated = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -164,13 +162,9 @@ abstract class EventsRecord
               snapshot.data['created_date']))
           ..eventTag = safeGet(() => ListBuilder(snapshot.data['eventTag']))
           ..isEnded = snapshot.data['isEnded']
-          ..numberOfRemainingDays =
-              snapshot.data['numberOfRemainingDays']?.round()
           ..volunteerCount = snapshot.data['volunteer_count']?.toDouble()
           ..isDeleted = snapshot.data['isDeleted']
           ..eventContactNumber = snapshot.data['eventContactNumber']
-          ..archiveDate = safeGet(() => DateTime.fromMillisecondsSinceEpoch(
-              snapshot.data['archive_date']))
           ..isConfirmbySA = snapshot.data['isConfirmbySA']
           ..expiryDate = safeGet(() =>
               DateTime.fromMillisecondsSinceEpoch(snapshot.data['expiry_date']))
@@ -182,8 +176,6 @@ abstract class EventsRecord
               snapshot.data['eventDateEnd']))
           ..organizationPartner =
               safeGet(() => ListBuilder(snapshot.data['organization_partner']))
-          ..eventStartDate = snapshot.data['eventStartDate']
-          ..eventEndDate = snapshot.data['eventEndDate']
           ..isReqCancel = snapshot.data['isReqCancel']
           ..volunteerRef = safeGet(() =>
               ListBuilder(snapshot.data['volunteer_ref'].map((s) => toRef(s))))
@@ -201,6 +193,10 @@ abstract class EventsRecord
           ..rateCount = snapshot.data['rateCount']?.toDouble()
           ..reason = snapshot.data['reason']
           ..isDeclined = snapshot.data['isDeclined']
+          ..rateRef = safeGet(
+              () => ListBuilder(snapshot.data['rate_ref'].map((s) => toRef(s))))
+          ..ageRequirement = snapshot.data['ageRequirement']?.round()
+          ..isMeritScoreUpdated = snapshot.data['isMeritScoreUpdated']
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -240,17 +236,13 @@ Map<String, dynamic> createEventsRecordData({
   double? neededVolunteer,
   DateTime? createdDate,
   bool? isEnded,
-  int? numberOfRemainingDays,
   double? volunteerCount,
   bool? isDeleted,
   String? eventContactNumber,
-  DateTime? archiveDate,
   bool? isConfirmbySA,
   DateTime? expiryDate,
   DateTime? eventDateStart,
   DateTime? eventDateEnd,
-  String? eventStartDate,
-  String? eventEndDate,
   bool? isReqCancel,
   DocumentReference? partnerOrgRef,
   DateTime? startTime,
@@ -261,6 +253,8 @@ Map<String, dynamic> createEventsRecordData({
   double? rateCount,
   String? reason,
   bool? isDeclined,
+  int? ageRequirement,
+  bool? isMeritScoreUpdated,
 }) {
   final firestoreData = serializers.toFirestore(
     EventsRecord.serializer,
@@ -278,19 +272,15 @@ Map<String, dynamic> createEventsRecordData({
         ..createdDate = createdDate
         ..eventTag = null
         ..isEnded = isEnded
-        ..numberOfRemainingDays = numberOfRemainingDays
         ..volunteerCount = volunteerCount
         ..isDeleted = isDeleted
         ..eventContactNumber = eventContactNumber
-        ..archiveDate = archiveDate
         ..isConfirmbySA = isConfirmbySA
         ..expiryDate = expiryDate
         ..adminRef = null
         ..eventDateStart = eventDateStart
         ..eventDateEnd = eventDateEnd
         ..organizationPartner = null
-        ..eventStartDate = eventStartDate
-        ..eventEndDate = eventEndDate
         ..isReqCancel = isReqCancel
         ..volunteerRef = null
         ..partnerOrgRef = partnerOrgRef
@@ -302,7 +292,10 @@ Map<String, dynamic> createEventsRecordData({
         ..rateTotal = rateTotal
         ..rateCount = rateCount
         ..reason = reason
-        ..isDeclined = isDeclined,
+        ..isDeclined = isDeclined
+        ..rateRef = null
+        ..ageRequirement = ageRequirement
+        ..isMeritScoreUpdated = isMeritScoreUpdated,
     ),
   );
 

@@ -82,12 +82,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.heartCount;
-    if (value != null) {
-      result
-        ..add('heart_count')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.isDeceased;
     if (value != null) {
       result
@@ -100,13 +94,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
       result
         ..add('meritScore')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.department;
-    if (value != null) {
-      result
-        ..add('department')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
     }
     value = object.isDeleted;
     if (value != null) {
@@ -155,6 +142,19 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
       result
         ..add('duration')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.age;
+    if (value != null) {
+      result
+        ..add('age')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.birthday;
+    if (value != null) {
+      result
+        ..add('birthday')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -214,10 +214,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.location = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'heart_count':
-          result.heartCount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'isDeceased':
           result.isDeceased = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -225,10 +221,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         case 'meritScore':
           result.meritScore = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
-          break;
-        case 'department':
-          result.department = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
         case 'isDeleted':
           result.isDeleted = serializers.deserialize(value,
@@ -257,6 +249,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         case 'duration':
           result.duration = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
+          break;
+        case 'age':
+          result.age = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'birthday':
+          result.birthday = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -291,13 +291,9 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? location;
   @override
-  final int? heartCount;
-  @override
   final bool? isDeceased;
   @override
   final int? meritScore;
-  @override
-  final String? department;
   @override
   final bool? isDeleted;
   @override
@@ -312,6 +308,10 @@ class _$UsersRecord extends UsersRecord {
   final String? screenName;
   @override
   final int? duration;
+  @override
+  final int? age;
+  @override
+  final DateTime? birthday;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -328,10 +328,8 @@ class _$UsersRecord extends UsersRecord {
       this.userType,
       this.gender,
       this.location,
-      this.heartCount,
       this.isDeceased,
       this.meritScore,
-      this.department,
       this.isDeleted,
       this.expiryDate,
       this.startTime,
@@ -339,6 +337,8 @@ class _$UsersRecord extends UsersRecord {
       this.deviceType,
       this.screenName,
       this.duration,
+      this.age,
+      this.birthday,
       this.ffRef})
       : super._();
 
@@ -362,10 +362,8 @@ class _$UsersRecord extends UsersRecord {
         userType == other.userType &&
         gender == other.gender &&
         location == other.location &&
-        heartCount == other.heartCount &&
         isDeceased == other.isDeceased &&
         meritScore == other.meritScore &&
-        department == other.department &&
         isDeleted == other.isDeleted &&
         expiryDate == other.expiryDate &&
         startTime == other.startTime &&
@@ -373,6 +371,8 @@ class _$UsersRecord extends UsersRecord {
         deviceType == other.deviceType &&
         screenName == other.screenName &&
         duration == other.duration &&
+        age == other.age &&
+        birthday == other.birthday &&
         ffRef == other.ffRef;
   }
 
@@ -404,17 +404,17 @@ class _$UsersRecord extends UsersRecord {
                                                                 userType.hashCode),
                                                             gender.hashCode),
                                                         location.hashCode),
-                                                    heartCount.hashCode),
-                                                isDeceased.hashCode),
-                                            meritScore.hashCode),
-                                        department.hashCode),
-                                    isDeleted.hashCode),
-                                expiryDate.hashCode),
-                            startTime.hashCode),
-                        endTime.hashCode),
-                    deviceType.hashCode),
-                screenName.hashCode),
-            duration.hashCode),
+                                                    isDeceased.hashCode),
+                                                meritScore.hashCode),
+                                            isDeleted.hashCode),
+                                        expiryDate.hashCode),
+                                    startTime.hashCode),
+                                endTime.hashCode),
+                            deviceType.hashCode),
+                        screenName.hashCode),
+                    duration.hashCode),
+                age.hashCode),
+            birthday.hashCode),
         ffRef.hashCode));
   }
 
@@ -430,10 +430,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('userType', userType)
           ..add('gender', gender)
           ..add('location', location)
-          ..add('heartCount', heartCount)
           ..add('isDeceased', isDeceased)
           ..add('meritScore', meritScore)
-          ..add('department', department)
           ..add('isDeleted', isDeleted)
           ..add('expiryDate', expiryDate)
           ..add('startTime', startTime)
@@ -441,6 +439,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('deviceType', deviceType)
           ..add('screenName', screenName)
           ..add('duration', duration)
+          ..add('age', age)
+          ..add('birthday', birthday)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -485,10 +485,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get location => _$this._location;
   set location(String? location) => _$this._location = location;
 
-  int? _heartCount;
-  int? get heartCount => _$this._heartCount;
-  set heartCount(int? heartCount) => _$this._heartCount = heartCount;
-
   bool? _isDeceased;
   bool? get isDeceased => _$this._isDeceased;
   set isDeceased(bool? isDeceased) => _$this._isDeceased = isDeceased;
@@ -496,10 +492,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   int? _meritScore;
   int? get meritScore => _$this._meritScore;
   set meritScore(int? meritScore) => _$this._meritScore = meritScore;
-
-  String? _department;
-  String? get department => _$this._department;
-  set department(String? department) => _$this._department = department;
 
   bool? _isDeleted;
   bool? get isDeleted => _$this._isDeleted;
@@ -529,6 +521,14 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   int? get duration => _$this._duration;
   set duration(int? duration) => _$this._duration = duration;
 
+  int? _age;
+  int? get age => _$this._age;
+  set age(int? age) => _$this._age = age;
+
+  DateTime? _birthday;
+  DateTime? get birthday => _$this._birthday;
+  set birthday(DateTime? birthday) => _$this._birthday = birthday;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -549,10 +549,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _userType = $v.userType;
       _gender = $v.gender;
       _location = $v.location;
-      _heartCount = $v.heartCount;
       _isDeceased = $v.isDeceased;
       _meritScore = $v.meritScore;
-      _department = $v.department;
       _isDeleted = $v.isDeleted;
       _expiryDate = $v.expiryDate;
       _startTime = $v.startTime;
@@ -560,6 +558,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _deviceType = $v.deviceType;
       _screenName = $v.screenName;
       _duration = $v.duration;
+      _age = $v.age;
+      _birthday = $v.birthday;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -592,10 +592,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             userType: userType,
             gender: gender,
             location: location,
-            heartCount: heartCount,
             isDeceased: isDeceased,
             meritScore: meritScore,
-            department: department,
             isDeleted: isDeleted,
             expiryDate: expiryDate,
             startTime: startTime,
@@ -603,6 +601,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             deviceType: deviceType,
             screenName: screenName,
             duration: duration,
+            age: age,
+            birthday: birthday,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

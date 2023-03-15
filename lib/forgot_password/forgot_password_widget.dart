@@ -37,22 +37,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
       logFirebaseEvent('FORGOT_PASSWORD_forgotPassword_ON_LOAD');
       logFirebaseEvent('forgotPassword_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('forgotPassword_custom_action');
-      await actions.updateSession(
-        currentUserReference!.id,
-        getCurrentTimestamp,
-        null,
-        () {
-          if (isAndroid) {
-            return 'Android';
-          } else if (isiOS) {
-            return 'iOS';
-          } else {
-            return 'iOS';
-          }
-        }(),
-        'Forgot Password',
-      );
     });
 
     _model.emailAddressController ??= TextEditingController();
@@ -102,8 +86,18 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       onPressed: () async {
                         logFirebaseEvent(
                             'FORGOT_PASSWORD_arrow_back_rounded_ICN_O');
-                        logFirebaseEvent('IconButton_navigate_back');
-                        context.pop();
+                        logFirebaseEvent('IconButton_navigate_to');
+
+                        context.goNamed(
+                          'Login',
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 0),
+                            ),
+                          },
+                        );
                       },
                     ),
                     Padding(
@@ -213,8 +207,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       ),
                       child: TextFormField(
                         controller: _model.emailAddressController,
+                        maxLength: 254,
                         obscureText: false,
                         decoration: InputDecoration(
+                          counterText: "",
                           hintText: 'Enter your email...',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyText1

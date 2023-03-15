@@ -101,7 +101,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 112.6,
+                            height: 102.6,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).primaryColor,
                             ),
@@ -132,9 +132,8 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                           logFirebaseEvent(
                                               'CREDIT_SCORE_keyboard_backspace_ICN_ON_T');
                                           logFirebaseEvent(
-                                              'IconButton_navigate_to');
-
-                                          context.pushNamed('profileScreen');
+                                              'IconButton_navigate_back');
+                                          context.safePop();
                                         },
                                       ),
                                       Text(
@@ -184,7 +183,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 85.0, 0.0, 25.0),
+                            0.0, 75.0, 0.0, 25.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -375,7 +374,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 500.0, 0.0, 80.0),
+                            0.0, 485.0, 0.0, 80.0),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,

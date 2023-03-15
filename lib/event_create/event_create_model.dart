@@ -43,11 +43,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+    if (val.length < 5) {
+      return 'Min 65 character';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 65) {
+      return 'Max 65 character';
     }
 
     return null;
@@ -62,11 +62,11 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+    if (val.length < 5) {
+      return 'Min 5 character';
     }
-    if (val.length > 2200) {
-      return 'Max 2200 character';
+    if (val.length > 500) {
+      return 'Max 500 character';
     }
 
     return null;
@@ -105,8 +105,26 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 15) {
-      return 'Max 15 character';
+    if (val.length > 13) {
+      return 'Max 13 character';
+    }
+    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+      return 'Include the + symbol, country code (63). ';
+    }
+    return null;
+  }
+
+  // State field(s) for ageRequirement widget.
+  TextEditingController? ageRequirementController;
+  String? Function(BuildContext, String?)? ageRequirementControllerValidator;
+  String? _ageRequirementControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 3) {
+      return 'Max 3 character';
     }
 
     return null;
@@ -121,8 +139,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length > 6) {
-      return 'Max 6 character';
+    if (val.length > 4) {
+      return 'Max 4 character';
     }
 
     return null;
@@ -134,6 +152,8 @@ class EventCreateModel extends FlutterFlowModel {
   String? partnerDropDownValue;
   // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
   bool? isEventExist;
+  // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.
+  EventsRecord? isCreated1;
   bool isMediaUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -151,8 +171,8 @@ class EventCreateModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 65) {
+      return 'Max 65 character';
     }
 
     return null;
@@ -171,8 +191,8 @@ class EventCreateModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 2200) {
-      return 'Max 2200 character';
+    if (val.length > 500) {
+      return 'Max 500 character';
     }
 
     return null;
@@ -185,6 +205,7 @@ class EventCreateModel extends FlutterFlowModel {
     descriptionEventControllerValidator = _descriptionEventControllerValidator;
     personInChargeControllerValidator = _personInChargeControllerValidator;
     contactNumberControllerValidator = _contactNumberControllerValidator;
+    ageRequirementControllerValidator = _ageRequirementControllerValidator;
     neededVolunteerControllerValidator = _neededVolunteerControllerValidator;
     selectCauseCreateModel =
         createModel(context, () => SelectCauseCreateModel());
@@ -199,6 +220,7 @@ class EventCreateModel extends FlutterFlowModel {
     descriptionEventController?.dispose();
     personInChargeController?.dispose();
     contactNumberController?.dispose();
+    ageRequirementController?.dispose();
     neededVolunteerController?.dispose();
     selectCauseCreateModel.dispose();
     titleAnnouncementController?.dispose();

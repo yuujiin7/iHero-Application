@@ -31,14 +31,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   String? get location;
 
-  @BuiltValueField(wireName: 'heart_count')
-  int? get heartCount;
-
   bool? get isDeceased;
 
   int? get meritScore;
-
-  String? get department;
 
   bool? get isDeleted;
 
@@ -55,6 +50,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   int? get duration;
 
+  int? get age;
+
+  DateTime? get birthday;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -68,14 +67,13 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..userType = ''
     ..gender = ''
     ..location = ''
-    ..heartCount = 0
     ..isDeceased = false
     ..meritScore = 0
-    ..department = ''
     ..isDeleted = false
     ..deviceType = ''
     ..screenName = ''
-    ..duration = 0;
+    ..duration = 0
+    ..age = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -108,10 +106,8 @@ Map<String, dynamic> createUsersRecordData({
   String? userType,
   String? gender,
   String? location,
-  int? heartCount,
   bool? isDeceased,
   int? meritScore,
-  String? department,
   bool? isDeleted,
   DateTime? expiryDate,
   DateTime? startTime,
@@ -119,6 +115,8 @@ Map<String, dynamic> createUsersRecordData({
   String? deviceType,
   String? screenName,
   int? duration,
+  int? age,
+  DateTime? birthday,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -133,17 +131,17 @@ Map<String, dynamic> createUsersRecordData({
         ..userType = userType
         ..gender = gender
         ..location = location
-        ..heartCount = heartCount
         ..isDeceased = isDeceased
         ..meritScore = meritScore
-        ..department = department
         ..isDeleted = isDeleted
         ..expiryDate = expiryDate
         ..startTime = startTime
         ..endTime = endTime
         ..deviceType = deviceType
         ..screenName = screenName
-        ..duration = duration,
+        ..duration = duration
+        ..age = age
+        ..birthday = birthday,
     ),
   );
 

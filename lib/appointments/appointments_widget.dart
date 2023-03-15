@@ -1,6 +1,5 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -74,263 +73,276 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          icon: Icon(
-            Icons.keyboard_backspace,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 30.0,
-          ),
-          onPressed: () async {
-            logFirebaseEvent('APPOINTMENTS_keyboard_backspace_ICN_ON_T');
-            logFirebaseEvent('IconButton_navigate_back');
-            context.pop();
-          },
-        ),
-        title: Text(
-          'Appointments',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Ubuntu',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 22.0,
-                useGoogleFonts: GoogleFonts.asMap()
-                    .containsKey(FlutterFlowTheme.of(context).bodyText1Family),
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0.0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEBEFF7),
-                    ),
-                    child: PagedListView<DocumentSnapshot<Object?>?,
-                        RegistrationRecord>(
-                      pagingController: () {
-                        final Query<Object?> Function(Query<Object?>)
-                            queryBuilder = (registrationRecord) =>
-                                registrationRecord
-                                    .where('isDeleted', isEqualTo: false)
-                                    .where('isConfirmbySA', isEqualTo: true)
-                                    .orderBy('appointmentDate');
-                        if (_model.pagingController != null) {
-                          final query =
-                              queryBuilder(RegistrationRecord.collection);
-                          if (query != _model.pagingQuery) {
-                            // The query has changed
-                            _model.pagingQuery = query;
-                            _model.streamSubscriptions
-                                .forEach((s) => s?.cancel());
-                            _model.streamSubscriptions.clear();
-                            _model.pagingController!.refresh();
-                          }
-                          return _model.pagingController!;
-                        }
-
-                        _model.pagingController =
-                            PagingController(firstPageKey: null);
-                        _model.pagingQuery =
-                            queryBuilder(RegistrationRecord.collection);
-                        _model.pagingController!
-                            .addPageRequestListener((nextPageMarker) {
-                          queryRegistrationRecordPage(
-                            queryBuilder: (registrationRecord) =>
-                                registrationRecord
-                                    .where('isDeleted', isEqualTo: false)
-                                    .where('isConfirmbySA', isEqualTo: true)
-                                    .orderBy('appointmentDate'),
-                            nextPageMarker: nextPageMarker,
-                            pageSize: 15,
-                            isStream: true,
-                          ).then((page) {
-                            _model.pagingController!.appendPage(
-                              page.data,
-                              page.nextPageMarker,
-                            );
-                            final streamSubscription =
-                                page.dataStream?.listen((data) {
-                              data.forEach((item) {
-                                final itemIndexes = _model
-                                    .pagingController!.itemList!
-                                    .asMap()
-                                    .map((k, v) => MapEntry(v.reference.id, k));
-                                final index = itemIndexes[item.reference.id];
-                                final items =
-                                    _model.pagingController!.itemList!;
-                                if (index != null) {
-                                  items.replaceRange(index, index + 1, [item]);
-                                  _model.pagingController!.itemList = {
-                                    for (var item in items) item.reference: item
-                                  }.values.toList();
-                                }
-                              });
-                              setState(() {});
-                            });
-                            _model.streamSubscriptions.add(streamSubscription);
-                          });
-                        });
-                        return _model.pagingController!;
-                      }(),
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      builderDelegate:
-                          PagedChildBuilderDelegate<RegistrationRecord>(
-                        // Customize what your widget looks like when it's loading the first page.
-                        firstPageProgressIndicatorBuilder: (_) => Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: SpinKitSquareCircle(
-                              color: Color(0xFFFE2126),
-                              size: 50.0,
-                            ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, _) => [
+          SliverAppBar(
+            pinned: false,
+            floating: true,
+            snap: false,
+            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+            automaticallyImplyLeading: true,
+            title: Text(
+              'Appointments',
+              style: FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: 'Ubuntu',
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    fontSize: 22.0,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).bodyText1Family),
+                  ),
+            ),
+            actions: [],
+            centerTitle: true,
+            elevation: 0.0,
+          )
+        ],
+        body: Builder(
+          builder: (context) {
+            return SafeArea(
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 5.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEBEFF7),
                           ),
-                        ),
-                        noItemsFoundIndicatorBuilder: (_) => Image.asset(
-                          'assets/images/2895108.jpg',
-                        ),
-                        itemBuilder: (context, _, listViewIndex) {
-                          final listViewRegistrationRecord =
-                              _model.pagingController!.itemList![listViewIndex];
-                          return Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: FlutterFlowTheme.of(context).primaryBtnText,
-                            child: Container(
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
+                          child: PagedListView<DocumentSnapshot<Object?>?,
+                              RegistrationRecord>(
+                            pagingController: () {
+                              final Query<Object?> Function(Query<Object?>)
+                                  queryBuilder =
+                                  (registrationRecord) => registrationRecord
+                                      .where('isDeleted', isEqualTo: false)
+                                      .where('isConfirmbySA', isEqualTo: true)
+                                      .orderBy('appointmentDate');
+                              if (_model.pagingController != null) {
+                                final query =
+                                    queryBuilder(RegistrationRecord.collection);
+                                if (query != _model.pagingQuery) {
+                                  // The query has changed
+                                  _model.pagingQuery = query;
+                                  _model.streamSubscriptions
+                                      .forEach((s) => s?.cancel());
+                                  _model.streamSubscriptions.clear();
+                                  _model.pagingController!.refresh();
+                                }
+                                return _model.pagingController!;
+                              }
+
+                              _model.pagingController =
+                                  PagingController(firstPageKey: null);
+                              _model.pagingQuery =
+                                  queryBuilder(RegistrationRecord.collection);
+                              _model.pagingController!
+                                  .addPageRequestListener((nextPageMarker) {
+                                queryRegistrationRecordPage(
+                                  queryBuilder: (registrationRecord) =>
+                                      registrationRecord
+                                          .where('isDeleted', isEqualTo: false)
+                                          .where('isConfirmbySA',
+                                              isEqualTo: true)
+                                          .orderBy('appointmentDate'),
+                                  nextPageMarker: nextPageMarker,
+                                  pageSize: 15,
+                                  isStream: true,
+                                ).then((page) {
+                                  _model.pagingController!.appendPage(
+                                    page.data,
+                                    page.nextPageMarker,
+                                  );
+                                  final streamSubscription =
+                                      page.dataStream?.listen((data) {
+                                    data.forEach((item) {
+                                      final itemIndexes = _model
+                                          .pagingController!.itemList!
+                                          .asMap()
+                                          .map((k, v) =>
+                                              MapEntry(v.reference.id, k));
+                                      final index =
+                                          itemIndexes[item.reference.id];
+                                      final items =
+                                          _model.pagingController!.itemList!;
+                                      if (index != null) {
+                                        items.replaceRange(
+                                            index, index + 1, [item]);
+                                        _model.pagingController!.itemList = {
+                                          for (var item in items)
+                                            item.reference: item
+                                        }.values.toList();
+                                      }
+                                    });
+                                    setState(() {});
+                                  });
+                                  _model.streamSubscriptions
+                                      .add(streamSubscription);
+                                });
+                              });
+                              return _model.pagingController!;
+                            }(),
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            builderDelegate:
+                                PagedChildBuilderDelegate<RegistrationRecord>(
+                              // Customize what your widget looks like when it's loading the first page.
+                              firstPageProgressIndicatorBuilder: (_) => Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: SpinKitSquareCircle(
+                                    color: Color(0xFFFE2126),
+                                    size: 50.0,
+                                  ),
+                                ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 10.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
+                              noItemsFoundIndicatorBuilder: (_) => Image.asset(
+                                'assets/images/2895108.jpg',
+                              ),
+                              itemBuilder: (context, _, listViewIndex) {
+                                final listViewRegistrationRecord = _model
+                                    .pagingController!.itemList![listViewIndex];
+                                return Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 8.0, 8.0, 8.0),
+                                    child: Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 5.0, 0.0, 5.0),
-                                          child: Container(
-                                            width: 90.0,
-                                            height: 90.0,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFEEEEEE),
-                                              shape: BoxShape.circle,
+                                        Container(
+                                          width: 60.0,
+                                          height: 60.0,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl: valueOrDefault<String>(
+                                              listViewRegistrationRecord
+                                                  .photoUrl,
+                                              'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fblank-profile-picture-973460_1280.webp?alt=media&token=6b24d361-09ef-40bb-87f8-e501dd9e7222',
                                             ),
-                                            child: Container(
-                                              width: 120.0,
-                                              height: 120.0,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    valueOrDefault<String>(
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5.0, 0.0, 0.0, 0.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AutoSizeText(
                                                   listViewRegistrationRecord
-                                                      .photoUrl,
-                                                  'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fblank-profile-picture-973460_1280.webp?alt=media&token=6b24d361-09ef-40bb-87f8-e501dd9e7222',
+                                                      .displayName!,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Ubuntu',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        fontSize: 20.0,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family),
+                                                      ),
                                                 ),
-                                              ),
+                                                AutoSizeText(
+                                                  listViewRegistrationRecord
+                                                      .email!,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Barlow',
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family),
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5.0, 0.0, 0.0, 0.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                AutoSizeText(
+                                                  dateTimeFormat(
+                                                    'M/d h:mm a',
+                                                    listViewRegistrationRecord
+                                                        .appointmentDate!,
+                                                    locale: FFLocalizations.of(
+                                                            context)
+                                                        .languageCode,
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Barlow',
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1Family),
+                                                      ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5.0, 0.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          AutoSizeText(
-                                            listViewRegistrationRecord
-                                                .displayName!,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Ubuntu',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  fontSize: 20.0,
-                                                  useGoogleFonts: GoogleFonts
-                                                          .asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
-                                                ),
-                                          ),
-                                          AutoSizeText(
-                                            listViewRegistrationRecord.email!,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Barlow',
-                                                  useGoogleFonts: GoogleFonts
-                                                          .asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 100.0,
-                                      height: 100.0,
-                                      decoration: BoxDecoration(),
-                                      child: Icon(
-                                        Icons.more,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

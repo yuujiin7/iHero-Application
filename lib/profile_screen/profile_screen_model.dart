@@ -1,6 +1,7 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/bug_report_widget.dart';
+import '/components/change_password_widget.dart';
 import '/components/confirm_logout_widget.dart';
 import '/components/edit_profile_picture_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';

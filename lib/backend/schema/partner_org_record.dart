@@ -25,8 +25,6 @@ abstract class PartnerOrgRecord
 
   String? get mission;
 
-  BuiltList<String>? get orgType;
-
   String? get email;
 
   String? get address;
@@ -42,6 +40,14 @@ abstract class PartnerOrgRecord
   @BuiltValueField(wireName: 'expiry_date')
   DateTime? get expiryDate;
 
+  @BuiltValueField(wireName: 'created_by')
+  DateTime? get createdBy;
+
+  @BuiltValueField(wireName: 'created_at')
+  DateTime? get createdAt;
+
+  String? get orgType;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -53,11 +59,11 @@ abstract class PartnerOrgRecord
     ..contactPerson = ''
     ..contactNumber = ''
     ..mission = ''
-    ..orgType = ListBuilder()
     ..email = ''
     ..address = ''
     ..photoUrl = ''
-    ..isDeleted = false;
+    ..isDeleted = false
+    ..orgType = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('partnerOrg');
@@ -93,6 +99,9 @@ Map<String, dynamic> createPartnerOrgRecordData({
   DocumentReference? adminRef,
   bool? isDeleted,
   DateTime? expiryDate,
+  DateTime? createdBy,
+  DateTime? createdAt,
+  String? orgType,
 }) {
   final firestoreData = serializers.toFirestore(
     PartnerOrgRecord.serializer,
@@ -104,13 +113,15 @@ Map<String, dynamic> createPartnerOrgRecordData({
         ..contactPerson = contactPerson
         ..contactNumber = contactNumber
         ..mission = mission
-        ..orgType = null
         ..email = email
         ..address = address
         ..photoUrl = photoUrl
         ..adminRef = adminRef
         ..isDeleted = isDeleted
-        ..expiryDate = expiryDate,
+        ..expiryDate = expiryDate
+        ..createdBy = createdBy
+        ..createdAt = createdAt
+        ..orgType = orgType,
     ),
   );
 

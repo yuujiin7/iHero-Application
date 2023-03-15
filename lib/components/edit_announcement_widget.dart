@@ -224,8 +224,10 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                           TextEditingController(
                                     text: containerAnnouncementRecord.title,
                                   ),
+                                  maxLength: 65,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Title',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -332,8 +334,10 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       TextEditingController(
                                     text: containerAnnouncementRecord.body,
                                   ),
+                                  maxLength: 500,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    counterText: "",
                                     hintText: 'Description',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -472,22 +476,21 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
                                               title: Text('Confirmation'),
-                                              content: Text(
-                                                  'Do you want to post this Announcement'),
+                                              content: Text('Submit changes?'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           alertDialogContext,
                                                           false),
-                                                  child: Text('Cancel'),
+                                                  child: Text('No'),
                                                 ),
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           alertDialogContext,
                                                           true),
-                                                  child: Text('Confirm'),
+                                                  child: Text('Yes'),
                                                 ),
                                               ],
                                             );
@@ -525,7 +528,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       return AlertDialog(
                                         title: Text('Success'),
                                         content: Text(
-                                            'Your Announcement is to be confirmed'),
+                                            'announcement has been edited'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(

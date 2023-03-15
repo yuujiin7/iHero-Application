@@ -63,6 +63,8 @@ abstract class RegistrationRecord
 
   bool? get isDeclined;
 
+  String? get reason;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -83,7 +85,8 @@ abstract class RegistrationRecord
     ..isDeleted = false
     ..isConfirmbySA = false
     ..phoneNumber = ''
-    ..isDeclined = false;
+    ..isDeclined = false
+    ..reason = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('registration');
@@ -128,6 +131,7 @@ Map<String, dynamic> createRegistrationRecordData({
   bool? isConfirmbySA,
   String? phoneNumber,
   bool? isDeclined,
+  String? reason,
 }) {
   final firestoreData = serializers.toFirestore(
     RegistrationRecord.serializer,
@@ -153,7 +157,8 @@ Map<String, dynamic> createRegistrationRecordData({
         ..expiryDate = expiryDate
         ..isConfirmbySA = isConfirmbySA
         ..phoneNumber = phoneNumber
-        ..isDeclined = isDeclined,
+        ..isDeclined = isDeclined
+        ..reason = reason,
     ),
   );
 

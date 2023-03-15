@@ -70,22 +70,26 @@ class _SearchForCountryCodeWidgetState
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
-              child: Icon(
-                Icons.arrow_drop_down,
-                color: Colors.black,
-                size: 24.0,
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 0.0),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.black,
+                  size: 24.0,
+                ),
               ),
             ),
-            Text(
-              '+${FFAppState().selectedCountryCode}',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
-                    fontSize: 20.0,
-                    useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).bodyText1Family),
-                  ),
+            Expanded(
+              child: Text(
+                '+${FFAppState().selectedCountryCode}',
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                      fontSize: 18.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyText1Family),
+                    ),
+              ),
             ),
           ],
         ),
