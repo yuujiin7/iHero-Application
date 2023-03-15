@@ -2689,8 +2689,8 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                             _model.isEventExist =
                                                                                 await actions.documentExists(
                                                                               FFAppState().address,
-                                                                              functions.formatDateTime(FFAppState().startDate!),
-                                                                              functions.formatDateTime(FFAppState().endDate!),
+                                                                              FFAppState().startDate!,
+                                                                              FFAppState().endDate!,
                                                                             );
                                                                             _shouldSetState =
                                                                                 true;

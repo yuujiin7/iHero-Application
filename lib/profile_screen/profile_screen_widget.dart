@@ -698,6 +698,10 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                   .where(
                                                                       'isDeleted',
                                                                       isEqualTo:
+                                                                          false)
+                                                                  .where(
+                                                                      'isDeclined',
+                                                                      isEqualTo:
                                                                           false),
                                                             ),
                                                             builder: (context,

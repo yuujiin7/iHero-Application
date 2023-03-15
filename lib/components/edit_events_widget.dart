@@ -2008,12 +2008,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       await actions
                                                           .documentExists(
                                                     FFAppState().address,
-                                                    FFAppState()
-                                                        .startDate!
-                                                        .toString(),
-                                                    FFAppState()
-                                                        .endDate!
-                                                        .toString(),
+                                                    FFAppState().startDate!,
+                                                    FFAppState().endDate!,
                                                   );
                                                   _shouldSetState = true;
                                                   if (_model.isEventExist!) {
