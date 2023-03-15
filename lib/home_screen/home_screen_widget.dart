@@ -104,8 +104,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               );
             },
           ).then((value) => setState(() {}));
-
-          return;
         } else {
           if (_model.falseInfo != null) {
             logFirebaseEvent('HomeScreen_bottom_sheet');
@@ -123,8 +121,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 );
               },
             ).then((value) => setState(() {}));
-
-            return;
           } else {
             if (_model.memo != null) {
               logFirebaseEvent('HomeScreen_bottom_sheet');
@@ -142,10 +138,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   );
                 },
               ).then((value) => setState(() {}));
-
-              return;
-            } else {
-              return;
             }
           }
         }

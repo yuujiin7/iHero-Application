@@ -153,6 +153,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'HomeScreen',
               path: 'HomeScreen',
+              requireAuth: true,
               builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(

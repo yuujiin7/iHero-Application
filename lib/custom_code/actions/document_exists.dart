@@ -13,6 +13,7 @@ Future<bool> documentExists(
   var query = await queryEventsRecordOnce(
       queryBuilder: (EventsRecord) =>
           EventsRecord.where("eventStartDate", isEqualTo: eventStartDate)
+              .where("isEnded", isEqualTo: false)
               .where("eventAddress", isEqualTo: eventAddress)
               .where("eventEndDate", isEqualTo: eventEndDate));
 
@@ -24,5 +25,3 @@ Future<bool> documentExists(
     return false;
   }
 }
-// Set your action name, define your arguments and return parameter,
-// and then add the boilerplate code using the button on the right!

@@ -2523,7 +2523,10 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                         child: StreamBuilder<
                                                                             List<PartnerOrgRecord>>(
                                                                           stream:
-                                                                              queryPartnerOrgRecord(),
+                                                                              queryPartnerOrgRecord(
+                                                                            queryBuilder: (partnerOrgRecord) =>
+                                                                                partnerOrgRecord.where('isDeleted', isEqualTo: false),
+                                                                          ),
                                                                           builder:
                                                                               (context, snapshot) {
                                                                             // Customize what your widget looks like when it's loading.
@@ -2657,43 +2660,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               'ButtonSubmit_validate_form');
                                                                           if (_model.formKey1.currentState == null ||
                                                                               !_model.formKey1.currentState!.validate()) {
-                                                                            return;
-                                                                          }
-                                                                          if (_model.selectCauseCreateModel.dropDownValue ==
-                                                                              null) {
-                                                                            await showDialog(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  content: Text('Pick atleast 1 cause'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                      child: Text('Ok'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            );
-                                                                            return;
-                                                                          }
-                                                                          if (_model.partnerDropDownValue ==
-                                                                              null) {
-                                                                            await showDialog(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Pick a partner organiztaion'),
-                                                                                  content: Text('Pick Philippine Red Cross if none'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                      child: Text('Ok'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            );
                                                                             return;
                                                                           }
                                                                           logFirebaseEvent(
