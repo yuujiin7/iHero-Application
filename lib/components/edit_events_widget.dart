@@ -12,7 +12,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
@@ -238,7 +237,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       TextEditingController(
                                     text: containerEventsRecord.eventTitle,
                                   ),
-                                  maxLength: 255,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.titleEventController',
                                     Duration(milliseconds: 2000),
@@ -252,7 +250,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   ),
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Event Title',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -359,10 +356,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text:
                                         containerEventsRecord.eventDescription,
                                   ),
-                                  maxLength: 2200,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Event Description',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1290,10 +1285,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventInChargePerson,
                                   ),
-                                  maxLength: 50,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Who is in charge?',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1395,10 +1388,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventContactNumber,
                                   ),
-                                  maxLength: 15,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Contact Number',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1466,11 +1457,114 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                 FlutterFlowTheme.of(context)
                                                     .bodyText1Family),
                                       ),
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          signed: true, decimal: true),
+                                  keyboardType: TextInputType.phone,
                                   validator: _model
                                       .contactNumberControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('^[\\d+\\-\\s]*\$'))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: TextFormField(
+                                  controller:
+                                      _model.ageRequirementController ??=
+                                          TextEditingController(
+                                    text: containerEventsRecord.ageRequirement
+                                        .toString(),
+                                  ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText: 'Age Requirement',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1Family,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1Family),
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4.0),
+                                        topRight: Radius.circular(4.0),
+                                      ),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Barlow',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontWeight: FontWeight.w500,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family),
+                                      ),
+                                  keyboardType: TextInputType.number,
+                                  validator: _model
+                                      .ageRequirementControllerValidator
                                       .asValidator(context),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
@@ -1506,10 +1600,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       formatType: FormatType.compact,
                                     ),
                                   ),
-                                  maxLength: 6,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'No. of volunteer needed',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1865,6 +1957,16 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     'EDIT_EVENTS_COMP_ButtonSubmit_ON_TAP');
                                                 var _shouldSetState = false;
                                                 logFirebaseEvent(
+                                                    'ButtonSubmit_validate_form');
+                                                if (_model.formKey
+                                                            .currentState ==
+                                                        null ||
+                                                    !_model
+                                                        .formKey.currentState!
+                                                        .validate()) {
+                                                  return;
+                                                }
+                                                logFirebaseEvent(
                                                     'ButtonSubmit_alert_dialog');
                                                 var confirmDialogResponse =
                                                     await showDialog<bool>(
@@ -1899,16 +2001,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         ) ??
                                                         false;
                                                 if (confirmDialogResponse) {
-                                                  logFirebaseEvent(
-                                                      'ButtonSubmit_validate_form');
-                                                  if (_model.formKey
-                                                              .currentState ==
-                                                          null ||
-                                                      !_model
-                                                          .formKey.currentState!
-                                                          .validate()) {
-                                                    return;
-                                                  }
                                                   logFirebaseEvent(
                                                       'ButtonSubmit_custom_action');
                                                   _model.isEventExist =
