@@ -101,6 +101,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
 
     _model.titleEventController ??= TextEditingController();
     _model.descriptionEventController ??= TextEditingController();
+    _model.addRequirementsEventController ??= TextEditingController();
     _model.personInChargeController ??= TextEditingController();
     _model.contactNumberController ??= TextEditingController(text: '+63');
     _model.ageRequirementController ??= TextEditingController();
@@ -739,6 +740,166 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                             minLines: 1,
                                                             validator: _model
                                                                 .descriptionEventControllerValidator
+                                                                .asValidator(
+                                                                    context),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Material(
+                                                        color:
+                                                            Colors.transparent,
+                                                        elevation: 2.0,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          child: TextFormField(
+                                                            controller: _model
+                                                                .addRequirementsEventController,
+                                                            textCapitalization:
+                                                                TextCapitalization
+                                                                    .words,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Reminders/Requirements',
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            FlutterFlowTheme.of(context).bodyText1Family,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryColor,
+                                                                        useGoogleFonts:
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                      ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyText1Family),
+                                                                ),
+                                                            maxLines: 20,
+                                                            minLines: 1,
+                                                            validator: _model
+                                                                .addRequirementsEventControllerValidator
                                                                 .asValidator(
                                                                     context),
                                                           ),
@@ -2660,7 +2821,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                           (FFAppState().endDate ==
                                                                               null) &&
                                                                           (FFAppState().address == null ||
-                                                                              FFAppState().address == '')
+                                                                              FFAppState().address ==
+                                                                                  '') &&
+                                                                          (_model.selectCauseCreateModel.dropDownValue == null ||
+                                                                              _model.selectCauseCreateModel.dropDownValue ==
+                                                                                  '') &&
+                                                                          (_model.partnerDropDownValue == null ||
+                                                                              _model.partnerDropDownValue == '')
                                                                       ? null
                                                                       : () async {
                                                                           logFirebaseEvent(
@@ -2733,7 +2900,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                   ...createEventsRecordData(
                                                                                     eventTitle: _model.titleEventController.text,
                                                                                     eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                                    eventDescription: _model.descriptionEventController.text,
+                                                                                    eventDescription: _model.addRequirementsEventController.text,
                                                                                     eventInChargePerson: _model.personInChargeController.text,
                                                                                     eventLocation: FFAppState().locationLatLng,
                                                                                     eventAddress: FFAppState().address,
@@ -2760,6 +2927,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     reason: null,
                                                                                     ageRequirement: int.tryParse(_model.ageRequirementController.text),
                                                                                     isMeritScoreUpdated: false,
+                                                                                    addRequirementEvent: _model.addRequirementsEventController.text,
                                                                                   ),
                                                                                   'admin_ref': [
                                                                                     currentUserReference
@@ -2836,7 +3004,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                   ...createEventsRecordData(
                                                                                     eventTitle: _model.titleEventController.text,
                                                                                     eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                                    eventDescription: _model.descriptionEventController.text,
+                                                                                    eventDescription: _model.descriptionAnnouncementController.text,
                                                                                     eventInChargePerson: _model.personInChargeController.text,
                                                                                     eventLocation: FFAppState().locationLatLng,
                                                                                     eventAddress: FFAppState().address,

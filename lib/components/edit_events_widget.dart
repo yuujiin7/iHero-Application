@@ -237,7 +237,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       TextEditingController(
                                     text: containerEventsRecord.eventTitle,
                                   ),
-                                  maxLength: 65,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.titleEventController',
                                     Duration(milliseconds: 2000),
@@ -251,7 +250,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   ),
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Event Title',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -351,17 +349,126 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       .secondaryBackground,
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    TextFormField(
+                                      controller:
+                                          _model.descriptionEventController ??=
+                                              TextEditingController(
+                                        text: containerEventsRecord
+                                            .eventDescription,
+                                      ),
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Event Description',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Ubuntu',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w600,
+                                              useGoogleFonts:
+                                                  GoogleFonts.asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1Family),
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(4.0),
+                                            topRight: Radius.circular(4.0),
+                                          ),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Barlow',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontWeight: FontWeight.w500,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1Family),
+                                          ),
+                                      maxLines: 20,
+                                      minLines: 1,
+                                      keyboardType: TextInputType.multiline,
+                                      validator: _model
+                                          .descriptionEventControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
                                 child: TextFormField(
                                   controller:
-                                      _model.descriptionEventController ??=
+                                      _model.addRequirementEventController ??=
                                           TextEditingController(
-                                    text:
-                                        containerEventsRecord.eventDescription,
+                                    text: containerEventsRecord
+                                        .addRequirementEvent,
                                   ),
-                                  maxLength: 500,
+                                  textCapitalization: TextCapitalization.words,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Event Description',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -432,7 +539,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   minLines: 1,
                                   keyboardType: TextInputType.multiline,
                                   validator: _model
-                                      .descriptionEventControllerValidator
+                                      .addRequirementEventControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -1289,10 +1396,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventInChargePerson,
                                   ),
-                                  maxLength: 50,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Who is in charge?',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1394,10 +1499,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventContactNumber,
                                   ),
-                                  maxLength: 13,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Contact Number',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1501,10 +1604,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord.ageRequirement
                                         .toString(),
                                   ),
-                                  maxLength: 3,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Age Requirement',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -1610,10 +1711,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       formatType: FormatType.compact,
                                     ),
                                   ),
-                                  maxLength: 4,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'No. of volunteer needed',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -2107,6 +2206,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                           recurranceDate: _model
                                                               .choiceChipsValue,
                                                           volunteerCount: 0.0,
+                                                          addRequirementEvent:
+                                                              _model
+                                                                  .addRequirementEventController
+                                                                  .text,
                                                         ),
                                                         'organization_partner':
                                                             FFAppState()

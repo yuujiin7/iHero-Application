@@ -67,11 +67,25 @@ class EditEventsModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
+    if (val.length > 500) {
+      return 'Maximum 500 characters allowed, currently ${val.length}.';
     }
-    if (val.length > 2200) {
-      return 'Max 2200 character';
+
+    return null;
+  }
+
+  // State field(s) for addRequirementEvent widget.
+  TextEditingController? addRequirementEventController;
+  String? Function(BuildContext, String?)?
+      addRequirementEventControllerValidator;
+  String? _addRequirementEventControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 500) {
+      return 'Maximum 500 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -166,6 +180,8 @@ class EditEventsModel extends FlutterFlowModel {
   void initState(BuildContext context) {
     titleEventControllerValidator = _titleEventControllerValidator;
     descriptionEventControllerValidator = _descriptionEventControllerValidator;
+    addRequirementEventControllerValidator =
+        _addRequirementEventControllerValidator;
     personInChargeControllerValidator = _personInChargeControllerValidator;
     contactNumberControllerValidator = _contactNumberControllerValidator;
     ageRequirementControllerValidator = _ageRequirementControllerValidator;
@@ -176,6 +192,7 @@ class EditEventsModel extends FlutterFlowModel {
   void dispose() {
     titleEventController?.dispose();
     descriptionEventController?.dispose();
+    addRequirementEventController?.dispose();
     personInChargeController?.dispose();
     contactNumberController?.dispose();
     ageRequirementController?.dispose();

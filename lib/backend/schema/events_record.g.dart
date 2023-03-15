@@ -285,6 +285,13 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.addRequirementEvent;
+    if (value != null) {
+      result
+        ..add('addRequirementEvent')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -471,6 +478,10 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
           result.isMeritScoreUpdated = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'addRequirementEvent':
+          result.addRequirementEvent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -558,6 +569,8 @@ class _$EventsRecord extends EventsRecord {
   @override
   final bool? isMeritScoreUpdated;
   @override
+  final String? addRequirementEvent;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$EventsRecord([void Function(EventsRecordBuilder)? updates]) =>
@@ -600,6 +613,7 @@ class _$EventsRecord extends EventsRecord {
       this.rateRef,
       this.ageRequirement,
       this.isMeritScoreUpdated,
+      this.addRequirementEvent,
       this.ffRef})
       : super._();
 
@@ -650,6 +664,7 @@ class _$EventsRecord extends EventsRecord {
         rateRef == other.rateRef &&
         ageRequirement == other.ageRequirement &&
         isMeritScoreUpdated == other.isMeritScoreUpdated &&
+        addRequirementEvent == other.addRequirementEvent &&
         ffRef == other.ffRef;
   }
 
@@ -673,25 +688,25 @@ class _$EventsRecord extends EventsRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode), adminRef.hashCode),
-                                                                                eventDateStart.hashCode),
-                                                                            eventDateEnd.hashCode),
-                                                                        organizationPartner.hashCode),
-                                                                    isReqCancel.hashCode),
-                                                                volunteerRef.hashCode),
-                                                            partnerOrgRef.hashCode),
-                                                        volunteerList.hashCode),
-                                                    startTime.hashCode),
-                                                endTime.hashCode),
-                                            isRecurring.hashCode),
-                                        recurranceDate.hashCode),
-                                    rateTotal.hashCode),
-                                rateCount.hashCode),
-                            reason.hashCode),
-                        isDeclined.hashCode),
-                    rateRef.hashCode),
-                ageRequirement.hashCode),
-            isMeritScoreUpdated.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode), adminRef.hashCode), eventDateStart.hashCode),
+                                                                                eventDateEnd.hashCode),
+                                                                            organizationPartner.hashCode),
+                                                                        isReqCancel.hashCode),
+                                                                    volunteerRef.hashCode),
+                                                                partnerOrgRef.hashCode),
+                                                            volunteerList.hashCode),
+                                                        startTime.hashCode),
+                                                    endTime.hashCode),
+                                                isRecurring.hashCode),
+                                            recurranceDate.hashCode),
+                                        rateTotal.hashCode),
+                                    rateCount.hashCode),
+                                reason.hashCode),
+                            isDeclined.hashCode),
+                        rateRef.hashCode),
+                    ageRequirement.hashCode),
+                isMeritScoreUpdated.hashCode),
+            addRequirementEvent.hashCode),
         ffRef.hashCode));
   }
 
@@ -734,6 +749,7 @@ class _$EventsRecord extends EventsRecord {
           ..add('rateRef', rateRef)
           ..add('ageRequirement', ageRequirement)
           ..add('isMeritScoreUpdated', isMeritScoreUpdated)
+          ..add('addRequirementEvent', addRequirementEvent)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -915,6 +931,11 @@ class EventsRecordBuilder
   set isMeritScoreUpdated(bool? isMeritScoreUpdated) =>
       _$this._isMeritScoreUpdated = isMeritScoreUpdated;
 
+  String? _addRequirementEvent;
+  String? get addRequirementEvent => _$this._addRequirementEvent;
+  set addRequirementEvent(String? addRequirementEvent) =>
+      _$this._addRequirementEvent = addRequirementEvent;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -962,6 +983,7 @@ class EventsRecordBuilder
       _rateRef = $v.rateRef?.toBuilder();
       _ageRequirement = $v.ageRequirement;
       _isMeritScoreUpdated = $v.isMeritScoreUpdated;
+      _addRequirementEvent = $v.addRequirementEvent;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -1023,6 +1045,7 @@ class EventsRecordBuilder
               rateRef: _rateRef?.build(),
               ageRequirement: ageRequirement,
               isMeritScoreUpdated: isMeritScoreUpdated,
+              addRequirementEvent: addRequirementEvent,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
