@@ -317,13 +317,13 @@ int rateSuggestion(int rateValue) {
 String? ratingFunction(int? rating) {
   if (rating! >= 85 && rating <= 100) {
     return ("Excellent");
-  } else if (rating <= 80 && rating >= 65) {
+  } else if (rating <= 84 && rating >= 65) {
     return ("Good");
-  } else if (rating <= 60 && rating >= 45) {
+  } else if (rating <= 64 && rating >= 45) {
     return ("Fair");
-  } else if (rating <= 40 && rating >= 25) {
+  } else if (rating <= 44 && rating >= 25) {
     return ("Low");
-  } else if (rating <= 20 && rating >= 0) {
+  } else if (rating <= 24 && rating >= 0) {
     return ("Extremely Low");
   } else {
     return ("Error");
@@ -371,13 +371,13 @@ String customColorRating(int rating) {
   String color;
   if (rating >= 85 && rating <= 100) {
     color = ("#57e32c");
-  } else if (rating <= 80 && rating >= 65) {
+  } else if (rating <= 84 && rating >= 65) {
     color = ("#b7dd29");
-  } else if (rating <= 60 && rating >= 45) {
+  } else if (rating <= 64 && rating >= 45) {
     color = ("#ffe23b");
-  } else if (rating <= 40 && rating >= 25) {
+  } else if (rating <= 44 && rating >= 25) {
     color = ("#ffa534");
-  } else if (rating <= 20 && rating >= 0) {
+  } else if (rating <= 24 && rating >= 0) {
     color = ("#ff0000");
   } else {
     color = ("#ff0000");
@@ -392,13 +392,13 @@ double meritCounter(int merit) {
 String pointEquivalent(double point) {
   if (point >= 85 && point <= 100) {
     return ("Congratulations! Keep up the great work! Your dedication and commitment to the volunteer program are greatly appreciated. Keep striving for excellence!");
-  } else if (point <= 80 && point >= 65) {
+  } else if (point <= 84 && point >= 65) {
     return ("Needs room for improvement. Keep working hard and be proactive in your involvement in the volunteer program. Your contributions are valuable and make a difference!");
-  } else if (point <= 60 && point >= 45) {
+  } else if (point <= 64 && point >= 45) {
     return ("We encourage you to review your performance and consider ways to improve. Remember, your involvement and dedication to the volunteer program are crucial to its success. Let's work together to achieve your full potential!");
-  } else if (point <= 50 && point >= 25) {
+  } else if (point <= 54 && point >= 25) {
     return ("Your credit score has fallen into the low range. We recommend that you take the necessary steps to join events to improve your performance and regain your excellent standing. If you need support or have questions, please don't hesitate to reach out to us.");
-  } else if (point <= 20 && point >= 0) {
+  } else if (point <= 24 && point >= 0) {
     return ("Your credit score is extremely low. As a result, your account has been temporarily suspended and you are temporarily ineligible to join any events or activities organized by the volunteer organization. We strongly encourage you to visit our office to discuss your performance and take the necessary steps to reactivate your account and improve your credit score. Your involvement and commitment to the volunteer program are important, and we are here to help you succeed!");
   } else {
     return ("Your credit score is extremely low. As a result, your account has been temporarily suspended and you are temporarily ineligible to join any events or activities organized by the volunteer organization. We strongly encourage you to visit our office to discuss your performance and take the necessary steps to reactivate your account and improve your credit score. Your involvement and commitment to the volunteer program are important, and we are here to help you succeed!");

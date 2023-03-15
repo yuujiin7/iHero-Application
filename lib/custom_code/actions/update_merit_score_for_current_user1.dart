@@ -11,9 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+
 Future<String> updateMeritScoreForCurrentUser1() async {
   CollectionReference eventsCollection =
       FirebaseFirestore.instance.collection('events');
+  CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
   String currentUserID = FirebaseAuth.instance.currentUser!.uid;
   DocumentReference currentUserRef =
       FirebaseFirestore.instance.collection('users').doc(currentUserID);
