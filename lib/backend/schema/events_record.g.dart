@@ -173,20 +173,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
-    value = object.eventStartDate;
-    if (value != null) {
-      result
-        ..add('eventStartDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.eventEndDate;
-    if (value != null) {
-      result
-        ..add('eventEndDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.isReqCancel;
     if (value != null) {
       result
@@ -415,14 +401,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
-        case 'eventStartDate':
-          result.eventStartDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'eventEndDate':
-          result.eventEndDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'isReqCancel':
           result.isReqCancel = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -550,10 +528,6 @@ class _$EventsRecord extends EventsRecord {
   @override
   final BuiltList<String>? organizationPartner;
   @override
-  final String? eventStartDate;
-  @override
-  final String? eventEndDate;
-  @override
   final bool? isReqCancel;
   @override
   final BuiltList<DocumentReference<Object?>>? volunteerRef;
@@ -611,8 +585,6 @@ class _$EventsRecord extends EventsRecord {
       this.eventDateStart,
       this.eventDateEnd,
       this.organizationPartner,
-      this.eventStartDate,
-      this.eventEndDate,
       this.isReqCancel,
       this.volunteerRef,
       this.partnerOrgRef,
@@ -663,8 +635,6 @@ class _$EventsRecord extends EventsRecord {
         eventDateStart == other.eventDateStart &&
         eventDateEnd == other.eventDateEnd &&
         organizationPartner == other.organizationPartner &&
-        eventStartDate == other.eventStartDate &&
-        eventEndDate == other.eventEndDate &&
         isReqCancel == other.isReqCancel &&
         volunteerRef == other.volunteerRef &&
         partnerOrgRef == other.partnerOrgRef &&
@@ -703,10 +673,10 @@ class _$EventsRecord extends EventsRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode), adminRef.hashCode), eventDateStart.hashCode), eventDateEnd.hashCode),
-                                                                                organizationPartner.hashCode),
-                                                                            eventStartDate.hashCode),
-                                                                        eventEndDate.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode), adminRef.hashCode),
+                                                                                eventDateStart.hashCode),
+                                                                            eventDateEnd.hashCode),
+                                                                        organizationPartner.hashCode),
                                                                     isReqCancel.hashCode),
                                                                 volunteerRef.hashCode),
                                                             partnerOrgRef.hashCode),
@@ -749,8 +719,6 @@ class _$EventsRecord extends EventsRecord {
           ..add('eventDateStart', eventDateStart)
           ..add('eventDateEnd', eventDateEnd)
           ..add('organizationPartner', organizationPartner)
-          ..add('eventStartDate', eventStartDate)
-          ..add('eventEndDate', eventEndDate)
           ..add('isReqCancel', isReqCancel)
           ..add('volunteerRef', volunteerRef)
           ..add('partnerOrgRef', partnerOrgRef)
@@ -877,15 +845,6 @@ class EventsRecordBuilder
   set organizationPartner(ListBuilder<String>? organizationPartner) =>
       _$this._organizationPartner = organizationPartner;
 
-  String? _eventStartDate;
-  String? get eventStartDate => _$this._eventStartDate;
-  set eventStartDate(String? eventStartDate) =>
-      _$this._eventStartDate = eventStartDate;
-
-  String? _eventEndDate;
-  String? get eventEndDate => _$this._eventEndDate;
-  set eventEndDate(String? eventEndDate) => _$this._eventEndDate = eventEndDate;
-
   bool? _isReqCancel;
   bool? get isReqCancel => _$this._isReqCancel;
   set isReqCancel(bool? isReqCancel) => _$this._isReqCancel = isReqCancel;
@@ -988,8 +947,6 @@ class EventsRecordBuilder
       _eventDateStart = $v.eventDateStart;
       _eventDateEnd = $v.eventDateEnd;
       _organizationPartner = $v.organizationPartner?.toBuilder();
-      _eventStartDate = $v.eventStartDate;
-      _eventEndDate = $v.eventEndDate;
       _isReqCancel = $v.isReqCancel;
       _volunteerRef = $v.volunteerRef?.toBuilder();
       _partnerOrgRef = $v.partnerOrgRef;
@@ -1051,8 +1008,6 @@ class EventsRecordBuilder
               eventDateStart: eventDateStart,
               eventDateEnd: eventDateEnd,
               organizationPartner: _organizationPartner?.build(),
-              eventStartDate: eventStartDate,
-              eventEndDate: eventEndDate,
               isReqCancel: isReqCancel,
               volunteerRef: _volunteerRef?.build(),
               partnerOrgRef: partnerOrgRef,

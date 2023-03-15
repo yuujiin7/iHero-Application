@@ -62,10 +62,6 @@ abstract class EventsRecord
   @BuiltValueField(wireName: 'organization_partner')
   BuiltList<String>? get organizationPartner;
 
-  String? get eventStartDate;
-
-  String? get eventEndDate;
-
   bool? get isReqCancel;
 
   @BuiltValueField(wireName: 'volunteer_ref')
@@ -121,8 +117,6 @@ abstract class EventsRecord
     ..isConfirmbySA = false
     ..adminRef = ListBuilder()
     ..organizationPartner = ListBuilder()
-    ..eventStartDate = ''
-    ..eventEndDate = ''
     ..isReqCancel = false
     ..volunteerRef = ListBuilder()
     ..volunteerList = ListBuilder()
@@ -182,8 +176,6 @@ abstract class EventsRecord
               snapshot.data['eventDateEnd']))
           ..organizationPartner =
               safeGet(() => ListBuilder(snapshot.data['organization_partner']))
-          ..eventStartDate = snapshot.data['eventStartDate']
-          ..eventEndDate = snapshot.data['eventEndDate']
           ..isReqCancel = snapshot.data['isReqCancel']
           ..volunteerRef = safeGet(() =>
               ListBuilder(snapshot.data['volunteer_ref'].map((s) => toRef(s))))
@@ -251,8 +243,6 @@ Map<String, dynamic> createEventsRecordData({
   DateTime? expiryDate,
   DateTime? eventDateStart,
   DateTime? eventDateEnd,
-  String? eventStartDate,
-  String? eventEndDate,
   bool? isReqCancel,
   DocumentReference? partnerOrgRef,
   DateTime? startTime,
@@ -291,8 +281,6 @@ Map<String, dynamic> createEventsRecordData({
         ..eventDateStart = eventDateStart
         ..eventDateEnd = eventDateEnd
         ..organizationPartner = null
-        ..eventStartDate = eventStartDate
-        ..eventEndDate = eventEndDate
         ..isReqCancel = isReqCancel
         ..volunteerRef = null
         ..partnerOrgRef = partnerOrgRef

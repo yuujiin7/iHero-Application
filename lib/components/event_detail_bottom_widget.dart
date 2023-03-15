@@ -211,7 +211,17 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                 ),
                           ),
                           Text(
-                            '${widget.eventDetails!.eventStartDate == widget.eventDetails!.eventEndDate ? widget.eventDetails!.eventStartDate : '${widget.eventDetails!.eventStartDate} - ${widget.eventDetails!.eventEndDate}'}',
+                            '${widget.eventDetails!.eventDateStart == widget.eventDetails!.eventDateEnd ? widget.eventDetails!.eventDateStart?.toString() : '${dateTimeFormat(
+                                'yMMMd',
+                                widget.eventDetails!.eventDateStart,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              )} - ${dateTimeFormat(
+                                'yMMMd',
+                                widget.eventDetails!.eventDateEnd,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              )}'}',
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
