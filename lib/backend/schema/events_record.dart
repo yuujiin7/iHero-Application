@@ -96,6 +96,8 @@ abstract class EventsRecord
 
   bool? get isMeritScoreUpdated;
 
+  String? get addRequirementEvent;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -128,7 +130,8 @@ abstract class EventsRecord
     ..isDeclined = false
     ..rateRef = ListBuilder()
     ..ageRequirement = 0
-    ..isMeritScoreUpdated = false;
+    ..isMeritScoreUpdated = false
+    ..addRequirementEvent = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -197,6 +200,7 @@ abstract class EventsRecord
               () => ListBuilder(snapshot.data['rate_ref'].map((s) => toRef(s))))
           ..ageRequirement = snapshot.data['ageRequirement']?.round()
           ..isMeritScoreUpdated = snapshot.data['isMeritScoreUpdated']
+          ..addRequirementEvent = snapshot.data['addRequirementEvent']
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -255,6 +259,7 @@ Map<String, dynamic> createEventsRecordData({
   bool? isDeclined,
   int? ageRequirement,
   bool? isMeritScoreUpdated,
+  String? addRequirementEvent,
 }) {
   final firestoreData = serializers.toFirestore(
     EventsRecord.serializer,
@@ -295,7 +300,8 @@ Map<String, dynamic> createEventsRecordData({
         ..isDeclined = isDeclined
         ..rateRef = null
         ..ageRequirement = ageRequirement
-        ..isMeritScoreUpdated = isMeritScoreUpdated,
+        ..isMeritScoreUpdated = isMeritScoreUpdated
+        ..addRequirementEvent = addRequirementEvent,
     ),
   );
 

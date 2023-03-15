@@ -444,6 +444,30 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                             .bodyText1Family),
                                               ),
                                         ),
+                                        Divider(
+                                          thickness: 1.0,
+                                        ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            eventFullDetailEventsRecord
+                                                .addRequirementEvent,
+                                            'Reminders/Requirements',
+                                          ).maybeHandleOverflow(
+                                            maxChars: 500,
+                                            replacement: '…',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Barlow',
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyText1Family),
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),

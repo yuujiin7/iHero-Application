@@ -224,10 +224,8 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                           TextEditingController(
                                     text: containerAnnouncementRecord.title,
                                   ),
-                                  maxLength: 65,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Title',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
@@ -334,10 +332,8 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       TextEditingController(
                                     text: containerAnnouncementRecord.body,
                                   ),
-                                  maxLength: 500,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    counterText: "",
                                     hintText: 'Description',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
