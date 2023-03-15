@@ -207,7 +207,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       ),
                       child: TextFormField(
                         controller: _model.emailAddressController,
-                        maxLength: 50,
+                        maxLength: 254,
                         obscureText: false,
                         decoration: InputDecoration(
                           counterText: "",

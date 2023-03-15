@@ -93,6 +93,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   70.0, 10.0, 70.0, 10.0),
                               child: TextFormField(
                                 controller: _model.emailFieldController,
+                                maxLength: 254,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.emailFieldController',
                                   Duration(milliseconds: 2000),
@@ -111,6 +112,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: 'Email',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -189,6 +191,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   70.0, 0.0, 70.0, 0.0),
                               child: TextFormField(
                                 controller: _model.passwordFieldController,
+                                maxLength: 100,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.passwordFieldController',
                                   Duration(milliseconds: 2000),
@@ -208,6 +211,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 autofocus: true,
                                 obscureText: !_model.passwordFieldVisibility,
                                 decoration: InputDecoration(
+                                  counterText: "",
                                   hintText: ' Password',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
