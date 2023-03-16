@@ -3,7 +3,6 @@ import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/back_component_widget.dart';
 import '/components/email_confirmation_widget.dart';
-import '/components/search_for_country_code_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -104,15 +103,13 @@ class AppointmentPageModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Max 255 character';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 100) {
+      return 'Max 100 character';
     }
 
     return null;
   }
 
-  // Model for searchForCountryCode component.
-  late SearchForCountryCodeModel searchForCountryCodeModel;
   // State field(s) for contactNumber widget.
   TextEditingController? contactNumberController;
   String? Function(BuildContext, String?)? contactNumberControllerValidator;
@@ -124,10 +121,12 @@ class AppointmentPageModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 15) {
+    if (val.length > 13) {
       return 'Max 15 character';
     }
-
+    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+      return 'Include the + symbol, country code (63). ';
+    }
     return null;
   }
 
@@ -163,8 +162,6 @@ class AppointmentPageModel extends FlutterFlowModel {
     nationalityControllerValidator = _nationalityControllerValidator;
     civilStatusControllerValidator = _civilStatusControllerValidator;
     addressControllerValidator = _addressControllerValidator;
-    searchForCountryCodeModel =
-        createModel(context, () => SearchForCountryCodeModel());
     contactNumberControllerValidator = _contactNumberControllerValidator;
     emailControllerValidator = _emailControllerValidator;
   }
@@ -175,7 +172,6 @@ class AppointmentPageModel extends FlutterFlowModel {
     nationalityController?.dispose();
     civilStatusController?.dispose();
     addressController?.dispose();
-    searchForCountryCodeModel.dispose();
     contactNumberController?.dispose();
     emailController?.dispose();
   }

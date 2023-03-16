@@ -321,6 +321,12 @@ class FFAppState extends ChangeNotifier {
   set selectedCountryCode(String _value) {
     _selectedCountryCode = _value;
   }
+
+  DateTime? _birthday;
+  DateTime? get birthday => _birthday;
+  set birthday(DateTime? _value) {
+    _birthday = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

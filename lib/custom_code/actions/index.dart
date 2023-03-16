@@ -7,6 +7,7 @@ export 'create_client.dart' show createClient;
 export 'document_exists.dart' show documentExists;
 export 'get_document_reference.dart' show getDocumentReference;
 export 'batch_update_ended_events.dart' show batchUpdateEndedEvents;
+export 'document_exists_copy.dart' show documentExistsCopy;
 export 'update_session.dart' show updateSession;
 export 'update_session_logout.dart' show updateSessionLogout;
 export 'get_user_ids.dart' show getUserIds;
