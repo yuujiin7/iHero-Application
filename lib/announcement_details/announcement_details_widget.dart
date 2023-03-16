@@ -55,6 +55,8 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
         logFirebaseEvent('announcementDetails_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
         _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {

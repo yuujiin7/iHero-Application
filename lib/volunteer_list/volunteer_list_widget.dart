@@ -49,6 +49,8 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
         logFirebaseEvent('volunteerList_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
         _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {

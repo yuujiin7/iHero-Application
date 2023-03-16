@@ -179,6 +179,8 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                           logFirebaseEvent('Text_auth');
                           GoRouter.of(context).prepareAuthEvent();
                           await signOut();
+                          GoRouter.of(context).clearRedirectLocation();
+
                           logFirebaseEvent('Text_navigate_to');
 
                           context.pushNamedAuth('Login', mounted);

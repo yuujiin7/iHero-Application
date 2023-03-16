@@ -7,12 +7,14 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,6 +53,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
         logFirebaseEvent('findEvents_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
         _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {
@@ -182,6 +186,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 5.0, 0.0, 0.0),
                           child: FlutterFlowDropDown<String>(
+                            controller: _model.dropDownController1 ??=
+                                FormFieldController<String>(null),
                             options: FFAppState().CauseList.toList(),
                             onChanged: (val) =>
                                 setState(() => _model.dropDownValue1 = val),
@@ -253,6 +259,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                               List<PartnerOrgRecord>
                                   dropDownPartnerOrgRecordList = snapshot.data!;
                               return FlutterFlowDropDown<String>(
+                                controller: _model.dropDownController2 ??=
+                                    FormFieldController<String>(null),
                                 options: dropDownPartnerOrgRecordList
                                     .map((e) => e.orgName)
                                     .withoutNulls
@@ -782,6 +790,10 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                             validator: _model
                                                 .searchFieldControllerValidator
                                                 .asValidator(context),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp('^.{1,65}'))
+                                            ],
                                           ),
                                         ),
                                         FlutterFlowIconButton(

@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -53,6 +54,8 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
         logFirebaseEvent('appointmentPage_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
         return;
       } else {
         return;
@@ -277,6 +280,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.fullNameController,
+                          textCapitalization: TextCapitalization.sentences,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Enter Full Name',
@@ -337,6 +341,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                           validator: _model.fullNameControllerValidator
                               .asValidator(context),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp('^.{1,50}'))
+                          ],
                         ),
                       ),
                     ),
@@ -545,6 +553,8 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: FlutterFlowDropDown<String>(
+                          controller: _model.genderController ??=
+                              FormFieldController<String>(null),
                           options: [
                             'Male',
                             'Female',
@@ -597,6 +607,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.nationalityController,
+                          textCapitalization: TextCapitalization.sentences,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Nationality',
@@ -674,6 +685,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                           validator: _model.nationalityControllerValidator
                               .asValidator(context),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp('^.{1,50}'))
+                          ],
                         ),
                       ),
                     ),
@@ -697,6 +712,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.civilStatusController,
+                          textCapitalization: TextCapitalization.sentences,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Civil Status',
@@ -774,6 +790,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                               ),
                           validator: _model.civilStatusControllerValidator
                               .asValidator(context),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp('^.{1,20}'))
+                          ],
                         ),
                       ),
                     ),
@@ -875,6 +895,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           keyboardType: TextInputType.streetAddress,
                           validator: _model.addressControllerValidator
                               .asValidator(context),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp('^.{1,255}'))
+                          ],
                         ),
                       ),
                     ),
@@ -990,7 +1014,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                         .asValidator(context),
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
-                                          RegExp('^[\\d+\\-\\s]*\$'))
+                                          RegExp('^[\\d+\\-\\s]{1,13}'))
                                     ],
                                   ),
                                 ),
@@ -1020,6 +1044,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         child: TextFormField(
                           controller: _model.emailController,
+                          textCapitalization: TextCapitalization.sentences,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Email Address',
@@ -1101,6 +1126,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           keyboardType: TextInputType.emailAddress,
                           validator: _model.emailControllerValidator
                               .asValidator(context),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp('^.{1,255}'))
+                          ],
                         ),
                       ),
                     ),

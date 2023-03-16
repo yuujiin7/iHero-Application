@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -173,6 +174,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               validator: _model
                                   .currentPasswordControllerValidator
                                   .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,100}'))
+                              ],
                             ),
                           ),
                           Padding(
@@ -241,6 +246,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               style: FlutterFlowTheme.of(context).bodyText1,
                               validator: _model.newPasswordControllerValidator
                                   .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,100}'))
+                              ],
                             ),
                           ),
                           Padding(
@@ -329,6 +338,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               validator: _model
                                   .confirmNewPsswrodControllerValidator
                                   .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,100}'))
+                              ],
                             ),
                           ),
                           if (_model.notMatch)

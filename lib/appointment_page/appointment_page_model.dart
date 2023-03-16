@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -56,6 +57,7 @@ class AppointmentPageModel extends FlutterFlowModel {
   bool? age;
   // State field(s) for gender widget.
   String? genderValue;
+  FormFieldController<String>? genderController;
   // State field(s) for nationality widget.
   TextEditingController? nationalityController;
   String? Function(BuildContext, String?)? nationalityControllerValidator;

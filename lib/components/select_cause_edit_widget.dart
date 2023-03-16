@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -86,6 +87,8 @@ class _SelectCauseEditWidgetState extends State<SelectCauseEditWidget> {
                           children: [
                             Expanded(
                               child: FlutterFlowDropDown<String>(
+                                controller: _model.dropDownController ??=
+                                    FormFieldController<String>(null),
                                 options: functions
                                     .sortList(FFAppState().CauseList.toList())
                                     .toList(),

@@ -9,6 +9,7 @@ import '/flutter_flow/upload_media.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -258,6 +259,10 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                     ),
                                 validator: _model.fullNameControllerValidator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^.{1,50}'))
+                                ],
                               ),
                             ),
                           ),
@@ -359,6 +364,10 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                 validator: _model
                                     .descriptionEventControllerValidator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^.{1,500}'))
+                                ],
                               ),
                             ),
                           ),

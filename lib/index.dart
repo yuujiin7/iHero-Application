@@ -1,6 +1,6 @@
 // Export pages
-export '/onboarding/onboarding_widget.dart' show OnboardingWidget;
 export '/splash_screen/splash_screen_widget.dart' show SplashScreenWidget;
+export '/onboarding/onboarding_widget.dart' show OnboardingWidget;
 export '/login/login_widget.dart' show LoginWidget;
 export '/o_t_p_code/o_t_p_code_widget.dart' show OTPCodeWidget;
 export '/volunteer_phone/volunteer_phone_widget.dart' show VolunteerPhoneWidget;

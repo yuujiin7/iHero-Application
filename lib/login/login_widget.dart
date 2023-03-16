@@ -6,6 +6,7 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -109,6 +110,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   }
                                 },
                                 autofocus: true,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Email',
@@ -174,6 +177,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 keyboardType: TextInputType.emailAddress,
                                 validator: _model.emailFieldControllerValidator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^.{1,254}'))
+                                ],
                               ),
                             ),
                           ),
@@ -206,6 +213,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   }
                                 },
                                 autofocus: true,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
                                 obscureText: !_model.passwordFieldVisibility,
                                 decoration: InputDecoration(
                                   hintText: ' Password',
@@ -287,6 +296,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 validator: _model
                                     .passwordFieldControllerValidator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^.{1,100}'))
+                                ],
                               ),
                             ),
                           ),

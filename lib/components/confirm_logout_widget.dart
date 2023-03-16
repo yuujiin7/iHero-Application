@@ -104,6 +104,8 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                     logFirebaseEvent('Button_auth');
                     GoRouter.of(context).prepareAuthEvent(true);
                     await signOut();
+                    GoRouter.of(context).clearRedirectLocation();
+
                     logFirebaseEvent('Button_navigate_to');
 
                     context.goNamedAuth(

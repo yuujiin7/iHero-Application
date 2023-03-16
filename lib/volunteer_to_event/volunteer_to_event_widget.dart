@@ -9,6 +9,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -248,6 +249,9 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                     onEditingComplete:
                                                         onEditingComplete,
                                                     autofocus: true,
+                                                    textCapitalization:
+                                                        TextCapitalization
+                                                            .sentences,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       hintText:
@@ -349,6 +353,11 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                     validator: _model
                                                         .searchFieldControllerValidator
                                                         .asValidator(context),
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .allow(RegExp(
+                                                              '^.{1,50}'))
+                                                    ],
                                                   );
                                                 },
                                               ),
@@ -488,7 +497,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                     .documentRequestCompleter =
                                                 null);
                                             await _model
-                                                .waitForDocumentRequestCompleter();
+                                                .waitForDocumentRequestCompleted();
                                           },
                                           child: GridView.builder(
                                             padding: EdgeInsets.zero,

@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -1298,9 +1299,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   children: [
                                     Expanded(
                                       child: FlutterFlowChoiceChips(
-                                        initiallySelected: [
-                                          containerEventsRecord.recurranceDate!
-                                        ],
                                         options: [
                                           ChipData('Sunday'),
                                           ChipData('Monday'),
@@ -1366,6 +1364,14 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                         initialized:
                                             _model.choiceChipsValue != null,
                                         alignment: WrapAlignment.spaceEvenly,
+                                        controller: _model
+                                                .choiceChipsController ??=
+                                            FormFieldController<List<String>>(
+                                          [
+                                            containerEventsRecord
+                                                .recurranceDate!
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1861,12 +1867,16 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       snapshot.data!;
                                                   return FlutterFlowDropDown<
                                                       String>(
-                                                    initialOption: _model
-                                                            .partnerDropDownValue ??=
-                                                        containerEventsRecord
-                                                            .organizationPartner!
-                                                            .toList()
-                                                            .first,
+                                                    controller: _model
+                                                            .partnerDropDownController ??=
+                                                        FormFieldController<
+                                                            String>(
+                                                      _model.partnerDropDownValue ??=
+                                                          containerEventsRecord
+                                                              .organizationPartner!
+                                                              .toList()
+                                                              .first,
+                                                    ),
                                                     options:
                                                         partnerDropDownPartnerOrgRecordList
                                                             .map((e) =>

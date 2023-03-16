@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -43,9 +44,6 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 5) {
-      return 'Min 65 character';
-    }
     if (val.length > 65) {
       return 'Max 65 character';
     }
@@ -92,6 +90,7 @@ class EventCreateModel extends FlutterFlowModel {
   bool? switchValue;
   // State field(s) for ChoiceChips widget.
   String? choiceChipsValue;
+  FormFieldController<List<String>>? choiceChipsController;
   // State field(s) for PersonInCharge widget.
   TextEditingController? personInChargeController;
   String? Function(BuildContext, String?)? personInChargeControllerValidator;
@@ -101,9 +100,6 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
-    }
     if (val.length > 50) {
       return 'Max 50 character';
     }
@@ -120,9 +116,9 @@ class EventCreateModel extends FlutterFlowModel {
     }
 
     if (val.length > 13) {
-      return 'Max 13 character';
+      return 'Maximum 13 characters allowed, currently ${val.length}.';
     }
-    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+    if (!RegExp('^(09|\\+639)\\d{9}\$').hasMatch(val)) {
       return 'Include the + symbol, country code (63). ';
     }
     return null;
@@ -164,6 +160,7 @@ class EventCreateModel extends FlutterFlowModel {
   late SelectCauseCreateModel selectCauseCreateModel;
   // State field(s) for PartnerDropDown widget.
   String? partnerDropDownValue;
+  FormFieldController<String>? partnerDropDownController;
   // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
   bool? isEventExist;
   // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.

@@ -50,6 +50,8 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         logFirebaseEvent('profileScreen_auth');
         GoRouter.of(context).prepareAuthEvent();
         await signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
         _navigate = () => context.goNamedAuth('Onboarding', mounted);
         return;
       } else {

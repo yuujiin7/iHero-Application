@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -27,11 +28,11 @@ class ChangePasswordModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 10) {
+    if (val.length < 8) {
       return 'Min 10 character';
     }
-    if (val.length > 25) {
-      return 'Max 25 character';
+    if (val.length > 100) {
+      return 'Maximum 100 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -46,15 +47,15 @@ class ChangePasswordModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 10) {
-      return 'Requires at least 10 characters.';
+    if (val.length < 8) {
+      return 'Requires at least 8 characters.';
     }
-    if (val.length > 25) {
-      return 'Max 25 character';
+    if (val.length > 100) {
+      return 'Maximum 100 characters allowed, currently ${val.length}.';
     }
-    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{10,25}\$')
+    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{8,100}\$')
         .hasMatch(val)) {
-      return 'Password must be 10-25 characters long and contain at least one uppercase letter, one digit, and one special character.';
+      return 'Password must be 8-100characters long and contain at least one uppercase letter, one digit, and one special character.';
     }
     return null;
   }
@@ -69,15 +70,15 @@ class ChangePasswordModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 10) {
-      return 'Min 10 character';
+    if (val.length < 8) {
+      return 'Requires at least 8 characters.';
     }
-    if (val.length > 52) {
-      return 'Max 25 character';
+    if (val.length > 100) {
+      return 'Maximum 100 characters allowed, currently ${val.length}.';
     }
-    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{10,25}\$')
+    if (!RegExp('^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^\\w\\s]).{8,100}\$')
         .hasMatch(val)) {
-      return 'Password must be 10-25 characters long and contain at least one uppercase letter, one digit, and one special character.';
+      return 'Password must be 8-100 characters long and contain at least one uppercase letter, one digit, and one special character.';
     }
     return null;
   }

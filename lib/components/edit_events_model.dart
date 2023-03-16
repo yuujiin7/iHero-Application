@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,6 +98,7 @@ class EditEventsModel extends FlutterFlowModel {
   bool? switchValue;
   // State field(s) for ChoiceChips widget.
   String? choiceChipsValue;
+  FormFieldController<List<String>>? choiceChipsController;
   // State field(s) for PersonInCharge widget.
   TextEditingController? personInChargeController;
   String? Function(BuildContext, String?)? personInChargeControllerValidator;
@@ -172,6 +174,7 @@ class EditEventsModel extends FlutterFlowModel {
   late SelectCauseEditModel selectCauseEditModel;
   // State field(s) for PartnerDropDown widget.
   String? partnerDropDownValue;
+  FormFieldController<String>? partnerDropDownController;
   // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
   bool? isEventExist;
 

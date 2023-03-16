@@ -80,14 +80,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : OnboardingWidget(),
           routes: [
             FFRoute(
-              name: 'Onboarding',
-              path: 'onboarding',
-              builder: (context, params) => OnboardingWidget(),
-            ),
-            FFRoute(
               name: 'splashScreen',
               path: 'splashScreen',
               builder: (context, params) => SplashScreenWidget(),
+            ),
+            FFRoute(
+              name: 'Onboarding',
+              path: 'onboarding',
+              builder: (context, params) => OnboardingWidget(),
             ),
             FFRoute(
               name: 'Login',
@@ -389,6 +389,7 @@ extension GoRouterExtensions on GoRouter {
           : appState.updateNotifyOnAuthChange(false);
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
+  void clearRedirectLocation() => appState.clearRedirectLocation();
   void setRedirectLocationIfUnset(String location) =>
       (routerDelegate.refreshListenable as AppStateNotifier)
           .updateNotifyOnAuthChange(false);
