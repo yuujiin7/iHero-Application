@@ -2837,329 +2837,294 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                             .first
                                                                         : null;
                                                                 return FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    logFirebaseEvent(
-                                                                        'EVENT_CREATE_PAGE_ButtonSubmit_ON_TAP');
-                                                                    var _shouldSetState =
-                                                                        false;
-                                                                    logFirebaseEvent(
-                                                                        'ButtonSubmit_validate_form');
-                                                                    if (_model.formKey1.currentState ==
-                                                                            null ||
-                                                                        !_model
-                                                                            .formKey1
-                                                                            .currentState!
-                                                                            .validate()) {
-                                                                      return;
-                                                                    }
-                                                                    logFirebaseEvent(
-                                                                        'ButtonSubmit_alert_dialog');
-                                                                    var confirmDialogResponse =
-                                                                        await showDialog<bool>(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Submit '),
-                                                                                  content: Text('Create this event?'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                      child: Text('Cancel'),
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                      child: Text('Confirm'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            ) ??
-                                                                            false;
-                                                                    if (confirmDialogResponse) {
-                                                                      logFirebaseEvent(
-                                                                          'ButtonSubmit_custom_action');
-                                                                      _model.isEventExist =
-                                                                          await actions
-                                                                              .documentExists(
-                                                                        FFAppState()
-                                                                            .address,
-                                                                        FFAppState()
-                                                                            .startDate!,
-                                                                        FFAppState()
-                                                                            .endDate!,
-                                                                      );
-                                                                      _shouldSetState =
-                                                                          true;
-                                                                      if (_model
-                                                                          .isEventExist!) {
-                                                                        logFirebaseEvent(
-                                                                            'ButtonSubmit_alert_dialog');
-                                                                        await showDialog(
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (alertDialogContext) {
-                                                                            return AlertDialog(
-                                                                              title: Text('Failed'),
-                                                                              content: Text('Another events has the same Location and Date.'),
-                                                                              actions: [
-                                                                                TextButton(
-                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                  child: Text('Dismiss'),
-                                                                                ),
-                                                                              ],
-                                                                            );
-                                                                          },
-                                                                        );
-                                                                        if (_shouldSetState)
-                                                                          setState(
-                                                                              () {});
-                                                                        return;
-                                                                      } else {
-                                                                        if (_model
-                                                                            .switchValue!) {
+                                                                  onPressed: ((FFAppState().startDate == null) && (FFAppState().endDate == null)) ||
+                                                                          (FFAppState().address == null ||
+                                                                              FFAppState().address ==
+                                                                                  '') ||
+                                                                          (_model.selectCauseCreateModel.selectedTagsList.length ==
+                                                                              0) ||
+                                                                          ((FFAppState().startTime == null) &&
+                                                                              (FFAppState().endTime == null))
+                                                                      ? null
+                                                                      : () async {
                                                                           logFirebaseEvent(
-                                                                              'ButtonSubmit_backend_call');
-
-                                                                          final eventsCreateData1 =
-                                                                              {
-                                                                            ...createEventsRecordData(
-                                                                              eventTitle: _model.titleEventController.text,
-                                                                              eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                              eventDescription: _model.addRequirementsEventController.text,
-                                                                              eventInChargePerson: _model.personInChargeController.text,
-                                                                              eventLocation: FFAppState().locationLatLng,
-                                                                              eventAddress: FFAppState().address,
-                                                                              neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
-                                                                              createdDate: getCurrentTimestamp,
-                                                                              isEnded: false,
-                                                                              isDeleted: false,
-                                                                              eventContactNumber: _model.contactNumberController.text,
-                                                                              isConfirmbySA: false,
-                                                                              eventDateStart: FFAppState().startDate,
-                                                                              eventDateEnd: FFAppState().endDate,
-                                                                              neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
-                                                                              partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
-                                                                              isReqCancel: false,
-                                                                              startTime: _model.datePicked1,
-                                                                              endTime: _model.datePicked2,
-                                                                              isRecurring: _model.switchValue,
-                                                                              recurranceDate: _model.choiceChipsValue,
-                                                                              rateTotal: 0.0,
-                                                                              rateCount: 0.0,
-                                                                              isDeclined: false,
-                                                                              volunteerCount: null,
-                                                                              expiryDate: null,
-                                                                              reason: null,
-                                                                              ageRequirement: int.tryParse(_model.ageRequirementController.text),
-                                                                              isMeritScoreUpdated: false,
-                                                                              addRequirementEvent: _model.addRequirementsEventController.text,
-                                                                            ),
-                                                                            'admin_ref':
-                                                                                [
-                                                                              currentUserReference
-                                                                            ],
-                                                                            'eventTag':
-                                                                                _model.selectCauseCreateModel.selectedTagsList,
-                                                                            'organization_partner':
-                                                                                [
-                                                                              _model.partnerDropDownValue
-                                                                            ],
-                                                                          };
-                                                                          var eventsRecordReference1 = EventsRecord
-                                                                              .collection
-                                                                              .doc();
-                                                                          await eventsRecordReference1
-                                                                              .set(eventsCreateData1);
-                                                                          _model.isCreated1 = EventsRecord.getDocumentFromData(
-                                                                              eventsCreateData1,
-                                                                              eventsRecordReference1);
-                                                                          _shouldSetState =
-                                                                              true;
-                                                                          if (_model.isCreated1!.reference !=
-                                                                              null) {
-                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                            await showDialog(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Done'),
-                                                                                  content: Text('Event is to be confirmed.'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                      child: Text('Ok'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            );
-                                                                            logFirebaseEvent('ButtonSubmit_update_app_state');
-                                                                            FFAppState().update(() {
-                                                                              FFAppState().deleteLocationLatLng();
-                                                                              FFAppState().locationLatLng = null;
-
-                                                                              FFAppState().deleteAddress();
-                                                                              FFAppState().address = '';
-
-                                                                              FFAppState().startDate = null;
-                                                                              FFAppState().endDate = null;
-                                                                              FFAppState().startTime = null;
-                                                                              FFAppState().endTime = null;
-                                                                            });
-                                                                            logFirebaseEvent('ButtonSubmit_navigate_to');
-
-                                                                            context.pushNamed('HomeScreen');
-
-                                                                            if (_shouldSetState)
-                                                                              setState(() {});
+                                                                              'EVENT_CREATE_PAGE_ButtonSubmit_ON_TAP');
+                                                                          var _shouldSetState =
+                                                                              false;
+                                                                          logFirebaseEvent(
+                                                                              'ButtonSubmit_validate_form');
+                                                                          if (_model.formKey1.currentState == null ||
+                                                                              !_model.formKey1.currentState!.validate()) {
                                                                             return;
-                                                                          } else {
-                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                            await showDialog(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Done'),
-                                                                                  content: Text('Creation failed.'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                      child: Text('Ok'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
+                                                                          }
+                                                                          logFirebaseEvent(
+                                                                              'ButtonSubmit_alert_dialog');
+                                                                          var confirmDialogResponse = await showDialog<bool>(
+                                                                                context: context,
+                                                                                builder: (alertDialogContext) {
+                                                                                  return AlertDialog(
+                                                                                    title: Text('Submit '),
+                                                                                    content: Text('Create this event?'),
+                                                                                    actions: [
+                                                                                      TextButton(
+                                                                                        onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                        child: Text('Cancel'),
+                                                                                      ),
+                                                                                      TextButton(
+                                                                                        onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                        child: Text('Confirm'),
+                                                                                      ),
+                                                                                    ],
+                                                                                  );
+                                                                                },
+                                                                              ) ??
+                                                                              false;
+                                                                          if (confirmDialogResponse) {
+                                                                            logFirebaseEvent('ButtonSubmit_custom_action');
+                                                                            _model.isEventExist =
+                                                                                await actions.documentExists(
+                                                                              FFAppState().address,
+                                                                              FFAppState().startDate!,
+                                                                              FFAppState().endDate!,
                                                                             );
+                                                                            _shouldSetState =
+                                                                                true;
+                                                                            if (_model.isEventExist!) {
+                                                                              logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                              await showDialog(
+                                                                                context: context,
+                                                                                builder: (alertDialogContext) {
+                                                                                  return AlertDialog(
+                                                                                    title: Text('Failed'),
+                                                                                    content: Text('Another events has the same Location and Date.'),
+                                                                                    actions: [
+                                                                                      TextButton(
+                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                        child: Text('Dismiss'),
+                                                                                      ),
+                                                                                    ],
+                                                                                  );
+                                                                                },
+                                                                              );
+                                                                              if (_shouldSetState)
+                                                                                setState(() {});
+                                                                              return;
+                                                                            } else {
+                                                                              if (_model.switchValue!) {
+                                                                                logFirebaseEvent('ButtonSubmit_backend_call');
+
+                                                                                final eventsCreateData1 = {
+                                                                                  ...createEventsRecordData(
+                                                                                    eventTitle: _model.titleEventController.text,
+                                                                                    eventPhotoUrl: _model.uploadedFileUrl1,
+                                                                                    eventDescription: _model.addRequirementsEventController.text,
+                                                                                    eventInChargePerson: _model.personInChargeController.text,
+                                                                                    eventLocation: FFAppState().locationLatLng,
+                                                                                    eventAddress: FFAppState().address,
+                                                                                    neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
+                                                                                    createdDate: getCurrentTimestamp,
+                                                                                    isEnded: false,
+                                                                                    isDeleted: false,
+                                                                                    eventContactNumber: _model.contactNumberController.text,
+                                                                                    isConfirmbySA: false,
+                                                                                    eventDateStart: FFAppState().startDate,
+                                                                                    eventDateEnd: FFAppState().endDate,
+                                                                                    neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
+                                                                                    partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
+                                                                                    isReqCancel: false,
+                                                                                    startTime: _model.datePicked1,
+                                                                                    endTime: _model.datePicked2,
+                                                                                    isRecurring: _model.switchValue,
+                                                                                    recurranceDate: _model.choiceChipsValue,
+                                                                                    rateTotal: 0.0,
+                                                                                    rateCount: 0.0,
+                                                                                    isDeclined: false,
+                                                                                    volunteerCount: null,
+                                                                                    expiryDate: null,
+                                                                                    reason: null,
+                                                                                    ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                                    isMeritScoreUpdated: false,
+                                                                                    addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                                  ),
+                                                                                  'admin_ref': [
+                                                                                    currentUserReference
+                                                                                  ],
+                                                                                  'eventTag': _model.selectCauseCreateModel.selectedTagsList,
+                                                                                  'organization_partner': [
+                                                                                    _model.partnerDropDownValue
+                                                                                  ],
+                                                                                };
+                                                                                var eventsRecordReference1 = EventsRecord.collection.doc();
+                                                                                await eventsRecordReference1.set(eventsCreateData1);
+                                                                                _model.isCreated1 = EventsRecord.getDocumentFromData(eventsCreateData1, eventsRecordReference1);
+                                                                                _shouldSetState = true;
+                                                                                if (_model.isCreated1!.reference != null) {
+                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text('Done'),
+                                                                                        content: Text('Event is to be confirmed.'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                                  FFAppState().update(() {
+                                                                                    FFAppState().deleteLocationLatLng();
+                                                                                    FFAppState().locationLatLng = null;
+
+                                                                                    FFAppState().deleteAddress();
+                                                                                    FFAppState().address = '';
+
+                                                                                    FFAppState().startDate = null;
+                                                                                    FFAppState().endDate = null;
+                                                                                    FFAppState().startTime = null;
+                                                                                    FFAppState().endTime = null;
+                                                                                  });
+                                                                                  logFirebaseEvent('ButtonSubmit_navigate_to');
+
+                                                                                  context.pushNamed('HomeScreen');
+
+                                                                                  if (_shouldSetState) setState(() {});
+                                                                                  return;
+                                                                                } else {
+                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text('Done'),
+                                                                                        content: Text('Creation failed.'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                  if (_shouldSetState) setState(() {});
+                                                                                  return;
+                                                                                }
+                                                                              } else {
+                                                                                logFirebaseEvent('ButtonSubmit_backend_call');
+
+                                                                                final eventsCreateData2 = {
+                                                                                  ...createEventsRecordData(
+                                                                                    eventTitle: _model.titleEventController.text,
+                                                                                    eventPhotoUrl: _model.uploadedFileUrl1,
+                                                                                    eventDescription: _model.descriptionAnnouncementController.text,
+                                                                                    eventInChargePerson: _model.personInChargeController.text,
+                                                                                    eventLocation: FFAppState().locationLatLng,
+                                                                                    eventAddress: FFAppState().address,
+                                                                                    neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
+                                                                                    createdDate: getCurrentTimestamp,
+                                                                                    isEnded: false,
+                                                                                    isDeleted: false,
+                                                                                    eventContactNumber: _model.contactNumberController.text,
+                                                                                    isConfirmbySA: false,
+                                                                                    eventDateStart: FFAppState().startDate,
+                                                                                    eventDateEnd: FFAppState().endDate,
+                                                                                    neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
+                                                                                    partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
+                                                                                    isReqCancel: false,
+                                                                                    startTime: _model.datePicked1,
+                                                                                    endTime: _model.datePicked2,
+                                                                                    recurranceDate: 'Everyday',
+                                                                                    isDeclined: false,
+                                                                                    volunteerCount: null,
+                                                                                    expiryDate: null,
+                                                                                    isRecurring: false,
+                                                                                    rateTotal: 0.0,
+                                                                                    rateCount: 0.0,
+                                                                                    reason: null,
+                                                                                    ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                                    isMeritScoreUpdated: false,
+                                                                                  ),
+                                                                                  'admin_ref': [
+                                                                                    currentUserReference
+                                                                                  ],
+                                                                                  'eventTag': _model.selectCauseCreateModel.selectedTagsList,
+                                                                                  'organization_partner': [
+                                                                                    _model.partnerDropDownValue
+                                                                                  ],
+                                                                                };
+                                                                                await EventsRecord.collection.doc().set(eventsCreateData2);
+                                                                                if (_model.isCreated1!.reference != null) {
+                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text('Done'),
+                                                                                        content: Text('Event is to be confirmed.'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                                  FFAppState().update(() {
+                                                                                    FFAppState().deleteLocationLatLng();
+                                                                                    FFAppState().locationLatLng = null;
+
+                                                                                    FFAppState().deleteAddress();
+                                                                                    FFAppState().address = '';
+
+                                                                                    FFAppState().startDate = null;
+                                                                                    FFAppState().endDate = null;
+                                                                                    FFAppState().startTime = null;
+                                                                                    FFAppState().endTime = null;
+                                                                                  });
+                                                                                  logFirebaseEvent('ButtonSubmit_navigate_to');
+
+                                                                                  context.pushNamed('HomeScreen');
+
+                                                                                  if (_shouldSetState) setState(() {});
+                                                                                  return;
+                                                                                } else {
+                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text('Done'),
+                                                                                        content: Text('Creation failed.'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                  if (_shouldSetState) setState(() {});
+                                                                                  return;
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          } else {
                                                                             if (_shouldSetState)
                                                                               setState(() {});
                                                                             return;
                                                                           }
-                                                                        } else {
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_backend_call');
 
-                                                                          final eventsCreateData2 =
-                                                                              {
-                                                                            ...createEventsRecordData(
-                                                                              eventTitle: _model.titleEventController.text,
-                                                                              eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                              eventDescription: _model.descriptionAnnouncementController.text,
-                                                                              eventInChargePerson: _model.personInChargeController.text,
-                                                                              eventLocation: FFAppState().locationLatLng,
-                                                                              eventAddress: FFAppState().address,
-                                                                              neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
-                                                                              createdDate: getCurrentTimestamp,
-                                                                              isEnded: false,
-                                                                              isDeleted: false,
-                                                                              eventContactNumber: _model.contactNumberController.text,
-                                                                              isConfirmbySA: false,
-                                                                              eventDateStart: FFAppState().startDate,
-                                                                              eventDateEnd: FFAppState().endDate,
-                                                                              neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
-                                                                              partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
-                                                                              isReqCancel: false,
-                                                                              startTime: _model.datePicked1,
-                                                                              endTime: _model.datePicked2,
-                                                                              recurranceDate: 'Everyday',
-                                                                              isDeclined: false,
-                                                                              volunteerCount: null,
-                                                                              expiryDate: null,
-                                                                              isRecurring: false,
-                                                                              rateTotal: 0.0,
-                                                                              rateCount: 0.0,
-                                                                              reason: null,
-                                                                              ageRequirement: int.tryParse(_model.ageRequirementController.text),
-                                                                              isMeritScoreUpdated: false,
-                                                                            ),
-                                                                            'admin_ref':
-                                                                                [
-                                                                              currentUserReference
-                                                                            ],
-                                                                            'eventTag':
-                                                                                _model.selectCauseCreateModel.selectedTagsList,
-                                                                            'organization_partner':
-                                                                                [
-                                                                              _model.partnerDropDownValue
-                                                                            ],
-                                                                          };
-                                                                          await EventsRecord
-                                                                              .collection
-                                                                              .doc()
-                                                                              .set(eventsCreateData2);
-                                                                          if (_model.isCreated1!.reference !=
-                                                                              null) {
-                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                            await showDialog(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Done'),
-                                                                                  content: Text('Event is to be confirmed.'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                      child: Text('Ok'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            );
-                                                                            logFirebaseEvent('ButtonSubmit_update_app_state');
-                                                                            FFAppState().update(() {
-                                                                              FFAppState().deleteLocationLatLng();
-                                                                              FFAppState().locationLatLng = null;
-
-                                                                              FFAppState().deleteAddress();
-                                                                              FFAppState().address = '';
-
-                                                                              FFAppState().startDate = null;
-                                                                              FFAppState().endDate = null;
-                                                                              FFAppState().startTime = null;
-                                                                              FFAppState().endTime = null;
-                                                                            });
-                                                                            logFirebaseEvent('ButtonSubmit_navigate_to');
-
-                                                                            context.pushNamed('HomeScreen');
-
-                                                                            if (_shouldSetState)
-                                                                              setState(() {});
-                                                                            return;
-                                                                          } else {
-                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                            await showDialog(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Done'),
-                                                                                  content: Text('Creation failed.'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                      child: Text('Ok'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            );
-                                                                            if (_shouldSetState)
-                                                                              setState(() {});
-                                                                            return;
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                    } else {
-                                                                      if (_shouldSetState)
-                                                                        setState(
-                                                                            () {});
-                                                                      return;
-                                                                    }
-
-                                                                    if (_shouldSetState)
-                                                                      setState(
-                                                                          () {});
-                                                                  },
+                                                                          if (_shouldSetState)
+                                                                            setState(() {});
+                                                                        },
                                                                   text:
                                                                       'Submit',
                                                                   options:
