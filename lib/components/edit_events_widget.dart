@@ -249,6 +249,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       setState(() {});
                                     },
                                   ),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Event Title',
@@ -328,7 +330,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       .asValidator(context),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        RegExp('[a-zA-Z0-9]'))
+                                        RegExp('^.{1,65}'))
                                   ],
                                 ),
                               ),
@@ -363,6 +365,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           'Description',
                                         ),
                                       ),
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         hintText: 'Event Description',
@@ -440,6 +444,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       validator: _model
                                           .descriptionEventControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('^.{1,500}'))
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -472,7 +480,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       'Requirement',
                                     ),
                                   ),
-                                  textCapitalization: TextCapitalization.words,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Event Description',
@@ -547,6 +556,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   validator: _model
                                       .addRequirementEventControllerValidator
                                       .asValidator(context),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('^.{1,500}'))
+                                  ],
                                 ),
                               ),
                             ),
@@ -607,7 +620,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isDateSet
+                                              FFAppState().startDate == null
                                                   ? dateTimeFormat(
                                                       'yMMMd',
                                                       containerEventsRecord
@@ -695,7 +708,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isDateSet
+                                              FFAppState().endDate == null
                                                   ? dateTimeFormat(
                                                       'yMMMd',
                                                       containerEventsRecord
@@ -851,7 +864,11 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   ),
                                                   child: Text(
                                                     valueOrDefault<String>(
-                                                      !_model.isLocSet
+                                                      FFAppState().address ==
+                                                                  null ||
+                                                              FFAppState()
+                                                                      .address ==
+                                                                  ''
                                                           ? containerEventsRecord
                                                               .eventAddress
                                                           : valueOrDefault<
@@ -987,7 +1004,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isTimeSet
+                                              FFAppState().startTime == null
                                                   ? dateTimeFormat(
                                                       'jm',
                                                       containerEventsRecord
@@ -1123,7 +1140,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isTimeSet
+                                              FFAppState().endTime == null
                                                   ? dateTimeFormat(
                                                       'jm',
                                                       containerEventsRecord
@@ -1407,6 +1424,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                     text: containerEventsRecord
                                         .eventInChargePerson,
                                   ),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Who is in charge?',
@@ -1481,7 +1500,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       .asValidator(context),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        RegExp('[a-zA-Z]'))
+                                        RegExp('^.{1,50}'))
                                   ],
                                 ),
                               ),
@@ -1690,7 +1709,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       .asValidator(context),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9]'))
+                                        RegExp('^\\d{0,3}'))
                                   ],
                                 ),
                               ),
@@ -1797,23 +1816,27 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       .asValidator(context),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9]'))
+                                        RegExp('^\\d{1,4}'))
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            child: wrapWithModel(
-                              model: _model.selectCauseEditModel,
-                              updateCallback: () => setState(() {}),
-                              child: SelectCauseEditWidget(
-                                eventRef: widget.eventsDetails,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: wrapWithModel(
+                                model: _model.selectCauseEditModel,
+                                updateCallback: () => setState(() {}),
+                                child: SelectCauseEditWidget(
+                                  eventRef: widget.eventsDetails,
+                                ),
                               ),
                             ),
                           ),

@@ -340,7 +340,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Policies and Reporting',
+                                    'Reporting',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1

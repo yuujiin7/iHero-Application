@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -223,7 +222,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                             ),
                                             child: Container(
                                               width: double.infinity,
-                                              height: 270.0,
+                                              height: 225.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -580,107 +579,6 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                     Divider(
                                                       thickness: 1.0,
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                columnEventsRecord
-                                                                            .isReqCancel ==
-                                                                        true
-                                                                    ? null
-                                                                    : () async {
-                                                                        logFirebaseEvent(
-                                                                            'MY_EVENTS_ADMIN_REQUEST_CANCELLATION_BTN');
-                                                                        logFirebaseEvent(
-                                                                            'Button_backend_call');
-
-                                                                        final eventsUpdateData =
-                                                                            createEventsRecordData(
-                                                                          isReqCancel:
-                                                                              true,
-                                                                        );
-                                                                        await columnEventsRecord
-                                                                            .reference
-                                                                            .update(eventsUpdateData);
-                                                                      },
-                                                            text: columnEventsRecord
-                                                                    .isReqCancel!
-                                                                ? 'In Progress'
-                                                                : 'Request Cancellation',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 190.0,
-                                                              height: 35.0,
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryBtnText,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .subtitle2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).subtitle2Family,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).subtitle2Family),
-                                                                      ),
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              disabledColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryColor,
-                                                              disabledTextColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -756,7 +654,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                               ),
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 270.0,
+                                                height: 225.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -1108,107 +1006,6 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                     ),
                                                     Divider(
                                                       thickness: 1.0,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                columnEventsRecord
-                                                                            .isReqCancel ==
-                                                                        true
-                                                                    ? null
-                                                                    : () async {
-                                                                        logFirebaseEvent(
-                                                                            'MY_EVENTS_ADMIN_REQUEST_CANCELLATION_BTN');
-                                                                        logFirebaseEvent(
-                                                                            'Button_backend_call');
-
-                                                                        final eventsUpdateData =
-                                                                            createEventsRecordData(
-                                                                          isReqCancel:
-                                                                              true,
-                                                                        );
-                                                                        await columnEventsRecord
-                                                                            .reference
-                                                                            .update(eventsUpdateData);
-                                                                      },
-                                                            text: columnEventsRecord
-                                                                    .isReqCancel!
-                                                                ? 'In Progress'
-                                                                : 'Request Cancellation',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 190.0,
-                                                              height: 35.0,
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryBtnText,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .subtitle2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).subtitle2Family,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).subtitle2Family),
-                                                                      ),
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              disabledColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryColor,
-                                                              disabledTextColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
                                                     ),
                                                   ],
                                                 ),

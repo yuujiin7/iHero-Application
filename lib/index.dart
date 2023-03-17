@@ -40,3 +40,9 @@ export '/my_events_volunteer/my_events_volunteer_widget.dart'
 export '/my_announcement/my_announcement_widget.dart' show MyAnnouncementWidget;
 export '/inspiring_videos/inspiring_videos_widget.dart'
     show InspiringVideosWidget;
+export '/about_i_h_e_r_o/about_i_h_e_r_o_widget.dart' show AboutIHEROWidget;
+export '/terms_of_service/terms_of_service_widget.dart'
+    show TermsOfServiceWidget;
+export '/data_privacy_policy/data_privacy_policy_widget.dart'
+    show DataPrivacyPolicyWidget;
+export '/our_team/our_team_widget.dart' show OurTeamWidget;

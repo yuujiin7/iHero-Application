@@ -52,8 +52,8 @@ class EditEventsModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 65) {
+      return 'Maximum 65 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -130,7 +130,7 @@ class EditEventsModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 13) {
-      return 'Max 13 character';
+      return 'Maximum 13 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -146,7 +146,7 @@ class EditEventsModel extends FlutterFlowModel {
     }
 
     if (val.length > 3) {
-      return 'Max 3 character';
+      return 'Maximum 3 characters allowed, currently ${val.length}.';
     }
     if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
       return 'Invalid text';

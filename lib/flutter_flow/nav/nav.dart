@@ -319,6 +319,30 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'InspiringVideos',
               path: 'inspiringVideos',
               builder: (context, params) => InspiringVideosWidget(),
+            ),
+            FFRoute(
+              name: 'AboutIHERO',
+              path: 'aboutIHERO',
+              requireAuth: true,
+              builder: (context, params) => AboutIHEROWidget(),
+            ),
+            FFRoute(
+              name: 'TermsOfService',
+              path: 'termsOfService',
+              requireAuth: true,
+              builder: (context, params) => TermsOfServiceWidget(),
+            ),
+            FFRoute(
+              name: 'DataPrivacyPolicy',
+              path: 'dataPrivacyPolicy',
+              requireAuth: true,
+              builder: (context, params) => DataPrivacyPolicyWidget(),
+            ),
+            FFRoute(
+              name: 'OurTeam',
+              path: 'ourTeam',
+              requireAuth: true,
+              builder: (context, params) => OurTeamWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
