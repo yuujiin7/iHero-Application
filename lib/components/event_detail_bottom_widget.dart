@@ -238,11 +238,11 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                           Text(
                             '${dateTimeFormat(
                               'jm',
-                              widget.eventDetails!.startTime,
+                              widget.eventDetails!.eventDateStart,
                               locale: FFLocalizations.of(context).languageCode,
                             )} - ${dateTimeFormat(
                               'jm',
-                              widget.eventDetails!.endTime,
+                              widget.eventDetails!.eventDateEnd,
                               locale: FFLocalizations.of(context).languageCode,
                             )}',
                             style: FlutterFlowTheme.of(context)

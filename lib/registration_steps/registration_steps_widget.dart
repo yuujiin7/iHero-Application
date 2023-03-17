@@ -564,7 +564,19 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                         'Button_navigate_to');
 
                                                     context.goNamed(
-                                                        'appointmentPage');
+                                                      'appointmentPage',
+                                                      extra: <String, dynamic>{
+                                                        kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                        ),
+                                                      },
+                                                    );
                                                   },
                                                   text: 'Apply for Appointment',
                                                   options: FFButtonOptions(

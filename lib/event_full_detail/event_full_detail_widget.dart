@@ -516,12 +516,13 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                           .languageCode,
                                     )} ${dateTimeFormat(
                                       'jm',
-                                      eventFullDetailEventsRecord.startTime,
+                                      eventFullDetailEventsRecord
+                                          .eventDateStart,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
                                     )} - ${dateTimeFormat(
                                       'jm',
-                                      eventFullDetailEventsRecord.endTime,
+                                      eventFullDetailEventsRecord.eventDateEnd,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
                                     )}',

@@ -274,15 +274,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter!
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -399,11 +396,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
@@ -806,15 +803,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter!
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -932,11 +926,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
@@ -1338,15 +1332,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter!
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -1464,11 +1455,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
@@ -1728,15 +1719,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter!
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -1854,11 +1842,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
@@ -2213,15 +2201,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter!
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -2339,11 +2324,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:

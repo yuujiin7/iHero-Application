@@ -12,7 +12,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
-import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
@@ -357,8 +357,11 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       controller:
                                           _model.descriptionEventController ??=
                                               TextEditingController(
-                                        text: containerEventsRecord
-                                            .eventDescription,
+                                        text: valueOrDefault<String>(
+                                          containerEventsRecord
+                                              .eventDescription,
+                                          'Description',
+                                        ),
                                       ),
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -464,8 +467,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   controller:
                                       _model.addRequirementEventController ??=
                                           TextEditingController(
-                                    text: containerEventsRecord
-                                        .addRequirementEvent,
+                                    text: valueOrDefault<String>(
+                                      containerEventsRecord.addRequirementEvent,
+                                      'Requirement',
+                                    ),
                                   ),
                                   textCapitalization: TextCapitalization.words,
                                   obscureText: false,
@@ -986,7 +991,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   ? dateTimeFormat(
                                                       'jm',
                                                       containerEventsRecord
-                                                          .startTime!,
+                                                          .eventDateStart!,
                                                       locale:
                                                           FFLocalizations.of(
                                                                   context)
@@ -1122,7 +1127,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   ? dateTimeFormat(
                                                       'jm',
                                                       containerEventsRecord
-                                                          .endTime!,
+                                                          .eventDateEnd!,
                                                       locale:
                                                           FFLocalizations.of(
                                                                   context)
@@ -1873,9 +1878,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                             String>(
                                                       _model.partnerDropDownValue ??=
                                                           containerEventsRecord
-                                                              .organizationPartner!
-                                                              .toList()
-                                                              .first,
+                                                              .organizationPartnter,
                                                     ),
                                                     options:
                                                         partnerDropDownPartnerOrgRecordList
@@ -2076,7 +2079,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                             : () async {
                                                 logFirebaseEvent(
                                                     'EDIT_EVENTS_COMP_ButtonSubmit_ON_TAP');
-                                                var _shouldSetState = false;
                                                 logFirebaseEvent(
                                                     'ButtonSubmit_validate_form');
                                                 if (_model.formKey
@@ -2122,17 +2124,93 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         ) ??
                                                         false;
                                                 if (confirmDialogResponse) {
-                                                  logFirebaseEvent(
-                                                      'ButtonSubmit_custom_action');
-                                                  _model.isEventExist =
-                                                      await actions
-                                                          .documentExists(
-                                                    FFAppState().address,
-                                                    FFAppState().startDate!,
-                                                    FFAppState().endDate!,
-                                                  );
-                                                  _shouldSetState = true;
-                                                  if (_model.isEventExist!) {
+                                                  if (_model.switchValue!) {
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_backend_call');
+
+                                                    final eventsUpdateData1 =
+                                                        createEventsRecordData(
+                                                      eventTitle: _model
+                                                          .titleEventController
+                                                          .text,
+                                                      eventPhotoUrl: _model
+                                                          .uploadedFileUrl,
+                                                      eventDescription: _model
+                                                          .descriptionEventController
+                                                          .text,
+                                                      eventInChargePerson: _model
+                                                          .personInChargeController
+                                                          .text,
+                                                      eventLocation:
+                                                          FFAppState().locationLatLng ==
+                                                                  null
+                                                              ? containerEventsRecord
+                                                                  .eventLocation
+                                                              : FFAppState()
+                                                                  .locationLatLng,
+                                                      eventAddress: FFAppState()
+                                                                      .address !=
+                                                                  null &&
+                                                              FFAppState()
+                                                                      .address !=
+                                                                  ''
+                                                          ? containerEventsRecord
+                                                              .eventAddress
+                                                          : FFAppState()
+                                                              .address,
+                                                      neededVolunteerCount:
+                                                          double.tryParse(_model
+                                                              .neededVolunteerController
+                                                              .text),
+                                                      neededVolunteer:
+                                                          double.tryParse(_model
+                                                              .neededVolunteerController
+                                                              .text),
+                                                      isEnded: false,
+                                                      isDeleted: false,
+                                                      eventContactNumber: _model
+                                                          .contactNumberController
+                                                          .text,
+                                                      isConfirmbySA: false,
+                                                      eventDateStart: FFAppState()
+                                                                  .startDate ==
+                                                              null
+                                                          ? containerEventsRecord
+                                                              .eventDateStart
+                                                          : functions.overwriteEvent(
+                                                              FFAppState()
+                                                                  .startDate!,
+                                                              FFAppState()
+                                                                  .startTime!),
+                                                      eventDateEnd: FFAppState()
+                                                                  .endDate ==
+                                                              null
+                                                          ? containerEventsRecord
+                                                              .eventDateEnd
+                                                          : functions
+                                                              .overwriteEvent(
+                                                                  FFAppState()
+                                                                      .endDate!,
+                                                                  FFAppState()
+                                                                      .endTime!),
+                                                      isReqCancel: false,
+                                                      partnerOrgRef:
+                                                          buttonSubmitPartnerOrgRecord!
+                                                              .reference,
+                                                      isRecurring:
+                                                          _model.switchValue,
+                                                      recurranceDate: _model
+                                                          .choiceChipsValue,
+                                                      volunteerCount: 0.0,
+                                                      addRequirementEvent: _model
+                                                          .addRequirementEventController
+                                                          .text,
+                                                      organizationPartnter: _model
+                                                          .partnerDropDownValue,
+                                                    );
+                                                    await widget.eventsDetails!
+                                                        .update(
+                                                            eventsUpdateData1);
                                                     logFirebaseEvent(
                                                         'ButtonSubmit_alert_dialog');
                                                     await showDialog(
@@ -2140,284 +2218,189 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       builder:
                                                           (alertDialogContext) {
                                                         return AlertDialog(
-                                                          title: Text('Failed'),
+                                                          title: Text('Done'),
                                                           content: Text(
-                                                              'Another Events has the same Location and Date is scanned.'),
+                                                              'Event has been edited.'),
                                                           actions: [
                                                             TextButton(
                                                               onPressed: () =>
                                                                   Navigator.pop(
                                                                       alertDialogContext),
-                                                              child: Text('Ok'),
+                                                              child: Text(
+                                                                  'Dismiss'),
                                                             ),
                                                           ],
                                                         );
                                                       },
                                                     );
-                                                    if (_shouldSetState)
-                                                      setState(() {});
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_update_widget_state');
+                                                    setState(() {
+                                                      _model.isDateSet = false;
+                                                      _model.isTimeSet = false;
+                                                      _model.isLocSet = false;
+                                                    });
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_update_app_state');
+                                                    setState(() {
+                                                      FFAppState()
+                                                          .deleteLocationLatLng();
+                                                      FFAppState()
+                                                              .locationLatLng =
+                                                          null;
+
+                                                      FFAppState()
+                                                          .deleteAddress();
+                                                      FFAppState().address = '';
+
+                                                      FFAppState().startDate =
+                                                          null;
+                                                      FFAppState().endDate =
+                                                          null;
+                                                    });
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_bottom_sheet');
+                                                    Navigator.pop(context);
                                                     return;
                                                   } else {
-                                                    if (_model.switchValue!) {
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_backend_call');
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_backend_call');
 
-                                                      final eventsUpdateData1 =
-                                                          {
-                                                        ...createEventsRecordData(
-                                                          eventTitle: _model
-                                                              .titleEventController
-                                                              .text,
-                                                          eventPhotoUrl: _model
-                                                              .uploadedFileUrl,
-                                                          eventDescription: _model
-                                                              .descriptionEventController
-                                                              .text,
-                                                          eventInChargePerson:
-                                                              _model
-                                                                  .personInChargeController
-                                                                  .text,
-                                                          eventLocation:
-                                                              FFAppState()
+                                                    final eventsUpdateData2 =
+                                                        createEventsRecordData(
+                                                      eventTitle: _model
+                                                          .titleEventController
+                                                          .text,
+                                                      eventPhotoUrl: _model
+                                                          .uploadedFileUrl,
+                                                      eventDescription: _model
+                                                          .descriptionEventController
+                                                          .text,
+                                                      eventInChargePerson: _model
+                                                          .personInChargeController
+                                                          .text,
+                                                      eventLocation:
+                                                          FFAppState().locationLatLng ==
+                                                                  null
+                                                              ? containerEventsRecord
+                                                                  .eventLocation
+                                                              : FFAppState()
                                                                   .locationLatLng,
-                                                          eventAddress:
+                                                      eventAddress: FFAppState()
+                                                                      .address !=
+                                                                  null &&
                                                               FFAppState()
-                                                                  .address,
-                                                          neededVolunteerCount:
-                                                              double.tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          neededVolunteer: double
-                                                              .tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          isEnded: false,
-                                                          isDeleted: false,
-                                                          eventContactNumber: _model
-                                                              .contactNumberController
-                                                              .text,
-                                                          isConfirmbySA: false,
-                                                          eventDateStart:
+                                                                      .address !=
+                                                                  ''
+                                                          ? containerEventsRecord
+                                                              .eventAddress
+                                                          : FFAppState()
+                                                              .address,
+                                                      neededVolunteerCount:
+                                                          double.tryParse(_model
+                                                              .neededVolunteerController
+                                                              .text),
+                                                      neededVolunteer:
+                                                          double.tryParse(_model
+                                                              .neededVolunteerController
+                                                              .text),
+                                                      isEnded: false,
+                                                      isDeleted: false,
+                                                      eventContactNumber: _model
+                                                          .contactNumberController
+                                                          .text,
+                                                      isConfirmbySA: false,
+                                                      eventDateStart: FFAppState()
+                                                                  .startDate ==
+                                                              null
+                                                          ? containerEventsRecord
+                                                              .eventDateStart
+                                                          : functions.overwriteEvent(
                                                               FFAppState()
-                                                                  .startDate,
-                                                          eventDateEnd:
+                                                                  .startDate!,
                                                               FFAppState()
-                                                                  .endDate,
-                                                          isReqCancel: false,
-                                                          partnerOrgRef:
-                                                              buttonSubmitPartnerOrgRecord!
-                                                                  .reference,
-                                                          startTime: _model
-                                                              .datePicked1,
-                                                          endTime: _model
-                                                              .datePicked2,
-                                                          isRecurring: _model
-                                                              .switchValue,
-                                                          recurranceDate: _model
-                                                              .choiceChipsValue,
-                                                          volunteerCount: 0.0,
-                                                          addRequirementEvent:
-                                                              _model
-                                                                  .addRequirementEventController
-                                                                  .text,
-                                                        ),
-                                                        'organization_partner':
-                                                            FFAppState()
-                                                                .forOrgList,
-                                                      };
-                                                      await widget
-                                                          .eventsDetails!
-                                                          .update(
-                                                              eventsUpdateData1);
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_alert_dialog');
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title: Text('Done'),
-                                                            content: Text(
-                                                                'Event has been edited.'),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child: Text(
-                                                                    'Dismiss'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_widget_state');
-                                                      setState(() {
-                                                        _model.isDateSet =
-                                                            false;
-                                                        _model.isTimeSet =
-                                                            false;
-                                                        _model.isLocSet = false;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_app_state');
-                                                      setState(() {
-                                                        FFAppState()
-                                                            .deleteLocationLatLng();
-                                                        FFAppState()
-                                                                .locationLatLng =
-                                                            null;
+                                                                  .startTime!),
+                                                      eventDateEnd: FFAppState()
+                                                                  .endDate ==
+                                                              null
+                                                          ? containerEventsRecord
+                                                              .eventDateEnd
+                                                          : functions
+                                                              .overwriteEvent(
+                                                                  FFAppState()
+                                                                      .endDate!,
+                                                                  FFAppState()
+                                                                      .endTime!),
+                                                      isReqCancel: false,
+                                                      partnerOrgRef:
+                                                          buttonSubmitPartnerOrgRecord!
+                                                              .reference,
+                                                      isRecurring:
+                                                          _model.switchValue,
+                                                      recurranceDate: _model
+                                                          .choiceChipsValue,
+                                                      volunteerCount: 0.0,
+                                                      organizationPartnter: _model
+                                                          .partnerDropDownValue,
+                                                    );
+                                                    await widget.eventsDetails!
+                                                        .update(
+                                                            eventsUpdateData2);
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_alert_dialog');
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: Text('Done'),
+                                                          content: Text(
+                                                              'Event has been edited.'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext),
+                                                              child: Text(
+                                                                  'Dismiss'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_update_widget_state');
+                                                    setState(() {
+                                                      _model.isDateSet = false;
+                                                      _model.isTimeSet = false;
+                                                      _model.isLocSet = false;
+                                                    });
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_update_app_state');
+                                                    setState(() {
+                                                      FFAppState()
+                                                          .deleteLocationLatLng();
+                                                      FFAppState()
+                                                              .locationLatLng =
+                                                          null;
 
-                                                        FFAppState()
-                                                            .deleteAddress();
-                                                        FFAppState().address =
-                                                            '';
+                                                      FFAppState()
+                                                          .deleteAddress();
+                                                      FFAppState().address = '';
 
-                                                        FFAppState().startDate =
-                                                            null;
-                                                        FFAppState().endDate =
-                                                            null;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_bottom_sheet');
-                                                      Navigator.pop(context);
-                                                      if (_shouldSetState)
-                                                        setState(() {});
-                                                      return;
-                                                    } else {
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_backend_call');
-
-                                                      final eventsUpdateData2 =
-                                                          {
-                                                        ...createEventsRecordData(
-                                                          eventTitle: _model
-                                                              .titleEventController
-                                                              .text,
-                                                          eventPhotoUrl: _model
-                                                              .uploadedFileUrl,
-                                                          eventDescription: _model
-                                                              .descriptionEventController
-                                                              .text,
-                                                          eventInChargePerson:
-                                                              _model
-                                                                  .personInChargeController
-                                                                  .text,
-                                                          eventLocation:
-                                                              FFAppState()
-                                                                  .locationLatLng,
-                                                          eventAddress:
-                                                              FFAppState()
-                                                                  .address,
-                                                          neededVolunteerCount:
-                                                              double.tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          neededVolunteer: double
-                                                              .tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          isEnded: false,
-                                                          isDeleted: false,
-                                                          eventContactNumber: _model
-                                                              .contactNumberController
-                                                              .text,
-                                                          isConfirmbySA: false,
-                                                          eventDateStart:
-                                                              FFAppState()
-                                                                  .startDate,
-                                                          eventDateEnd:
-                                                              FFAppState()
-                                                                  .endDate,
-                                                          isReqCancel: false,
-                                                          partnerOrgRef:
-                                                              buttonSubmitPartnerOrgRecord!
-                                                                  .reference,
-                                                          startTime: _model
-                                                              .datePicked1,
-                                                          endTime: _model
-                                                              .datePicked2,
-                                                          isRecurring: _model
-                                                              .switchValue,
-                                                          recurranceDate: _model
-                                                              .choiceChipsValue,
-                                                          volunteerCount: 0.0,
-                                                        ),
-                                                        'organization_partner':
-                                                            FFAppState()
-                                                                .forOrgList,
-                                                      };
-                                                      await widget
-                                                          .eventsDetails!
-                                                          .update(
-                                                              eventsUpdateData2);
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_alert_dialog');
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title: Text('Done'),
-                                                            content: Text(
-                                                                'Event has been edited.'),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child: Text(
-                                                                    'Dismiss'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_widget_state');
-                                                      setState(() {
-                                                        _model.isDateSet =
-                                                            false;
-                                                        _model.isTimeSet =
-                                                            false;
-                                                        _model.isLocSet = false;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_app_state');
-                                                      setState(() {
-                                                        FFAppState()
-                                                            .deleteLocationLatLng();
-                                                        FFAppState()
-                                                                .locationLatLng =
-                                                            null;
-
-                                                        FFAppState()
-                                                            .deleteAddress();
-                                                        FFAppState().address =
-                                                            '';
-
-                                                        FFAppState().startDate =
-                                                            null;
-                                                        FFAppState().endDate =
-                                                            null;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_bottom_sheet');
-                                                      Navigator.pop(context);
-                                                      if (_shouldSetState)
-                                                        setState(() {});
-                                                      return;
-                                                    }
+                                                      FFAppState().startDate =
+                                                          null;
+                                                      FFAppState().endDate =
+                                                          null;
+                                                    });
+                                                    logFirebaseEvent(
+                                                        'ButtonSubmit_bottom_sheet');
+                                                    Navigator.pop(context);
+                                                    return;
                                                   }
                                                 } else {
-                                                  if (_shouldSetState)
-                                                    setState(() {});
                                                   return;
                                                 }
-
-                                                if (_shouldSetState)
-                                                  setState(() {});
                                               },
                                         text: 'Submit',
                                         options: FFButtonOptions(

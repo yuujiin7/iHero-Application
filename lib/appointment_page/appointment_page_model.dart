@@ -1,7 +1,6 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/components/back_component_widget.dart';
 import '/components/email_confirmation_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -11,9 +10,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,8 +24,6 @@ class AppointmentPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // Model for backComponent component.
-  late BackComponentModel backComponentModel;
   bool isMediaUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -126,7 +121,7 @@ class AppointmentPageModel extends FlutterFlowModel {
     if (val.length > 13) {
       return 'Max 15 character';
     }
-    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+    if (!RegExp('^(09|\\+639)\\d{9}\$').hasMatch(val)) {
       return 'Include the + symbol, country code (63). ';
     }
     return null;
@@ -159,7 +154,6 @@ class AppointmentPageModel extends FlutterFlowModel {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
-    backComponentModel = createModel(context, () => BackComponentModel());
     fullNameControllerValidator = _fullNameControllerValidator;
     nationalityControllerValidator = _nationalityControllerValidator;
     civilStatusControllerValidator = _civilStatusControllerValidator;
@@ -169,7 +163,6 @@ class AppointmentPageModel extends FlutterFlowModel {
   }
 
   void dispose() {
-    backComponentModel.dispose();
     fullNameController?.dispose();
     nationalityController?.dispose();
     civilStatusController?.dispose();

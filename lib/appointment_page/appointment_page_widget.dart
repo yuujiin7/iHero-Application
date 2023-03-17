@@ -1,7 +1,6 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/components/back_component_widget.dart';
 import '/components/email_confirmation_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -11,9 +10,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_media.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -50,18 +47,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
       logFirebaseEvent('APPOINTMENT_appointmentPage_ON_LOAD');
       logFirebaseEvent('appointmentPage_custom_action');
       await actions.lockOrientation();
-      if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
-        logFirebaseEvent('appointmentPage_auth');
-        GoRouter.of(context).prepareAuthEvent();
-        await signOut();
-        GoRouter.of(context).clearRedirectLocation();
-
-        return;
-      } else {
-        return;
-      }
-
-      context.goNamedAuth('Onboarding', mounted);
     });
 
     _model.fullNameController ??= TextEditingController();
@@ -87,44 +72,35 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                wrapWithModel(
-                  model: _model.backComponentModel,
-                  updateCallback: () => setState(() {}),
-                  child: BackComponentWidget(),
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: true,
+        actions: [],
+        flexibleSpace: FlexibleSpaceBar(
+          title: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                child: Text(
+                  'Step 1',
+                  style: FlutterFlowTheme.of(context).title1.override(
+                        fontFamily: 'Ubuntu',
+                        color: Color(0xFFF1F4F8),
+                        fontSize: 32.0,
+                        useGoogleFonts: GoogleFonts.asMap().containsKey(
+                            FlutterFlowTheme.of(context).title1Family),
+                      ),
                 ),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 0.0, 10.0),
-                  child: Text(
-                    'Step 1',
-                    style: FlutterFlowTheme.of(context).title1.override(
-                          fontFamily: 'Ubuntu',
-                          color: Color(0xFFF1F4F8),
-                          fontSize: 32.0,
-                          useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).title1Family),
-                        ),
-                  ),
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
+              ),
+            ],
           ),
-          elevation: 0.0,
+          centerTitle: true,
+          expandedTitleScale: 1.0,
         ),
+        elevation: 0.0,
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -250,8 +226,8 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: CachedNetworkImage(
-                              imageUrl: valueOrDefault<String>(
+                            child: Image.network(
+                              valueOrDefault<String>(
                                 _model.uploadedFileUrl1,
                                 'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2Fprofadd.jpg?alt=media&token=e797a7fa-01ea-431b-b9b8-d8a9858d48f0',
                               ),
@@ -397,7 +373,15 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                           ),
                                     ),
                                     Text(
-                                      FFAppState().birthday!.toString(),
+                                      valueOrDefault<String>(
+                                        dateTimeFormat(
+                                          'yMMMd',
+                                          FFAppState().birthday,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        ),
+                                        'Date',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -510,21 +494,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                     _model.contactNumberController?.clear();
                                     _model.emailController?.clear();
                                   });
-                                  logFirebaseEvent('IconButton_delete_media');
-                                  await FirebaseStorage.instance
-                                      .refFromURL(_model.uploadedFileUrl1)
-                                      .delete();
-                                  logFirebaseEvent('IconButton_delete_media');
-                                  await FirebaseStorage.instance
-                                      .refFromURL(
-                                          _model.uploadedFileUrls2.first)
-                                      .delete();
-                                  logFirebaseEvent('IconButton_delete_media');
-                                  await FirebaseStorage.instance
-                                      .refFromURL(_model.uploadedFileUrls2.last)
-                                      .delete();
-                                  if (_shouldSetState) setState(() {});
-                                  return;
                                 }
 
                                 if (_shouldSetState) setState(() {});

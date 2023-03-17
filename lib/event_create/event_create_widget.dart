@@ -2917,7 +2917,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                   ...createEventsRecordData(
                                                                                     eventTitle: _model.titleEventController.text,
                                                                                     eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                                    eventDescription: _model.addRequirementsEventController.text,
+                                                                                    eventDescription: _model.descriptionEventController.text,
                                                                                     eventInChargePerson: _model.personInChargeController.text,
                                                                                     eventLocation: FFAppState().locationLatLng,
                                                                                     eventAddress: FFAppState().address,
@@ -2927,13 +2927,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     isDeleted: false,
                                                                                     eventContactNumber: _model.contactNumberController.text,
                                                                                     isConfirmbySA: false,
-                                                                                    eventDateStart: FFAppState().startDate,
-                                                                                    eventDateEnd: FFAppState().endDate,
+                                                                                    eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                                    eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
                                                                                     neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
                                                                                     partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
                                                                                     isReqCancel: false,
-                                                                                    startTime: _model.datePicked1,
-                                                                                    endTime: _model.datePicked2,
                                                                                     isRecurring: _model.switchValue,
                                                                                     recurranceDate: _model.choiceChipsValue,
                                                                                     rateTotal: 0.0,
@@ -2945,20 +2943,43 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     ageRequirement: int.tryParse(_model.ageRequirementController.text),
                                                                                     isMeritScoreUpdated: false,
                                                                                     addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                                    organizationPartnter: _model.partnerDropDownValue,
                                                                                   ),
                                                                                   'admin_ref': [
                                                                                     currentUserReference
                                                                                   ],
                                                                                   'eventTag': _model.selectCauseCreateModel.selectedTagsList,
-                                                                                  'organization_partner': [
-                                                                                    _model.partnerDropDownValue
-                                                                                  ],
                                                                                 };
                                                                                 var eventsRecordReference1 = EventsRecord.collection.doc();
                                                                                 await eventsRecordReference1.set(eventsCreateData1);
                                                                                 _model.isCreated1 = EventsRecord.getDocumentFromData(eventsCreateData1, eventsRecordReference1);
                                                                                 _shouldSetState = true;
                                                                                 if (_model.isCreated1!.reference != null) {
+                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                                  FFAppState().update(() {
+                                                                                    FFAppState().deleteLocationLatLng();
+                                                                                    FFAppState().locationLatLng = null;
+
+                                                                                    FFAppState().deleteAddress();
+                                                                                    FFAppState().address = '';
+
+                                                                                    FFAppState().startDate = null;
+                                                                                    FFAppState().endDate = null;
+                                                                                    FFAppState().startTime = null;
+                                                                                    FFAppState().endTime = null;
+                                                                                  });
+                                                                                  logFirebaseEvent('ButtonSubmit_clear_text_fields');
+                                                                                  setState(() {
+                                                                                    _model.titleEventController?.clear();
+                                                                                    _model.descriptionEventController?.clear();
+                                                                                    _model.addRequirementsEventController?.clear();
+                                                                                    _model.personInChargeController?.clear();
+                                                                                    _model.contactNumberController?.clear();
+                                                                                    _model.ageRequirementController?.clear();
+                                                                                    _model.neededVolunteerController?.clear();
+                                                                                    _model.titleAnnouncementController?.clear();
+                                                                                    _model.descriptionAnnouncementController?.clear();
+                                                                                  });
                                                                                   logFirebaseEvent('ButtonSubmit_alert_dialog');
                                                                                   await showDialog(
                                                                                     context: context,
@@ -2975,19 +2996,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                       );
                                                                                     },
                                                                                   );
-                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
-                                                                                  FFAppState().update(() {
-                                                                                    FFAppState().deleteLocationLatLng();
-                                                                                    FFAppState().locationLatLng = null;
-
-                                                                                    FFAppState().deleteAddress();
-                                                                                    FFAppState().address = '';
-
-                                                                                    FFAppState().startDate = null;
-                                                                                    FFAppState().endDate = null;
-                                                                                    FFAppState().startTime = null;
-                                                                                    FFAppState().endTime = null;
-                                                                                  });
                                                                                   logFirebaseEvent('ButtonSubmit_navigate_to');
 
                                                                                   context.pushNamed('HomeScreen');
@@ -3021,7 +3029,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                   ...createEventsRecordData(
                                                                                     eventTitle: _model.titleEventController.text,
                                                                                     eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                                    eventDescription: _model.descriptionAnnouncementController.text,
+                                                                                    eventDescription: _model.descriptionEventController.text,
                                                                                     eventInChargePerson: _model.personInChargeController.text,
                                                                                     eventLocation: FFAppState().locationLatLng,
                                                                                     eventAddress: FFAppState().address,
@@ -3031,13 +3039,11 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     isDeleted: false,
                                                                                     eventContactNumber: _model.contactNumberController.text,
                                                                                     isConfirmbySA: false,
-                                                                                    eventDateStart: FFAppState().startDate,
-                                                                                    eventDateEnd: FFAppState().endDate,
+                                                                                    eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                                    eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
                                                                                     neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
                                                                                     partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
                                                                                     isReqCancel: false,
-                                                                                    startTime: _model.datePicked1,
-                                                                                    endTime: _model.datePicked2,
                                                                                     recurranceDate: 'Everyday',
                                                                                     isDeclined: false,
                                                                                     volunteerCount: null,
@@ -3048,17 +3054,44 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     reason: null,
                                                                                     ageRequirement: int.tryParse(_model.ageRequirementController.text),
                                                                                     isMeritScoreUpdated: false,
+                                                                                    addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                                    organizationPartnter: _model.partnerDropDownValue,
                                                                                   ),
                                                                                   'admin_ref': [
                                                                                     currentUserReference
                                                                                   ],
                                                                                   'eventTag': _model.selectCauseCreateModel.selectedTagsList,
-                                                                                  'organization_partner': [
-                                                                                    _model.partnerDropDownValue
-                                                                                  ],
                                                                                 };
-                                                                                await EventsRecord.collection.doc().set(eventsCreateData2);
-                                                                                if (_model.isCreated1!.reference != null) {
+                                                                                var eventsRecordReference2 = EventsRecord.collection.doc();
+                                                                                await eventsRecordReference2.set(eventsCreateData2);
+                                                                                _model.isCreated2 = EventsRecord.getDocumentFromData(eventsCreateData2, eventsRecordReference2);
+                                                                                _shouldSetState = true;
+                                                                                if (_model.isCreated2!.reference != null) {
+                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                                  FFAppState().update(() {
+                                                                                    FFAppState().deleteLocationLatLng();
+                                                                                    FFAppState().locationLatLng = null;
+
+                                                                                    FFAppState().deleteAddress();
+                                                                                    FFAppState().address = '';
+
+                                                                                    FFAppState().startDate = null;
+                                                                                    FFAppState().endDate = null;
+                                                                                    FFAppState().startTime = null;
+                                                                                    FFAppState().endTime = null;
+                                                                                  });
+                                                                                  logFirebaseEvent('ButtonSubmit_clear_text_fields');
+                                                                                  setState(() {
+                                                                                    _model.titleEventController?.clear();
+                                                                                    _model.descriptionEventController?.clear();
+                                                                                    _model.addRequirementsEventController?.clear();
+                                                                                    _model.personInChargeController?.clear();
+                                                                                    _model.contactNumberController?.clear();
+                                                                                    _model.ageRequirementController?.clear();
+                                                                                    _model.neededVolunteerController?.clear();
+                                                                                    _model.titleAnnouncementController?.clear();
+                                                                                    _model.descriptionAnnouncementController?.clear();
+                                                                                  });
                                                                                   logFirebaseEvent('ButtonSubmit_alert_dialog');
                                                                                   await showDialog(
                                                                                     context: context,
@@ -3075,19 +3108,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                       );
                                                                                     },
                                                                                   );
-                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
-                                                                                  FFAppState().update(() {
-                                                                                    FFAppState().deleteLocationLatLng();
-                                                                                    FFAppState().locationLatLng = null;
-
-                                                                                    FFAppState().deleteAddress();
-                                                                                    FFAppState().address = '';
-
-                                                                                    FFAppState().startDate = null;
-                                                                                    FFAppState().endDate = null;
-                                                                                    FFAppState().startTime = null;
-                                                                                    FFAppState().endTime = null;
-                                                                                  });
                                                                                   logFirebaseEvent('ButtonSubmit_navigate_to');
 
                                                                                   context.pushNamed('HomeScreen');

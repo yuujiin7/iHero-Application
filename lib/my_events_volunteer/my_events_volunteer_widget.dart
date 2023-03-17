@@ -431,11 +431,11 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                                     locale: FFLocalizations.of(context).languageCode,
                                                                                   )} ${dateTimeFormat(
                                                                                     'jm',
-                                                                                    upcomingItem.startTime,
+                                                                                    upcomingItem.eventDateStart,
                                                                                     locale: FFLocalizations.of(context).languageCode,
                                                                                   )} - ${dateTimeFormat(
                                                                                     'jm',
-                                                                                    upcomingItem.endTime,
+                                                                                    upcomingItem.eventDateEnd,
                                                                                     locale: FFLocalizations.of(context).languageCode,
                                                                                   )}',
                                                                                   maxLines: 2,
@@ -824,11 +824,11 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                                   locale: FFLocalizations.of(context).languageCode,
                                                                                 )} ${dateTimeFormat(
                                                                                   'jm',
-                                                                                  ongoingItem.startTime,
+                                                                                  ongoingItem.eventDateStart,
                                                                                   locale: FFLocalizations.of(context).languageCode,
                                                                                 )} - ${dateTimeFormat(
                                                                                   'jm',
-                                                                                  ongoingItem.endTime,
+                                                                                  ongoingItem.eventDateEnd,
                                                                                   locale: FFLocalizations.of(context).languageCode,
                                                                                 )}',
                                                                                 maxLines: 2,
@@ -1216,11 +1216,11 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                                   locale: FFLocalizations.of(context).languageCode,
                                                                                 )} ${dateTimeFormat(
                                                                                   'jm',
-                                                                                  finishedItem.startTime,
+                                                                                  finishedItem.eventDateStart,
                                                                                   locale: FFLocalizations.of(context).languageCode,
                                                                                 )} - ${dateTimeFormat(
                                                                                   'jm',
-                                                                                  finishedItem.endTime,
+                                                                                  finishedItem.eventDateEnd,
                                                                                   locale: FFLocalizations.of(context).languageCode,
                                                                                 )}',
                                                                                 maxLines: 2,

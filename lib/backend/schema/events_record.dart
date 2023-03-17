@@ -59,9 +59,6 @@ abstract class EventsRecord
 
   DateTime? get eventDateEnd;
 
-  @BuiltValueField(wireName: 'organization_partner')
-  BuiltList<String>? get organizationPartner;
-
   bool? get isReqCancel;
 
   @BuiltValueField(wireName: 'volunteer_ref')
@@ -72,10 +69,6 @@ abstract class EventsRecord
 
   @BuiltValueField(wireName: 'volunteer_list')
   BuiltList<String>? get volunteerList;
-
-  DateTime? get startTime;
-
-  DateTime? get endTime;
 
   bool? get isRecurring;
 
@@ -98,6 +91,9 @@ abstract class EventsRecord
 
   String? get addRequirementEvent;
 
+  @BuiltValueField(wireName: 'organization_partnter')
+  String? get organizationPartnter;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -118,7 +114,6 @@ abstract class EventsRecord
     ..eventContactNumber = ''
     ..isConfirmbySA = false
     ..adminRef = ListBuilder()
-    ..organizationPartner = ListBuilder()
     ..isReqCancel = false
     ..volunteerRef = ListBuilder()
     ..volunteerList = ListBuilder()
@@ -131,7 +126,8 @@ abstract class EventsRecord
     ..rateRef = ListBuilder()
     ..ageRequirement = 0
     ..isMeritScoreUpdated = false
-    ..addRequirementEvent = '';
+    ..addRequirementEvent = ''
+    ..organizationPartnter = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -177,8 +173,6 @@ abstract class EventsRecord
               snapshot.data['eventDateStart']))
           ..eventDateEnd = safeGet(() => DateTime.fromMillisecondsSinceEpoch(
               snapshot.data['eventDateEnd']))
-          ..organizationPartner =
-              safeGet(() => ListBuilder(snapshot.data['organization_partner']))
           ..isReqCancel = snapshot.data['isReqCancel']
           ..volunteerRef = safeGet(() =>
               ListBuilder(snapshot.data['volunteer_ref'].map((s) => toRef(s))))
@@ -186,10 +180,6 @@ abstract class EventsRecord
               safeGet(() => toRef(snapshot.data['partnerOrg_ref']))
           ..volunteerList =
               safeGet(() => ListBuilder(snapshot.data['volunteer_list']))
-          ..startTime = safeGet(() =>
-              DateTime.fromMillisecondsSinceEpoch(snapshot.data['startTime']))
-          ..endTime = safeGet(() =>
-              DateTime.fromMillisecondsSinceEpoch(snapshot.data['endTime']))
           ..isRecurring = snapshot.data['isRecurring']
           ..recurranceDate = snapshot.data['recurranceDate']
           ..rateTotal = snapshot.data['rateTotal']?.toDouble()
@@ -201,6 +191,7 @@ abstract class EventsRecord
           ..ageRequirement = snapshot.data['ageRequirement']?.round()
           ..isMeritScoreUpdated = snapshot.data['isMeritScoreUpdated']
           ..addRequirementEvent = snapshot.data['addRequirementEvent']
+          ..organizationPartnter = snapshot.data['organization_partnter']
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -249,8 +240,6 @@ Map<String, dynamic> createEventsRecordData({
   DateTime? eventDateEnd,
   bool? isReqCancel,
   DocumentReference? partnerOrgRef,
-  DateTime? startTime,
-  DateTime? endTime,
   bool? isRecurring,
   String? recurranceDate,
   double? rateTotal,
@@ -260,6 +249,7 @@ Map<String, dynamic> createEventsRecordData({
   int? ageRequirement,
   bool? isMeritScoreUpdated,
   String? addRequirementEvent,
+  String? organizationPartnter,
 }) {
   final firestoreData = serializers.toFirestore(
     EventsRecord.serializer,
@@ -285,13 +275,10 @@ Map<String, dynamic> createEventsRecordData({
         ..adminRef = null
         ..eventDateStart = eventDateStart
         ..eventDateEnd = eventDateEnd
-        ..organizationPartner = null
         ..isReqCancel = isReqCancel
         ..volunteerRef = null
         ..partnerOrgRef = partnerOrgRef
         ..volunteerList = null
-        ..startTime = startTime
-        ..endTime = endTime
         ..isRecurring = isRecurring
         ..recurranceDate = recurranceDate
         ..rateTotal = rateTotal
@@ -301,7 +288,8 @@ Map<String, dynamic> createEventsRecordData({
         ..rateRef = null
         ..ageRequirement = ageRequirement
         ..isMeritScoreUpdated = isMeritScoreUpdated
-        ..addRequirementEvent = addRequirementEvent,
+        ..addRequirementEvent = addRequirementEvent
+        ..organizationPartnter = organizationPartnter,
     ),
   );
 

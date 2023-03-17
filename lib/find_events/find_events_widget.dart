@@ -1499,8 +1499,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                             .eventDateEnd!,
                                                         FFAppState().searchOrg,
                                                         eventListItem
-                                                            .organizationPartner!
-                                                            .toList()),
+                                                            .organizationPartnter!),
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,
