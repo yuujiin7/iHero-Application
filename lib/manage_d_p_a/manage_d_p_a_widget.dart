@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/help_center_drawer_widget.dart';
 import '/components/memo_request_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -35,7 +35,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'ManageDPA'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('MANAGE_D_P_A_PAGE_ManageDPA_ON_PAGE_LOAD');
+      logFirebaseEvent('MANAGE_D_P_A_ManageDPA_ON_INIT_STATE');
       logFirebaseEvent('ManageDPA_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('ManageDPA_custom_action');
@@ -69,20 +69,20 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      endDrawer: Drawer(
-        elevation: 16.0,
-        child: wrapWithModel(
-          model: _model.helpCenterDrawerModel,
-          updateCallback: () => setState(() {}),
-          child: HelpCenterDrawerWidget(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        endDrawer: Drawer(
+          elevation: 16.0,
+          child: wrapWithModel(
+            model: _model.helpCenterDrawerModel,
+            updateCallback: () => setState(() {}),
+            child: HelpCenterDrawerWidget(),
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -103,7 +103,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                             width: double.infinity,
                             height: 150.0,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).primary,
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -139,19 +139,19 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                       Text(
                                         'HELP CENTER',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBtnText,
                                               fontSize: 24.0,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       FlutterFlowIconButton(
@@ -213,19 +213,19 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                         'Managing a \nDeceased Person\'s Account',
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family,
+                                                      .bodyMediumFamily,
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.w600,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                     ],
@@ -270,7 +270,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                             'If iHero is made aware that a person has passed away, it\'s our policy to memorialize the account. ',
                                             textAlign: TextAlign.justify,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   fontSize: 17.0,
@@ -279,7 +279,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                           Padding(
@@ -291,7 +291,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                               textAlign: TextAlign.justify,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         fontSize: 17.0,
@@ -300,7 +300,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                           ),
@@ -313,7 +313,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                               textAlign: TextAlign.justify,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         fontSize: 17.0,
@@ -322,7 +322,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                           ),
@@ -344,13 +344,19 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
+                                    barrierColor: Color(0x00000000),
                                     enableDrag: false,
                                     context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding:
-                                            MediaQuery.of(context).viewInsets,
-                                        child: MemoRequestWidget(),
+                                    builder: (bottomSheetContext) {
+                                      return GestureDetector(
+                                        onTap: () => FocusScope.of(context)
+                                            .requestFocus(_unfocusNode),
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.of(bottomSheetContext)
+                                                  .viewInsets,
+                                          child: MemoRequestWidget(),
+                                        ),
                                       );
                                     },
                                   ).then((value) => setState(() {}));
@@ -363,20 +369,20 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .subtitle2Family,
+                                            .titleSmallFamily,
                                         color: Colors.white,
                                         fontSize: 18.0,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2Family),
+                                                    .titleSmallFamily),
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,

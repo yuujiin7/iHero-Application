@@ -1,11 +1,11 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -91,17 +91,17 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                           children: [
                             Text(
                               'Memoralization Request',
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .title2Family,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .title2Family),
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .headlineMediumFamily),
+                                  ),
                             ),
                           ],
                         ),
@@ -129,11 +129,11 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                 Text(
                   'After someone has passed away, we want to respect their wishes for what should happen to their account. If a family member or friend uses this form to submit a request, the account goes into a special memorialized state unless the person has requested to have their account removed when they pass away.',
                   textAlign: TextAlign.justify,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Barlow',
                         fontSize: 13.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).bodyText1Family),
+                            FlutterFlowTheme.of(context).bodyMediumFamily),
                       ),
                 ),
                 Padding(
@@ -141,11 +141,11 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                   child: Text(
                     'We’re sorry to hear about your loss, and we’re working to make sure your report will get reviewed. ',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 13.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -166,17 +166,17 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                               'Who passed away?',
                               textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: Color(0xFFB51E1E),
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w500,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -194,21 +194,20 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                               decoration: InputDecoration(
                                 labelText: 'Full Name on the Person\'s Profile',
                                 labelStyle: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Ubuntu',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       fontWeight: FontWeight.w600,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
+                                    color: FlutterFlowTheme.of(context).primary,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
@@ -238,7 +237,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                 ),
                               ),
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Barlow',
                                     color: Colors.black,
@@ -246,7 +245,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                               validator: _model.textFieldControllerValidator
                                   .asValidator(context),
@@ -267,8 +266,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                     .secondaryBackground,
                                 borderRadius: BorderRadius.circular(10.0),
                                 border: Border.all(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   width: 1.0,
                                 ),
                               ),
@@ -311,12 +309,12 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                         TextAlign.justify,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color:
                                                               Color(0xFFB51E1E),
                                                           fontSize: 12.0,
@@ -325,7 +323,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -346,7 +344,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                       icon: Icon(
                                         Icons.date_range_rounded,
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         size: 25.0,
                                       ),
                                       onPressed: () async {
@@ -359,7 +357,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                           context: context,
                                           initialDate: getCurrentTimestamp,
                                           firstDate: DateTime(1900),
-                                          lastDate: DateTime(2050),
+                                          lastDate: getCurrentTimestamp,
                                         );
 
                                         TimeOfDay? _datePickedTime;
@@ -431,7 +429,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                             child: Text(
                               'If you don\'t know the exact date, please get in touch with a family member or friend who knows it.',
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Barlow',
                                     color: FlutterFlowTheme.of(context)
@@ -440,7 +438,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -451,24 +449,24 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                               'Documentation of Death',
                               textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: Color(0xFFB51E1E),
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w500,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
                           Text(
                             'Please provide a scan or photo of your loved one\'s obituary, death certificate, memorial card or other documentation confirming that they\'ve passed away.',
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: 'Barlow',
                                   color: FlutterFlowTheme.of(context)
@@ -477,7 +475,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                   fontWeight: FontWeight.w500,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                           Padding(
@@ -491,8 +489,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                     .secondaryBackground,
                                 borderRadius: BorderRadius.circular(10.0),
                                 border: Border.all(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   width: 1.0,
                                 ),
                               ),
@@ -527,12 +524,12 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color: Colors.black,
                                                         fontSize: 16.0,
                                                         useGoogleFonts: GoogleFonts
@@ -540,7 +537,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -560,7 +557,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                       icon: Icon(
                                         Icons.photo_camera,
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         size: 25.0,
                                       ),
                                       onPressed: () async {
@@ -578,7 +575,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                 validateFileFormat(
                                                     m.storagePath, context))) {
                                           setState(() =>
-                                              _model.isMediaUploading = true);
+                                              _model.isDataUploading = true);
                                           var selectedUploadedFiles =
                                               <FFUploadedFile>[];
                                           var downloadUrls = <String>[];
@@ -614,7 +611,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                           } finally {
                                             ScaffoldMessenger.of(context)
                                                 .hideCurrentSnackBar();
-                                            _model.isMediaUploading = false;
+                                            _model.isDataUploading = false;
                                           }
                                           if (selectedUploadedFiles.length ==
                                                   selectedMedia.length &&
@@ -631,7 +628,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                           } else {
                                             setState(() {});
                                             showUploadMessage(context,
-                                                'Failed to upload media');
+                                                'Failed to upload data');
                                             return;
                                           }
                                         }
@@ -737,6 +734,15 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                 );
                               },
                             );
+                            logFirebaseEvent('Button_backend_call');
+
+                            final logsCreateData = createLogsRecordData(
+                              date: getCurrentTimestamp,
+                              action: 'Created a memoralization report.',
+                              userRef: currentUserReference,
+                            );
+                            await LogsRecord.createDoc(currentUserReference!)
+                                .set(logsCreateData);
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             return;
@@ -756,15 +762,16 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           color: Color(0xFF2B8C2A),
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
-                                    .subtitle2Family,
+                                    .titleSmallFamily,
                                 color: Colors.white,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .subtitle2Family),
+                                        .titleSmallFamily),
                               ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

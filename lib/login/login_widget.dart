@@ -1,8 +1,10 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -34,7 +36,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Login'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('LOGIN_PAGE_Login_ON_PAGE_LOAD');
+      logFirebaseEvent('LOGIN_PAGE_Login_ON_INIT_STATE');
       logFirebaseEvent('Login_custom_action');
       await actions.lockOrientation();
     });
@@ -55,16 +57,16 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryColor,
+              color: FlutterFlowTheme.of(context).primary,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -96,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 controller: _model.emailFieldController,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.emailFieldController',
-                                  Duration(milliseconds: 2000),
+                                  Duration(milliseconds: 200),
                                   () => setState(() {}),
                                 ),
                                 onFieldSubmitted: (_) async {
@@ -110,26 +112,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   }
                                 },
                                 autofocus: true,
+                                autofillHints: [AutofillHints.email],
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Email',
                                   hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
+                                            .tertiary,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(16.0),
@@ -163,7 +166,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           20.0, 10.0, 20.0, 10.0),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: FlutterFlowTheme.of(context)
@@ -172,7 +175,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: _model.emailFieldControllerValidator
@@ -213,26 +216,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   }
                                 },
                                 autofocus: true,
+                                autofillHints: [AutofillHints.password],
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 obscureText: !_model.passwordFieldVisibility,
                                 decoration: InputDecoration(
                                   hintText: ' Password',
                                   hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
+                                            .tertiary,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(16.0),
@@ -274,14 +278,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       _model.passwordFieldVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       size: 20.0,
                                     ),
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: FlutterFlowTheme.of(context)
@@ -290,7 +294,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 keyboardType: TextInputType.visiblePassword,
                                 validator: _model
@@ -335,7 +339,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 child: Text(
                                   'Forgot Password?',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: FlutterFlowTheme.of(context)
@@ -345,7 +349,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ),
@@ -376,7 +380,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   logFirebaseEvent('loginButton_auth');
                                   GoRouter.of(context).prepareAuthEvent();
 
-                                  final user = await signInWithEmail(
+                                  final user =
+                                      await authManager.signInWithEmail(
                                     context,
                                     _model.emailFieldController.text,
                                     _model.passwordFieldController.text,
@@ -414,6 +419,19 @@ class _LoginWidgetState extends State<LoginWidget> {
 
                                         context.goNamedAuth(
                                             'HomeScreen', mounted);
+
+                                        logFirebaseEvent(
+                                            'loginButton_backend_call');
+
+                                        final logsCreateData =
+                                            createLogsRecordData(
+                                          date: getCurrentTimestamp,
+                                          action: 'Login',
+                                          userRef: currentUserReference,
+                                        );
+                                        await LogsRecord.createDoc(
+                                                currentUserReference!)
+                                            .set(logsCreateData);
                                       } else {
                                         if (valueOrDefault(
                                                 currentUserDocument?.userType,
@@ -487,7 +505,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     }
                                   } else {
                                     logFirebaseEvent('loginButton_auth');
-                                    await sendEmailVerification();
+                                    await authManager.sendEmailVerification();
                                     logFirebaseEvent(
                                         'loginButton_alert_dialog');
                                     await showDialog(
@@ -517,17 +535,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: Colors.white,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2Family),
+                                                    .titleSmallFamily),
                                       ),
                                   elevation: 2.0,
                                   borderSide: BorderSide(
@@ -556,7 +573,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: Text(
                           'Not a Volunteer?',
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Barlow',
                                 color: FlutterFlowTheme.of(context)
@@ -565,7 +582,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),
@@ -591,7 +608,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           child: Text(
                             'Click Here',
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: 'Barlow',
                                   color: Color(0xFFFFA534),
@@ -599,7 +616,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   fontWeight: FontWeight.w500,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                         ),

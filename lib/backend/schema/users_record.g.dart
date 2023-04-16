@@ -156,6 +156,34 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.streetAddress;
+    if (value != null) {
+      result
+        ..add('streetAddress')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.aptSuiteorUnitAddress;
+    if (value != null) {
+      result
+        ..add('aptSuiteorUnitAddress')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.city;
+    if (value != null) {
+      result
+        ..add('City')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.province;
+    if (value != null) {
+      result
+        ..add('Province')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -258,6 +286,22 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.birthday = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'streetAddress':
+          result.streetAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'aptSuiteorUnitAddress':
+          result.aptSuiteorUnitAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'City':
+          result.city = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'Province':
+          result.province = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -313,6 +357,14 @@ class _$UsersRecord extends UsersRecord {
   @override
   final DateTime? birthday;
   @override
+  final String? streetAddress;
+  @override
+  final String? aptSuiteorUnitAddress;
+  @override
+  final String? city;
+  @override
+  final String? province;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -339,6 +391,10 @@ class _$UsersRecord extends UsersRecord {
       this.duration,
       this.age,
       this.birthday,
+      this.streetAddress,
+      this.aptSuiteorUnitAddress,
+      this.city,
+      this.province,
       this.ffRef})
       : super._();
 
@@ -373,49 +429,43 @@ class _$UsersRecord extends UsersRecord {
         duration == other.duration &&
         age == other.age &&
         birthday == other.birthday &&
+        streetAddress == other.streetAddress &&
+        aptSuiteorUnitAddress == other.aptSuiteorUnitAddress &&
+        city == other.city &&
+        province == other.province &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                                                                                photoUrl.hashCode),
-                                                                            uid.hashCode),
-                                                                        createdTime.hashCode),
-                                                                    phoneNumber.hashCode),
-                                                                userType.hashCode),
-                                                            gender.hashCode),
-                                                        location.hashCode),
-                                                    isDeceased.hashCode),
-                                                meritScore.hashCode),
-                                            isDeleted.hashCode),
-                                        expiryDate.hashCode),
-                                    startTime.hashCode),
-                                endTime.hashCode),
-                            deviceType.hashCode),
-                        screenName.hashCode),
-                    duration.hashCode),
-                age.hashCode),
-            birthday.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, displayName.hashCode);
+    _$hash = $jc(_$hash, photoUrl.hashCode);
+    _$hash = $jc(_$hash, uid.hashCode);
+    _$hash = $jc(_$hash, createdTime.hashCode);
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, userType.hashCode);
+    _$hash = $jc(_$hash, gender.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jc(_$hash, isDeceased.hashCode);
+    _$hash = $jc(_$hash, meritScore.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, expiryDate.hashCode);
+    _$hash = $jc(_$hash, startTime.hashCode);
+    _$hash = $jc(_$hash, endTime.hashCode);
+    _$hash = $jc(_$hash, deviceType.hashCode);
+    _$hash = $jc(_$hash, screenName.hashCode);
+    _$hash = $jc(_$hash, duration.hashCode);
+    _$hash = $jc(_$hash, age.hashCode);
+    _$hash = $jc(_$hash, birthday.hashCode);
+    _$hash = $jc(_$hash, streetAddress.hashCode);
+    _$hash = $jc(_$hash, aptSuiteorUnitAddress.hashCode);
+    _$hash = $jc(_$hash, city.hashCode);
+    _$hash = $jc(_$hash, province.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -441,6 +491,10 @@ class _$UsersRecord extends UsersRecord {
           ..add('duration', duration)
           ..add('age', age)
           ..add('birthday', birthday)
+          ..add('streetAddress', streetAddress)
+          ..add('aptSuiteorUnitAddress', aptSuiteorUnitAddress)
+          ..add('city', city)
+          ..add('province', province)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -529,6 +583,24 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   DateTime? get birthday => _$this._birthday;
   set birthday(DateTime? birthday) => _$this._birthday = birthday;
 
+  String? _streetAddress;
+  String? get streetAddress => _$this._streetAddress;
+  set streetAddress(String? streetAddress) =>
+      _$this._streetAddress = streetAddress;
+
+  String? _aptSuiteorUnitAddress;
+  String? get aptSuiteorUnitAddress => _$this._aptSuiteorUnitAddress;
+  set aptSuiteorUnitAddress(String? aptSuiteorUnitAddress) =>
+      _$this._aptSuiteorUnitAddress = aptSuiteorUnitAddress;
+
+  String? _city;
+  String? get city => _$this._city;
+  set city(String? city) => _$this._city = city;
+
+  String? _province;
+  String? get province => _$this._province;
+  set province(String? province) => _$this._province = province;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -560,6 +632,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _duration = $v.duration;
       _age = $v.age;
       _birthday = $v.birthday;
+      _streetAddress = $v.streetAddress;
+      _aptSuiteorUnitAddress = $v.aptSuiteorUnitAddress;
+      _city = $v.city;
+      _province = $v.province;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -603,10 +679,14 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             duration: duration,
             age: age,
             birthday: birthday,
+            streetAddress: streetAddress,
+            aptSuiteorUnitAddress: aptSuiteorUnitAddress,
+            city: city,
+            province: province,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

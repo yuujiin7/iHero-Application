@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -43,7 +43,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
         parameters: {'screen_name': 'volunteerToEvent'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('VOLUNTEER_TO_EVENT_volunteerToEvent_ON_L');
+      logFirebaseEvent('VOLUNTEER_TO_EVENT_volunteerToEvent_ON_I');
       logFirebaseEvent('volunteerToEvent_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('volunteerToEvent_custom_action');
@@ -91,7 +91,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -99,54 +99,53 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
           );
         }
         final volunteerToEventEventsRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          body: NestedScrollView(
-            headerSliverBuilder: (context, _) => [
-              SliverAppBar(
-                pinned: true,
-                floating: false,
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                automaticallyImplyLeading: false,
-                leading: FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30.0,
-                  borderWidth: 1.0,
-                  buttonSize: 60.0,
-                  icon: Icon(
-                    Icons.keyboard_backspace,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    size: 30.0,
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: NestedScrollView(
+              headerSliverBuilder: (context, _) => [
+                SliverAppBar(
+                  pinned: true,
+                  floating: false,
+                  backgroundColor: FlutterFlowTheme.of(context).primary,
+                  automaticallyImplyLeading: false,
+                  leading: FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 60.0,
+                    icon: Icon(
+                      Icons.keyboard_backspace,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      size: 30.0,
+                    ),
+                    onPressed: () async {
+                      logFirebaseEvent(
+                          'VOLUNTEER_TO_EVENT_keyboard_backspace_IC');
+                      logFirebaseEvent('IconButton_navigate_back');
+                      context.safePop();
+                    },
                   ),
-                  onPressed: () async {
-                    logFirebaseEvent(
-                        'VOLUNTEER_TO_EVENT_keyboard_backspace_IC');
-                    logFirebaseEvent('IconButton_navigate_back');
-                    context.safePop();
-                  },
-                ),
-                title: Text(
-                  'VOLUNTEERS',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Ubuntu',
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        fontSize: 22.0,
-                        useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).bodyText1Family),
-                      ),
-                ),
-                actions: [],
-                centerTitle: true,
-                elevation: 0.0,
-              )
-            ],
-            body: Builder(
-              builder: (context) {
-                return SafeArea(
-                  child: GestureDetector(
-                    onTap: () =>
-                        FocusScope.of(context).requestFocus(_unfocusNode),
+                  title: Text(
+                    'VOLUNTEERS',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Ubuntu',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          fontSize: 22.0,
+                          useGoogleFonts: GoogleFonts.asMap().containsKey(
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
+                        ),
+                  ),
+                  actions: [],
+                  centerTitle: true,
+                  elevation: 0.0,
+                )
+              ],
+              body: Builder(
+                builder: (context) {
+                  return SafeArea(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -154,7 +153,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                           width: double.infinity,
                           height: 64.4,
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).primary,
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -211,7 +210,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                     textStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1,
+                                                            .bodyMedium,
                                                     textHighlightStyle:
                                                         TextStyle(),
                                                     elevation: 4.0,
@@ -259,11 +258,11 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText2
+                                                              .bodySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText2Family,
+                                                                    .bodySmallFamily,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
@@ -271,7 +270,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText2Family),
+                                                                            .bodySmallFamily),
                                                               ),
                                                       enabledBorder:
                                                           OutlineInputBorder(
@@ -327,20 +326,20 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .tertiaryColor,
+                                                                .tertiary,
                                                       ),
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .tertiaryColor,
+                                                              .tertiary,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           useGoogleFonts: GoogleFonts
@@ -348,7 +347,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                     validator: _model
                                                         .searchFieldControllerValidator
@@ -419,7 +418,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                           Text(
                                             'List of Volunteers',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Ubuntu',
                                                   color: FlutterFlowTheme.of(
@@ -432,7 +431,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ],
@@ -467,7 +466,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                             child: SizedBox(
                                               width: 50.0,
                                               height: 50.0,
-                                              child: SpinKitSquareCircle(
+                                              child: SpinKitRipple(
                                                 color: Color(0xFFFE2126),
                                                 size: 50.0,
                                               ),
@@ -537,8 +536,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                         child: SizedBox(
                                                           width: 50.0,
                                                           height: 50.0,
-                                                          child:
-                                                              SpinKitSquareCircle(
+                                                          child: SpinKitRipple(
                                                             color: Color(
                                                                 0xFFFE2126),
                                                             size: 50.0,
@@ -627,16 +625,16 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              FlutterFlowTheme.of(context).bodyText1Family,
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               12.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ],
@@ -666,7 +664,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
                                                                               'Barlow',
@@ -675,7 +673,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                           fontSize:
                                                                               10.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ],
@@ -743,16 +741,16 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
-                                                                              FlutterFlowTheme.of(context).bodyText1Family,
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                           color:
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               10.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ],
@@ -778,9 +776,9 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                         ),
                       ],
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         );

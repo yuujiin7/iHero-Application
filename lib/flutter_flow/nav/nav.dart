@@ -7,7 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
 
-import '../../auth/firebase_user_provider.dart';
+import '../../auth/base_auth_user_provider.dart';
 
 import '../../index.dart';
 import '../../main.dart';
@@ -21,8 +21,8 @@ export 'serialization_util.dart';
 const kTransitionInfoKey = '__transition_info__';
 
 class AppStateNotifier extends ChangeNotifier {
-  IHeroApplicationFirebaseUser? initialUser;
-  IHeroApplicationFirebaseUser? user;
+  BaseAuthUser? initialUser;
+  BaseAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -47,7 +47,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(IHeroApplicationFirebaseUser newUser) {
+  void update(BaseAuthUser newUser) {
     initialUser ??= newUser;
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
@@ -70,14 +70,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? HomeScreenWidget() : OnboardingWidget(),
+          appStateNotifier.loggedIn ? HomeScreenWidget() : SplashScreenWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? HomeScreenWidget()
-              : OnboardingWidget(),
+              : SplashScreenWidget(),
           routes: [
             FFRoute(
               name: 'splashScreen',
@@ -126,16 +126,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AppointmentPageWidget(),
             ),
             FFRoute(
-              name: 'findEvents',
-              path: 'findEvents',
-              requireAuth: true,
-              builder: (context, params) => FindEventsWidget(),
-            ),
-            FFRoute(
               name: 'journeyScreen',
               path: 'journeyScreen',
               requireAuth: true,
               builder: (context, params) => JourneyScreenWidget(),
+            ),
+            FFRoute(
+              name: 'findEvents',
+              path: 'findEvents',
+              requireAuth: true,
+              builder: (context, params) => FindEventsWidget(),
             ),
             FFRoute(
               name: 'allChat',
@@ -149,12 +149,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     'userref', ParamType.DocumentReference, false, ['users']),
                 userRecord: params.getParam('userRecord', ParamType.Document),
               ),
-            ),
-            FFRoute(
-              name: 'HomeScreen',
-              path: 'HomeScreen',
-              requireAuth: true,
-              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'chatPage',
@@ -189,6 +183,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'HomeScreen',
+              path: 'HomeScreen',
+              requireAuth: true,
+              builder: (context, params) => HomeScreenWidget(),
+            ),
+            FFRoute(
               name: 'volunteerList',
               path: 'volunteerList',
               requireAuth: true,
@@ -210,14 +210,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AnnouncementFeedWidget(),
             ),
             FFRoute(
-              name: 'eventCreate',
-              path: 'eventCreate',
-              requireAuth: true,
-              builder: (context, params) => EventCreateWidget(
-                tabIndex: params.getParam('tabIndex', ParamType.int),
-              ),
-            ),
-            FFRoute(
               name: 'volunteerToEvent',
               path: 'volunteerToEvent',
               requireAuth: true,
@@ -235,6 +227,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'appointments',
               requireAuth: true,
               builder: (context, params) => AppointmentsWidget(),
+            ),
+            FFRoute(
+              name: 'eventCreate',
+              path: 'eventCreate',
+              requireAuth: true,
+              builder: (context, params) => EventCreateWidget(
+                tabIndex: params.getParam('tabIndex', ParamType.int),
+              ),
             ),
             FFRoute(
               name: 'eventFullDetail',
@@ -343,6 +343,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'ourTeam',
               requireAuth: true,
               builder: (context, params) => OurTeamWidget(),
+            ),
+            FFRoute(
+              name: 'AnonymousProfile',
+              path: 'anonymousProfile',
+              builder: (context, params) => AnonymousProfileWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -513,7 +518,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/onboarding';
+            return '/splashScreen';
           }
           return null;
         },
@@ -530,7 +535,7 @@ class FFRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: SpinKitSquareCircle(
+                    child: SpinKitRipple(
                       color: Color(0xFFFE2126),
                       size: 50.0,
                     ),
@@ -571,5 +576,9 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.fade,
+        duration: Duration(milliseconds: 0),
+      );
 }

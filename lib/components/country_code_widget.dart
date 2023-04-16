@@ -117,7 +117,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Search Country... ex. Philippines',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        hintStyle: FlutterFlowTheme.of(context).bodySmall,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -155,7 +155,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                           size: 22.0,
                         ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyMedium,
                       minLines: 1,
                       validator:
                           _model.textControllerValidator.asValidator(context),
@@ -204,7 +204,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                               child: SizedBox(
                                 width: 50.0,
                                 height: 50.0,
-                                child: SpinKitSquareCircle(
+                                child: SpinKitRipple(
                                   color: Color(0xFFFE2126),
                                   size: 50.0,
                                 ),
@@ -320,17 +320,17 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family,
+                                                                    .bodyMediumFamily,
                                                                 fontSize: 12.0,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -361,17 +361,17 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family,
+                                                                    .bodyMediumFamily,
                                                                 fontSize: 12.0,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -398,19 +398,19 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                     maxLines: 2,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           fontSize: 12.0,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -500,19 +500,19 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                             ).toString().maybeHandleOverflow(
                                                 maxChars: 5),
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyText1Family,
+                                                          .bodyMediumFamily,
                                                   fontSize: 12.0,
                                                   useGoogleFonts: GoogleFonts
                                                           .asMap()
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ),
@@ -532,19 +532,19 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                 ),
                                             maxLines: 2,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyText1Family,
+                                                          .bodyMediumFamily,
                                                   fontSize: 12.0,
                                                   useGoogleFonts: GoogleFonts
                                                           .asMap()
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ),
@@ -561,18 +561,18 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                               .maybeHandleOverflow(maxChars: 5),
                                           maxLines: 2,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1Family,
+                                                        .bodyMediumFamily,
                                                 fontSize: 12.0,
                                                 useGoogleFonts: GoogleFonts
                                                         .asMap()
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                       ),

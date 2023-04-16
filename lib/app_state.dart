@@ -329,6 +329,12 @@ class FFAppState extends ChangeNotifier {
   set birthday(DateTime? _value) {
     _birthday = _value;
   }
+
+  DateTime? _registrationDate;
+  DateTime? get registrationDate => _registrationDate;
+  set registrationDate(DateTime? _value) {
+    _registrationDate = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

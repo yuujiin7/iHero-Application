@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/bug_report_widget.dart';
 import '/components/change_password_widget.dart';
@@ -42,17 +42,17 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         parameters: {'screen_name': 'profileScreen'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('PROFILE_SCREEN_profileScreen_ON_LOAD');
+      logFirebaseEvent('PROFILE_SCREEN_profileScreen_ON_INIT_STA');
       Function() _navigate = () {};
       logFirebaseEvent('profileScreen_custom_action');
       await actions.lockOrientation();
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('profileScreen_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
+        await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
         return;
       } else {
         logFirebaseEvent('profileScreen_custom_action');
@@ -99,7 +99,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -107,12 +107,12 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
           );
         }
         final profileScreenUsersRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: Color(0xFFEBEFF7),
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: Color(0xFFEBEFF7),
+            body: SafeArea(
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEFF7),
@@ -122,9 +122,9 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 241.0,
+                      height: 300.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -184,13 +184,19 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                     await showModalBottomSheet(
                                       isScrollControlled: true,
                                       backgroundColor: Colors.transparent,
+                                      barrierColor: Color(0x00000000),
                                       enableDrag: false,
                                       context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: EditProfilePictureWidget(),
+                                      builder: (bottomSheetContext) {
+                                        return GestureDetector(
+                                          onTap: () => FocusScope.of(context)
+                                              .requestFocus(_unfocusNode),
+                                          child: Padding(
+                                            padding: MediaQuery.of(
+                                                    bottomSheetContext)
+                                                .viewInsets,
+                                            child: EditProfilePictureWidget(),
+                                          ),
                                         );
                                       },
                                     ).then((value) => setState(() {}));
@@ -209,7 +215,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                 Text(
                                   'My',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: FlutterFlowTheme.of(context)
@@ -219,23 +225,23 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                                 Text(
                                   'Profile',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyText1Family,
+                                            .bodyMediumFamily,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBtnText,
                                         fontSize: 25.0,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ],
@@ -273,25 +279,25 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                             profileScreenUsersRecord
                                                 .displayName!,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Ubuntu',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   fontSize: 20.0,
                                                   useGoogleFonts: GoogleFonts
                                                           .asMap()
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                           Text(
                                             profileScreenUsersRecord.userType!,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   color: Color(0xFF0B266B),
@@ -301,7 +307,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ],
@@ -339,7 +345,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            30.0, 60.0, 30.0, 0.0),
+                            30.0, 0.0, 30.0, 0.0),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -379,12 +385,12 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     'Personal Info',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
@@ -394,7 +400,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -421,12 +427,12 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     'Address',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
@@ -438,7 +444,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -465,7 +471,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                               .location!,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -473,7 +479,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                         ),
                                                       ],
@@ -506,11 +512,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family,
+                                                                    .bodyMediumFamily,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondaryText,
@@ -519,7 +525,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -547,7 +553,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                               .phoneNumber!,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -555,7 +561,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                         ),
                                                       ],
@@ -614,11 +620,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                           'Management',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family,
+                                                                    .bodyMediumFamily,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
@@ -627,7 +633,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                         ),
                                                       ),
@@ -683,16 +689,16 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                   'Appointments',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
-                                                                            FlutterFlowTheme.of(context).bodyText1Family,
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .secondaryText,
                                                                         fontSize:
                                                                             16.0,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ),
@@ -727,7 +733,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         height:
                                                                             50.0,
                                                                         child:
-                                                                            SpinKitSquareCircle(
+                                                                            SpinKitRipple(
                                                                           color:
                                                                               Color(0xFFFE2126),
                                                                           size:
@@ -750,16 +756,16 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                       ),
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyText1Family,
+                                                                                FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                             color:
                                                                                 Colors.white,
                                                                             fontSize:
                                                                                 14.0,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                     showBadge:
@@ -770,7 +776,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .circle,
                                                                     badgeColor:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .tertiaryColor,
+                                                                            .tertiary,
                                                                     elevation:
                                                                         4.0,
                                                                     padding: EdgeInsetsDirectional
@@ -863,11 +869,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                           'Volunteer Status',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family,
+                                                                    .bodyMediumFamily,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
@@ -876,7 +882,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                         ),
                                                       ),
@@ -943,21 +949,21 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                             'My Performance',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryColor,
+                                                                      .primary,
                                                                   fontSize:
                                                                       22.0,
                                                                   useGoogleFonts: GoogleFonts
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -1008,11 +1014,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family,
+                                                                    .bodyMediumFamily,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
@@ -1021,7 +1027,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -1044,16 +1050,24 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       isScrollControlled: true,
                                                       backgroundColor:
                                                           Colors.transparent,
+                                                      barrierColor:
+                                                          Color(0x00000000),
                                                       enableDrag: false,
                                                       context: context,
-                                                      builder: (context) {
-                                                        return Padding(
-                                                          padding:
-                                                              MediaQuery.of(
-                                                                      context)
-                                                                  .viewInsets,
-                                                          child:
-                                                              ChangePasswordWidget(),
+                                                      builder:
+                                                          (bottomSheetContext) {
+                                                        return GestureDetector(
+                                                          onTap: () => FocusScope
+                                                                  .of(context)
+                                                              .requestFocus(
+                                                                  _unfocusNode),
+                                                          child: Padding(
+                                                            padding: MediaQuery.of(
+                                                                    bottomSheetContext)
+                                                                .viewInsets,
+                                                            child:
+                                                                ChangePasswordWidget(),
+                                                          ),
                                                         );
                                                       },
                                                     ).then((value) =>
@@ -1089,11 +1103,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                               'Change Password',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1102,7 +1116,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1152,11 +1166,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                             'Help Center',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -1166,7 +1180,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -1189,16 +1203,24 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       isScrollControlled: true,
                                                       backgroundColor:
                                                           Colors.transparent,
+                                                      barrierColor:
+                                                          Color(0x00000000),
                                                       enableDrag: false,
                                                       context: context,
-                                                      builder: (context) {
-                                                        return Padding(
-                                                          padding:
-                                                              MediaQuery.of(
-                                                                      context)
-                                                                  .viewInsets,
-                                                          child:
-                                                              BugReportWidget(),
+                                                      builder:
+                                                          (bottomSheetContext) {
+                                                        return GestureDetector(
+                                                          onTap: () => FocusScope
+                                                                  .of(context)
+                                                              .requestFocus(
+                                                                  _unfocusNode),
+                                                          child: Padding(
+                                                            padding: MediaQuery.of(
+                                                                    bottomSheetContext)
+                                                                .viewInsets,
+                                                            child:
+                                                                BugReportWidget(),
+                                                          ),
                                                         );
                                                       },
                                                     ).then((value) =>
@@ -1235,11 +1257,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                               'Report a Problem',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1248,7 +1270,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1266,7 +1288,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 10.0, 0.0, 10.0),
+                                        0.0, 10.0, 0.0, 0.0),
                                     child: InkWell(
                                       onTap: () async {
                                         logFirebaseEvent(
@@ -1320,21 +1342,131 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryColor,
+                                                                      .primary,
                                                                   fontSize:
                                                                       20.0,
                                                                   useGoogleFonts: GoogleFonts
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 10.0),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'PROFILE_SCREEN_Container_ptn4sbdb_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Container_bottom_sheet');
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          barrierColor: Color(0x00000000),
+                                          enableDrag: false,
+                                          context: context,
+                                          builder: (bottomSheetContext) {
+                                            return GestureDetector(
+                                              onTap: () => FocusScope.of(
+                                                      context)
+                                                  .requestFocus(_unfocusNode),
+                                              child: Padding(
+                                                padding: MediaQuery.of(
+                                                        bottomSheetContext)
+                                                    .viewInsets,
+                                                child: ConfirmLogoutWidget(),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                      },
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 1.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16.0),
+                                        ),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10.0, 10.0, 10.0, 5.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.login_outlined,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      size: 30.0,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  5.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Logout',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMediumFamily,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  fontSize:
+                                                                      20.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ),
@@ -1348,100 +1480,6 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                     ),
                                   ),
                                 ],
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 10.0, 0.0, 10.0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    logFirebaseEvent(
-                                        'PROFILE_SCREEN_Container_ptn4sbdb_ON_TAP');
-                                    logFirebaseEvent('Container_bottom_sheet');
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: ConfirmLogoutWidget(),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
-                                  },
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    elevation: 1.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 10.0, 10.0, 5.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Icon(
-                                                  Icons.login_outlined,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 30.0,
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          5.0, 0.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    'Logout',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyText1Family,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          fontSize: 20.0,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1Family),
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ),
                             ],
                           ),

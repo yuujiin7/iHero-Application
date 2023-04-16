@@ -14,6 +14,8 @@ import 'unethical_illegal_conduct_report_record.dart';
 import 'false_information_report_record.dart';
 import 'memoralization_report_record.dart';
 import 'monthly_created_event_record.dart';
+import 'logs_record.dart';
+import 'my_events_record.dart';
 
 import 'index.dart';
 
@@ -38,6 +40,8 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   FalseInformationReportRecord,
   MemoralizationReportRecord,
   MonthlyCreatedEventRecord,
+  LogsRecord,
+  MyEventsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
@@ -222,6 +226,9 @@ Map<String, dynamic> mapToFirestore(Map<String, dynamic> data) =>
       }
       return MapEntry(key, value);
     });
+
+List<GeoPoint>? convertToGeoPointList(List<LatLng>? list) =>
+    list?.map((e) => e.toGeoPoint()).toList();
 
 extension GeoPointExtension on LatLng {
   GeoPoint toGeoPoint() => GeoPoint(latitude, longitude);

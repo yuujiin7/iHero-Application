@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/calendar_widget.dart';
 import '/components/event_detail_bottom_widget.dart';
@@ -29,10 +29,10 @@ class FindEventsModel extends FlutterFlowModel {
   String? Function(BuildContext, String?)? searchFieldControllerValidator;
   // State field(s) for DropDown widget.
   String? dropDownValue1;
-  FormFieldController<String>? dropDownController1;
+  FormFieldController<String>? dropDownValueController1;
   // State field(s) for DropDown widget.
   String? dropDownValue2;
-  FormFieldController<String>? dropDownController2;
+  FormFieldController<String>? dropDownValueController2;
 
   /// Initialization and disposal methods.
 

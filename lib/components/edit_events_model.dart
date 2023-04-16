@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -11,8 +11,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
@@ -36,7 +37,7 @@ class EditEventsModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();
-  bool isMediaUploading = false;
+  bool isDataUploading = false;
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
@@ -97,8 +98,8 @@ class EditEventsModel extends FlutterFlowModel {
   // State field(s) for Switch widget.
   bool? switchValue;
   // State field(s) for ChoiceChips widget.
-  String? choiceChipsValue;
-  FormFieldController<List<String>>? choiceChipsController;
+  List<String>? choiceChipsValues;
+  FormFieldController<List<String>>? choiceChipsValueController;
   // State field(s) for PersonInCharge widget.
   TextEditingController? personInChargeController;
   String? Function(BuildContext, String?)? personInChargeControllerValidator;
@@ -170,11 +171,13 @@ class EditEventsModel extends FlutterFlowModel {
     return null;
   }
 
+  // State field(s) for Slider widget.
+  double? sliderValue;
   // Model for selectCauseEdit component.
   late SelectCauseEditModel selectCauseEditModel;
   // State field(s) for PartnerDropDown widget.
   String? partnerDropDownValue;
-  FormFieldController<String>? partnerDropDownController;
+  FormFieldController<String>? partnerDropDownValueController;
 
   /// Initialization and disposal methods.
 

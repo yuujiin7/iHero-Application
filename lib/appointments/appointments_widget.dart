@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -36,7 +36,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
         parameters: {'screen_name': 'appointments'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('APPOINTMENTS_appointments_ON_LOAD');
+      logFirebaseEvent('APPOINTMENTS_appointments_ON_INIT_STATE');
       logFirebaseEvent('appointments_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('appointments_custom_action');
@@ -70,37 +70,37 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, _) => [
-          SliverAppBar(
-            pinned: false,
-            floating: true,
-            snap: false,
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-            automaticallyImplyLeading: true,
-            title: Text(
-              'Appointments',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Ubuntu',
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    fontSize: 22.0,
-                    useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).bodyText1Family),
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
-          )
-        ],
-        body: Builder(
-          builder: (context) {
-            return SafeArea(
-              child: GestureDetector(
-                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: NestedScrollView(
+          headerSliverBuilder: (context, _) => [
+            SliverAppBar(
+              pinned: false,
+              floating: true,
+              snap: false,
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: true,
+              title: Text(
+                'Appointments',
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Ubuntu',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 22.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
+                    ),
+              ),
+              actions: [],
+              centerTitle: true,
+              elevation: 0.0,
+            )
+          ],
+          body: Builder(
+            builder: (context) {
+              return SafeArea(
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 5.0),
                   child: Column(
@@ -187,6 +187,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                               return _model.pagingController!;
                             }(),
                             padding: EdgeInsets.zero,
+                            reverse: false,
                             scrollDirection: Axis.vertical,
                             builderDelegate:
                                 PagedChildBuilderDelegate<RegistrationRecord>(
@@ -195,7 +196,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: SpinKitSquareCircle(
+                                  child: SpinKitRipple(
                                     color: Color(0xFFFE2126),
                                     size: 50.0,
                                   ),
@@ -254,20 +255,20 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                                       .displayName!,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Ubuntu',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                         fontSize: 20.0,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                                 AutoSizeText(
@@ -275,7 +276,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                                       .email!,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         useGoogleFonts: GoogleFonts
@@ -283,7 +284,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -313,7 +314,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         useGoogleFonts: GoogleFonts
@@ -321,7 +322,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -340,9 +341,9 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                     ],
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

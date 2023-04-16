@@ -29,13 +29,6 @@ class _$RegistrationRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.address;
-    if (value != null) {
-      result
-        ..add('address')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.email;
     if (value != null) {
       result
@@ -72,13 +65,6 @@ class _$RegistrationRecordSerializer
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
     }
-    value = object.profession;
-    if (value != null) {
-      result
-        ..add('profession')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.birthDate;
     if (value != null) {
       result
@@ -110,13 +96,6 @@ class _$RegistrationRecordSerializer
     if (value != null) {
       result
         ..add('civil_status')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.emergencyContact;
-    if (value != null) {
-      result
-        ..add('emergency_contact')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -177,6 +156,34 @@ class _$RegistrationRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.streetAddress;
+    if (value != null) {
+      result
+        ..add('streetAddress')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.aptSuiteorUnitAddress;
+    if (value != null) {
+      result
+        ..add('aptSuiteorUnitAddress')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.city;
+    if (value != null) {
+      result
+        ..add('City')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.province;
+    if (value != null) {
+      result
+        ..add('Province')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -204,10 +211,6 @@ class _$RegistrationRecordSerializer
           result.displayName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'address':
-          result.address = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'email':
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -230,10 +233,6 @@ class _$RegistrationRecordSerializer
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
           break;
-        case 'profession':
-          result.profession = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'birth_date':
           result.birthDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
@@ -252,10 +251,6 @@ class _$RegistrationRecordSerializer
           break;
         case 'civil_status':
           result.civilStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'emergency_contact':
-          result.emergencyContact = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'appointmentDate':
@@ -292,6 +287,22 @@ class _$RegistrationRecordSerializer
           result.reason = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'streetAddress':
+          result.streetAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'aptSuiteorUnitAddress':
+          result.aptSuiteorUnitAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'City':
+          result.city = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'Province':
+          result.province = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -309,8 +320,6 @@ class _$RegistrationRecord extends RegistrationRecord {
   @override
   final String? displayName;
   @override
-  final String? address;
-  @override
   final String? email;
   @override
   final String? photoUrl;
@@ -321,8 +330,6 @@ class _$RegistrationRecord extends RegistrationRecord {
   @override
   final DocumentReference<Object?>? createdBy;
   @override
-  final String? profession;
-  @override
   final DateTime? birthDate;
   @override
   final int? age;
@@ -332,8 +339,6 @@ class _$RegistrationRecord extends RegistrationRecord {
   final String? nationality;
   @override
   final String? civilStatus;
-  @override
-  final String? emergencyContact;
   @override
   final DateTime? appointmentDate;
   @override
@@ -351,6 +356,14 @@ class _$RegistrationRecord extends RegistrationRecord {
   @override
   final String? reason;
   @override
+  final String? streetAddress;
+  @override
+  final String? aptSuiteorUnitAddress;
+  @override
+  final String? city;
+  @override
+  final String? province;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$RegistrationRecord(
@@ -359,19 +372,16 @@ class _$RegistrationRecord extends RegistrationRecord {
 
   _$RegistrationRecord._(
       {this.displayName,
-      this.address,
       this.email,
       this.photoUrl,
       this.createdTime,
       this.uid,
       this.createdBy,
-      this.profession,
       this.birthDate,
       this.age,
       this.gender,
       this.nationality,
       this.civilStatus,
-      this.emergencyContact,
       this.appointmentDate,
       this.iDUrl,
       this.isDeleted,
@@ -380,6 +390,10 @@ class _$RegistrationRecord extends RegistrationRecord {
       this.phoneNumber,
       this.isDeclined,
       this.reason,
+      this.streetAddress,
+      this.aptSuiteorUnitAddress,
+      this.city,
+      this.province,
       this.ffRef})
       : super._();
 
@@ -397,19 +411,16 @@ class _$RegistrationRecord extends RegistrationRecord {
     if (identical(other, this)) return true;
     return other is RegistrationRecord &&
         displayName == other.displayName &&
-        address == other.address &&
         email == other.email &&
         photoUrl == other.photoUrl &&
         createdTime == other.createdTime &&
         uid == other.uid &&
         createdBy == other.createdBy &&
-        profession == other.profession &&
         birthDate == other.birthDate &&
         age == other.age &&
         gender == other.gender &&
         nationality == other.nationality &&
         civilStatus == other.civilStatus &&
-        emergencyContact == other.emergencyContact &&
         appointmentDate == other.appointmentDate &&
         iDUrl == other.iDUrl &&
         isDeleted == other.isDeleted &&
@@ -418,68 +429,58 @@ class _$RegistrationRecord extends RegistrationRecord {
         phoneNumber == other.phoneNumber &&
         isDeclined == other.isDeclined &&
         reason == other.reason &&
+        streetAddress == other.streetAddress &&
+        aptSuiteorUnitAddress == other.aptSuiteorUnitAddress &&
+        city == other.city &&
+        province == other.province &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc(0, displayName.hashCode), address.hashCode), email.hashCode), photoUrl.hashCode),
-                                                                                createdTime.hashCode),
-                                                                            uid.hashCode),
-                                                                        createdBy.hashCode),
-                                                                    profession.hashCode),
-                                                                birthDate.hashCode),
-                                                            age.hashCode),
-                                                        gender.hashCode),
-                                                    nationality.hashCode),
-                                                civilStatus.hashCode),
-                                            emergencyContact.hashCode),
-                                        appointmentDate.hashCode),
-                                    iDUrl.hashCode),
-                                isDeleted.hashCode),
-                            expiryDate.hashCode),
-                        isConfirmbySA.hashCode),
-                    phoneNumber.hashCode),
-                isDeclined.hashCode),
-            reason.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, displayName.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, photoUrl.hashCode);
+    _$hash = $jc(_$hash, createdTime.hashCode);
+    _$hash = $jc(_$hash, uid.hashCode);
+    _$hash = $jc(_$hash, createdBy.hashCode);
+    _$hash = $jc(_$hash, birthDate.hashCode);
+    _$hash = $jc(_$hash, age.hashCode);
+    _$hash = $jc(_$hash, gender.hashCode);
+    _$hash = $jc(_$hash, nationality.hashCode);
+    _$hash = $jc(_$hash, civilStatus.hashCode);
+    _$hash = $jc(_$hash, appointmentDate.hashCode);
+    _$hash = $jc(_$hash, iDUrl.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, expiryDate.hashCode);
+    _$hash = $jc(_$hash, isConfirmbySA.hashCode);
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, isDeclined.hashCode);
+    _$hash = $jc(_$hash, reason.hashCode);
+    _$hash = $jc(_$hash, streetAddress.hashCode);
+    _$hash = $jc(_$hash, aptSuiteorUnitAddress.hashCode);
+    _$hash = $jc(_$hash, city.hashCode);
+    _$hash = $jc(_$hash, province.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'RegistrationRecord')
           ..add('displayName', displayName)
-          ..add('address', address)
           ..add('email', email)
           ..add('photoUrl', photoUrl)
           ..add('createdTime', createdTime)
           ..add('uid', uid)
           ..add('createdBy', createdBy)
-          ..add('profession', profession)
           ..add('birthDate', birthDate)
           ..add('age', age)
           ..add('gender', gender)
           ..add('nationality', nationality)
           ..add('civilStatus', civilStatus)
-          ..add('emergencyContact', emergencyContact)
           ..add('appointmentDate', appointmentDate)
           ..add('iDUrl', iDUrl)
           ..add('isDeleted', isDeleted)
@@ -488,6 +489,10 @@ class _$RegistrationRecord extends RegistrationRecord {
           ..add('phoneNumber', phoneNumber)
           ..add('isDeclined', isDeclined)
           ..add('reason', reason)
+          ..add('streetAddress', streetAddress)
+          ..add('aptSuiteorUnitAddress', aptSuiteorUnitAddress)
+          ..add('city', city)
+          ..add('province', province)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -500,10 +505,6 @@ class RegistrationRecordBuilder
   String? _displayName;
   String? get displayName => _$this._displayName;
   set displayName(String? displayName) => _$this._displayName = displayName;
-
-  String? _address;
-  String? get address => _$this._address;
-  set address(String? address) => _$this._address = address;
 
   String? _email;
   String? get email => _$this._email;
@@ -526,10 +527,6 @@ class RegistrationRecordBuilder
   set createdBy(DocumentReference<Object?>? createdBy) =>
       _$this._createdBy = createdBy;
 
-  String? _profession;
-  String? get profession => _$this._profession;
-  set profession(String? profession) => _$this._profession = profession;
-
   DateTime? _birthDate;
   DateTime? get birthDate => _$this._birthDate;
   set birthDate(DateTime? birthDate) => _$this._birthDate = birthDate;
@@ -549,11 +546,6 @@ class RegistrationRecordBuilder
   String? _civilStatus;
   String? get civilStatus => _$this._civilStatus;
   set civilStatus(String? civilStatus) => _$this._civilStatus = civilStatus;
-
-  String? _emergencyContact;
-  String? get emergencyContact => _$this._emergencyContact;
-  set emergencyContact(String? emergencyContact) =>
-      _$this._emergencyContact = emergencyContact;
 
   DateTime? _appointmentDate;
   DateTime? get appointmentDate => _$this._appointmentDate;
@@ -589,6 +581,24 @@ class RegistrationRecordBuilder
   String? get reason => _$this._reason;
   set reason(String? reason) => _$this._reason = reason;
 
+  String? _streetAddress;
+  String? get streetAddress => _$this._streetAddress;
+  set streetAddress(String? streetAddress) =>
+      _$this._streetAddress = streetAddress;
+
+  String? _aptSuiteorUnitAddress;
+  String? get aptSuiteorUnitAddress => _$this._aptSuiteorUnitAddress;
+  set aptSuiteorUnitAddress(String? aptSuiteorUnitAddress) =>
+      _$this._aptSuiteorUnitAddress = aptSuiteorUnitAddress;
+
+  String? _city;
+  String? get city => _$this._city;
+  set city(String? city) => _$this._city = city;
+
+  String? _province;
+  String? get province => _$this._province;
+  set province(String? province) => _$this._province = province;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -601,19 +611,16 @@ class RegistrationRecordBuilder
     final $v = _$v;
     if ($v != null) {
       _displayName = $v.displayName;
-      _address = $v.address;
       _email = $v.email;
       _photoUrl = $v.photoUrl;
       _createdTime = $v.createdTime;
       _uid = $v.uid;
       _createdBy = $v.createdBy;
-      _profession = $v.profession;
       _birthDate = $v.birthDate;
       _age = $v.age;
       _gender = $v.gender;
       _nationality = $v.nationality;
       _civilStatus = $v.civilStatus;
-      _emergencyContact = $v.emergencyContact;
       _appointmentDate = $v.appointmentDate;
       _iDUrl = $v.iDUrl?.toBuilder();
       _isDeleted = $v.isDeleted;
@@ -622,6 +629,10 @@ class RegistrationRecordBuilder
       _phoneNumber = $v.phoneNumber;
       _isDeclined = $v.isDeclined;
       _reason = $v.reason;
+      _streetAddress = $v.streetAddress;
+      _aptSuiteorUnitAddress = $v.aptSuiteorUnitAddress;
+      _city = $v.city;
+      _province = $v.province;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -648,19 +659,16 @@ class RegistrationRecordBuilder
       _$result = _$v ??
           new _$RegistrationRecord._(
               displayName: displayName,
-              address: address,
               email: email,
               photoUrl: photoUrl,
               createdTime: createdTime,
               uid: uid,
               createdBy: createdBy,
-              profession: profession,
               birthDate: birthDate,
               age: age,
               gender: gender,
               nationality: nationality,
               civilStatus: civilStatus,
-              emergencyContact: emergencyContact,
               appointmentDate: appointmentDate,
               iDUrl: _iDUrl?.build(),
               isDeleted: isDeleted,
@@ -669,6 +677,10 @@ class RegistrationRecordBuilder
               phoneNumber: phoneNumber,
               isDeclined: isDeclined,
               reason: reason,
+              streetAddress: streetAddress,
+              aptSuiteorUnitAddress: aptSuiteorUnitAddress,
+              city: city,
+              province: province,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -686,4 +698,4 @@ class RegistrationRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

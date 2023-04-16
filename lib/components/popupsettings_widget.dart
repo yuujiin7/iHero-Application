@@ -89,7 +89,7 @@ class _PopupsettingsWidgetState extends State<PopupsettingsWidget> {
                             Text(
                               'See event on Map',
                               style: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .titleSmall
                                   .override(
                                     fontFamily: 'Comfortaa',
                                     color: Color(0xFFFF4D4D),
@@ -98,7 +98,7 @@ class _PopupsettingsWidgetState extends State<PopupsettingsWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .subtitle2Family),
+                                                .titleSmallFamily),
                                   ),
                             ),
                           ],

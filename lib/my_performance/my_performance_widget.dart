@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/my_perf_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -42,7 +42,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
         parameters: {'screen_name': 'myPerformance'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('MY_PERFORMANCE_myPerformance_ON_LOAD');
+      logFirebaseEvent('MY_PERFORMANCE_myPerformance_ON_INIT_STA');
       logFirebaseEvent('myPerformance_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('myPerformance_custom_action');
@@ -76,12 +76,12 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -89,7 +89,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                 width: double.infinity,
                 height: 162.6,
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primary,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -123,7 +123,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                             Text(
                               'MY PERFORMANCE',
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Ubuntu',
                                     color: FlutterFlowTheme.of(context)
@@ -133,7 +133,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                             FlutterFlowIconButton(
@@ -154,13 +154,19 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                 await showModalBottomSheet(
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
+                                  barrierColor: Color(0x00000000),
                                   enableDrag: false,
                                   context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding:
-                                          MediaQuery.of(context).viewInsets,
-                                      child: MyPerfWidget(),
+                                  builder: (bottomSheetContext) {
+                                    return GestureDetector(
+                                      onTap: () => FocusScope.of(context)
+                                          .requestFocus(_unfocusNode),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.of(bottomSheetContext)
+                                                .viewInsets,
+                                        child: MyPerfWidget(),
+                                      ),
                                     );
                                   },
                                 ).then((value) => setState(() {}));
@@ -196,7 +202,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                       Text(
                                         'Credit Score',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
                                               color:
@@ -204,12 +210,12 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                                       .primaryText,
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.bold,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       Divider(
@@ -254,7 +260,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
@@ -268,7 +274,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -344,7 +350,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                         '${valueOrDefault(currentUserDocument?.meritScore, 0).toString()}%'
                                             .maybeHandleOverflow(maxChars: 3),
                                         style: FlutterFlowTheme.of(context)
-                                            .title1
+                                            .displaySmall
                                             .override(
                                               fontFamily: 'Ubuntu',
                                               color: colorFromCssString(
@@ -358,12 +364,12 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                               fontSize: 40.0,
                                               letterSpacing: 1.0,
                                               fontWeight: FontWeight.bold,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .title1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .displaySmallFamily),
                                             ),
                                       ),
                                     ),
@@ -385,16 +391,16 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                                 .toDouble()),
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Barlow',
                                               fontSize: 15.0,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                     ),

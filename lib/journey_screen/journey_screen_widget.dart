@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -35,7 +35,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
         parameters: {'screen_name': 'journeyScreen'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('JOURNEY_SCREEN_journeyScreen_ON_LOAD');
+      logFirebaseEvent('JOURNEY_SCREEN_journeyScreen_ON_INIT_STA');
       logFirebaseEvent('journeyScreen_custom_action');
       await actions.lockOrientation();
     });
@@ -62,7 +62,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -70,12 +70,12 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
           );
         }
         final journeyScreenUsersRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: SafeArea(
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -121,7 +121,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                   Text(
                                     'Journey',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Comfortaa',
                                           fontSize: 24.0,
@@ -129,7 +129,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -199,7 +199,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                         child: Text(
                                           '38',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Comfortaa',
                                                 fontSize: 20.0,
@@ -209,24 +209,24 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                       ),
                                       Text(
                                         'Hours',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Comfortaa',
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.w600,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                     ],
@@ -234,14 +234,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                   Text(
                                     'Volunteered',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Comfortaa',
                                           fontSize: 14.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -301,7 +301,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                         child: Text(
                                           '3,500',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Comfortaa',
                                                 fontSize: 20.0,
@@ -311,7 +311,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                       ),
@@ -320,7 +320,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                   Text(
                                     'Donated',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Comfortaa',
                                           fontSize: 14.0,
@@ -328,7 +328,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -378,7 +378,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                               'GOALS',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
                                                         color:
@@ -393,7 +393,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                             FlutterFlowIconButton(
@@ -461,7 +461,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             '500',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -476,7 +476,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -501,14 +501,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                   'Hours\nVolunteering',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Comfortaa',
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ],
@@ -549,7 +549,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Target Date:',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -562,7 +562,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                           Card(
@@ -573,7 +573,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '22 July 2022',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -587,7 +587,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -599,7 +599,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '61',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -613,7 +613,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -621,7 +621,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Days Left',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -636,7 +636,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -685,7 +685,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             '5,000',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -700,7 +700,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -725,14 +725,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                   'Total\nDonation',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Comfortaa',
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ],
@@ -773,7 +773,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Target Date:',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -786,7 +786,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                           Card(
@@ -797,7 +797,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '22 July 2022',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -811,7 +811,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -823,7 +823,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '61',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -837,7 +837,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -845,7 +845,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Days Left',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -860,7 +860,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -911,7 +911,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                               'ACCOMPLISHMENTS',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Comfortaa',
                                                         color:
@@ -926,7 +926,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                           ],
@@ -979,7 +979,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             '500',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -994,7 +994,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -1019,14 +1019,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                   'Hours\nVolunteering',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Comfortaa',
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ],
@@ -1067,7 +1067,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Target Date:',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1080,7 +1080,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                           Card(
@@ -1091,7 +1091,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '22 July 2022',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1105,7 +1105,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1117,7 +1117,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               'Completed',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1131,7 +1131,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1181,7 +1181,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             '700',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1196,7 +1196,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -1221,14 +1221,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                   'Hours\nVolunteering',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Comfortaa',
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ],
@@ -1269,7 +1269,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Target Date:',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1282,7 +1282,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                           Card(
@@ -1293,7 +1293,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '22 July 2022',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1307,7 +1307,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1319,7 +1319,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               'Completed',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1333,7 +1333,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1383,7 +1383,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             '420',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1398,7 +1398,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -1423,14 +1423,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                   'Hours\nVolunteering',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Comfortaa',
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ],
@@ -1471,7 +1471,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Target Date:',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1484,7 +1484,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                           Card(
@@ -1495,7 +1495,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '22 July 2022',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1509,7 +1509,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1521,7 +1521,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               'Completed',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1535,7 +1535,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1585,7 +1585,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             '100,000',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1600,7 +1600,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ),
@@ -1625,14 +1625,14 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                   'Total\nDonation',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Comfortaa',
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ],
@@ -1673,7 +1673,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                             'Target Date:',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Comfortaa',
@@ -1686,7 +1686,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                           Card(
@@ -1697,7 +1697,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               '22 July 2022',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1711,7 +1711,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1723,7 +1723,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                               'Completed',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Comfortaa',
@@ -1737,7 +1737,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),

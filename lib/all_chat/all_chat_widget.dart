@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/chat/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -41,7 +41,7 @@ class _AllChatWidgetState extends State<AllChatWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'allChat'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('ALL_CHAT_PAGE_allChat_ON_PAGE_LOAD');
+      logFirebaseEvent('ALL_CHAT_PAGE_allChat_ON_INIT_STATE');
       logFirebaseEvent('allChat_custom_action');
       await actions.lockOrientation();
     });
@@ -70,7 +70,7 @@ class _AllChatWidgetState extends State<AllChatWidget> {
           buttonSize: 60.0,
           icon: Icon(
             Icons.keyboard_backspace,
-            color: FlutterFlowTheme.of(context).tertiaryColor,
+            color: FlutterFlowTheme.of(context).tertiary,
             size: 30.0,
           ),
           onPressed: () async {
@@ -81,13 +81,13 @@ class _AllChatWidgetState extends State<AllChatWidget> {
         ),
         title: Text(
           'All Chats',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
+          style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Comfortaa',
-                color: FlutterFlowTheme.of(context).tertiaryColor,
+                color: FlutterFlowTheme.of(context).tertiary,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
                 useGoogleFonts: GoogleFonts.asMap()
-                    .containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                    .containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
               ),
         ),
         actions: [],
@@ -110,7 +110,7 @@ class _AllChatWidgetState extends State<AllChatWidget> {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: SpinKitSquareCircle(
+                    child: SpinKitRipple(
                       color: Color(0xFFFE2126),
                       size: 50.0,
                     ),

@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/back_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -36,17 +36,17 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
         parameters: {'screen_name': 'TermsOfService'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('TERMS_OF_SERVICE_TermsOfService_ON_LOAD');
+      logFirebaseEvent('TERMS_OF_SERVICE_TermsOfService_ON_INIT_');
       Function() _navigate = () {};
       logFirebaseEvent('TermsOfService_custom_action');
       await actions.lockOrientation();
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('TermsOfService_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
+        await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
         return;
       } else {
         logFirebaseEvent('TermsOfService_custom_action');
@@ -93,7 +93,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -101,12 +101,12 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
           );
         }
         final termsOfServiceUsersRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: Color(0xFFEBEFF7),
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: Color(0xFFEBEFF7),
+            body: SafeArea(
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEFF7),
@@ -118,7 +118,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                       width: double.infinity,
                       height: 241.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -172,25 +172,25 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                           AutoSizeText(
                                             'iHero',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Ubuntu',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   fontSize: 20.0,
                                                   useGoogleFonts: GoogleFonts
                                                           .asMap()
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                           Text(
                                             'A PRC Santa Rosa Chapter Mobile App',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   color: Color(0xFF0B266B),
@@ -200,7 +200,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ],
@@ -270,12 +270,12 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                 'Terms of Service',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
@@ -285,7 +285,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ),
@@ -308,7 +308,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           useGoogleFonts: GoogleFonts
@@ -316,7 +316,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Padding(
@@ -336,18 +336,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -357,7 +357,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -365,7 +365,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -388,18 +388,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -409,7 +409,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -417,7 +417,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -440,18 +440,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -461,7 +461,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -469,7 +469,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -492,18 +492,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -513,7 +513,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -521,7 +521,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -544,18 +544,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -565,7 +565,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -573,7 +573,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -596,18 +596,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -617,7 +617,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -625,7 +625,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Padding(
@@ -643,7 +643,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Barlow',
@@ -651,7 +651,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ),
@@ -675,18 +675,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -696,7 +696,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -705,7 +705,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -728,18 +728,18 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 useGoogleFonts: GoogleFonts
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                     Text(
@@ -749,7 +749,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -757,7 +757,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -780,7 +780,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -788,7 +788,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],

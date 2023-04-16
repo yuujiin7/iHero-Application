@@ -181,6 +181,58 @@ class CountryCodeSearchCall {
       );
 }
 
+class SendEmailSendGridCall {
+  static Future<ApiCallResponse> call({
+    String? toEmail = '',
+    String? subject = '',
+    String? content = '',
+  }) {
+    final body = '''
+{
+  "personalizations": [
+    {
+      "to": [
+        {
+          "email": "${toEmail}"
+        }
+      ],
+      "subject": "${subject}"
+    }
+  ],
+  "content": [
+    {
+      "type": "text/plain",
+      "value": "${content}"
+    }
+  ],
+  "from": {
+    "email": "ihero.info@gmail.com",
+    "name": "iHero"
+  },
+  "reply_to": {
+    "email": "ihero.info@gmail.com",
+    "name": "iHero"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Send Email SendGrid',
+      apiUrl: 'https://api.sendgrid.com/v3/mail/send',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization':
+            'Bearer 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',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

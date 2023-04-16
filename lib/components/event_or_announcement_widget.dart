@@ -90,14 +90,14 @@ class _EventOrAnnouncementWidgetState extends State<EventOrAnnouncementWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).tertiaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         color: Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(
@@ -132,13 +132,13 @@ class _EventOrAnnouncementWidgetState extends State<EventOrAnnouncementWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).tertiaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 20.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(
@@ -165,11 +165,11 @@ class _EventOrAnnouncementWidgetState extends State<EventOrAnnouncementWidget> {
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         fontSize: 25.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(

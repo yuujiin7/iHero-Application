@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/back_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -35,17 +35,17 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'OurTeam'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('OUR_TEAM_PAGE_OurTeam_ON_PAGE_LOAD');
+      logFirebaseEvent('OUR_TEAM_PAGE_OurTeam_ON_INIT_STATE');
       Function() _navigate = () {};
       logFirebaseEvent('OurTeam_custom_action');
       await actions.lockOrientation();
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('OurTeam_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
+        await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
         return;
       } else {
         logFirebaseEvent('OurTeam_custom_action');
@@ -92,7 +92,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -100,12 +100,12 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
           );
         }
         final ourTeamUsersRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: Color(0xFFEBEFF7),
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: Color(0xFFEBEFF7),
+            body: SafeArea(
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEFF7),
@@ -117,7 +117,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                       width: double.infinity,
                       height: 241.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -171,25 +171,25 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                           AutoSizeText(
                                             'iHero',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Ubuntu',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   fontSize: 20.0,
                                                   useGoogleFonts: GoogleFonts
                                                           .asMap()
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                           Text(
                                             'A PRC Santa Rosa Chapter Mobile App',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   color: Color(0xFF0B266B),
@@ -199,7 +199,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ],
@@ -269,12 +269,12 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 'Our Team',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
@@ -284,7 +284,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ),
@@ -305,7 +305,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           useGoogleFonts: GoogleFonts
@@ -313,7 +313,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -333,18 +333,18 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Text(
@@ -352,7 +352,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color:
@@ -363,7 +363,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -383,18 +383,18 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Text(
@@ -402,7 +402,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color:
@@ -413,7 +413,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -433,18 +433,18 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Text(
@@ -452,7 +452,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color:
@@ -463,7 +463,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -483,18 +483,18 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Text(
@@ -502,7 +502,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color:
@@ -513,7 +513,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -533,18 +533,18 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Text(
@@ -552,7 +552,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color:
@@ -563,7 +563,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -577,7 +577,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                             'We are all passionate about technology and the potential it has to create positive change. Our thesis project is an opportunity for us to apply our skills and knowledge towards a meaningful cause. We are committed to working hard and collaborating effectively to ensure the success of our project.',
                                             textAlign: TextAlign.justify,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   useGoogleFonts: GoogleFonts
@@ -585,7 +585,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ),

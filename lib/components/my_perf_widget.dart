@@ -81,17 +81,17 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                           children: [
                             Text(
                               'My Performance',
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .title2Family,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .title2Family),
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .headlineMediumFamily),
+                                  ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -99,16 +99,16 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                               child: Text(
                                 'Credit Score Rules',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText2
+                                    .bodySmall
                                     .override(
                                       fontFamily: FlutterFlowTheme.of(context)
-                                          .bodyText2Family,
+                                          .bodySmallFamily,
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText2Family),
+                                                  .bodySmallFamily),
                                     ),
                               ),
                             ),
@@ -140,11 +140,11 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                   child: Text(
                     'Every Volunteer starts out with 100 credits which will be affected by your actions within the organization.',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 14.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -153,11 +153,11 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                   child: Text(
                     'If another volunteer reports you and the report is validated, each report is -5 credits.',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 16.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -170,14 +170,15 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                       Text(
                         'PUNISHMENTS',
                         textAlign: TextAlign.justify,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily:
-                                  FlutterFlowTheme.of(context).bodyText1Family,
+                                  FlutterFlowTheme.of(context).bodyMediumFamily,
                               color: Color(0xFFB51E1E),
                               fontSize: 20.0,
                               fontWeight: FontWeight.w800,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).bodyText1Family),
+                                  FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily),
                             ),
                       ),
                     ],
@@ -188,13 +189,13 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                   child: Text(
                     '25 to 60 Credit Score',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily:
-                              FlutterFlowTheme.of(context).bodyText1Family,
+                              FlutterFlowTheme.of(context).bodyMediumFamily,
                           fontSize: 18.0,
                           decoration: TextDecoration.underline,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -203,11 +204,11 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                   child: Text(
                     'Volunteers will be given off a warning and their credit score will be monitored throughout the month.',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 15.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -216,13 +217,13 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                   child: Text(
                     'below 20 Credit Score',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily:
-                              FlutterFlowTheme.of(context).bodyText1Family,
+                              FlutterFlowTheme.of(context).bodyMediumFamily,
                           fontSize: 18.0,
                           decoration: TextDecoration.underline,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -231,11 +232,11 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                   child: Text(
                     'Volunteers below this credit score will be suspended until further notice.',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 15.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -260,17 +261,18 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
-                                    .subtitle2Family,
+                                    .titleSmallFamily,
                                 color: Colors.white,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .subtitle2Family),
+                                        .titleSmallFamily),
                               ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

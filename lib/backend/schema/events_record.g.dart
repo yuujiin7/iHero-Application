@@ -205,13 +205,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.recurranceDate;
-    if (value != null) {
-      result
-        ..add('recurranceDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.rateTotal;
     if (value != null) {
       result
@@ -276,6 +269,28 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         ..add('organization_partnter')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.recurranceDate;
+    if (value != null) {
+      result
+        ..add('recurranceDate')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.registrationDate;
+    if (value != null) {
+      result
+        ..add('registrationDate')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.minimumVolunteer;
+    if (value != null) {
+      result
+        ..add('minimumVolunteer')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -414,10 +429,6 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
           result.isRecurring = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
-        case 'recurranceDate':
-          result.recurranceDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'rateTotal':
           result.rateTotal = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
@@ -456,6 +467,20 @@ class _$EventsRecordSerializer implements StructuredSerializer<EventsRecord> {
         case 'organization_partnter':
           result.organizationPartnter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'recurranceDate':
+          result.recurranceDate.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'registrationDate':
+          result.registrationDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'minimumVolunteer':
+          result.minimumVolunteer = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -522,8 +547,6 @@ class _$EventsRecord extends EventsRecord {
   @override
   final bool? isRecurring;
   @override
-  final String? recurranceDate;
-  @override
   final double? rateTotal;
   @override
   final double? rateCount;
@@ -541,6 +564,12 @@ class _$EventsRecord extends EventsRecord {
   final String? addRequirementEvent;
   @override
   final String? organizationPartnter;
+  @override
+  final BuiltList<String>? recurranceDate;
+  @override
+  final DateTime? registrationDate;
+  @override
+  final double? minimumVolunteer;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -573,7 +602,6 @@ class _$EventsRecord extends EventsRecord {
       this.partnerOrgRef,
       this.volunteerList,
       this.isRecurring,
-      this.recurranceDate,
       this.rateTotal,
       this.rateCount,
       this.reason,
@@ -583,6 +611,9 @@ class _$EventsRecord extends EventsRecord {
       this.isMeritScoreUpdated,
       this.addRequirementEvent,
       this.organizationPartnter,
+      this.recurranceDate,
+      this.registrationDate,
+      this.minimumVolunteer,
       this.ffRef})
       : super._();
 
@@ -622,7 +653,6 @@ class _$EventsRecord extends EventsRecord {
         partnerOrgRef == other.partnerOrgRef &&
         volunteerList == other.volunteerList &&
         isRecurring == other.isRecurring &&
-        recurranceDate == other.recurranceDate &&
         rateTotal == other.rateTotal &&
         rateCount == other.rateCount &&
         reason == other.reason &&
@@ -632,49 +662,55 @@ class _$EventsRecord extends EventsRecord {
         isMeritScoreUpdated == other.isMeritScoreUpdated &&
         addRequirementEvent == other.addRequirementEvent &&
         organizationPartnter == other.organizationPartnter &&
+        recurranceDate == other.recurranceDate &&
+        registrationDate == other.registrationDate &&
+        minimumVolunteer == other.minimumVolunteer &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, eventTitle.hashCode), eventPhotoUrl.hashCode), eventDescription.hashCode), eventInChargePerson.hashCode), eventLocation.hashCode), eventAddress.hashCode), volunteerNames.hashCode), neededVolunteerCount.hashCode), neededVolunteer.hashCode), createdDate.hashCode), eventTag.hashCode), isEnded.hashCode), volunteerCount.hashCode), isDeleted.hashCode), eventContactNumber.hashCode), isConfirmbySA.hashCode), expiryDate.hashCode),
-                                                                                adminRef.hashCode),
-                                                                            eventDateStart.hashCode),
-                                                                        eventDateEnd.hashCode),
-                                                                    isReqCancel.hashCode),
-                                                                volunteerRef.hashCode),
-                                                            partnerOrgRef.hashCode),
-                                                        volunteerList.hashCode),
-                                                    isRecurring.hashCode),
-                                                recurranceDate.hashCode),
-                                            rateTotal.hashCode),
-                                        rateCount.hashCode),
-                                    reason.hashCode),
-                                isDeclined.hashCode),
-                            rateRef.hashCode),
-                        ageRequirement.hashCode),
-                    isMeritScoreUpdated.hashCode),
-                addRequirementEvent.hashCode),
-            organizationPartnter.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, eventTitle.hashCode);
+    _$hash = $jc(_$hash, eventPhotoUrl.hashCode);
+    _$hash = $jc(_$hash, eventDescription.hashCode);
+    _$hash = $jc(_$hash, eventInChargePerson.hashCode);
+    _$hash = $jc(_$hash, eventLocation.hashCode);
+    _$hash = $jc(_$hash, eventAddress.hashCode);
+    _$hash = $jc(_$hash, volunteerNames.hashCode);
+    _$hash = $jc(_$hash, neededVolunteerCount.hashCode);
+    _$hash = $jc(_$hash, neededVolunteer.hashCode);
+    _$hash = $jc(_$hash, createdDate.hashCode);
+    _$hash = $jc(_$hash, eventTag.hashCode);
+    _$hash = $jc(_$hash, isEnded.hashCode);
+    _$hash = $jc(_$hash, volunteerCount.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, eventContactNumber.hashCode);
+    _$hash = $jc(_$hash, isConfirmbySA.hashCode);
+    _$hash = $jc(_$hash, expiryDate.hashCode);
+    _$hash = $jc(_$hash, adminRef.hashCode);
+    _$hash = $jc(_$hash, eventDateStart.hashCode);
+    _$hash = $jc(_$hash, eventDateEnd.hashCode);
+    _$hash = $jc(_$hash, isReqCancel.hashCode);
+    _$hash = $jc(_$hash, volunteerRef.hashCode);
+    _$hash = $jc(_$hash, partnerOrgRef.hashCode);
+    _$hash = $jc(_$hash, volunteerList.hashCode);
+    _$hash = $jc(_$hash, isRecurring.hashCode);
+    _$hash = $jc(_$hash, rateTotal.hashCode);
+    _$hash = $jc(_$hash, rateCount.hashCode);
+    _$hash = $jc(_$hash, reason.hashCode);
+    _$hash = $jc(_$hash, isDeclined.hashCode);
+    _$hash = $jc(_$hash, rateRef.hashCode);
+    _$hash = $jc(_$hash, ageRequirement.hashCode);
+    _$hash = $jc(_$hash, isMeritScoreUpdated.hashCode);
+    _$hash = $jc(_$hash, addRequirementEvent.hashCode);
+    _$hash = $jc(_$hash, organizationPartnter.hashCode);
+    _$hash = $jc(_$hash, recurranceDate.hashCode);
+    _$hash = $jc(_$hash, registrationDate.hashCode);
+    _$hash = $jc(_$hash, minimumVolunteer.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -705,7 +741,6 @@ class _$EventsRecord extends EventsRecord {
           ..add('partnerOrgRef', partnerOrgRef)
           ..add('volunteerList', volunteerList)
           ..add('isRecurring', isRecurring)
-          ..add('recurranceDate', recurranceDate)
           ..add('rateTotal', rateTotal)
           ..add('rateCount', rateCount)
           ..add('reason', reason)
@@ -715,6 +750,9 @@ class _$EventsRecord extends EventsRecord {
           ..add('isMeritScoreUpdated', isMeritScoreUpdated)
           ..add('addRequirementEvent', addRequirementEvent)
           ..add('organizationPartnter', organizationPartnter)
+          ..add('recurranceDate', recurranceDate)
+          ..add('registrationDate', registrationDate)
+          ..add('minimumVolunteer', minimumVolunteer)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -845,11 +883,6 @@ class EventsRecordBuilder
   bool? get isRecurring => _$this._isRecurring;
   set isRecurring(bool? isRecurring) => _$this._isRecurring = isRecurring;
 
-  String? _recurranceDate;
-  String? get recurranceDate => _$this._recurranceDate;
-  set recurranceDate(String? recurranceDate) =>
-      _$this._recurranceDate = recurranceDate;
-
   double? _rateTotal;
   double? get rateTotal => _$this._rateTotal;
   set rateTotal(double? rateTotal) => _$this._rateTotal = rateTotal;
@@ -892,6 +925,22 @@ class EventsRecordBuilder
   set organizationPartnter(String? organizationPartnter) =>
       _$this._organizationPartnter = organizationPartnter;
 
+  ListBuilder<String>? _recurranceDate;
+  ListBuilder<String> get recurranceDate =>
+      _$this._recurranceDate ??= new ListBuilder<String>();
+  set recurranceDate(ListBuilder<String>? recurranceDate) =>
+      _$this._recurranceDate = recurranceDate;
+
+  DateTime? _registrationDate;
+  DateTime? get registrationDate => _$this._registrationDate;
+  set registrationDate(DateTime? registrationDate) =>
+      _$this._registrationDate = registrationDate;
+
+  double? _minimumVolunteer;
+  double? get minimumVolunteer => _$this._minimumVolunteer;
+  set minimumVolunteer(double? minimumVolunteer) =>
+      _$this._minimumVolunteer = minimumVolunteer;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -928,7 +977,6 @@ class EventsRecordBuilder
       _partnerOrgRef = $v.partnerOrgRef;
       _volunteerList = $v.volunteerList?.toBuilder();
       _isRecurring = $v.isRecurring;
-      _recurranceDate = $v.recurranceDate;
       _rateTotal = $v.rateTotal;
       _rateCount = $v.rateCount;
       _reason = $v.reason;
@@ -938,6 +986,9 @@ class EventsRecordBuilder
       _isMeritScoreUpdated = $v.isMeritScoreUpdated;
       _addRequirementEvent = $v.addRequirementEvent;
       _organizationPartnter = $v.organizationPartnter;
+      _recurranceDate = $v.recurranceDate?.toBuilder();
+      _registrationDate = $v.registrationDate;
+      _minimumVolunteer = $v.minimumVolunteer;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -988,7 +1039,6 @@ class EventsRecordBuilder
               partnerOrgRef: partnerOrgRef,
               volunteerList: _volunteerList?.build(),
               isRecurring: isRecurring,
-              recurranceDate: recurranceDate,
               rateTotal: rateTotal,
               rateCount: rateCount,
               reason: reason,
@@ -998,6 +1048,9 @@ class EventsRecordBuilder
               isMeritScoreUpdated: isMeritScoreUpdated,
               addRequirementEvent: addRequirementEvent,
               organizationPartnter: organizationPartnter,
+              recurranceDate: _recurranceDate?.build(),
+              registrationDate: registrationDate,
+              minimumVolunteer: minimumVolunteer,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -1019,6 +1072,9 @@ class EventsRecordBuilder
 
         _$failedField = 'rateRef';
         _rateRef?.build();
+
+        _$failedField = 'recurranceDate';
+        _recurranceDate?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'EventsRecord', _$failedField, e.toString());
@@ -1030,4 +1086,4 @@ class EventsRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

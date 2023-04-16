@@ -1,8 +1,10 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,9 +105,18 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                   if (confirmDialogResponse) {
                     logFirebaseEvent('Button_auth');
                     GoRouter.of(context).prepareAuthEvent(true);
-                    await signOut();
+                    await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
+                    logFirebaseEvent('Button_backend_call');
+
+                    final logsCreateData = createLogsRecordData(
+                      date: getCurrentTimestamp,
+                      action: 'Logout',
+                      userRef: currentUserReference,
+                    );
+                    await LogsRecord.createDoc(currentUserReference!)
+                        .set(logsCreateData);
                     logFirebaseEvent('Button_navigate_to');
 
                     context.goNamedAuth(
@@ -125,14 +136,14 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         color: Colors.white,
                         fontSize: 25.0,
                         fontWeight: FontWeight.w600,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(
@@ -159,11 +170,11 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         fontSize: 25.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(

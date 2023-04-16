@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/help_center_drawer_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -34,7 +34,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'FAQs'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('F_A_QS_PAGE_FAQs_ON_PAGE_LOAD');
+      logFirebaseEvent('F_A_QS_PAGE_FAQs_ON_INIT_STATE');
       logFirebaseEvent('FAQs_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('FAQs_custom_action');
@@ -68,20 +68,20 @@ class _FAQsWidgetState extends State<FAQsWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      endDrawer: Drawer(
-        elevation: 16.0,
-        child: wrapWithModel(
-          model: _model.helpCenterDrawerModel,
-          updateCallback: () => setState(() {}),
-          child: HelpCenterDrawerWidget(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        endDrawer: Drawer(
+          elevation: 16.0,
+          child: wrapWithModel(
+            model: _model.helpCenterDrawerModel,
+            updateCallback: () => setState(() {}),
+            child: HelpCenterDrawerWidget(),
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -102,7 +102,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                             width: double.infinity,
                             height: 150.0,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).primary,
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -138,19 +138,19 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                       Text(
                                         'HELP CENTER',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBtnText,
                                               fontSize: 24.0,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       FlutterFlowIconButton(
@@ -212,19 +212,19 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                         'Volunteering Service FAQs',
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family,
+                                                      .bodyMediumFamily,
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.w600,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                     ],
@@ -272,11 +272,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                           'HOW DO I START VOLUNTEERING?',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -287,7 +287,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -317,7 +317,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -328,7 +328,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),
@@ -359,12 +359,12 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                           textAlign:
                                                                               TextAlign.center,
                                                                           style: FlutterFlowTheme.of(context)
-                                                                              .bodyText1
+                                                                              .bodyMedium
                                                                               .override(
                                                                                 fontFamily: 'Barlow',
                                                                                 color: FlutterFlowTheme.of(context).secondaryText,
                                                                                 fontSize: 16.0,
-                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                               ),
                                                                         ),
                                                                       ],
@@ -373,18 +373,18 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       ' (049) 545-4531 / 09175114909',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Barlow',
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                             fontSize:
                                                                                 16.0,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                     Padding(
@@ -399,12 +399,12 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         textAlign:
                                                                             TextAlign.center,
                                                                         style: FlutterFlowTheme.of(context)
-                                                                            .bodyText1
+                                                                            .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Barlow',
                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                               fontSize: 16.0,
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                             ),
                                                                       ),
                                                                     ),
@@ -412,18 +412,18 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       'laguna.santarosa@redcross.org.ph',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Barlow',
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                             fontSize:
                                                                                 16.0,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                   ],
@@ -462,11 +462,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                           'WHAT ARE THE REQUIREMENTS?',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -477,7 +477,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -507,7 +507,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -518,7 +518,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),
@@ -535,7 +535,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                   'Other requirements include:\n\na.  PRC membership known as Membership with Accident Assistance Benefit (MAAB)\n\nb.  Photocopy of two valid IDs\n\nc.  Copy of Resume\n\nd.  2x2 ID picture',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Barlow',
@@ -544,7 +544,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         fontSize:
                                                                             15.0,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ),
@@ -581,11 +581,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                           'DO YOU GIVE ALLOWANCE TO YOUR VOLUNTEERS?',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -596,7 +596,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -634,7 +634,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                           .justify,
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Barlow',
@@ -643,7 +643,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         fontSize:
                                                                             16.0,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         lineHeight:
                                                                             1.0,
                                                                       ),
@@ -684,11 +684,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -699,7 +699,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -729,7 +729,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -740,7 +740,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),
@@ -778,11 +778,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                           'WHERE EXACTLY ARE YOU LOCATED?',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -793,7 +793,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -823,7 +823,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -834,7 +834,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),
@@ -874,11 +874,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -889,7 +889,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -919,7 +919,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -930,7 +930,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),
@@ -970,11 +970,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -985,7 +985,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -1015,7 +1015,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -1026,7 +1026,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),
@@ -1066,11 +1066,11 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .title1Family,
+                                                                    .displaySmallFamily,
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 15.0,
@@ -1081,7 +1081,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                         ),
                                                         collapsed: Container(
@@ -1111,7 +1111,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                         .justify,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1
+                                                                    .bodyMedium
                                                                     .override(
                                                                       fontFamily:
                                                                           'Barlow',
@@ -1122,7 +1122,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
                                                                       useGoogleFonts: GoogleFonts
                                                                               .asMap()
                                                                           .containsKey(
-                                                                              FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       lineHeight:
                                                                           1.0,
                                                                     ),

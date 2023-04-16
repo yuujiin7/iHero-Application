@@ -72,8 +72,6 @@ abstract class EventsRecord
 
   bool? get isRecurring;
 
-  String? get recurranceDate;
-
   double? get rateTotal;
 
   double? get rateCount;
@@ -93,6 +91,12 @@ abstract class EventsRecord
 
   @BuiltValueField(wireName: 'organization_partnter')
   String? get organizationPartnter;
+
+  BuiltList<String>? get recurranceDate;
+
+  DateTime? get registrationDate;
+
+  double? get minimumVolunteer;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -118,7 +122,6 @@ abstract class EventsRecord
     ..volunteerRef = ListBuilder()
     ..volunteerList = ListBuilder()
     ..isRecurring = false
-    ..recurranceDate = ''
     ..rateTotal = 0.0
     ..rateCount = 0.0
     ..reason = ''
@@ -127,7 +130,9 @@ abstract class EventsRecord
     ..ageRequirement = 0
     ..isMeritScoreUpdated = false
     ..addRequirementEvent = ''
-    ..organizationPartnter = '';
+    ..organizationPartnter = ''
+    ..recurranceDate = ListBuilder()
+    ..minimumVolunteer = 0.0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
@@ -181,7 +186,6 @@ abstract class EventsRecord
           ..volunteerList =
               safeGet(() => ListBuilder(snapshot.data['volunteer_list']))
           ..isRecurring = snapshot.data['isRecurring']
-          ..recurranceDate = snapshot.data['recurranceDate']
           ..rateTotal = snapshot.data['rateTotal']?.toDouble()
           ..rateCount = snapshot.data['rateCount']?.toDouble()
           ..reason = snapshot.data['reason']
@@ -192,6 +196,12 @@ abstract class EventsRecord
           ..isMeritScoreUpdated = snapshot.data['isMeritScoreUpdated']
           ..addRequirementEvent = snapshot.data['addRequirementEvent']
           ..organizationPartnter = snapshot.data['organization_partnter']
+          ..recurranceDate =
+              safeGet(() => ListBuilder(snapshot.data['recurranceDate']))
+          ..registrationDate = safeGet(() =>
+              DateTime.fromMillisecondsSinceEpoch(
+                  snapshot.data['registrationDate']))
+          ..minimumVolunteer = snapshot.data['minimumVolunteer']?.toDouble()
           ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
       );
 
@@ -241,7 +251,6 @@ Map<String, dynamic> createEventsRecordData({
   bool? isReqCancel,
   DocumentReference? partnerOrgRef,
   bool? isRecurring,
-  String? recurranceDate,
   double? rateTotal,
   double? rateCount,
   String? reason,
@@ -250,6 +259,8 @@ Map<String, dynamic> createEventsRecordData({
   bool? isMeritScoreUpdated,
   String? addRequirementEvent,
   String? organizationPartnter,
+  DateTime? registrationDate,
+  double? minimumVolunteer,
 }) {
   final firestoreData = serializers.toFirestore(
     EventsRecord.serializer,
@@ -280,7 +291,6 @@ Map<String, dynamic> createEventsRecordData({
         ..partnerOrgRef = partnerOrgRef
         ..volunteerList = null
         ..isRecurring = isRecurring
-        ..recurranceDate = recurranceDate
         ..rateTotal = rateTotal
         ..rateCount = rateCount
         ..reason = reason
@@ -289,7 +299,10 @@ Map<String, dynamic> createEventsRecordData({
         ..ageRequirement = ageRequirement
         ..isMeritScoreUpdated = isMeritScoreUpdated
         ..addRequirementEvent = addRequirementEvent
-        ..organizationPartnter = organizationPartnter,
+        ..organizationPartnter = organizationPartnter
+        ..recurranceDate = null
+        ..registrationDate = registrationDate
+        ..minimumVolunteer = minimumVolunteer,
     ),
   );
 

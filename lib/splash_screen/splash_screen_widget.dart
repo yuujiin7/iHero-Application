@@ -30,7 +30,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
         parameters: {'screen_name': 'splashScreen'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SPLASH_SCREEN_splashScreen_ON_LOAD');
+      logFirebaseEvent('SPLASH_SCREEN_splashScreen_ON_INIT_STATE');
       logFirebaseEvent('splashScreen_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('splashScreen_wait__delay');
@@ -60,7 +60,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).primaryColor,
+            color: FlutterFlowTheme.of(context).primary,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -107,11 +107,11 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
               ),
               Text(
                 '- A PRC Santa Rosa Chapter Mobile App -',
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                       color: FlutterFlowTheme.of(context).white,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).bodyText1Family),
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
                     ),
               ),
             ],

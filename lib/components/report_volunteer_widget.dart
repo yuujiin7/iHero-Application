@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_checkbox_group.dart';
@@ -7,7 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -94,17 +94,17 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                           children: [
                             Text(
                               'Unethical or Illegal Conduct',
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .title2Family,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .title2Family),
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .headlineMediumFamily),
+                                  ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -112,17 +112,17 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               child: Text(
                                 'The Absenteeism, Tardiness, Bullying, Harassment or Intimidation Reporting Form',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText2
+                                    .bodySmall
                                     .override(
                                       fontFamily: FlutterFlowTheme.of(context)
-                                          .bodyText2Family,
+                                          .bodySmallFamily,
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       fontWeight: FontWeight.w500,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText2Family),
+                                                  .bodySmallFamily),
                                     ),
                               ),
                             ),
@@ -154,22 +154,22 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                   child: Text(
                     'To ensure orderly operations and provide the best possible work environment, iHero and Red Cross Laguna Chapter - Santa Rosa Branch expects volunteers to follow rules of conduct that will protect the interests and safety of all volunteers, employees, and the organization.',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 13.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
                 Text(
                   'This is a form to report alleged absenteeism, tardiness, bullying, harassment, or intimidation that occurred during  a government-sponsored activity or event; or that substantially disrupted the orderly operation of the organization.',
                   textAlign: TextAlign.justify,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Barlow',
                         fontSize: 13.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).bodyText1Family),
+                            FlutterFlowTheme.of(context).bodyMediumFamily),
                       ),
                 ),
                 Padding(
@@ -185,17 +185,17 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                           Text(
                             'Please provide the complainant\'s information',
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyText1Family,
+                                      .bodyMediumFamily,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w500,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                           Padding(
@@ -216,21 +216,21 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 decoration: InputDecoration(
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Ubuntu',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         fontWeight: FontWeight.w600,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(10.0),
@@ -260,7 +260,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: Colors.black,
@@ -268,7 +268,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 validator: _model.textFieldControllerValidator
                                     .asValidator(context),
@@ -286,16 +286,16 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               'Select the forms of behavior that best describe the reported volunteer (Choose all that apply)',
                               textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: Color(0xFFB51E1E),
                                     fontSize: 13.0,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -323,23 +323,24 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                   ],
                                   onChanged: (val) => setState(
                                       () => _model.checkboxGroupValues = val),
-                                  controller: _model.checkboxGroupController ??=
-                                      FormFieldController<List<String>>(
+                                  controller:
+                                      _model.checkboxGroupValueController ??=
+                                          FormFieldController<List<String>>(
                                     [],
                                   ),
                                   activeColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).primary,
                                   checkColor: Colors.white,
                                   checkboxBorderColor: Color(0xFF95A1AC),
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         fontSize: 12.0,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   initialized:
                                       _model.checkboxGroupValues != null,
@@ -358,8 +359,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                     .secondaryBackground,
                                 borderRadius: BorderRadius.circular(10.0),
                                 border: Border.all(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   width: 1.0,
                                 ),
                               ),
@@ -393,7 +393,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                               'Date occured',
                                             ),
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   fontWeight: FontWeight.w500,
@@ -402,7 +402,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ),
@@ -419,7 +419,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                       icon: Icon(
                                         Icons.date_range_rounded,
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         size: 25.0,
                                       ),
                                       onPressed: () async {
@@ -476,10 +476,10 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               'Please explain where the alleged absenteeism, tardiness, bullying, harassment, or intimidation appears to support your claim.',
                               textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                     fontSize: 12.0,
@@ -487,7 +487,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -506,16 +506,16 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               decoration: InputDecoration(
                                 hintText: 'Description',
                                 hintStyle: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Ubuntu',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       fontWeight: FontWeight.w600,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -549,7 +549,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 ),
                               ),
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Barlow',
                                     color: Colors.black,
@@ -557,7 +557,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                               maxLines: 12,
                               keyboardType: TextInputType.multiline,
@@ -576,10 +576,10 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                             child: Text(
                               'Please provide a photo of the incident/behavior that supports your claim',
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                     fontSize: 12.0,
@@ -587,7 +587,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -602,8 +602,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                     .secondaryBackground,
                                 borderRadius: BorderRadius.circular(10.0),
                                 border: Border.all(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   width: 1.0,
                                 ),
                               ),
@@ -638,7 +637,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         color: Colors.black,
@@ -650,7 +649,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -670,7 +669,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                       icon: Icon(
                                         Icons.photo_camera,
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         size: 25.0,
                                       ),
                                       onPressed: () async {
@@ -690,7 +689,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                 validateFileFormat(
                                                     m.storagePath, context))) {
                                           setState(() =>
-                                              _model.isMediaUploading = true);
+                                              _model.isDataUploading = true);
                                           var selectedUploadedFiles =
                                               <FFUploadedFile>[];
                                           var downloadUrls = <String>[];
@@ -719,7 +718,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                 .map((u) => u!)
                                                 .toList();
                                           } finally {
-                                            _model.isMediaUploading = false;
+                                            _model.isDataUploading = false;
                                           }
                                           if (selectedUploadedFiles.length ==
                                                   selectedMedia.length &&
@@ -844,6 +843,16 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 );
                               },
                             );
+                            logFirebaseEvent('Button_backend_call');
+
+                            final logsCreateData = createLogsRecordData(
+                              date: getCurrentTimestamp,
+                              action:
+                                  'Created a unethical/illegal conduct report',
+                              userRef: currentUserReference,
+                            );
+                            await LogsRecord.createDoc(currentUserReference!)
+                                .set(logsCreateData);
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             if (_shouldSetState) setState(() {});
@@ -867,15 +876,16 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           color: Color(0xFF2B8C2A),
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
-                                    .subtitle2Family,
+                                    .titleSmallFamily,
                                 color: Colors.white,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .subtitle2Family),
+                                        .titleSmallFamily),
                               ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

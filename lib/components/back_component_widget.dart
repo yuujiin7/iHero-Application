@@ -43,7 +43,7 @@ class _BackComponentWidgetState extends State<BackComponentWidget> {
 
     return Container(
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).primaryColor,
+        color: FlutterFlowTheme.of(context).primary,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -71,12 +71,12 @@ class _BackComponentWidgetState extends State<BackComponentWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
             child: Text(
               'Back',
-              style: FlutterFlowTheme.of(context).title1.override(
+              style: FlutterFlowTheme.of(context).displaySmall.override(
                     fontFamily: 'Ubuntu',
                     color: FlutterFlowTheme.of(context).primaryBtnText,
                     fontSize: 16.0,
-                    useGoogleFonts: GoogleFonts.asMap()
-                        .containsKey(FlutterFlowTheme.of(context).title1Family),
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).displaySmallFamily),
                   ),
             ),
           ),

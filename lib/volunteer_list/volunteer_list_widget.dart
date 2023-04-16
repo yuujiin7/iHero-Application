@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -41,17 +41,17 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
         parameters: {'screen_name': 'volunteerList'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('VOLUNTEER_LIST_volunteerList_ON_LOAD');
+      logFirebaseEvent('VOLUNTEER_LIST_volunteerList_ON_INIT_STA');
       Function() _navigate = () {};
       logFirebaseEvent('volunteerList_custom_action');
       await actions.lockOrientation();
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('volunteerList_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
+        await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
         return;
       } else {
         logFirebaseEvent('volunteerList_custom_action');
@@ -102,7 +102,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -110,45 +110,45 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
           );
         }
         List<UsersRecord> volunteerListUsersRecordList = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-            automaticallyImplyLeading: false,
-            leading: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
-              icon: Icon(
-                Icons.keyboard_backspace,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                size: 30.0,
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: false,
+              leading: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 60.0,
+                icon: Icon(
+                  Icons.keyboard_backspace,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  size: 30.0,
+                ),
+                onPressed: () async {
+                  logFirebaseEvent('VOLUNTEER_LIST_keyboard_backspace_ICN_ON');
+                  logFirebaseEvent('IconButton_navigate_back');
+                  context.safePop();
+                },
               ),
-              onPressed: () async {
-                logFirebaseEvent('VOLUNTEER_LIST_keyboard_backspace_ICN_ON');
-                logFirebaseEvent('IconButton_navigate_back');
-                context.safePop();
-              },
+              title: Text(
+                'VOLUNTEERS',
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Ubuntu',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 22.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
+                    ),
+              ),
+              actions: [],
+              centerTitle: true,
+              elevation: 0.0,
             ),
-            title: Text(
-              'VOLUNTEERS',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Ubuntu',
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    fontSize: 22.0,
-                    useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).bodyText1Family),
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
-          ),
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+            body: SafeArea(
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -238,12 +238,12 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
@@ -253,7 +253,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -273,22 +273,22 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           fontSize: 10.0,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -336,7 +336,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -348,7 +348,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],

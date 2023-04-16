@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -41,7 +41,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'OTPCode'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('O_T_P_CODE_PAGE_OTPCode_ON_PAGE_LOAD');
+      logFirebaseEvent('O_T_P_CODE_PAGE_OTPCode_ON_INIT_STATE');
       logFirebaseEvent('OTPCode_custom_action');
       await actions.lockOrientation();
     });
@@ -61,19 +61,19 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  FlutterFlowTheme.of(context).primaryColor,
-                  FlutterFlowTheme.of(context).tertiaryColor
+                  FlutterFlowTheme.of(context).primary,
+                  FlutterFlowTheme.of(context).tertiary
                 ],
                 stops: [0.0, 1.0],
                 begin: AlignmentDirectional(0.0, -1.0),
@@ -180,7 +180,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                               'Verify It\'s You',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Comfortaa',
                                     color: FlutterFlowTheme.of(context)
@@ -190,7 +190,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ],
@@ -209,7 +209,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                 Text(
                                   'A verification code has been sent ',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Comfortaa',
                                         color: FlutterFlowTheme.of(context)
@@ -217,13 +217,13 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                                 Text(
                                   'to your phone number',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Comfortaa',
                                         color: FlutterFlowTheme.of(context)
@@ -231,7 +231,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ],
@@ -260,16 +260,16 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyText1Family,
+                                            .bodyMediumFamily,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   hintText: '0000',
                                   enabledBorder: OutlineInputBorder(
@@ -308,16 +308,16 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                           20.0, 15.0, 20.0, 15.0),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Comfortaa',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       fontWeight: FontWeight.normal,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 keyboardType: TextInputType.number,
                                 validator: _model
@@ -352,7 +352,8 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                   );
                                   return;
                                 }
-                                final phoneVerifiedUser = await verifySmsCode(
+                                final phoneVerifiedUser =
+                                    await authManager.verifySmsCode(
                                   context: context,
                                   smsCode: smsCodeVal,
                                 );
@@ -372,14 +373,14 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                     0.0, 0.0, 0.0, 0.0),
                                 color: Color(0xFFFE2126),
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Comfortaa',
                                       color: Colors.white,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .subtitle2Family),
+                                                  .titleSmallFamily),
                                     ),
                                 elevation: 2.0,
                                 borderSide: BorderSide(

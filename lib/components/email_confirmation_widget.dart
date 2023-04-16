@@ -54,7 +54,7 @@ class _EmailConfirmationWidgetState extends State<EmailConfirmationWidget> {
         children: [
           Icon(
             Icons.email_outlined,
-            color: FlutterFlowTheme.of(context).primaryColor,
+            color: FlutterFlowTheme.of(context).primary,
             size: 90.0,
           ),
           Padding(
@@ -66,11 +66,12 @@ class _EmailConfirmationWidgetState extends State<EmailConfirmationWidget> {
                 Text(
                   'Please wait for confirmation\n on your email for Step 2',
                   textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).title3.override(
-                        fontFamily: FlutterFlowTheme.of(context).title3Family,
+                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                        fontFamily:
+                            FlutterFlowTheme.of(context).headlineSmallFamily,
                         color: FlutterFlowTheme.of(context).primaryText,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).title3Family),
+                            FlutterFlowTheme.of(context).headlineSmallFamily),
                       ),
                 ),
               ],
@@ -86,10 +87,10 @@ class _EmailConfirmationWidgetState extends State<EmailConfirmationWidget> {
                   child: Text(
                     'It may take up to several time.',
                     textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText2.override(
+                    style: FlutterFlowTheme.of(context).bodySmall.override(
                           fontFamily: 'Barlow',
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText2Family),
+                              FlutterFlowTheme.of(context).bodySmallFamily),
                         ),
                   ),
                 ),
@@ -111,14 +112,14 @@ class _EmailConfirmationWidgetState extends State<EmailConfirmationWidget> {
                 height: 50.0,
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                color: FlutterFlowTheme.of(context).primaryColor,
-                textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                color: FlutterFlowTheme.of(context).primary,
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Ubuntu',
                       color: Colors.white,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).subtitle2Family),
+                          FlutterFlowTheme.of(context).titleSmallFamily),
                     ),
                 elevation: 2.0,
                 borderSide: BorderSide(

@@ -60,7 +60,7 @@
 	<key>NSMicrophoneUsageDescription</key>
     <string>In order to record audio for video, this app requires permission to access the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>In order to upload media, this app requires permission to access the photo library.</string>
+    <string>In order to upload data, this app requires permission to access the photo library.</string>
 	<key>NSCalendarsUsageDescription</key>
     <string>This app requires permission to use the Calendar</string>
 	<key>PermissionGroupNotification</key>

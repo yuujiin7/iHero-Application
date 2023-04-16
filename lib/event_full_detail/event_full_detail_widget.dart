@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/confirm_delete_widget.dart';
 import '/components/edit_events_widget.dart';
@@ -50,7 +50,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
         parameters: {'screen_name': 'eventFullDetail'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('EVENT_FULL_DETAIL_eventFullDetail_ON_LOA');
+      logFirebaseEvent('EVENT_FULL_DETAIL_eventFullDetail_ON_INI');
       logFirebaseEvent('eventFullDetail_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('eventFullDetail_update_app_state');
@@ -100,7 +100,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -108,192 +108,207 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
           );
         }
         final eventFullDetailEventsRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          body: NestedScrollView(
-            headerSliverBuilder: (context, _) => [
-              SliverAppBar(
-                pinned: false,
-                floating: true,
-                snap: false,
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                automaticallyImplyLeading: false,
-                leading: FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30.0,
-                  borderWidth: 1.0,
-                  buttonSize: 54.0,
-                  icon: Icon(
-                    Icons.arrow_back_rounded,
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                    size: 24.0,
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: NestedScrollView(
+              headerSliverBuilder: (context, _) => [
+                SliverAppBar(
+                  pinned: false,
+                  floating: true,
+                  snap: false,
+                  backgroundColor: FlutterFlowTheme.of(context).primary,
+                  automaticallyImplyLeading: false,
+                  leading: FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 54.0,
+                    icon: Icon(
+                      Icons.arrow_back_rounded,
+                      color: FlutterFlowTheme.of(context).primaryBtnText,
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      logFirebaseEvent(
+                          'EVENT_FULL_DETAIL_arrow_back_rounded_ICN');
+                      logFirebaseEvent('IconButton_navigate_back');
+                      context.safePop();
+                    },
                   ),
-                  onPressed: () async {
-                    logFirebaseEvent(
-                        'EVENT_FULL_DETAIL_arrow_back_rounded_ICN');
-                    logFirebaseEvent('IconButton_navigate_back');
-                    context.safePop();
-                  },
-                ),
-                title: FutureBuilder<PartnerOrgRecord>(
-                  future: PartnerOrgRecord.getDocumentOnce(
-                      eventFullDetailEventsRecord.partnerOrgRef!),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: SpinKitSquareCircle(
-                            color: Color(0xFFFE2126),
-                            size: 50.0,
+                  title: FutureBuilder<PartnerOrgRecord>(
+                    future: PartnerOrgRecord.getDocumentOnce(
+                        eventFullDetailEventsRecord.partnerOrgRef!),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: SpinKitRipple(
+                              color: Color(0xFFFE2126),
+                              size: 50.0,
+                            ),
                           ),
-                        ),
+                        );
+                      }
+                      final textPartnerOrgRecord = snapshot.data!;
+                      return AutoSizeText(
+                        textPartnerOrgRecord.orgName!,
+                        style: FlutterFlowTheme.of(context)
+                            .titleMedium
+                            .override(
+                              fontFamily: 'Ubuntu',
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              fontSize: 22.0,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context)
+                                      .titleMediumFamily),
+                            ),
                       );
-                    }
-                    final textPartnerOrgRecord = snapshot.data!;
-                    return AutoSizeText(
-                      textPartnerOrgRecord.orgName!,
-                      style: FlutterFlowTheme.of(context).subtitle1.override(
-                            fontFamily: 'Ubuntu',
+                    },
+                  ),
+                  actions: [
+                    Visibility(
+                      visible:
+                          valueOrDefault(currentUserDocument?.userType, '') ==
+                              'Admin',
+                      child: AuthUserStreamWidget(
+                        builder: (context) => FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30.0,
+                          borderWidth: 1.0,
+                          buttonSize: 40.0,
+                          icon: Icon(
+                            Icons.emoji_people,
                             color: FlutterFlowTheme.of(context).primaryBtnText,
-                            fontSize: 22.0,
-                            useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).subtitle1Family),
+                            size: 20.0,
                           ),
-                    );
-                  },
-                ),
-                actions: [
-                  Visibility(
-                    visible:
-                        valueOrDefault(currentUserDocument?.userType, '') ==
-                            'Admin',
-                    child: AuthUserStreamWidget(
-                      builder: (context) => FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 30.0,
-                        borderWidth: 1.0,
-                        buttonSize: 40.0,
-                        icon: Icon(
-                          Icons.emoji_people,
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                          size: 20.0,
-                        ),
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'EVENT_FULL_DETAIL_emoji_people_ICN_ON_TA');
-                          logFirebaseEvent('IconButton_navigate_to');
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'EVENT_FULL_DETAIL_emoji_people_ICN_ON_TA');
+                            logFirebaseEvent('IconButton_navigate_to');
 
-                          context.goNamed(
-                            'volunteerToEvent',
-                            queryParams: {
-                              'volunteerListofEvent': serializeParam(
-                                widget.eventFullDetails,
-                                ParamType.Document,
-                              ),
-                            }.withoutNulls,
-                            extra: <String, dynamic>{
-                              'volunteerListofEvent': widget.eventFullDetails,
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible:
-                        (valueOrDefault(currentUserDocument?.userType, '') ==
-                                'Admin') &&
-                            !eventFullDetailEventsRecord.isEnded!,
-                    child: AuthUserStreamWidget(
-                      builder: (context) => FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 30.0,
-                        borderWidth: 1.0,
-                        buttonSize: 40.0,
-                        icon: Icon(
-                          Icons.edit,
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                          size: 20.0,
-                        ),
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'EVENT_FULL_DETAIL_PAGE_edit_ICN_ON_TAP');
-                          logFirebaseEvent('IconButton_bottom_sheet');
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            enableDrag: false,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: EditEventsWidget(
-                                  eventsDetails:
-                                      eventFullDetailEventsRecord.reference,
-                                  isFromFirestore: true,
+                            context.goNamed(
+                              'volunteerToEvent',
+                              queryParams: {
+                                'volunteerListofEvent': serializeParam(
+                                  widget.eventFullDetails,
+                                  ParamType.Document,
                                 ),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
-                        },
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible:
-                        valueOrDefault(currentUserDocument?.userType, '') ==
-                            'Admin',
-                    child: AuthUserStreamWidget(
-                      builder: (context) => FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 30.0,
-                        borderWidth: 1.0,
-                        buttonSize: 40.0,
-                        icon: FaIcon(
-                          FontAwesomeIcons.trashAlt,
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                          size: 20.0,
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'volunteerListofEvent': widget.eventFullDetails,
+                              },
+                            );
+                          },
                         ),
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'EVENT_FULL_DETAIL_trashAlt_ICN_ON_TAP');
-                          logFirebaseEvent('IconButton_bottom_sheet');
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            enableDrag: false,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child: ConfirmDeleteWidget(
-                                  eventRef:
-                                      eventFullDetailEventsRecord.reference,
-                                  isEvent: true,
-                                  isAnnouncement: false,
-                                ),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
-                        },
                       ),
                     ),
-                  ),
-                ],
-                centerTitle: false,
-                elevation: 0.0,
-              )
-            ],
-            body: Builder(
-              builder: (context) {
-                return SafeArea(
-                  child: GestureDetector(
-                    onTap: () =>
-                        FocusScope.of(context).requestFocus(_unfocusNode),
+                    Visibility(
+                      visible:
+                          (valueOrDefault(currentUserDocument?.userType, '') ==
+                                  'Admin') &&
+                              !eventFullDetailEventsRecord.isEnded!,
+                      child: AuthUserStreamWidget(
+                        builder: (context) => FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30.0,
+                          borderWidth: 1.0,
+                          buttonSize: 40.0,
+                          icon: Icon(
+                            Icons.edit,
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            size: 20.0,
+                          ),
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'EVENT_FULL_DETAIL_PAGE_edit_ICN_ON_TAP');
+                            logFirebaseEvent('IconButton_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              barrierColor: Color(0x00000000),
+                              enableDrag: false,
+                              context: context,
+                              builder: (bottomSheetContext) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context)
+                                      .requestFocus(_unfocusNode),
+                                  child: Padding(
+                                    padding: MediaQuery.of(bottomSheetContext)
+                                        .viewInsets,
+                                    child: EditEventsWidget(
+                                      eventsDetails:
+                                          eventFullDetailEventsRecord.reference,
+                                      isFromFirestore: true,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
+                          },
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible:
+                          valueOrDefault(currentUserDocument?.userType, '') ==
+                              'Admin',
+                      child: AuthUserStreamWidget(
+                        builder: (context) => FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30.0,
+                          borderWidth: 1.0,
+                          buttonSize: 40.0,
+                          icon: FaIcon(
+                            FontAwesomeIcons.trashAlt,
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                            size: 20.0,
+                          ),
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'EVENT_FULL_DETAIL_trashAlt_ICN_ON_TAP');
+                            logFirebaseEvent('IconButton_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              barrierColor: Color(0x00000000),
+                              enableDrag: false,
+                              context: context,
+                              builder: (bottomSheetContext) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context)
+                                      .requestFocus(_unfocusNode),
+                                  child: Padding(
+                                    padding: MediaQuery.of(bottomSheetContext)
+                                        .viewInsets,
+                                    child: ConfirmDeleteWidget(
+                                      eventRef:
+                                          eventFullDetailEventsRecord.reference,
+                                      isEvent: true,
+                                      isAnnouncement: false,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => setState(() {}));
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                  centerTitle: false,
+                  elevation: 0.0,
+                )
+              ],
+              body: Builder(
+                builder: (context) {
+                  return SafeArea(
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
@@ -385,12 +400,12 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                               ),
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodyText1
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Ubuntu',
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primaryColor,
+                                                        .primary,
                                                     fontSize: 22.0,
                                                     fontWeight: FontWeight.bold,
                                                     useGoogleFonts: GoogleFonts
@@ -398,7 +413,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                         .containsKey(
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family),
+                                                                .bodyMediumFamily),
                                                   ),
                                             ),
                                           ),
@@ -433,7 +448,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                             replacement: '…',
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Barlow',
                                                 useGoogleFonts: GoogleFonts
@@ -441,7 +456,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                         Divider(
@@ -457,7 +472,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                             replacement: '…',
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Barlow',
                                                 useGoogleFonts: GoogleFonts
@@ -465,7 +480,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                       ],
@@ -483,14 +498,14 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                   Text(
                                     'Event Date:',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           fontSize: 14.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -527,16 +542,16 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                           .languageCode,
                                     )}',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           fontSize: 16.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -551,14 +566,14 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                   Text(
                                     'Person In  Charge:',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           fontSize: 14.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -577,14 +592,14 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                       'In Charge',
                                     ),
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           fontSize: 16.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -599,14 +614,14 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                   Text(
                                     'Contact:',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           fontSize: 14.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -625,14 +640,14 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                       'contact Number',
                                     ),
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           fontSize: 16.0,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
@@ -647,7 +662,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                   Text(
                                     'Posted:',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           color: Color(0xFF0B266B),
@@ -656,7 +671,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                   Padding(
@@ -671,7 +686,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                             .languageCode,
                                       ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Barlow',
                                             color: Color(0xFF0B266B),
@@ -680,7 +695,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
+                                                        .bodyMediumFamily),
                                           ),
                                     ),
                                   ),
@@ -705,7 +720,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                       Text(
                                         'Reviews',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
+                                            .bodyMedium,
                                       ),
                                       StreamBuilder<
                                           List<CommentsAndRateRecord>>(
@@ -727,7 +742,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child: SpinKitSquareCircle(
+                                                child: SpinKitRipple(
                                                   color: Color(0xFFFE2126),
                                                   size: 50.0,
                                                 ),
@@ -767,7 +782,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                             width: 50.0,
                                                             height: 50.0,
                                                             child:
-                                                                SpinKitSquareCircle(
+                                                                SpinKitRipple(
                                                               color: Color(
                                                                   0xFFFE2126),
                                                               size: 50.0,
@@ -850,10 +865,10 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                                                                                   child: Text(
                                                                                     rowUsersRecord.displayName!,
-                                                                                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                          fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
-                                                                                          color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                          useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                          useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                         ),
                                                                                   ),
                                                                                 ),
@@ -864,10 +879,10 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                               children: [
                                                                                 Text(
                                                                                   listViewCommentsAndRateRecord.comment!,
-                                                                                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Barlow',
                                                                                         fontSize: 12.0,
-                                                                                        useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                        useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                       ),
                                                                                 ),
                                                                               ],
@@ -910,12 +925,12 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                                 FFLocalizations.of(context).languageCode,
                                                                           ),
                                                                           style: FlutterFlowTheme.of(context)
-                                                                              .bodyText1
+                                                                              .bodyMedium
                                                                               .override(
                                                                                 fontFamily: 'Barlow',
                                                                                 color: Color(0xFF0B266B),
                                                                                 fontSize: 10.0,
-                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                               ),
                                                                         ),
                                                                       ],
@@ -938,293 +953,361 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                       Divider(
                                         thickness: 1.0,
                                       ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Rate and Review',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            RatingBar.builder(
-                                              onRatingUpdate: (newValue) {
-                                                setState(() =>
-                                                    _model.ratingBarValue2 =
-                                                        newValue);
-                                                logFirebaseEvent(
-                                                    'EVENT_FULL_DETAIL_RatingBar_31la21gm_ON_');
-                                                logFirebaseEvent(
-                                                    'RatingBar_clear_text_fields');
-                                                setState(() {
-                                                  _model.textController
-                                                      ?.clear();
-                                                });
-                                                logFirebaseEvent(
-                                                    'RatingBar_update_app_state');
-                                                setState(() {
-                                                  FFAppState().rateIsTapped =
-                                                      true;
-                                                  FFAppState().rateValue =
-                                                      functions.rateSuggestion(
-                                                          _model
-                                                              .ratingBarValue2!
-                                                              .round());
-                                                });
-                                              },
-                                              itemBuilder: (context, index) =>
-                                                  Icon(
-                                                Icons.star_rounded,
-                                                color: Color(0xFFFFA534),
-                                              ),
-                                              direction: Axis.horizontal,
-                                              initialRating: _model
-                                                  .ratingBarValue2 ??= 3.0,
-                                              unratedColor: Color(0xFF9E9E9E),
-                                              itemCount: 5,
-                                              itemSize: 40.0,
-                                              glowColor: Color(0xFFFFA534),
-                                            ),
-                                            if (FFAppState().rateIsTapped)
-                                              Container(
-                                                width: double.infinity,
+                                      FutureBuilder<int>(
+                                        future: queryCommentsAndRateRecordCount(
+                                          queryBuilder: (commentsAndRateRecord) =>
+                                              commentsAndRateRecord
+                                                  .where('post_type',
+                                                      isEqualTo: widget
+                                                          .eventFullDetails!
+                                                          .reference)
+                                                  .where('created_by',
+                                                      isEqualTo:
+                                                          currentUserReference),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
                                                 height: 50.0,
-                                                decoration: BoxDecoration(),
-                                                child: Row(
+                                                child: SpinKitRipple(
+                                                  color: Color(0xFFFE2126),
+                                                  size: 50.0,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          int containerCount = snapshot.data!;
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                            ),
+                                            child: Visibility(
+                                              visible: containerCount > 0,
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 10.0, 0.0, 0.0),
+                                                child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
                                                   children: [
-                                                    Container(
-                                                      width: 150.0,
-                                                      height: 40.0,
-                                                      decoration:
-                                                          BoxDecoration(),
-                                                      child: Card(
-                                                        clipBehavior: Clip
-                                                            .antiAliasWithSaveLayer,
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        elevation: 2.0,
-                                                        child: Column(
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'Rate and Review',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    RatingBar.builder(
+                                                      onRatingUpdate:
+                                                          (newValue) {
+                                                        setState(() => _model
+                                                                .ratingBarValue2 =
+                                                            newValue);
+                                                        logFirebaseEvent(
+                                                            'EVENT_FULL_DETAIL_RatingBar_31la21gm_ON_');
+                                                        logFirebaseEvent(
+                                                            'RatingBar_clear_text_fields');
+                                                        setState(() {
+                                                          _model.textController
+                                                              ?.clear();
+                                                        });
+                                                        logFirebaseEvent(
+                                                            'RatingBar_update_app_state');
+                                                        setState(() {
+                                                          FFAppState()
+                                                                  .rateIsTapped =
+                                                              true;
+                                                          FFAppState()
+                                                                  .rateValue =
+                                                              functions.rateSuggestion(
+                                                                  _model
+                                                                      .ratingBarValue2!
+                                                                      .round());
+                                                        });
+                                                      },
+                                                      itemBuilder:
+                                                          (context, index) =>
+                                                              Icon(
+                                                        Icons.star_rounded,
+                                                        color:
+                                                            Color(0xFFFFA534),
+                                                      ),
+                                                      direction:
+                                                          Axis.horizontal,
+                                                      initialRating: _model
+                                                              .ratingBarValue2 ??=
+                                                          3.0,
+                                                      unratedColor:
+                                                          Color(0xFF9E9E9E),
+                                                      itemCount: 5,
+                                                      itemSize: 40.0,
+                                                      glowColor:
+                                                          Color(0xFFFFA534),
+                                                    ),
+                                                    if (FFAppState()
+                                                        .rateIsTapped)
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: 50.0,
+                                                        decoration:
+                                                            BoxDecoration(),
+                                                        child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            Text(
-                                                              FFAppState()
-                                                                      .ratingSuggestion[
-                                                                  FFAppState()
-                                                                      .rateValue],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
+                                                            Container(
+                                                              width: 150.0,
+                                                              height: 40.0,
+                                                              decoration:
+                                                                  BoxDecoration(),
+                                                              child: Card(
+                                                                clipBehavior: Clip
+                                                                    .antiAliasWithSaveLayer,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                elevation: 2.0,
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      FFAppState()
+                                                                              .ratingSuggestion[
+                                                                          FFAppState()
+                                                                              .rateValue],
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
+                                                      ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  5.0,
+                                                                  0.0,
+                                                                  5.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              controller: _model
+                                                                  .textController,
+                                                              onChanged: (_) =>
+                                                                  EasyDebounce
+                                                                      .debounce(
+                                                                '_model.textController',
+                                                                Duration(
+                                                                    milliseconds:
+                                                                        500),
+                                                                () => setState(
+                                                                    () {}),
+                                                              ),
+                                                              autofocus: true,
+                                                              obscureText:
+                                                                  false,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                labelText:
+                                                                    'Write a Review',
+                                                                hintText: FFAppState()
+                                                                        .ratingSuggestion[
+                                                                    FFAppState()
+                                                                        .rateValue],
+                                                                hintStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Barlow',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      useGoogleFonts: GoogleFonts
+                                                                              .asMap()
+                                                                          .containsKey(
+                                                                              FlutterFlowTheme.of(context).bodySmallFamily),
+                                                                    ),
+                                                                enabledBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Color(
+                                                                        0x00000000),
+                                                                    width: 1.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                ),
+                                                                focusedBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Color(
+                                                                        0x00000000),
+                                                                    width: 1.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                ),
+                                                                errorBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Color(
+                                                                        0x00000000),
+                                                                    width: 1.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                ),
+                                                                focusedErrorBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Color(
+                                                                        0x00000000),
+                                                                    width: 1.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                ),
+                                                                filled: true,
+                                                                fillColor: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBtnText,
+                                                                contentPadding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            5.0,
+                                                                            5.0,
+                                                                            5.0,
+                                                                            5.0),
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium,
+                                                              maxLines: 5,
+                                                              minLines: 1,
+                                                              validator: _model
+                                                                  .textControllerValidator
+                                                                  .asValidator(
+                                                                      context),
+                                                            ),
+                                                          ),
+                                                          FlutterFlowIconButton(
+                                                            borderColor: Colors
+                                                                .transparent,
+                                                            borderRadius: 30.0,
+                                                            borderWidth: 1.0,
+                                                            buttonSize: 40.0,
+                                                            icon: Icon(
+                                                              Icons.send,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              size: 15.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              logFirebaseEvent(
+                                                                  'EVENT_FULL_DETAIL_PAGE_send_ICN_ON_TAP');
+                                                              logFirebaseEvent(
+                                                                  'IconButton_backend_call');
+
+                                                              final commentsAndRateCreateData =
+                                                                  createCommentsAndRateRecordData(
+                                                                createdBy:
+                                                                    currentUserReference,
+                                                                createdAt:
+                                                                    getCurrentTimestamp,
+                                                                comment: _model
+                                                                    .textController
+                                                                    .text,
+                                                                rating: _model
+                                                                    .ratingBarValue2,
+                                                                postType:
+                                                                    eventFullDetailEventsRecord
+                                                                        .reference,
+                                                              );
+                                                              await CommentsAndRateRecord
+                                                                      .createDoc(
+                                                                          eventFullDetailEventsRecord
+                                                                              .reference)
+                                                                  .set(
+                                                                      commentsAndRateCreateData);
+                                                              logFirebaseEvent(
+                                                                  'IconButton_backend_call');
+
+                                                              final eventsUpdateData =
+                                                                  {
+                                                                ...createEventsRecordData(
+                                                                  rateTotal: _model
+                                                                      .ratingBarValue2,
+                                                                ),
+                                                                'rateCount':
+                                                                    FieldValue
+                                                                        .increment(
+                                                                            1.0),
+                                                              };
+                                                              await eventFullDetailEventsRecord
+                                                                  .reference
+                                                                  .update(
+                                                                      eventsUpdateData);
+                                                            },
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 0.0, 5.0, 0.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: TextFormField(
-                                                      controller:
-                                                          _model.textController,
-                                                      onChanged: (_) =>
-                                                          EasyDebounce.debounce(
-                                                        '_model.textController',
-                                                        Duration(
-                                                            milliseconds: 500),
-                                                        () => setState(() {}),
-                                                      ),
-                                                      autofocus: true,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText:
-                                                            'Write a Review',
-                                                        hintText: FFAppState()
-                                                                .ratingSuggestion[
-                                                            FFAppState()
-                                                                .rateValue],
-                                                        hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Barlow',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  useGoogleFonts: GoogleFonts
-                                                                          .asMap()
-                                                                      .containsKey(
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .bodyText2Family),
-                                                                ),
-                                                        enabledBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
-                                                        focusedBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
-                                                        errorBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryBtnText,
-                                                        contentPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5.0,
-                                                                    5.0,
-                                                                    5.0,
-                                                                    5.0),
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                      maxLines: 5,
-                                                      minLines: 1,
-                                                      validator: _model
-                                                          .textControllerValidator
-                                                          .asValidator(context),
-                                                    ),
-                                                  ),
-                                                  FlutterFlowIconButton(
-                                                    borderColor:
-                                                        Colors.transparent,
-                                                    borderRadius: 30.0,
-                                                    borderWidth: 1.0,
-                                                    buttonSize: 40.0,
-                                                    icon: Icon(
-                                                      Icons.send,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                      size: 15.0,
-                                                    ),
-                                                    onPressed: () async {
-                                                      logFirebaseEvent(
-                                                          'EVENT_FULL_DETAIL_PAGE_send_ICN_ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'IconButton_backend_call');
-
-                                                      final commentsAndRateCreateData =
-                                                          createCommentsAndRateRecordData(
-                                                        createdBy:
-                                                            currentUserReference,
-                                                        createdAt:
-                                                            getCurrentTimestamp,
-                                                        comment: _model
-                                                            .textController
-                                                            .text,
-                                                        rating: _model
-                                                            .ratingBarValue2,
-                                                        postType:
-                                                            eventFullDetailEventsRecord
-                                                                .reference,
-                                                      );
-                                                      await CommentsAndRateRecord
-                                                              .createDoc(
-                                                                  eventFullDetailEventsRecord
-                                                                      .reference)
-                                                          .set(
-                                                              commentsAndRateCreateData);
-                                                      logFirebaseEvent(
-                                                          'IconButton_backend_call');
-
-                                                      final eventsUpdateData = {
-                                                        ...createEventsRecordData(
-                                                          rateTotal: _model
-                                                              .ratingBarValue2,
-                                                        ),
-                                                        'rateCount': FieldValue
-                                                            .increment(1.0),
-                                                      };
-                                                      await eventFullDetailEventsRecord
-                                                          .reference
-                                                          .update(
-                                                              eventsUpdateData);
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
                                             ),
-                                          ],
-                                        ),
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
@@ -1234,9 +1317,9 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         );

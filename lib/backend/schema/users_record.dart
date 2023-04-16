@@ -54,6 +54,16 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   DateTime? get birthday;
 
+  String? get streetAddress;
+
+  String? get aptSuiteorUnitAddress;
+
+  @BuiltValueField(wireName: 'City')
+  String? get city;
+
+  @BuiltValueField(wireName: 'Province')
+  String? get province;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -73,7 +83,11 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..deviceType = ''
     ..screenName = ''
     ..duration = 0
-    ..age = 0;
+    ..age = 0
+    ..streetAddress = ''
+    ..aptSuiteorUnitAddress = ''
+    ..city = ''
+    ..province = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -117,6 +131,10 @@ Map<String, dynamic> createUsersRecordData({
   int? duration,
   int? age,
   DateTime? birthday,
+  String? streetAddress,
+  String? aptSuiteorUnitAddress,
+  String? city,
+  String? province,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -141,7 +159,11 @@ Map<String, dynamic> createUsersRecordData({
         ..screenName = screenName
         ..duration = duration
         ..age = age
-        ..birthday = birthday,
+        ..birthday = birthday
+        ..streetAddress = streetAddress
+        ..aptSuiteorUnitAddress = aptSuiteorUnitAddress
+        ..city = city
+        ..province = province,
     ),
   );
 

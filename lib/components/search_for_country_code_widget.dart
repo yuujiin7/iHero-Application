@@ -50,11 +50,12 @@ class _SearchForCountryCodeWidgetState
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
+          barrierColor: Color(0x00000000),
           enableDrag: false,
           context: context,
-          builder: (context) {
+          builder: (bottomSheetContext) {
             return Padding(
-              padding: MediaQuery.of(context).viewInsets,
+              padding: MediaQuery.of(bottomSheetContext).viewInsets,
               child: CountryCodeWidget(),
             );
           },
@@ -83,11 +84,11 @@ class _SearchForCountryCodeWidgetState
             Expanded(
               child: Text(
                 '+${FFAppState().selectedCountryCode}',
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                       fontSize: 18.0,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).bodyText1Family),
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
                     ),
               ),
             ),

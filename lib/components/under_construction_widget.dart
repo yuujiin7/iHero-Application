@@ -87,7 +87,7 @@ class _UnderConstructionWidgetState extends State<UnderConstructionWidget> {
             width: 300.0,
             height: 520.0,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).tertiaryColor,
+              color: FlutterFlowTheme.of(context).tertiary,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -101,14 +101,15 @@ class _UnderConstructionWidgetState extends State<UnderConstructionWidget> {
                     children: [
                       Text(
                         'OOPS',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Comfortaa',
                               color: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               fontSize: 26.0,
                               fontWeight: FontWeight.bold,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).bodyText1Family),
+                                  FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily),
                             ),
                       ),
                     ],
@@ -132,12 +133,12 @@ class _UnderConstructionWidgetState extends State<UnderConstructionWidget> {
                     Text(
                       'Page is still Under Construction\nFeature will be available soon.',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Comfortaa',
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).bodyText1Family),
+                                FlutterFlowTheme.of(context).bodyMediumFamily),
                           ),
                     ),
                   ],

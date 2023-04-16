@@ -85,7 +85,7 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                           children: [
                             Expanded(
                               child: FlutterFlowDropDown<String>(
-                                controller: _model.dropDownController ??=
+                                controller: _model.dropDownValueController ??=
                                     FormFieldController<String>(null),
                                 options: functions
                                     .sortList(FFAppState().CauseList.toList())
@@ -95,18 +95,19 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                 width: 180.0,
                                 height: 50.0,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: FlutterFlowTheme.of(context)
-                                          .bodyText1Family,
-                                      color: Colors.black,
+                                          .bodyMediumFamily,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       fontWeight: FontWeight.w500,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
-                                hintText: 'Please select...',
+                                hintText: 'Select Event Cause Category',
                                 fillColor: Colors.white,
                                 elevation: 2.0,
                                 borderColor: Colors.transparent,
@@ -115,6 +116,7 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                 margin: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 4.0, 12.0, 4.0),
                                 hidesUnderline: true,
+                                isSearchable: true,
                               ),
                             ),
                             Padding(
@@ -122,14 +124,13 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                   5.0, 0.0, 0.0, 0.0),
                               child: FlutterFlowIconButton(
                                 borderColor:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                                    FlutterFlowTheme.of(context).primary,
                                 borderRadius: 10.0,
                                 borderWidth: 1.0,
                                 buttonSize: 50.0,
                                 icon: Icon(
                                   Icons.add_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   size: 30.0,
                                 ),
                                 onPressed: () async {
@@ -215,12 +216,12 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                           fontSize: 12.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -229,7 +230,7 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -246,7 +247,7 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                         icon: Icon(
                                           Icons.close,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           size: 12.0,
                                         ),
                                         onPressed: () async {

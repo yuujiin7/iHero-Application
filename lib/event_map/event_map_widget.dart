@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/event_detail_bottom_widget.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
@@ -39,17 +39,17 @@ class _EventMapWidgetState extends State<EventMapWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'eventMap'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('EVENT_MAP_PAGE_eventMap_ON_PAGE_LOAD');
+      logFirebaseEvent('EVENT_MAP_PAGE_eventMap_ON_INIT_STATE');
       Function() _navigate = () {};
       logFirebaseEvent('eventMap_custom_action');
       await actions.lockOrientation();
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('eventMap_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
+        await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        _navigate = () => context.goNamedAuth('splashScreen', mounted);
         return;
       } else {
         logFirebaseEvent('eventMap_custom_action');
@@ -87,42 +87,42 @@ class _EventMapWidgetState extends State<EventMapWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      resizeToAvoidBottomInset: false,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, _) => [
-          SliverAppBar(
-            pinned: true,
-            floating: false,
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-            automaticallyImplyLeading: true,
-            title: Text(
-              'EVENT MAP',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Ubuntu',
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                    fontSize: 20.0,
-                    useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).bodyText1Family),
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 4.0,
-          )
-        ],
-        body: Builder(
-          builder: (context) {
-            return SafeArea(
-              child: GestureDetector(
-                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: NestedScrollView(
+          headerSliverBuilder: (context, _) => [
+            SliverAppBar(
+              pinned: true,
+              floating: false,
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: true,
+              title: Text(
+                'EVENT MAP',
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Ubuntu',
+                      color: FlutterFlowTheme.of(context).primaryBtnText,
+                      fontSize: 20.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
+                    ),
+              ),
+              actions: [],
+              centerTitle: true,
+              elevation: 4.0,
+            )
+          ],
+          body: Builder(
+            builder: (context) {
+              return SafeArea(
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).primary,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -151,7 +151,7 @@ class _EventMapWidgetState extends State<EventMapWidget> {
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: SpinKitSquareCircle(
+                                    child: SpinKitRipple(
                                       color: Color(0xFFFE2126),
                                       size: 50.0,
                                     ),
@@ -180,14 +180,22 @@ class _EventMapWidgetState extends State<EventMapWidget> {
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0x00000000),
                                             context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: EventDetailBottomWidget(
-                                                  eventDetails:
-                                                      googleMapEventsRecord,
+                                            builder: (bottomSheetContext) {
+                                              return GestureDetector(
+                                                onTap: () => FocusScope.of(
+                                                        context)
+                                                    .requestFocus(_unfocusNode),
+                                                child: Padding(
+                                                  padding: MediaQuery.of(
+                                                          bottomSheetContext)
+                                                      .viewInsets,
+                                                  child:
+                                                      EventDetailBottomWidget(
+                                                    eventDetails:
+                                                        googleMapEventsRecord,
+                                                  ),
                                                 ),
                                               );
                                             },
@@ -216,9 +224,9 @@ class _EventMapWidgetState extends State<EventMapWidget> {
                     ],
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

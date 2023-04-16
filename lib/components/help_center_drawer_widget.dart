@@ -60,7 +60,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                       width: double.infinity,
                       height: 150.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                     ),
                   ],
@@ -96,16 +96,16 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                   'HELP CENTER',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyText1Family,
+                                            .bodyMediumFamily,
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.w600,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ],
@@ -140,17 +140,17 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                     'User Guide',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
+                                                  .bodyMediumFamily,
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w600,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                   Divider(
@@ -172,7 +172,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
@@ -209,7 +209,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -221,7 +221,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -249,7 +249,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
@@ -286,7 +286,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -298,7 +298,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -343,17 +343,17 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                     'Reporting',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
+                                                  .bodyMediumFamily,
                                           fontSize: 18.0,
                                           fontWeight: FontWeight.w600,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                   Divider(
@@ -375,7 +375,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
@@ -412,7 +412,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -424,7 +424,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],
@@ -452,7 +452,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
@@ -499,7 +499,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -511,7 +511,7 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ],

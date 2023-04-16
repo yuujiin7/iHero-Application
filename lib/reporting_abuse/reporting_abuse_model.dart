@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/help_center_drawer_widget.dart';
 import '/components/report_false_info_widget.dart';
 import '/components/report_volunteer_widget.dart';

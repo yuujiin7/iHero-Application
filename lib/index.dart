@@ -9,22 +9,22 @@ export '/registration_steps/registration_steps_widget.dart'
 export '/event_map/event_map_widget.dart' show EventMapWidget;
 export '/appointment_page/appointment_page_widget.dart'
     show AppointmentPageWidget;
-export '/find_events/find_events_widget.dart' show FindEventsWidget;
 export '/journey_screen/journey_screen_widget.dart' show JourneyScreenWidget;
+export '/find_events/find_events_widget.dart' show FindEventsWidget;
 export '/all_chat/all_chat_widget.dart' show AllChatWidget;
-export '/home_screen/home_screen_widget.dart' show HomeScreenWidget;
 export '/chat_page/chat_page_widget.dart' show ChatPageWidget;
 export '/group_chat_page/group_chat_page_widget.dart' show GroupChatPageWidget;
 export '/announcement_details/announcement_details_widget.dart'
     show AnnouncementDetailsWidget;
+export '/home_screen/home_screen_widget.dart' show HomeScreenWidget;
 export '/volunteer_list/volunteer_list_widget.dart' show VolunteerListWidget;
 export '/profile_screen/profile_screen_widget.dart' show ProfileScreenWidget;
 export '/announcement_feed/announcement_feed_widget.dart'
     show AnnouncementFeedWidget;
-export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/volunteer_to_event/volunteer_to_event_widget.dart'
     show VolunteerToEventWidget;
 export '/appointments/appointments_widget.dart' show AppointmentsWidget;
+export '/event_create/event_create_widget.dart' show EventCreateWidget;
 export '/event_full_detail/event_full_detail_widget.dart'
     show EventFullDetailWidget;
 export '/f_a_qs/f_a_qs_widget.dart' show FAQsWidget;
@@ -46,3 +46,5 @@ export '/terms_of_service/terms_of_service_widget.dart'
 export '/data_privacy_policy/data_privacy_policy_widget.dart'
     show DataPrivacyPolicyWidget;
 export '/our_team/our_team_widget.dart' show OurTeamWidget;
+export '/anonymous_profile/anonymous_profile_widget.dart'
+    show AnonymousProfileWidget;

@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/consequences_widget.dart';
 import '/components/help_center_drawer_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -35,7 +35,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'CreditScore'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('CREDIT_SCORE_CreditScore_ON_LOAD');
+      logFirebaseEvent('CREDIT_SCORE_CreditScore_ON_INIT_STATE');
       logFirebaseEvent('CreditScore_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('CreditScore_custom_action');
@@ -69,20 +69,20 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      endDrawer: Drawer(
-        elevation: 16.0,
-        child: wrapWithModel(
-          model: _model.helpCenterDrawerModel,
-          updateCallback: () => setState(() {}),
-          child: HelpCenterDrawerWidget(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        endDrawer: Drawer(
+          elevation: 16.0,
+          child: wrapWithModel(
+            model: _model.helpCenterDrawerModel,
+            updateCallback: () => setState(() {}),
+            child: HelpCenterDrawerWidget(),
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -103,7 +103,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                             width: double.infinity,
                             height: 102.6,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).primary,
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -139,19 +139,19 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                       Text(
                                         'HELP CENTER',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBtnText,
                                               fontSize: 24.0,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       FlutterFlowIconButton(
@@ -218,12 +218,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                             'Credit Score Rules',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyText1Family,
+                                                          .bodyMediumFamily,
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w600,
                                                   useGoogleFonts: GoogleFonts
@@ -231,7 +231,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ],
@@ -274,7 +274,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           fontSize: 14.0,
@@ -283,7 +283,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Padding(
@@ -295,7 +295,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                   textAlign: TextAlign.justify,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         fontSize: 14.0,
@@ -304,7 +304,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ),
@@ -328,13 +328,19 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
+                                    barrierColor: Color(0x00000000),
                                     enableDrag: false,
                                     context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding:
-                                            MediaQuery.of(context).viewInsets,
-                                        child: ConsequencesWidget(),
+                                    builder: (bottomSheetContext) {
+                                      return GestureDetector(
+                                        onTap: () => FocusScope.of(context)
+                                            .requestFocus(_unfocusNode),
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.of(bottomSheetContext)
+                                                  .viewInsets,
+                                          child: ConsequencesWidget(),
+                                        ),
                                       );
                                     },
                                   ).then((value) => setState(() {}));
@@ -347,20 +353,20 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .subtitle2Family,
+                                            .titleSmallFamily,
                                         color: Colors.white,
                                         fontSize: 18.0,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2Family),
+                                                    .titleSmallFamily),
                                       ),
+                                  elevation: 2.0,
                                   borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
@@ -438,12 +444,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color:
                                                               Color(0xFF0B266B),
                                                           fontSize: 18.0,
@@ -454,7 +460,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ],
@@ -475,12 +481,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                 '85 - 100',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .customColor4,
@@ -492,7 +498,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Text(
@@ -500,7 +506,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                 textAlign: TextAlign.justify,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -512,7 +518,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Padding(
@@ -524,7 +530,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                   textAlign: TextAlign.justify,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Barlow',
                                                         fontSize: 15.0,
@@ -533,7 +539,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ),
@@ -594,11 +600,11 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: Color(
                                                                       0xFF0B266B),
                                                                   fontSize:
@@ -610,7 +616,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ],
@@ -631,12 +637,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                     '65 - 80',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .customColor4,
@@ -648,7 +654,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Text(
@@ -657,7 +663,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         TextAlign.justify,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -669,7 +675,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Padding(
@@ -684,7 +690,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -693,7 +699,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -756,11 +762,11 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: Color(
                                                                       0xFF0B266B),
                                                                   fontSize:
@@ -772,7 +778,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ],
@@ -793,12 +799,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                     '45 - 60',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .customColor4,
@@ -810,7 +816,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Text(
@@ -819,7 +825,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         TextAlign.justify,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -831,7 +837,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Padding(
@@ -846,7 +852,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -855,7 +861,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -918,11 +924,11 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: Color(
                                                                       0xFF0B266B),
                                                                   fontSize:
@@ -934,7 +940,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ],
@@ -955,12 +961,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                     '25 - 40',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .customColor4,
@@ -972,7 +978,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Text(
@@ -981,7 +987,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         TextAlign.justify,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -993,7 +999,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Padding(
@@ -1008,7 +1014,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -1017,7 +1023,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),
@@ -1080,11 +1086,11 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: Color(
                                                                       0xFF0B266B),
                                                                   fontSize:
@@ -1096,7 +1102,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ],
@@ -1117,12 +1123,12 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                     '0 - 20',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .customColor4,
@@ -1134,7 +1140,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Text(
@@ -1143,7 +1149,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                         TextAlign.justify,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -1155,7 +1161,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                   Padding(
@@ -1170,7 +1176,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Barlow',
@@ -1179,7 +1185,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
+                                                                            .bodyMediumFamily),
                                                               ),
                                                     ),
                                                   ),

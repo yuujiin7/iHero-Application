@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -117,6 +117,16 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                         );
                       },
                     );
+                    logFirebaseEvent('Button_backend_call');
+
+                    final logsCreateData1 = createLogsRecordData(
+                      date: getCurrentTimestamp,
+                      action: 'Deleted an event',
+                      userRef: currentUserReference,
+                      eventRef: widget.eventRef,
+                    );
+                    await LogsRecord.createDoc(currentUserReference!)
+                        .set(logsCreateData1);
                   } else {
                     logFirebaseEvent('Button_backend_call');
 
@@ -142,6 +152,16 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                         );
                       },
                     );
+                    logFirebaseEvent('Button_backend_call');
+
+                    final logsCreateData2 = createLogsRecordData(
+                      date: getCurrentTimestamp,
+                      action: 'Deleted an announcement',
+                      userRef: currentUserReference,
+                      announcementRef: widget.aannouncementref,
+                    );
+                    await LogsRecord.createDoc(currentUserReference!)
+                        .set(logsCreateData2);
                   }
 
                   logFirebaseEvent('Button_navigate_to');
@@ -155,14 +175,14 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         color: Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(
@@ -189,11 +209,11 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Ubuntu',
                         fontSize: 20.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 3.0,
                   borderSide: BorderSide(

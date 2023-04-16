@@ -23,7 +23,7 @@ class SelectCauseCreateModel extends FlutterFlowModel {
 
   // State field(s) for DropDown widget.
   String? dropDownValue;
-  FormFieldController<String>? dropDownController;
+  FormFieldController<String>? dropDownValueController;
 
   /// Initialization and disposal methods.
 

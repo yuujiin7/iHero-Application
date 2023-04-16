@@ -1,12 +1,13 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: SpinKitSquareCircle(
+                child: SpinKitRipple(
                   color: Color(0xFFFE2126),
                   size: 50.0,
                 ),
@@ -91,7 +92,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                         children: [
                           Text(
                             'Upload Image',
-                            style: FlutterFlowTheme.of(context).bodyText1,
+                            style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -134,7 +135,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                             validateFileFormat(
                                                 m.storagePath, context))) {
                                       setState(
-                                          () => _model.isMediaUploading = true);
+                                          () => _model.isDataUploading = true);
                                       var selectedUploadedFiles =
                                           <FFUploadedFile>[];
                                       var downloadUrls = <String>[];
@@ -167,7 +168,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       } finally {
                                         ScaffoldMessenger.of(context)
                                             .hideCurrentSnackBar();
-                                        _model.isMediaUploading = false;
+                                        _model.isDataUploading = false;
                                       }
                                       if (selectedUploadedFiles.length ==
                                               selectedMedia.length &&
@@ -183,14 +184,17 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       } else {
                                         setState(() {});
                                         showUploadMessage(
-                                            context, 'Failed to upload media');
+                                            context, 'Failed to upload data');
                                         return;
                                       }
                                     }
                                   },
                                   child: Image.network(
                                     valueOrDefault<String>(
-                                      containerAnnouncementRecord.photoUrl,
+                                      _model.uploadedFileUrl == null ||
+                                              _model.uploadedFileUrl == ''
+                                          ? containerAnnouncementRecord.photoUrl
+                                          : _model.uploadedFileUrl,
                                       'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
                                     ),
                                     width: 100.0,
@@ -224,21 +228,23 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                           TextEditingController(
                                     text: containerAnnouncementRecord.title,
                                   ),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Title',
                                     hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
+                                                  .bodyMediumFamily,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -282,13 +288,13 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                     ),
                                     prefixIcon: Icon(
                                       Icons.title,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       size: 20.0,
                                     ),
                                   ),
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: FlutterFlowTheme.of(context)
@@ -297,7 +303,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   maxLines: 4,
                                   minLines: 1,
@@ -305,6 +311,10 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                   validator: _model
                                       .titleAnnouncementControllerValidator
                                       .asValidator(context),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('^[\\s\\S]{0,65}'))
+                                  ],
                                 ),
                               ),
                             ),
@@ -332,21 +342,23 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       TextEditingController(
                                     text: containerAnnouncementRecord.body,
                                   ),
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Description',
                                     hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
+                                                  .bodyMediumFamily,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -390,7 +402,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                     ),
                                   ),
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: FlutterFlowTheme.of(context)
@@ -399,7 +411,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   maxLines: 12,
                                   minLines: 1,
@@ -407,6 +419,10 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                   validator: _model
                                       .descriptionAnnouncementControllerValidator
                                       .asValidator(context),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('^[\\s\\S]{0,500}'))
+                                  ],
                                 ),
                               ),
                             ),
@@ -438,19 +454,18 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .subtitle2Family,
+                                            .titleSmallFamily,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBtnText,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2Family),
+                                                    .titleSmallFamily),
                                       ),
                                   elevation: 3.0,
                                   borderSide: BorderSide(
@@ -465,6 +480,11 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'EDIT_ANNOUNCEMENT_COMP_SUBMIT_BTN_ON_TAP');
+                                logFirebaseEvent('Button_validate_form');
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  return;
+                                }
                                 logFirebaseEvent('Button_alert_dialog');
                                 var confirmDialogResponse =
                                     await showDialog<bool>(
@@ -494,29 +514,24 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                         ) ??
                                         false;
                                 if (confirmDialogResponse) {
-                                  logFirebaseEvent('Button_validate_form');
-                                  if (_model.formKey.currentState == null ||
-                                      !_model.formKey.currentState!
-                                          .validate()) {
-                                    return;
-                                  }
                                   logFirebaseEvent('Button_backend_call');
 
-                                  final announcementCreateData =
+                                  final announcementUpdateData =
                                       createAnnouncementRecordData(
                                     title:
                                         _model.titleAnnouncementController.text,
                                     body: _model
                                         .descriptionAnnouncementController.text,
-                                    photoUrl: _model.uploadedFileUrl,
-                                    createdTime: getCurrentTimestamp,
-                                    createdBy: currentUserReference,
-                                    isDeleted: false,
-                                    isConfirmbySA: false,
+                                    photoUrl: valueOrDefault<String>(
+                                      _model.uploadedFileUrl == null ||
+                                              _model.uploadedFileUrl == ''
+                                          ? containerAnnouncementRecord.photoUrl
+                                          : _model.uploadedFileUrl,
+                                      'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
+                                    ),
                                   );
-                                  await AnnouncementRecord.collection
-                                      .doc()
-                                      .set(announcementCreateData);
+                                  await widget.announcementDetails!
+                                      .update(announcementUpdateData);
                                   logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
@@ -535,9 +550,20 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                       );
                                     },
                                   );
+                                  logFirebaseEvent('Button_backend_call');
+
+                                  final logsCreateData = createLogsRecordData(
+                                    date: getCurrentTimestamp,
+                                    action: 'Edited an announcement',
+                                    userRef: currentUserReference,
+                                    announcementRef: widget.announcementDetails,
+                                  );
+                                  await LogsRecord.createDoc(
+                                          currentUserReference!)
+                                      .set(logsCreateData);
                                   logFirebaseEvent('Button_navigate_to');
 
-                                  context.pushNamed('HomeScreen');
+                                  context.goNamed('HomeScreen');
 
                                   return;
                                 } else {
@@ -554,15 +580,15 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                     0.0, 0.0, 0.0, 0.0),
                                 color: Color(0xFF2B8C2A),
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: FlutterFlowTheme.of(context)
-                                          .subtitle2Family,
+                                          .titleSmallFamily,
                                       color: Colors.white,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .subtitle2Family),
+                                                  .titleSmallFamily),
                                     ),
                                 elevation: 3.0,
                                 borderSide: BorderSide(

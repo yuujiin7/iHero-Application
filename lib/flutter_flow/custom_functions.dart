@@ -9,7 +9,7 @@ import 'lat_lng.dart';
 import 'place.dart';
 import '../backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../auth/auth_util.dart';
+import '../../auth/firebase_auth/auth_util.dart';
 
 String? getUserStatus(
   bool? isDeceased,
@@ -575,4 +575,15 @@ DateTime overwriteEvent(
 ) {
   return DateTime(eventDate.year, eventDate.month, eventDate.day,
       eventTime.hour, eventTime.minute);
+}
+
+DateTime daysBefore(
+  DateTime? startDate,
+  int days,
+) {
+  // decrease startDate  7 days
+  if (startDate == null) {
+    return DateTime.now();
+  }
+  return startDate.subtract(Duration(days: days));
 }

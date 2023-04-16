@@ -14,8 +14,6 @@ abstract class RegistrationRecord
   @BuiltValueField(wireName: 'display_name')
   String? get displayName;
 
-  String? get address;
-
   String? get email;
 
   @BuiltValueField(wireName: 'photo_url')
@@ -29,8 +27,6 @@ abstract class RegistrationRecord
   @BuiltValueField(wireName: 'created_by')
   DocumentReference? get createdBy;
 
-  String? get profession;
-
   @BuiltValueField(wireName: 'birth_date')
   DateTime? get birthDate;
 
@@ -42,9 +38,6 @@ abstract class RegistrationRecord
 
   @BuiltValueField(wireName: 'civil_status')
   String? get civilStatus;
-
-  @BuiltValueField(wireName: 'emergency_contact')
-  String? get emergencyContact;
 
   DateTime? get appointmentDate;
 
@@ -65,28 +58,39 @@ abstract class RegistrationRecord
 
   String? get reason;
 
+  String? get streetAddress;
+
+  String? get aptSuiteorUnitAddress;
+
+  @BuiltValueField(wireName: 'City')
+  String? get city;
+
+  @BuiltValueField(wireName: 'Province')
+  String? get province;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(RegistrationRecordBuilder builder) => builder
     ..displayName = ''
-    ..address = ''
     ..email = ''
     ..photoUrl = ''
     ..uid = ''
-    ..profession = ''
     ..age = 0
     ..gender = ''
     ..nationality = ''
     ..civilStatus = ''
-    ..emergencyContact = ''
     ..iDUrl = ListBuilder()
     ..isDeleted = false
     ..isConfirmbySA = false
     ..phoneNumber = ''
     ..isDeclined = false
-    ..reason = '';
+    ..reason = ''
+    ..streetAddress = ''
+    ..aptSuiteorUnitAddress = ''
+    ..city = ''
+    ..province = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('registration');
@@ -112,19 +116,16 @@ abstract class RegistrationRecord
 
 Map<String, dynamic> createRegistrationRecordData({
   String? displayName,
-  String? address,
   String? email,
   String? photoUrl,
   DateTime? createdTime,
   String? uid,
   DocumentReference? createdBy,
-  String? profession,
   DateTime? birthDate,
   int? age,
   String? gender,
   String? nationality,
   String? civilStatus,
-  String? emergencyContact,
   DateTime? appointmentDate,
   bool? isDeleted,
   DateTime? expiryDate,
@@ -132,25 +133,26 @@ Map<String, dynamic> createRegistrationRecordData({
   String? phoneNumber,
   bool? isDeclined,
   String? reason,
+  String? streetAddress,
+  String? aptSuiteorUnitAddress,
+  String? city,
+  String? province,
 }) {
   final firestoreData = serializers.toFirestore(
     RegistrationRecord.serializer,
     RegistrationRecord(
       (r) => r
         ..displayName = displayName
-        ..address = address
         ..email = email
         ..photoUrl = photoUrl
         ..createdTime = createdTime
         ..uid = uid
         ..createdBy = createdBy
-        ..profession = profession
         ..birthDate = birthDate
         ..age = age
         ..gender = gender
         ..nationality = nationality
         ..civilStatus = civilStatus
-        ..emergencyContact = emergencyContact
         ..appointmentDate = appointmentDate
         ..iDUrl = null
         ..isDeleted = isDeleted
@@ -158,7 +160,11 @@ Map<String, dynamic> createRegistrationRecordData({
         ..isConfirmbySA = isConfirmbySA
         ..phoneNumber = phoneNumber
         ..isDeclined = isDeclined
-        ..reason = reason,
+        ..reason = reason
+        ..streetAddress = streetAddress
+        ..aptSuiteorUnitAddress = aptSuiteorUnitAddress
+        ..city = city
+        ..province = province,
     ),
   );
 

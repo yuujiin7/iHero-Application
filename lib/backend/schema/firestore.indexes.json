@@ -117,10 +117,6 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "isConfirmbySA",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "admin_ref",
           "arrayConfig": "CONTAINS"
         },
@@ -279,6 +275,28 @@
       ]
     },
     {
+      "collectionGroup": "announcement",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "isDeleted",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_by",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isDeclined",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "title",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "chat_messages",
       "queryScope": "COLLECTION",
       "fields": [
@@ -289,6 +307,18 @@
         {
           "fieldPath": "timestamp",
           "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "comments_and_rate",
+      "fieldPath": "post_type",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
         }
       ]
     }

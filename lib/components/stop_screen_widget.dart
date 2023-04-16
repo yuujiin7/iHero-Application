@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -86,7 +86,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
             width: 300.0,
             height: 520.0,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).tertiaryColor,
+              color: FlutterFlowTheme.of(context).tertiary,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -100,14 +100,15 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                     children: [
                       Text(
                         'INTERESTED?',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Comfortaa',
                               color: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               fontSize: 26.0,
                               fontWeight: FontWeight.bold,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).bodyText1Family),
+                                  FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily),
                             ),
                       ),
                     ],
@@ -131,12 +132,12 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                     Text(
                       'You need to be a volunteer to\naccess these feature',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Comfortaa',
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).bodyText1Family),
+                                FlutterFlowTheme.of(context).bodyMediumFamily),
                           ),
                     ),
                   ],
@@ -154,7 +155,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                           'Be a volunteer. \nSet an appointment\nto register.',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color: FlutterFlowTheme.of(context)
@@ -163,7 +164,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),
@@ -174,20 +175,24 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                           logFirebaseEvent('Text_backend_call');
                           await currentUserReference!.delete();
                           logFirebaseEvent('Text_auth');
-                          await deleteUser(context);
-                          logFirebaseEvent('Text_auth');
-                          GoRouter.of(context).prepareAuthEvent();
-                          await signOut();
-                          GoRouter.of(context).clearRedirectLocation();
-
+                          await authManager.deleteUser(context);
                           logFirebaseEvent('Text_navigate_to');
 
-                          context.pushNamedAuth('RegistrationSteps', mounted);
+                          context.goNamed(
+                            'RegistrationSteps',
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.fade,
+                                duration: Duration(milliseconds: 0),
+                              ),
+                            },
+                          );
                         },
                         child: Text(
                           'Click Here',
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color:
@@ -196,7 +201,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),
@@ -216,7 +221,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                           'Already have an account?',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color: FlutterFlowTheme.of(context)
@@ -225,7 +230,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),
@@ -236,10 +241,10 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                           logFirebaseEvent('Text_backend_call');
                           await currentUserReference!.delete();
                           logFirebaseEvent('Text_auth');
-                          await deleteUser(context);
+                          await authManager.deleteUser(context);
                           logFirebaseEvent('Text_auth');
                           GoRouter.of(context).prepareAuthEvent();
-                          await signOut();
+                          await authManager.signOut();
                           GoRouter.of(context).clearRedirectLocation();
 
                           logFirebaseEvent('Text_navigate_to');
@@ -249,7 +254,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                         child: Text(
                           'Click Here',
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color:
@@ -258,7 +263,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),

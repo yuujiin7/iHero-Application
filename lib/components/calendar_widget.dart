@@ -90,15 +90,31 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: 100.0,
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      'You can click two dates to pick the event\'s start and end date. ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 50.0),
+                                  0.0, 20.0, 0.0, 20.0),
                               child: Container(
                                 width: double.infinity,
-                                height: 250.0,
+                                height: 400.0,
                                 child: custom_widgets.SfCalendar(
                                   width: double.infinity,
-                                  height: 250.0,
+                                  height: 400.0,
                                 ),
                               ),
                             ),
@@ -141,6 +157,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                               ) ??
                                               false;
                                       if (confirmDialogResponse) {
+                                        logFirebaseEvent(
+                                            'Button_update_app_state');
+                                        setState(() {
+                                          FFAppState().startDate = null;
+                                          FFAppState().endTime = null;
+                                        });
                                         logFirebaseEvent('Button_bottom_sheet');
                                         Navigator.pop(context);
                                         return;
@@ -156,10 +178,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                       iconPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       textStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2
+                                          .bodySmall
                                           .override(
                                             fontFamily: 'Ubuntu',
                                             color: FlutterFlowTheme.of(context)
@@ -169,7 +191,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText2Family),
+                                                        .bodySmallFamily),
                                           ),
                                       elevation: 1.0,
                                       borderSide: BorderSide(
@@ -245,7 +267,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                         0.0, 0.0, 0.0, 0.0),
                                     color: Color(0xFF2B8C2A),
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .bodyText2
+                                        .bodySmall
                                         .override(
                                           fontFamily: 'Ubuntu',
                                           color: FlutterFlowTheme.of(context)
@@ -255,7 +277,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2Family),
+                                                      .bodySmallFamily),
                                         ),
                                     elevation: 1.0,
                                     borderSide: BorderSide(
