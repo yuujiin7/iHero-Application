@@ -146,6 +146,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
               body: Builder(
                 builder: (context) {
                   return SafeArea(
+                    top: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -449,12 +450,10 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                             .whereIn(
                                                 'uid',
                                                 volunteerToEventEventsRecord
-                                                            .volunteerList!
-                                                            .toList() !=
+                                                            .volunteerList !=
                                                         ''
                                                     ? volunteerToEventEventsRecord
-                                                        .volunteerList!
-                                                        .toList()
+                                                        .volunteerList
                                                     : null)
                                             .where('userType',
                                                 isEqualTo: 'Volunteer'),
@@ -522,7 +521,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                             .searchFieldController
                                                             .text,
                                                         gridViewUsersRecord
-                                                            .displayName!),
+                                                            .displayName),
                                                 child:
                                                     StreamBuilder<UsersRecord>(
                                                   stream:
@@ -619,7 +618,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                 children: [
                                                                   Text(
                                                                     cardUsersRecord
-                                                                        .displayName!,
+                                                                        .displayName,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .center,
@@ -658,7 +657,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
                                                                 children: [
                                                                   Text(
                                                                     cardUsersRecord
-                                                                        .email!,
+                                                                        .email,
                                                                     textAlign:
                                                                         TextAlign
                                                                             .center,

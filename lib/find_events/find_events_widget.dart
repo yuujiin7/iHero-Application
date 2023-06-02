@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('findEvents_update_app_state');
@@ -191,7 +192,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                             child: FlutterFlowDropDown<String>(
                               controller: _model.dropDownValueController1 ??=
                                   FormFieldController<String>(null),
-                              options: FFAppState().CauseList.toList(),
+                              options: FFAppState().CauseList,
                               onChanged: (val) =>
                                   setState(() => _model.dropDownValue1 = val),
                               width: double.infinity,
@@ -271,8 +272,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                           FormFieldController<String>(null),
                                   options: dropDownPartnerOrgRecordList
                                       .map((e) => e.orgName)
-                                      .withoutNulls
-                                      .toList()
                                       .toList(),
                                   onChanged: (val) => setState(
                                       () => _model.dropDownValue2 = val),
@@ -600,6 +599,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
               ),
             ),
             body: SafeArea(
+              top: true,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -910,7 +910,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                             visible: functions.showSearchResult(
                                                 _model
                                                     .searchFieldController.text,
-                                                eventListItem.eventTitle!),
+                                                eventListItem.eventTitle),
                                             child: Card(
                                               clipBehavior:
                                                   Clip.antiAliasWithSaveLayer,
@@ -992,7 +992,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                   ),
                                                                   Text(
                                                                     eventListItem
-                                                                            .isRecurring!
+                                                                            .isRecurring
                                                                         ? 'Recurring'
                                                                         : 'non-Reccuring',
                                                                     style: FlutterFlowTheme.of(
@@ -1159,7 +1159,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                               children: [
                                                                 Text(
                                                                   eventListItem
-                                                                      .eventTitle!,
+                                                                      .eventTitle,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -1177,7 +1177,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                 ),
                                                                 Text(
                                                                   eventListItem
-                                                                      .eventDescription!,
+                                                                      .eventDescription,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .start,
@@ -1229,9 +1229,9 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                       LinearPercentIndicator(
                                                                     percent: functions.counterVolunteer(
                                                                         eventListItem
-                                                                            .volunteerCount!,
+                                                                            .volunteerCount,
                                                                         eventListItem
-                                                                            .neededVolunteer!)!,
+                                                                            .neededVolunteer)!,
                                                                     width:
                                                                         300.0,
                                                                     lineHeight:
@@ -1288,7 +1288,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                           Text(
                                                                         formatNumber(
                                                                           eventListItem
-                                                                              .neededVolunteerCount!,
+                                                                              .neededVolunteerCount,
                                                                           formatType:
                                                                               FormatType.compact,
                                                                         ),
@@ -1342,32 +1342,37 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            'Registration starts on ${valueOrDefault<String>(
-                                                              dateTimeFormat(
-                                                                'yMMMd',
-                                                                eventListItem
-                                                                    .registrationDate,
-                                                                locale: FFLocalizations.of(
-                                                                        context)
-                                                                    .languageCode,
-                                                              ),
-                                                              'Date',
-                                                            )} ${valueOrDefault<String>(
-                                                              dateTimeFormat(
-                                                                'jm',
-                                                                eventListItem
-                                                                    .registrationDate,
-                                                                locale: FFLocalizations.of(
-                                                                        context)
-                                                                    .languageCode,
-                                                              ),
-                                                              'Time',
-                                                            )}',
-                                                            'Registration Date',
-                                                          ),
+                                                        AutoSizeText(
+                                                          eventListItem
+                                                                      .registrationDate! >
+                                                                  getCurrentTimestamp
+                                                              ? valueOrDefault<
+                                                                  String>(
+                                                                  'Registration is on ${valueOrDefault<String>(
+                                                                    dateTimeFormat(
+                                                                      'yMd',
+                                                                      eventListItem
+                                                                          .registrationDate,
+                                                                      locale: FFLocalizations.of(
+                                                                              context)
+                                                                          .languageCode,
+                                                                    ),
+                                                                    'Date',
+                                                                  )} ${valueOrDefault<String>(
+                                                                    dateTimeFormat(
+                                                                      'jm',
+                                                                      eventListItem
+                                                                          .registrationDate,
+                                                                      locale: FFLocalizations.of(
+                                                                              context)
+                                                                          .languageCode,
+                                                                    ),
+                                                                    'Time',
+                                                                  )}',
+                                                                  'Registration Date',
+                                                                )
+                                                              : 'Registration Ended',
+                                                          maxLines: 2,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .labelSmall
@@ -1566,7 +1571,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                     .showSearchResultCopy(
                                                         FFAppState()
                                                             .searchCause,
-                                                        eventListItem.eventTag!
+                                                        eventListItem.eventTag
                                                             .toList(),
                                                         FFAppState().startDate!,
                                                         eventListItem
@@ -1576,7 +1581,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                             .eventDateEnd!,
                                                         FFAppState().searchOrg,
                                                         eventListItem
-                                                            .organizationPartnter!),
+                                                            .organizationPartnter),
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,
@@ -1656,7 +1661,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                         ),
                                                                       ),
                                                                       Text(
-                                                                        eventListItem.isRecurring!
+                                                                        eventListItem.isRecurring
                                                                             ? 'Recurring'
                                                                             : 'non-Reccuring',
                                                                         style: FlutterFlowTheme.of(context)
@@ -1801,7 +1806,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                   children: [
                                                                     Text(
                                                                       eventListItem
-                                                                          .eventTitle!,
+                                                                          .eventTitle,
                                                                       textAlign:
                                                                           TextAlign
                                                                               .center,
@@ -1819,7 +1824,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                     ),
                                                                     Text(
                                                                       eventListItem
-                                                                          .eventDescription!,
+                                                                          .eventDescription,
                                                                       textAlign:
                                                                           TextAlign
                                                                               .start,
@@ -1869,8 +1874,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                       child:
                                                                           LinearPercentIndicator(
                                                                         percent: functions.counterVolunteer(
-                                                                            eventListItem.volunteerCount!,
-                                                                            eventListItem.neededVolunteer!)!,
+                                                                            eventListItem.volunteerCount,
+                                                                            eventListItem.neededVolunteer)!,
                                                                         width:
                                                                             300.0,
                                                                         lineHeight:
@@ -1921,7 +1926,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                           child:
                                                                               Text(
                                                                             formatNumber(
-                                                                              eventListItem.neededVolunteerCount!,
+                                                                              eventListItem.neededVolunteerCount,
                                                                               formatType: FormatType.compact,
                                                                             ),
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(

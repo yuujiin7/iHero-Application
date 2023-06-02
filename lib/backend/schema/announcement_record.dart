@@ -1,77 +1,112 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'announcement_record.g.dart';
+class AnnouncementRecord extends FirestoreRecord {
+  AnnouncementRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class AnnouncementRecord
-    implements Built<AnnouncementRecord, AnnouncementRecordBuilder> {
-  static Serializer<AnnouncementRecord> get serializer =>
-      _$announcementRecordSerializer;
+  // "title" field.
+  String? _title;
+  String get title => _title ?? '';
+  bool hasTitle() => _title != null;
 
-  String? get title;
+  // "body" field.
+  String? _body;
+  String get body => _body ?? '';
+  bool hasBody() => _body != null;
 
-  String? get body;
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  String? get photoUrl;
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
 
-  @BuiltValueField(wireName: 'created_time')
-  DateTime? get createdTime;
+  // "created_by" field.
+  DocumentReference? _createdBy;
+  DocumentReference? get createdBy => _createdBy;
+  bool hasCreatedBy() => _createdBy != null;
 
-  @BuiltValueField(wireName: 'created_by')
-  DocumentReference? get createdBy;
+  // "liked_by" field.
+  List<DocumentReference>? _likedBy;
+  List<DocumentReference> get likedBy => _likedBy ?? const [];
+  bool hasLikedBy() => _likedBy != null;
 
-  @BuiltValueField(wireName: 'liked_by')
-  BuiltList<DocumentReference>? get likedBy;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "isDeleted" field.
+  bool? _isDeleted;
+  bool get isDeleted => _isDeleted ?? false;
+  bool hasIsDeleted() => _isDeleted != null;
 
-  bool? get isDeleted;
+  // "isConfirmbySA" field.
+  bool? _isConfirmbySA;
+  bool get isConfirmbySA => _isConfirmbySA ?? false;
+  bool hasIsConfirmbySA() => _isConfirmbySA != null;
 
-  bool? get isConfirmbySA;
+  // "reason" field.
+  String? _reason;
+  String get reason => _reason ?? '';
+  bool hasReason() => _reason != null;
 
-  String? get reason;
+  // "isDeclined" field.
+  bool? _isDeclined;
+  bool get isDeclined => _isDeclined ?? false;
+  bool hasIsDeclined() => _isDeclined != null;
 
-  bool? get isDeclined;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(AnnouncementRecordBuilder builder) => builder
-    ..title = ''
-    ..body = ''
-    ..photoUrl = ''
-    ..likedBy = ListBuilder()
-    ..isDeleted = false
-    ..isConfirmbySA = false
-    ..reason = ''
-    ..isDeclined = false;
+  void _initializeFields() {
+    _title = snapshotData['title'] as String?;
+    _body = snapshotData['body'] as String?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _createdBy = snapshotData['created_by'] as DocumentReference?;
+    _likedBy = getDataList(snapshotData['liked_by']);
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _isConfirmbySA = snapshotData['isConfirmbySA'] as bool?;
+    _reason = snapshotData['reason'] as String?;
+    _isDeclined = snapshotData['isDeclined'] as bool?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('announcement');
 
-  static Stream<AnnouncementRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<AnnouncementRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => AnnouncementRecord.fromSnapshot(s));
 
   static Future<AnnouncementRecord> getDocumentOnce(DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => AnnouncementRecord.fromSnapshot(s));
 
-  AnnouncementRecord._();
-  factory AnnouncementRecord(
-          [void Function(AnnouncementRecordBuilder) updates]) =
-      _$AnnouncementRecord;
+  static AnnouncementRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      AnnouncementRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static AnnouncementRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      AnnouncementRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'AnnouncementRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createAnnouncementRecordData({
@@ -86,22 +121,19 @@ Map<String, dynamic> createAnnouncementRecordData({
   String? reason,
   bool? isDeclined,
 }) {
-  final firestoreData = serializers.toFirestore(
-    AnnouncementRecord.serializer,
-    AnnouncementRecord(
-      (a) => a
-        ..title = title
-        ..body = body
-        ..photoUrl = photoUrl
-        ..createdTime = createdTime
-        ..createdBy = createdBy
-        ..likedBy = null
-        ..expiryDate = expiryDate
-        ..isDeleted = isDeleted
-        ..isConfirmbySA = isConfirmbySA
-        ..reason = reason
-        ..isDeclined = isDeclined,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'title': title,
+      'body': body,
+      'photo_url': photoUrl,
+      'created_time': createdTime,
+      'created_by': createdBy,
+      'expiry_date': expiryDate,
+      'isDeleted': isDeleted,
+      'isConfirmbySA': isConfirmbySA,
+      'reason': reason,
+      'isDeclined': isDeclined,
+    }.withoutNulls,
   );
 
   return firestoreData;

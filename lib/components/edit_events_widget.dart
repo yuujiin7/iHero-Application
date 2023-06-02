@@ -147,6 +147,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'EDIT_EVENTS_COMP_Image_h3wwvzsg_ON_TAP');
@@ -182,6 +186,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   bytes: m.bytes,
                                                   height: m.dimensions?.height,
                                                   width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
                                                 ))
                                             .toList();
 
@@ -220,7 +225,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   },
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        containerEventsRecord.eventPhotoUrl!,
+                                        containerEventsRecord.eventPhotoUrl,
                                     width: 100.0,
                                     height: 100.0,
                                     fit: BoxFit.cover,
@@ -1004,6 +1009,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       ),
                                     ),
                                     InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'EDIT_EVENTS_Container_pkk0sm94_ON_TAP');
@@ -1143,6 +1152,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 5.0, 0.0),
                                       child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'EDIT_EVENTS_Container_bnb0kdx1_ON_TAP');
@@ -1252,8 +1265,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                         ),
                                         Switch(
                                           value: _model.switchValue ??=
-                                              containerEventsRecord
-                                                  .isRecurring!,
+                                              containerEventsRecord.isRecurring,
                                           onChanged: (newValue) async {
                                             setState(() =>
                                                 _model.switchValue = newValue!);
@@ -1878,8 +1890,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         partnerDropDownPartnerOrgRecordList
                                                             .map((e) =>
                                                                 e.orgName)
-                                                            .withoutNulls
-                                                            .toList()
                                                             .toList(),
                                                     onChanged: (val) async {
                                                       setState(() => _model

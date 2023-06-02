@@ -82,6 +82,10 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           leading: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             onTap: () async {
               logFirebaseEvent('MY_ANNOUNCEMENT_Icon_tq75n70h_ON_TAP');
               logFirebaseEvent('Icon_navigate_back');
@@ -108,6 +112,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -128,34 +133,37 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                         2),
                     child: Column(
                       children: [
-                        TabBar(
-                          isScrollable: true,
-                          labelColor: FlutterFlowTheme.of(context).primary,
-                          unselectedLabelColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: FlutterFlowTheme.of(context)
-                                    .bodyMediumFamily,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
+                        Align(
+                          alignment: Alignment(0.0, 0),
+                          child: TabBar(
+                            isScrollable: true,
+                            labelColor: FlutterFlowTheme.of(context).primary,
+                            unselectedLabelColor:
+                                FlutterFlowTheme.of(context).secondaryText,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily),
+                                ),
+                            indicatorColor: Color(0xFFFFA534),
+                            tabs: [
+                              Tab(
+                                text: 'To be Confirmed',
                               ),
-                          indicatorColor: Color(0xFFFFA534),
-                          tabs: [
-                            Tab(
-                              text: 'To be Confirmed',
-                            ),
-                            Tab(
-                              text: 'Posted',
-                            ),
-                            Tab(
-                              text: 'Declined',
-                            ),
-                          ],
+                              Tab(
+                                text: 'Posted',
+                              ),
+                              Tab(
+                                text: 'Declined',
+                              ),
+                            ],
+                          ),
                         ),
                         Expanded(
                           child: TabBarView(
@@ -293,7 +301,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                                             0.0),
                                                                 child: Text(
                                                                   rowUsersRecord
-                                                                      .displayName!,
+                                                                      .displayName,
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -376,7 +384,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnAnnouncementRecord.title!,
+                                                                            columnAnnouncementRecord.title,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -425,6 +433,14 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_ANNOUNCEMENT_PAGE_Row_t1im013z_ON_TAP');
@@ -626,7 +642,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                                             0.0),
                                                                 child: Text(
                                                                   rowUsersRecord
-                                                                      .displayName!,
+                                                                      .displayName,
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -709,7 +725,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnAnnouncementRecord.title!,
+                                                                            columnAnnouncementRecord.title,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -758,6 +774,14 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_ANNOUNCEMENT_PAGE_Row_37fht6v5_ON_TAP');
@@ -959,7 +983,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                                             0.0),
                                                                 child: Text(
                                                                   rowUsersRecord
-                                                                      .displayName!,
+                                                                      .displayName,
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -1042,7 +1066,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnAnnouncementRecord.title!,
+                                                                            columnAnnouncementRecord.title,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -1091,6 +1115,14 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_ANNOUNCEMENT_PAGE_Row_w00tyjh3_ON_TAP');

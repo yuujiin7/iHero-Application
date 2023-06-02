@@ -69,6 +69,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
         body: Builder(
           builder: (context) {
             return SafeArea(
+              top: false,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,

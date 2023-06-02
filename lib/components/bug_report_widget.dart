@@ -254,6 +254,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                             bytes: m.bytes,
                                             height: m.dimensions?.height,
                                             width: m.dimensions?.width,
+                                            blurHash: m.blurHash,
                                           ))
                                       .toList();
 

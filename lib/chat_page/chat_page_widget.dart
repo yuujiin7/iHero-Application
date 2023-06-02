@@ -103,7 +103,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
           children: [
             if (!isGroupChat())
               Text(
-                widget.chatUser!.displayName!,
+                widget.chatUser!.displayName,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Comfortaa',
                       color: Colors.black,
@@ -133,6 +133,10 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
               child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onTap: () async {
                   logFirebaseEvent('CHAT_PAGE_PAGE_Icon_41kduqdl_ON_TAP');
                   logFirebaseEvent('Icon_navigate_to');
@@ -152,6 +156,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
         elevation: 2.0,
       ),
       body: SafeArea(
+        top: true,
         child: StreamBuilder<FFChatInfo>(
           stream: FFChatManager.instance.getChatInfo(
             otherUserRecord: widget.chatUser,

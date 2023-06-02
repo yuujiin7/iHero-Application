@@ -58,7 +58,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('HomeScreen_custom_action');
@@ -101,7 +101,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 child: Padding(
                   padding: MediaQuery.of(bottomSheetContext).viewInsets,
                   child: RegistrationDateWarningWidget(
-                    eventRef: _model.nearEvents?.toList(),
+                    eventRef: _model.nearEvents,
                   ),
                 ),
               );
@@ -207,6 +207,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
+          top: true,
           child: Stack(
             children: [
               Container(
@@ -355,6 +356,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     child: AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
                                                               'HOME_SCREEN_CircleImage_u7u1hehe_ON_TAP');
@@ -971,6 +980,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               ),
                                         ),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'HOME_SCREEN_PAGE_Text_dir4oixb_ON_TAP');
@@ -1256,6 +1269,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -1352,6 +1374,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             ),
                                       ),
                                       InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'HOME_SCREEN_PAGE_Text_ox9fm537_ON_TAP');
@@ -1394,21 +1420,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 5.0, 0.0, 5.0),
                                       child: FutureBuilder<List<EventsRecord>>(
-                                        future: queryEventsRecordOnce(
-                                          queryBuilder: (eventsRecord) =>
-                                              eventsRecord
-                                                  .where('volunteer_ref',
-                                                      arrayContains:
-                                                          currentUserReference)
-                                                  .where('isEnded',
-                                                      isEqualTo: false)
-                                                  .where('isDeleted',
-                                                      isEqualTo: false)
-                                                  .where('isReqCancel',
-                                                      isEqualTo: false)
-                                                  .where('isConfirmbySA',
-                                                      isEqualTo: true),
-                                          limit: 5,
+                                        future: FFAppState().participatedEvents(
+                                          requestFn: () =>
+                                              queryEventsRecordOnce(
+                                            queryBuilder: (eventsRecord) =>
+                                                eventsRecord
+                                                    .where('volunteer_ref',
+                                                        arrayContains:
+                                                            currentUserReference)
+                                                    .where('isEnded',
+                                                        isEqualTo: false)
+                                                    .where('isDeleted',
+                                                        isEqualTo: false)
+                                                    .where('isReqCancel',
+                                                        isEqualTo: false)
+                                                    .where('isConfirmbySA',
+                                                        isEqualTo: true),
+                                            limit: 5,
+                                          ),
                                         ),
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
@@ -1533,7 +1562,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       child:
                                                                           Text(
                                                                         myEventsListEventsRecord
-                                                                            .eventTitle!,
+                                                                            .eventTitle,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
@@ -1561,7 +1590,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               AutoSizeText(
-                                                                            myEventsListEventsRecord.eventDescription!,
+                                                                            myEventsListEventsRecord.eventDescription,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
@@ -1594,6 +1623,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -1693,6 +1731,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               ),
                                         ),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'HOME_SCREEN_PAGE_Text_91lxbgfv_ON_TAP');
@@ -1874,7 +1916,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       child:
                                                                           Text(
                                                                         myCreatedEventsListEventsRecord
-                                                                            .eventTitle!,
+                                                                            .eventTitle,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
@@ -1901,7 +1943,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               Text(
-                                                                            myCreatedEventsListEventsRecord.eventDescription!,
+                                                                            myCreatedEventsListEventsRecord.eventDescription,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
@@ -1934,6 +1976,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -2030,6 +2081,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                             ),
                                       ),
                                       InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'HOME_SCREEN_PAGE_Text_czcprkmq_ON_TAP');
@@ -2208,7 +2263,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       child:
                                                                           Text(
                                                                         myCreatedAnnouncementListAnnouncementRecord
-                                                                            .title!,
+                                                                            .title,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
@@ -2235,7 +2290,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               Text(
-                                                                            myCreatedAnnouncementListAnnouncementRecord.body!,
+                                                                            myCreatedAnnouncementListAnnouncementRecord.body,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
@@ -2268,6 +2323,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(

@@ -83,6 +83,7 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
           ),
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,

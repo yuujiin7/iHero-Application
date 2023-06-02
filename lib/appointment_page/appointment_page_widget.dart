@@ -60,6 +60,9 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
     _model.contactNumberController ??= TextEditingController();
     _model.emailController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+          _model.streetAddressController?.text = '123, Tandang Sora Avenue';
+          _model.unitAddressController?.text = 'First Floor, Room 22';
+          _model.provinceAddressController?.text = 'Laguna';
           _model.contactNumberController?.text = '+63';
         }));
   }
@@ -83,7 +86,33 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_outlined,
+              color: FlutterFlowTheme.of(context).primaryBtnText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              logFirebaseEvent('APPOINTMENT_arrow_back_outlined_ICN_ON_T');
+              logFirebaseEvent('IconButton_navigate_to');
+
+              context.goNamed(
+                'Login',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.fade,
+                    duration: Duration(milliseconds: 0),
+                  ),
+                },
+              );
+            },
+          ),
           actions: [],
           flexibleSpace: FlexibleSpaceBar(
             title: Column(
@@ -112,6 +141,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(),
@@ -162,6 +192,10 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                           shape: BoxShape.circle,
                         ),
                         child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onTap: () async {
                             logFirebaseEvent(
                                 'APPOINTMENT_CircleImage_7h32h3be_ON_TAP');
@@ -191,6 +225,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                           bytes: m.bytes,
                                           height: m.dimensions?.height,
                                           width: m.dimensions?.width,
+                                          blurHash: m.blurHash,
                                         ))
                                     .toList();
 
@@ -251,18 +286,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.words,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Full Name',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
-                          hintText: 'Enter Full Name',
+                          hintText: 'Full Name',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -309,7 +333,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Barlow',
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: FlutterFlowTheme.of(context).primaryText,
                               fontWeight: FontWeight.w500,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
                                   FlutterFlowTheme.of(context)
@@ -551,17 +575,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Nationality',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
                           hintText: 'Nationality',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -629,7 +642,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Barlow',
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: FlutterFlowTheme.of(context).primaryText,
                               fontWeight: FontWeight.w500,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
                                   FlutterFlowTheme.of(context)
@@ -698,18 +711,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Street Address',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
-                          hintText: '123, Tandang Sora Avenue',
+                          hintText: 'Street Address',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -799,18 +801,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Apt, Suite or Unit',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
-                          hintText: 'First Floor, Room 22',
+                          hintText: 'Apt, Suite or Unit',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -900,18 +891,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'City',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
-                          hintText: 'Santa Rosa',
+                          hintText: 'City',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -1001,18 +981,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Province',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
-                          hintText: 'Laguna',
+                          hintText: 'Province',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -1106,18 +1075,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         autofillHints: [AutofillHints.telephoneNumberNational],
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Phone Number',
-                          labelStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Barlow',
-                                color: FlutterFlowTheme.of(context).primary,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .bodyMediumFamily),
-                              ),
-                          hintText: 'Contact Number',
+                          hintText: 'Phone Number',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -1207,7 +1165,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                         textCapitalization: TextCapitalization.sentences,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Email Address',
                           hintText: 'Email Address',
                           hintStyle: FlutterFlowTheme.of(context)
                               .bodyMedium
@@ -1333,6 +1290,7 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                                                 bytes: m.bytes,
                                                 height: m.dimensions?.height,
                                                 width: m.dimensions?.width,
+                                                blurHash: m.blurHash,
                                               ))
                                           .toList();
 

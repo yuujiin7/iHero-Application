@@ -56,6 +56,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
       key: scaffoldKey,
       backgroundColor: Color(0xFF1E2429),
       body: SafeArea(
+        top: true,
         child: Container(
           width: double.infinity,
           height: double.infinity,

@@ -118,6 +118,10 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'EDIT_ANNOUNCEMENT_ImageAnnouncement_ON_T');
@@ -153,6 +157,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                                   bytes: m.bytes,
                                                   height: m.dimensions?.height,
                                                   width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
                                                 ))
                                             .toList();
 

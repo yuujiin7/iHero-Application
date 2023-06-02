@@ -110,6 +110,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
         elevation: 0.0,
       ),
       body: SafeArea(
+        top: true,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -341,7 +342,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                                             listViewUsersRecord] = newValue!);
                                       },
                                       title: Text(
-                                        listViewUsersRecord.displayName!,
+                                        listViewUsersRecord.displayName,
                                         style: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .override(
@@ -358,7 +359,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                                             ),
                                       ),
                                       subtitle: Text(
-                                        listViewUsersRecord.userType!,
+                                        listViewUsersRecord.userType,
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(

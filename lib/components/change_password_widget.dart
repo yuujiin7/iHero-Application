@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -468,6 +469,34 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 _model.confirmNewPsswrodController.text,
                               );
                               if (_model.success!) {
+                                logFirebaseEvent('Button_backend_call');
+
+                                final logsCreateData = createLogsRecordData(
+                                  date: getCurrentTimestamp,
+                                  action: 'Changed Password',
+                                  userRef: currentUserReference,
+                                );
+                                await LogsRecord.createDoc(
+                                        currentUserReference!)
+                                    .set(logsCreateData);
+                                logFirebaseEvent('Button_backend_call');
+                                _model.isChangePassword =
+                                    await ChangePasswordSendGridCall.call(
+                                  toEmail: currentUserEmail,
+                                  date: dateTimeFormat(
+                                    'yMMMd',
+                                    getCurrentTimestamp,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  ),
+                                  time: dateTimeFormat(
+                                    'jm',
+                                    getCurrentTimestamp,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  ),
+                                  toName: currentUserDisplayName,
+                                );
                                 logFirebaseEvent('Button_alert_dialog');
                                 await showDialog(
                                   context: context,
@@ -485,16 +514,6 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                     );
                                   },
                                 );
-                                logFirebaseEvent('Button_backend_call');
-
-                                final logsCreateData = createLogsRecordData(
-                                  date: getCurrentTimestamp,
-                                  action: 'Changed Password',
-                                  userRef: currentUserReference,
-                                );
-                                await LogsRecord.createDoc(
-                                        currentUserReference!)
-                                    .set(logsCreateData);
                                 logFirebaseEvent('Button_bottom_sheet');
                                 Navigator.pop(context);
                               } else {

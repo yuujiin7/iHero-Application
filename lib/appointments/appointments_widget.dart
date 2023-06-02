@@ -101,6 +101,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
           body: Builder(
             builder: (context) {
               return SafeArea(
+                top: false,
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 5.0),
                   child: Column(
@@ -252,7 +253,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                               children: [
                                                 AutoSizeText(
                                                   listViewRegistrationRecord
-                                                      .displayName!,
+                                                      .displayName,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -273,7 +274,7 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
                                                 ),
                                                 AutoSizeText(
                                                   listViewRegistrationRecord
-                                                      .email!,
+                                                      .email,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

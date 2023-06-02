@@ -63,7 +63,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('eventCreate_custom_action');
@@ -146,7 +146,87 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
               backgroundColor: FlutterFlowTheme.of(context).primary,
               iconTheme: IconThemeData(
                   color: FlutterFlowTheme.of(context).primaryBackground),
-              automaticallyImplyLeading: true,
+              automaticallyImplyLeading: false,
+              leading: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 60.0,
+                icon: Icon(
+                  Icons.arrow_back_outlined,
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                  size: 30.0,
+                ),
+                onPressed: () async {
+                  logFirebaseEvent('EVENT_CREATE_arrow_back_outlined_ICN_ON_');
+                  logFirebaseEvent('IconButton_alert_dialog');
+                  var confirmDialogResponse = await showDialog<bool>(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Exit'),
+                            content: Text('This form will reset upon exiting.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, false),
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, true),
+                                child: Text('Confirm'),
+                              ),
+                            ],
+                          );
+                        },
+                      ) ??
+                      false;
+                  if (confirmDialogResponse) {
+                    logFirebaseEvent('IconButton_update_app_state');
+                    FFAppState().update(() {
+                      FFAppState().deleteLocationLatLng();
+                      FFAppState().locationLatLng = null;
+
+                      FFAppState().deleteAddress();
+                      FFAppState().address = '';
+
+                      FFAppState().startDate = null;
+                      FFAppState().endDate = null;
+                      FFAppState().startTime = null;
+                      FFAppState().endTime = null;
+                    });
+                    logFirebaseEvent('IconButton_clear_text_fields');
+                    setState(() {
+                      _model.titleEventController?.clear();
+                      _model.descriptionEventController?.clear();
+                      _model.addRequirementsEventController?.clear();
+                      _model.personInChargeController?.clear();
+                      _model.contactNumberController?.clear();
+                      _model.ageRequirementController?.clear();
+                      _model.neededVolunteerController?.clear();
+                      _model.descriptionAnnouncementController?.clear();
+                      _model.titleAnnouncementController?.clear();
+                    });
+                    logFirebaseEvent('IconButton_navigate_to');
+
+                    context.goNamed(
+                      'HomeScreen',
+                      extra: <String, dynamic>{
+                        kTransitionInfoKey: TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+
+                    return;
+                  } else {
+                    return;
+                  }
+                },
+              ),
               title: Text(
                 'FILL UP THE FORM',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -165,6 +245,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
           body: Builder(
             builder: (context) {
               return SafeArea(
+                top: false,
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -185,24 +266,27 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                               1),
                           child: Column(
                             children: [
-                              TabBar(
-                                isScrollable: true,
-                                labelColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                unselectedLabelColor:
-                                    FlutterFlowTheme.of(context).gray600,
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).bodyMedium,
-                                indicatorColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                tabs: [
-                                  Tab(
-                                    text: 'Event',
-                                  ),
-                                  Tab(
-                                    text: 'Announcement',
-                                  ),
-                                ],
+                              Align(
+                                alignment: Alignment(0.0, 0),
+                                child: TabBar(
+                                  isScrollable: true,
+                                  labelColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  unselectedLabelColor:
+                                      FlutterFlowTheme.of(context).gray600,
+                                  labelStyle:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                  indicatorColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  tabs: [
+                                    Tab(
+                                      text: 'Event',
+                                    ),
+                                    Tab(
+                                      text: 'Announcement',
+                                    ),
+                                  ],
+                                ),
                               ),
                               Expanded(
                                 child: TabBarView(
@@ -211,7 +295,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                       builder: (context) => Form(
                                         key: _model.formKey1,
                                         autovalidateMode:
-                                            AutovalidateMode.disabled,
+                                            AutovalidateMode.always,
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -288,6 +372,15 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                         10.0),
                                                           ),
                                                           child: InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
                                                             onTap: () async {
                                                               logFirebaseEvent(
                                                                   'EVENT_CREATE_PAGE_Image_k7xmhcdo_ON_TAP');
@@ -332,6 +425,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                 bytes: m.bytes,
                                                                                 height: m.dimensions?.height,
                                                                                 width: m.dimensions?.width,
+                                                                                blurHash: m.blurHash,
                                                                               ))
                                                                           .toList();
 
@@ -1578,6 +1672,15 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                 ),
                                                               ),
                                                               InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -1764,6 +1867,18 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                           0.0),
                                                                   child:
                                                                       InkWell(
+                                                                    splashColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .transparent,
                                                                     onTap:
                                                                         () async {
                                                                       logFirebaseEvent(
@@ -2911,7 +3026,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                 snapshot.data!;
                                                                             return FlutterFlowDropDown<String>(
                                                                               controller: _model.partnerDropDownValueController ??= FormFieldController<String>(null),
-                                                                              options: partnerDropDownPartnerOrgRecordList.map((e) => e.orgName).withoutNulls.toList().toList(),
+                                                                              options: partnerDropDownPartnerOrgRecordList.map((e) => e.orgName).toList(),
                                                                               onChanged: (val) => setState(() => _model.partnerDropDownValue = val),
                                                                               width: 300.0,
                                                                               height: 50.0,
@@ -3146,8 +3261,8 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                             _model.isEventExist =
                                                                                 await actions.documentExists(
                                                                               FFAppState().address,
-                                                                              FFAppState().startDate!,
-                                                                              FFAppState().endDate!,
+                                                                              functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                              functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
                                                                             );
                                                                             _shouldSetState =
                                                                                 true;
@@ -3234,6 +3349,21 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     dateCreated: getCurrentTimestamp,
                                                                                   );
                                                                                   await MyEventsRecord.createDoc(currentUserReference!).set(myEventsCreateData1);
+                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        content: Text('The event has been created and is to be approved.'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
                                                                                   logFirebaseEvent('ButtonSubmit_update_app_state');
                                                                                   FFAppState().update(() {
                                                                                     FFAppState().deleteLocationLatLng();
@@ -3277,7 +3407,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                   );
                                                                                   logFirebaseEvent('ButtonSubmit_navigate_to');
 
-                                                                                  context.pushNamed('HomeScreen');
+                                                                                  context.goNamed('HomeScreen');
 
                                                                                   if (_shouldSetState) setState(() {});
                                                                                   return;
@@ -3363,6 +3493,21 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                     dateCreated: getCurrentTimestamp,
                                                                                   );
                                                                                   await MyEventsRecord.createDoc(currentUserReference!).set(myEventsCreateData2);
+                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        content: Text('The event has been created and is to be approved.'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
                                                                                   logFirebaseEvent('ButtonSubmit_update_app_state');
                                                                                   FFAppState().update(() {
                                                                                     FFAppState().deleteLocationLatLng();
@@ -3406,7 +3551,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                                   );
                                                                                   logFirebaseEvent('ButtonSubmit_navigate_to');
 
-                                                                                  context.pushNamed('HomeScreen');
+                                                                                  context.goNamed('HomeScreen');
 
                                                                                   if (_shouldSetState) setState(() {});
                                                                                   return;
@@ -3559,6 +3704,14 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       10.0),
                                                         ),
                                                         child: InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
                                                                 'EVENT_CREATE_ImageAnnouncement_ON_TAP');
@@ -3600,6 +3753,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                               bytes: m.bytes,
                                                                               height: m.dimensions?.height,
                                                                               width: m.dimensions?.width,
+                                                                              blurHash: m.blurHash,
                                                                             ))
                                                                         .toList();
 
@@ -4041,29 +4195,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                   .announcement!
                                                                   .reference !=
                                                               null) {
-                                                            logFirebaseEvent(
-                                                                'Button_alert_dialog');
-                                                            await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: Text(
-                                                                      'Success'),
-                                                                  content: Text(
-                                                                      'Your Announcement is to be confirmed'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed:
-                                                                          () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                      child: Text(
-                                                                          'Ok'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
                                                             logFirebaseEvent(
                                                                 'Button_backend_call');
 

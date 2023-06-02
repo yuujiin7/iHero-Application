@@ -160,6 +160,10 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 5.0, 0.0, 10.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'HELP_CENTER_DRAWER_Container_i3jsu3hp_ON');
@@ -237,6 +241,10 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 10.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'HELP_CENTER_DRAWER_Container_ad3b5gz2_ON');
@@ -363,6 +371,10 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 5.0, 0.0, 10.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'HELP_CENTER_DRAWER_Container_mt9r9b19_ON');
@@ -440,6 +452,10 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 10.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'HELP_CENTER_DRAWER_Container_vjgn70ln_ON');

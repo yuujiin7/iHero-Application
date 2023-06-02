@@ -45,7 +45,7 @@ class _AboutIHEROWidgetState extends State<AboutIHEROWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('AboutIHERO_custom_action');
@@ -106,6 +106,7 @@ class _AboutIHEROWidgetState extends State<AboutIHEROWidget> {
             key: scaffoldKey,
             backgroundColor: Color(0xFFEBEFF7),
             body: SafeArea(
+              top: true,
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEFF7),
@@ -328,6 +329,10 @@ class _AboutIHEROWidgetState extends State<AboutIHEROWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'ABOUT_I_H_E_R_O_Container_b1xsr0lk_ON_TA');
@@ -416,6 +421,10 @@ class _AboutIHEROWidgetState extends State<AboutIHEROWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'ABOUT_I_H_E_R_O_Container_37peuek3_ON_TA');
@@ -504,6 +513,10 @@ class _AboutIHEROWidgetState extends State<AboutIHEROWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'ABOUT_I_H_E_R_O_Container_cvr5o7gl_ON_TA');

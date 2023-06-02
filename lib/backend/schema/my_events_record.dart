@@ -1,31 +1,47 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'my_events_record.g.dart';
+class MyEventsRecord extends FirestoreRecord {
+  MyEventsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class MyEventsRecord
-    implements Built<MyEventsRecord, MyEventsRecordBuilder> {
-  static Serializer<MyEventsRecord> get serializer =>
-      _$myEventsRecordSerializer;
+  // "dateJoined" field.
+  DateTime? _dateJoined;
+  DateTime? get dateJoined => _dateJoined;
+  bool hasDateJoined() => _dateJoined != null;
 
-  DateTime? get dateJoined;
+  // "eventReference" field.
+  DocumentReference? _eventReference;
+  DocumentReference? get eventReference => _eventReference;
+  bool hasEventReference() => _eventReference != null;
 
-  DocumentReference? get eventReference;
+  // "userRef" field.
+  DocumentReference? _userRef;
+  DocumentReference? get userRef => _userRef;
+  bool hasUserRef() => _userRef != null;
 
-  DocumentReference? get userRef;
-
-  DateTime? get dateCreated;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
+  // "dateCreated" field.
+  DateTime? _dateCreated;
+  DateTime? get dateCreated => _dateCreated;
+  bool hasDateCreated() => _dateCreated != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  static void _initializeBuilder(MyEventsRecordBuilder builder) => builder;
+  void _initializeFields() {
+    _dateJoined = snapshotData['dateJoined'] as DateTime?;
+    _eventReference = snapshotData['eventReference'] as DocumentReference?;
+    _userRef = snapshotData['userRef'] as DocumentReference?;
+    _dateCreated = snapshotData['dateCreated'] as DateTime?;
+  }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -35,22 +51,27 @@ abstract class MyEventsRecord
   static DocumentReference createDoc(DocumentReference parent) =>
       parent.collection('myEvents').doc();
 
-  static Stream<MyEventsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<MyEventsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => MyEventsRecord.fromSnapshot(s));
 
-  static Future<MyEventsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<MyEventsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => MyEventsRecord.fromSnapshot(s));
 
-  MyEventsRecord._();
-  factory MyEventsRecord([void Function(MyEventsRecordBuilder) updates]) =
-      _$MyEventsRecord;
+  static MyEventsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      MyEventsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static MyEventsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      MyEventsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'MyEventsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createMyEventsRecordData({
@@ -59,15 +80,13 @@ Map<String, dynamic> createMyEventsRecordData({
   DocumentReference? userRef,
   DateTime? dateCreated,
 }) {
-  final firestoreData = serializers.toFirestore(
-    MyEventsRecord.serializer,
-    MyEventsRecord(
-      (m) => m
-        ..dateJoined = dateJoined
-        ..eventReference = eventReference
-        ..userRef = userRef
-        ..dateCreated = dateCreated,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'dateJoined': dateJoined,
+      'eventReference': eventReference,
+      'userRef': userRef,
+      'dateCreated': dateCreated,
+    }.withoutNulls,
   );
 
   return firestoreData;

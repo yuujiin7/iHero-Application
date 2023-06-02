@@ -431,8 +431,8 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                             await showDatePicker(
                                           context: context,
                                           initialDate: getCurrentTimestamp,
-                                          firstDate: getCurrentTimestamp,
-                                          lastDate: DateTime(2050),
+                                          firstDate: DateTime(1900),
+                                          lastDate: getCurrentTimestamp,
                                         );
 
                                         TimeOfDay? _datePickedTime;
@@ -705,6 +705,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                                               ?.height,
                                                           width: m.dimensions
                                                               ?.width,
+                                                          blurHash: m.blurHash,
                                                         ))
                                                     .toList();
 

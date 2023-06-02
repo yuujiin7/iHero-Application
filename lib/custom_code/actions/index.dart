@@ -29,4 +29,4 @@ export 'update_merit_score_for_current_user1.dart'
 export 'checkifhourbefore.dart' show checkifhourbefore;
 export 'get_near_events.dart' show getNearEvents;
 export 'has_joined_event_within_hour.dart' show hasJoinedEventWithinHour;
-export 'check_user_event_interval.dart' show checkUserEventInterval;
+export 'can_volunteer_join_event.dart' show canVolunteerJoinEvent;

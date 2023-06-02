@@ -44,6 +44,10 @@ class _SearchForCountryCodeWidgetState
     context.watch<FFAppState>();
 
     return InkWell(
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () async {
         logFirebaseEvent('SEARCH_FOR_COUNTRY_CODE_Container_8lem13');
         logFirebaseEvent('Container_bottom_sheet');

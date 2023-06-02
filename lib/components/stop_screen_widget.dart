@@ -169,6 +169,10 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                         ),
                       ),
                       InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () async {
                           logFirebaseEvent(
                               'STOP_SCREEN_COMP_Text_j8zu3w63_ON_TAP');
@@ -235,6 +239,10 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
                         ),
                       ),
                       InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () async {
                           logFirebaseEvent(
                               'STOP_SCREEN_COMP_Text_420kagjb_ON_TAP');
@@ -249,7 +257,7 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
 
                           logFirebaseEvent('Text_navigate_to');
 
-                          context.pushNamedAuth('Login', mounted);
+                          context.goNamedAuth('Login', context.mounted);
                         },
                         child: Text(
                           'Click Here',

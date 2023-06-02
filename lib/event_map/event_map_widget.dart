@@ -49,7 +49,7 @@ class _EventMapWidgetState extends State<EventMapWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('eventMap_custom_action');
@@ -118,6 +118,7 @@ class _EventMapWidgetState extends State<EventMapWidget> {
           body: Builder(
             builder: (context) {
               return SafeArea(
+                top: false,
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,

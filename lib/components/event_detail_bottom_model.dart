@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class EventDetailBottomModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this component.
 
-  // Stores action output result for [Custom Action - checkUserEventInterval] action in Button widget.
+  // Stores action output result for [Custom Action - canVolunteerJoinEvent] action in Button widget.
   bool? hasJoined;
 
   /// Initialization and disposal methods.

@@ -45,7 +45,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('OurTeam_custom_action');
@@ -106,6 +106,7 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
             key: scaffoldKey,
             backgroundColor: Color(0xFFEBEFF7),
             body: SafeArea(
+              top: true,
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEFF7),

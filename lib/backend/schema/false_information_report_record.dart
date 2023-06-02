@@ -1,84 +1,120 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'false_information_report_record.g.dart';
+class FalseInformationReportRecord extends FirestoreRecord {
+  FalseInformationReportRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class FalseInformationReportRecord
-    implements
-        Built<FalseInformationReportRecord,
-            FalseInformationReportRecordBuilder> {
-  static Serializer<FalseInformationReportRecord> get serializer =>
-      _$falseInformationReportRecordSerializer;
+  // "fullName" field.
+  String? _fullName;
+  String get fullName => _fullName ?? '';
+  bool hasFullName() => _fullName != null;
 
-  String? get fullName;
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
 
-  String? get email;
+  // "reportDetail" field.
+  String? _reportDetail;
+  String get reportDetail => _reportDetail ?? '';
+  bool hasReportDetail() => _reportDetail != null;
 
-  String? get reportDetail;
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  String? get photoUrl;
+  // "report_by" field.
+  DocumentReference? _reportBy;
+  DocumentReference? get reportBy => _reportBy;
+  bool hasReportBy() => _reportBy != null;
 
-  @BuiltValueField(wireName: 'report_by')
-  DocumentReference? get reportBy;
+  // "reported_at" field.
+  DateTime? _reportedAt;
+  DateTime? get reportedAt => _reportedAt;
+  bool hasReportedAt() => _reportedAt != null;
 
-  @BuiltValueField(wireName: 'reported_at')
-  DateTime? get reportedAt;
+  // "isConfirmbySA" field.
+  bool? _isConfirmbySA;
+  bool get isConfirmbySA => _isConfirmbySA ?? false;
+  bool hasIsConfirmbySA() => _isConfirmbySA != null;
 
-  bool? get isConfirmbySA;
+  // "isDeclined" field.
+  bool? _isDeclined;
+  bool get isDeclined => _isDeclined ?? false;
+  bool hasIsDeclined() => _isDeclined != null;
 
-  bool? get isDeclined;
+  // "reason" field.
+  String? _reason;
+  String get reason => _reason ?? '';
+  bool hasReason() => _reason != null;
 
-  String? get reason;
+  // "isDeleted" field.
+  bool? _isDeleted;
+  bool get isDeleted => _isDeleted ?? false;
+  bool hasIsDeleted() => _isDeleted != null;
 
-  bool? get isDeleted;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "isSeen" field.
+  bool? _isSeen;
+  bool get isSeen => _isSeen ?? false;
+  bool hasIsSeen() => _isSeen != null;
 
-  bool? get isSeen;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(FalseInformationReportRecordBuilder builder) =>
-      builder
-        ..fullName = ''
-        ..email = ''
-        ..reportDetail = ''
-        ..photoUrl = ''
-        ..isConfirmbySA = false
-        ..isDeclined = false
-        ..reason = ''
-        ..isDeleted = false
-        ..isSeen = false;
+  void _initializeFields() {
+    _fullName = snapshotData['fullName'] as String?;
+    _email = snapshotData['email'] as String?;
+    _reportDetail = snapshotData['reportDetail'] as String?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _reportBy = snapshotData['report_by'] as DocumentReference?;
+    _reportedAt = snapshotData['reported_at'] as DateTime?;
+    _isConfirmbySA = snapshotData['isConfirmbySA'] as bool?;
+    _isDeclined = snapshotData['isDeclined'] as bool?;
+    _reason = snapshotData['reason'] as String?;
+    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _isSeen = snapshotData['isSeen'] as bool?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('false_information_report');
 
   static Stream<FalseInformationReportRecord> getDocument(
           DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.snapshots().map((s) => FalseInformationReportRecord.fromSnapshot(s));
 
   static Future<FalseInformationReportRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => FalseInformationReportRecord.fromSnapshot(s));
 
-  FalseInformationReportRecord._();
-  factory FalseInformationReportRecord(
-          [void Function(FalseInformationReportRecordBuilder) updates]) =
-      _$FalseInformationReportRecord;
+  static FalseInformationReportRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      FalseInformationReportRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static FalseInformationReportRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      FalseInformationReportRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'FalseInformationReportRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createFalseInformationReportRecordData({
@@ -95,23 +131,21 @@ Map<String, dynamic> createFalseInformationReportRecordData({
   DateTime? expiryDate,
   bool? isSeen,
 }) {
-  final firestoreData = serializers.toFirestore(
-    FalseInformationReportRecord.serializer,
-    FalseInformationReportRecord(
-      (f) => f
-        ..fullName = fullName
-        ..email = email
-        ..reportDetail = reportDetail
-        ..photoUrl = photoUrl
-        ..reportBy = reportBy
-        ..reportedAt = reportedAt
-        ..isConfirmbySA = isConfirmbySA
-        ..isDeclined = isDeclined
-        ..reason = reason
-        ..isDeleted = isDeleted
-        ..expiryDate = expiryDate
-        ..isSeen = isSeen,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'fullName': fullName,
+      'email': email,
+      'reportDetail': reportDetail,
+      'photo_url': photoUrl,
+      'report_by': reportBy,
+      'reported_at': reportedAt,
+      'isConfirmbySA': isConfirmbySA,
+      'isDeclined': isDeclined,
+      'reason': reason,
+      'isDeleted': isDeleted,
+      'expiry_date': expiryDate,
+      'isSeen': isSeen,
+    }.withoutNulls,
   );
 
   return firestoreData;

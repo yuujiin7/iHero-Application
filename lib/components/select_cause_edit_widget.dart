@@ -90,8 +90,7 @@ class _SelectCauseEditWidgetState extends State<SelectCauseEditWidget> {
                                 controller: _model.dropDownValueController ??=
                                     FormFieldController<String>(null),
                                 options: functions
-                                    .sortList(FFAppState().CauseList.toList())
-                                    .toList(),
+                                    .sortList(FFAppState().CauseList.toList()),
                                 onChanged: (val) =>
                                     setState(() => _model.dropDownValue = val),
                                 width: 180.0,
@@ -175,7 +174,7 @@ class _SelectCauseEditWidgetState extends State<SelectCauseEditWidget> {
                     return Builder(
                       builder: (context) {
                         final eventTags =
-                            listViewEventsRecord.eventTag!.toList();
+                            listViewEventsRecord.eventTag.toList();
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.horizontal,

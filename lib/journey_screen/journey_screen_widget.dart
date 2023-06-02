@@ -76,6 +76,7 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,

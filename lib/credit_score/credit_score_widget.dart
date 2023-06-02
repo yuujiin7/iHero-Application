@@ -83,6 +83,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
           ),
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,

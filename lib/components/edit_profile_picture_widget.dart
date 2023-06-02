@@ -98,6 +98,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                               bytes: m.bytes,
                               height: m.dimensions?.height,
                               width: m.dimensions?.width,
+                              blurHash: m.blurHash,
                             ))
                         .toList();
 

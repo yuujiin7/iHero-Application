@@ -88,8 +88,7 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                 controller: _model.dropDownValueController ??=
                                     FormFieldController<String>(null),
                                 options: functions
-                                    .sortList(FFAppState().CauseList.toList())
-                                    .toList(),
+                                    .sortList(FFAppState().CauseList.toList()),
                                 onChanged: (val) =>
                                     setState(() => _model.dropDownValue = val),
                                 width: 180.0,
@@ -136,15 +135,40 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'SELECT_CAUSE_CREATE_add_rounded_ICN_ON_T');
-                                  logFirebaseEvent(
-                                      'IconButton_update_widget_state');
-                                  _model.updatePage(() {
-                                    _model.addToSelectedTagsList(
-                                        _model.dropDownValue!);
-                                  });
-                                  logFirebaseEvent(
-                                      'IconButton_update_widget_state');
-                                  setState(() {});
+                                  if (_model.selectedTagsList
+                                          .contains(_model.dropDownValue)
+                                      ? true
+                                      : false) {
+                                    logFirebaseEvent(
+                                        'IconButton_show_snack_bar');
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'This cause is already in the list.',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                  } else {
+                                    logFirebaseEvent(
+                                        'IconButton_update_widget_state');
+                                    _model.updatePage(() {
+                                      _model.addToSelectedTagsList(
+                                          _model.dropDownValue!);
+                                    });
+                                    logFirebaseEvent(
+                                        'IconButton_update_widget_state');
+                                    setState(() {});
+                                  }
                                 },
                               ),
                             ),

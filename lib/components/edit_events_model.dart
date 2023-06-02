@@ -149,9 +149,7 @@ class EditEventsModel extends FlutterFlowModel {
     if (val.length > 3) {
       return 'Maximum 3 characters allowed, currently ${val.length}.';
     }
-    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
-      return 'Invalid text';
-    }
+
     return null;
   }
 

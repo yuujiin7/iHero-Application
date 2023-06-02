@@ -57,7 +57,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('announcementDetails_custom_action');
@@ -138,7 +138,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                 },
               ),
               title: AutoSizeText(
-                widget.announcementdetails!.title!,
+                widget.announcementdetails!.title,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily: 'Ubuntu',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
@@ -244,6 +244,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -263,6 +264,10 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                         color: Color(0xFFEEEEEE),
                       ),
                       child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () async {
                           logFirebaseEvent(
                               'ANNOUNCEMENT_DETAILS_Image_wsxsam92_ON_T');
@@ -314,7 +319,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           AutoSizeText(
-                            widget.announcementdetails!.title!,
+                            widget.announcementdetails!.title,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -344,7 +349,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AutoSizeText(
-                                  widget.announcementdetails!.body!,
+                                  widget.announcementdetails!.body,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(

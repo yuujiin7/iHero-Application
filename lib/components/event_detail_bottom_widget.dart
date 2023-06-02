@@ -130,7 +130,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.eventDetails!.eventTitle!,
+                          widget.eventDetails!.eventTitle,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -174,7 +174,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                 ),
                           ),
                           Text(
-                            widget.eventDetails!.eventAddress!,
+                            widget.eventDetails!.eventAddress,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -291,7 +291,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      widget.eventDetails!.eventInChargePerson!,
+                      widget.eventDetails!.eventInChargePerson,
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Barlow',
@@ -311,7 +311,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      widget.eventDetails!.eventContactNumber!,
+                      widget.eventDetails!.eventContactNumber,
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Barlow',
@@ -358,7 +358,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                             ),
                       ),
                       Text(
-                        widget.eventDetails!.eventDescription!,
+                        widget.eventDetails!.eventDescription,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Barlow',
                               color: FlutterFlowTheme.of(context)
@@ -382,11 +382,10 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                   children: [
                     if ((widget.eventDetails!.neededVolunteer ==
                             widget.eventDetails!.volunteerCount) ||
-                        (widget.eventDetails!.registrationDate! <
+                        (widget.eventDetails!.registrationDate! >
                             getCurrentTimestamp))
                       FFButtonWidget(
-                        onPressed: widget.eventDetails!.volunteerRef!
-                                .toList()
+                        onPressed: widget.eventDetails!.volunteerRef
                                 .contains(currentUserReference)
                             ? null
                             : () async {
@@ -395,12 +394,12 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                 var _shouldSetState = false;
                                 logFirebaseEvent('Button_custom_action');
                                 _model.hasJoined =
-                                    await actions.checkUserEventInterval(
-                                  currentUserUid,
-                                  widget.eventDetails!.reference.id,
+                                    await actions.canVolunteerJoinEvent(
+                                  currentUserReference!.id,
+                                  widget.eventDetails!.eventDateStart!,
                                 );
                                 _shouldSetState = true;
-                                if (_model.hasJoined!) {
+                                if (!_model.hasJoined!) {
                                   logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
@@ -515,9 +514,12 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                       return;
                                     } else {
                                       if (valueOrDefault(
-                                              currentUserDocument?.age, 0) <
-                                          widget
-                                              .eventDetails!.ageRequirement!) {
+                                                  currentUserDocument?.age,
+                                                  0) >=
+                                              widget
+                                                  .eventDetails!.ageRequirement
+                                          ? false
+                                          : true) {
                                         logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
@@ -617,8 +619,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
 
                                 if (_shouldSetState) setState(() {});
                               },
-                        text: widget.eventDetails!.volunteerRef!
-                                .toList()
+                        text: widget.eventDetails!.volunteerRef
                                 .contains(currentUserReference)
                             ? 'Registered'
                             : 'Volunteer',

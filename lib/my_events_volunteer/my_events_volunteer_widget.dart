@@ -106,6 +106,10 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primary,
             automaticallyImplyLeading: false,
             leading: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               onTap: () async {
                 logFirebaseEvent('MY_EVENTS_VOLUNTEER_Icon_c52h4iaz_ON_TAP');
                 logFirebaseEvent('Icon_navigate_back');
@@ -132,6 +136,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
             elevation: 0.0,
           ),
           body: SafeArea(
+            top: true,
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -152,34 +157,38 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                           2),
                       child: Column(
                         children: [
-                          TabBar(
-                            isScrollable: true,
-                            labelColor: FlutterFlowTheme.of(context).primary,
-                            unselectedLabelColor:
-                                FlutterFlowTheme.of(context).secondaryText,
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyMediumFamily,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w500,
-                                  useGoogleFonts: GoogleFonts.asMap()
-                                      .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyMediumFamily),
+                          Align(
+                            alignment: Alignment(0.0, 0),
+                            child: TabBar(
+                              isScrollable: true,
+                              labelColor: FlutterFlowTheme.of(context).primary,
+                              unselectedLabelColor:
+                                  FlutterFlowTheme.of(context).secondaryText,
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyMediumFamily,
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              indicatorColor: Color(0xFFFFA534),
+                              tabs: [
+                                Tab(
+                                  text: 'Upcoming',
                                 ),
-                            indicatorColor: Color(0xFFFFA534),
-                            tabs: [
-                              Tab(
-                                text: 'Upcoming',
-                              ),
-                              Tab(
-                                text: 'Ongoing',
-                              ),
-                              Tab(
-                                text: 'Finished',
-                              ),
-                            ],
+                                Tab(
+                                  text: 'Ongoing',
+                                ),
+                                Tab(
+                                  text: 'Finished',
+                                ),
+                              ],
+                            ),
                           ),
                           Expanded(
                             child: TabBarView(
@@ -310,7 +319,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                               .data!;
                                                                       return Text(
                                                                         textPartnerOrgRecord
-                                                                            .orgName!,
+                                                                            .orgName,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
@@ -395,7 +404,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                                       color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                     ),
                                                                                     child: Text(
-                                                                                      upcomingItem.eventTitle!,
+                                                                                      upcomingItem.eventTitle,
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                             color: FlutterFlowTheme.of(context).primaryText,
@@ -460,6 +469,15 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                             thickness: 1.0,
                                                           ),
                                                           InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
                                                             onTap: () async {
                                                               logFirebaseEvent(
                                                                   'MY_EVENTS_VOLUNTEER_Row_7hnb9w4v_ON_TAP');
@@ -703,7 +721,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                             .data!;
                                                                     return Text(
                                                                       textPartnerOrgRecord
-                                                                          .orgName!,
+                                                                          .orgName,
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -790,7 +808,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                                 MainAxisSize.max,
                                                                             children: [
                                                                               Text(
-                                                                                ongoingItem.eventTitle!,
+                                                                                ongoingItem.eventTitle,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                       fontSize: 16.0,
@@ -852,6 +870,14 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                           thickness: 1.0,
                                                         ),
                                                         InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
                                                                 'MY_EVENTS_VOLUNTEER_Row_5o8r4uxn_ON_TAP');
@@ -1095,7 +1121,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                             .data!;
                                                                     return Text(
                                                                       textPartnerOrgRecord
-                                                                          .orgName!,
+                                                                          .orgName,
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -1182,7 +1208,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                                 MainAxisSize.max,
                                                                             children: [
                                                                               Text(
-                                                                                finishedItem.eventTitle!,
+                                                                                finishedItem.eventTitle,
                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                       fontSize: 16.0,
@@ -1244,6 +1270,14 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                           thickness: 1.0,
                                                         ),
                                                         InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
                                                                 'MY_EVENTS_VOLUNTEER_Row_hjr6lb28_ON_TAP');

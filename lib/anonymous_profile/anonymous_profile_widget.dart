@@ -167,9 +167,17 @@ class _AnonymousProfileWidgetState extends State<AnonymousProfileWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                 child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onTap: () async {
                     logFirebaseEvent(
                         'ANONYMOUS_PROFILE_Container_yqpqgh08_ON_');
+                    logFirebaseEvent('Container_backend_call');
+                    await currentUserReference!.delete();
+                    logFirebaseEvent('Container_auth');
+                    await authManager.deleteUser(context);
                     logFirebaseEvent('Container_navigate_to');
 
                     context.goNamed(
@@ -244,6 +252,10 @@ class _AnonymousProfileWidgetState extends State<AnonymousProfileWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
                 child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onTap: () async {
                     logFirebaseEvent(
                         'ANONYMOUS_PROFILE_Container_k8pldn27_ON_');

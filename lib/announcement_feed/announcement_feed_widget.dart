@@ -46,7 +46,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('announcementFeed_custom_action');
@@ -143,6 +143,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
           body: Builder(
             builder: (context) {
               return SafeArea(
+                top: false,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -491,7 +492,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                             0.0),
                                                                     child: Text(
                                                                       userInfoUsersRecord
-                                                                          .displayName!,
+                                                                          .displayName,
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium,
@@ -538,6 +539,14 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                 .circular(0.0),
                                                       ),
                                                       child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
                                                               'ANNOUNCEMENT_FEED_Image_q5q8xxnh_ON_TAP');
@@ -619,8 +628,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                           listViewAnnouncementRecord
                                                                               .reference;
                                                                       final likedByUpdate = listViewAnnouncementRecord
-                                                                              .likedBy!
-                                                                              .toList()
+                                                                              .likedBy
                                                                               .contains(
                                                                                   likedByElement)
                                                                           ? FieldValue
@@ -642,8 +650,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                               announcementUpdateData);
                                                                     },
                                                                     value: listViewAnnouncementRecord
-                                                                        .likedBy!
-                                                                        .toList()
+                                                                        .likedBy
                                                                         .contains(
                                                                             listViewAnnouncementRecord.reference),
                                                                     onIcon:
@@ -677,8 +684,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                     child: Text(
                                                                       formatNumber(
                                                                         listViewAnnouncementRecord
-                                                                            .likedBy!
-                                                                            .toList()
+                                                                            .likedBy
                                                                             .length,
                                                                         formatType:
                                                                             FormatType.compact,
@@ -716,7 +722,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                         10.0),
                                                             child: Text(
                                                               listViewAnnouncementRecord
-                                                                  .title!,
+                                                                  .title,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium,

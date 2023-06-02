@@ -90,7 +90,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Memoralization Request',
+                              'Memorialization Request',
                               style: FlutterFlowTheme.of(context)
                                   .headlineMedium
                                   .override(
@@ -596,6 +596,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                                               ?.height,
                                                           width: m.dimensions
                                                               ?.width,
+                                                          blurHash: m.blurHash,
                                                         ))
                                                     .toList();
 
@@ -669,7 +670,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: Text('Memoralization Request'),
+                                    title: Text('Memorialization Request'),
                                     content: Text(
                                         'Are you sure you want to submit this request?'),
                                     actions: [
@@ -723,7 +724,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                               builder: (alertDialogContext) {
                                 return AlertDialog(
                                   title: Text('Success'),
-                                  content: Text('Report has been made'),
+                                  content: Text('Request has been made'),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>

@@ -1,89 +1,136 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'partner_org_record.g.dart';
+class PartnerOrgRecord extends FirestoreRecord {
+  PartnerOrgRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class PartnerOrgRecord
-    implements Built<PartnerOrgRecord, PartnerOrgRecordBuilder> {
-  static Serializer<PartnerOrgRecord> get serializer =>
-      _$partnerOrgRecordSerializer;
+  // "website_url" field.
+  String? _websiteUrl;
+  String get websiteUrl => _websiteUrl ?? '';
+  bool hasWebsiteUrl() => _websiteUrl != null;
 
-  @BuiltValueField(wireName: 'website_url')
-  String? get websiteUrl;
+  // "org_name" field.
+  String? _orgName;
+  String get orgName => _orgName ?? '';
+  bool hasOrgName() => _orgName != null;
 
-  @BuiltValueField(wireName: 'org_name')
-  String? get orgName;
+  // "description" field.
+  String? _description;
+  String get description => _description ?? '';
+  bool hasDescription() => _description != null;
 
-  String? get description;
+  // "contactPerson" field.
+  String? _contactPerson;
+  String get contactPerson => _contactPerson ?? '';
+  bool hasContactPerson() => _contactPerson != null;
 
-  String? get contactPerson;
+  // "contactNumber" field.
+  String? _contactNumber;
+  String get contactNumber => _contactNumber ?? '';
+  bool hasContactNumber() => _contactNumber != null;
 
-  String? get contactNumber;
+  // "mission" field.
+  String? _mission;
+  String get mission => _mission ?? '';
+  bool hasMission() => _mission != null;
 
-  String? get mission;
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
 
-  String? get email;
+  // "address" field.
+  String? _address;
+  String get address => _address ?? '';
+  bool hasAddress() => _address != null;
 
-  String? get address;
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  String? get photoUrl;
+  // "admin_ref" field.
+  DocumentReference? _adminRef;
+  DocumentReference? get adminRef => _adminRef;
+  bool hasAdminRef() => _adminRef != null;
 
-  @BuiltValueField(wireName: 'admin_ref')
-  DocumentReference? get adminRef;
+  // "isDeleted" field.
+  bool? _isDeleted;
+  bool get isDeleted => _isDeleted ?? false;
+  bool hasIsDeleted() => _isDeleted != null;
 
-  bool? get isDeleted;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "created_by" field.
+  DateTime? _createdBy;
+  DateTime? get createdBy => _createdBy;
+  bool hasCreatedBy() => _createdBy != null;
 
-  @BuiltValueField(wireName: 'created_by')
-  DateTime? get createdBy;
+  // "created_at" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
-  @BuiltValueField(wireName: 'created_at')
-  DateTime? get createdAt;
+  // "orgType" field.
+  String? _orgType;
+  String get orgType => _orgType ?? '';
+  bool hasOrgType() => _orgType != null;
 
-  String? get orgType;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(PartnerOrgRecordBuilder builder) => builder
-    ..websiteUrl = ''
-    ..orgName = ''
-    ..description = ''
-    ..contactPerson = ''
-    ..contactNumber = ''
-    ..mission = ''
-    ..email = ''
-    ..address = ''
-    ..photoUrl = ''
-    ..isDeleted = false
-    ..orgType = '';
+  void _initializeFields() {
+    _websiteUrl = snapshotData['website_url'] as String?;
+    _orgName = snapshotData['org_name'] as String?;
+    _description = snapshotData['description'] as String?;
+    _contactPerson = snapshotData['contactPerson'] as String?;
+    _contactNumber = snapshotData['contactNumber'] as String?;
+    _mission = snapshotData['mission'] as String?;
+    _email = snapshotData['email'] as String?;
+    _address = snapshotData['address'] as String?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _adminRef = snapshotData['admin_ref'] as DocumentReference?;
+    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _createdBy = snapshotData['created_by'] as DateTime?;
+    _createdAt = snapshotData['created_at'] as DateTime?;
+    _orgType = snapshotData['orgType'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('partnerOrg');
 
-  static Stream<PartnerOrgRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<PartnerOrgRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => PartnerOrgRecord.fromSnapshot(s));
 
-  static Future<PartnerOrgRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<PartnerOrgRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => PartnerOrgRecord.fromSnapshot(s));
 
-  PartnerOrgRecord._();
-  factory PartnerOrgRecord([void Function(PartnerOrgRecordBuilder) updates]) =
-      _$PartnerOrgRecord;
+  static PartnerOrgRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      PartnerOrgRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static PartnerOrgRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      PartnerOrgRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'PartnerOrgRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createPartnerOrgRecordData({
@@ -103,26 +150,24 @@ Map<String, dynamic> createPartnerOrgRecordData({
   DateTime? createdAt,
   String? orgType,
 }) {
-  final firestoreData = serializers.toFirestore(
-    PartnerOrgRecord.serializer,
-    PartnerOrgRecord(
-      (p) => p
-        ..websiteUrl = websiteUrl
-        ..orgName = orgName
-        ..description = description
-        ..contactPerson = contactPerson
-        ..contactNumber = contactNumber
-        ..mission = mission
-        ..email = email
-        ..address = address
-        ..photoUrl = photoUrl
-        ..adminRef = adminRef
-        ..isDeleted = isDeleted
-        ..expiryDate = expiryDate
-        ..createdBy = createdBy
-        ..createdAt = createdAt
-        ..orgType = orgType,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'website_url': websiteUrl,
+      'org_name': orgName,
+      'description': description,
+      'contactPerson': contactPerson,
+      'contactNumber': contactNumber,
+      'mission': mission,
+      'email': email,
+      'address': address,
+      'photo_url': photoUrl,
+      'admin_ref': adminRef,
+      'isDeleted': isDeleted,
+      'expiry_date': expiryDate,
+      'created_by': createdBy,
+      'created_at': createdAt,
+      'orgType': orgType,
+    }.withoutNulls,
   );
 
   return firestoreData;

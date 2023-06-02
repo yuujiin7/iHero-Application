@@ -68,6 +68,10 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     onTap: () async {
                       logFirebaseEvent(
                           'COUNTRY_CODE_COMP_Icon_rd8lry2g_ON_TAP');
@@ -230,6 +234,10 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                     return Card(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'COUNTRY_CODE_Container_n6ele06v_ON_TAP');
@@ -438,6 +446,10 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                           Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
                                     'COUNTRY_CODE_Container_d89zvhru_ON_TAP');

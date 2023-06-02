@@ -103,11 +103,6 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                       ) ??
                       false;
                   if (confirmDialogResponse) {
-                    logFirebaseEvent('Button_auth');
-                    GoRouter.of(context).prepareAuthEvent(true);
-                    await authManager.signOut();
-                    GoRouter.of(context).clearRedirectLocation();
-
                     logFirebaseEvent('Button_backend_call');
 
                     final logsCreateData = createLogsRecordData(
@@ -117,11 +112,16 @@ class _ConfirmLogoutWidgetState extends State<ConfirmLogoutWidget> {
                     );
                     await LogsRecord.createDoc(currentUserReference!)
                         .set(logsCreateData);
+                    logFirebaseEvent('Button_auth');
+                    GoRouter.of(context).prepareAuthEvent(true);
+                    await authManager.signOut();
+                    GoRouter.of(context).clearRedirectLocation();
+
                     logFirebaseEvent('Button_navigate_to');
 
                     context.goNamedAuth(
                       'Login',
-                      mounted,
+                      context.mounted,
                       ignoreRedirect: true,
                     );
                   } else {

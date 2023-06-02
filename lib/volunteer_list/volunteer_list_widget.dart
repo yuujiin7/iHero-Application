@@ -51,7 +51,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('volunteerList_custom_action');
@@ -149,6 +149,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -234,7 +235,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                volunteerlistItem.displayName!,
+                                                volunteerlistItem.displayName,
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -269,7 +270,7 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                volunteerlistItem.email!,
+                                                volunteerlistItem.email,
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)

@@ -132,6 +132,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
+          top: true,
           child: Form(
             key: _model.formKey,
             autovalidateMode: AutovalidateMode.disabled,

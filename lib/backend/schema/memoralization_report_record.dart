@@ -1,79 +1,114 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'memoralization_report_record.g.dart';
+class MemoralizationReportRecord extends FirestoreRecord {
+  MemoralizationReportRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class MemoralizationReportRecord
-    implements
-        Built<MemoralizationReportRecord, MemoralizationReportRecordBuilder> {
-  static Serializer<MemoralizationReportRecord> get serializer =>
-      _$memoralizationReportRecordSerializer;
+  // "fullName" field.
+  String? _fullName;
+  String get fullName => _fullName ?? '';
+  bool hasFullName() => _fullName != null;
 
-  String? get fullName;
+  // "dateOfDeath" field.
+  DateTime? _dateOfDeath;
+  DateTime? get dateOfDeath => _dateOfDeath;
+  bool hasDateOfDeath() => _dateOfDeath != null;
 
-  DateTime? get dateOfDeath;
+  // "photo_url" field.
+  List<String>? _photoUrl;
+  List<String> get photoUrl => _photoUrl ?? const [];
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  BuiltList<String>? get photoUrl;
+  // "report_by" field.
+  DocumentReference? _reportBy;
+  DocumentReference? get reportBy => _reportBy;
+  bool hasReportBy() => _reportBy != null;
 
-  @BuiltValueField(wireName: 'report_by')
-  DocumentReference? get reportBy;
+  // "reported_at" field.
+  DateTime? _reportedAt;
+  DateTime? get reportedAt => _reportedAt;
+  bool hasReportedAt() => _reportedAt != null;
 
-  @BuiltValueField(wireName: 'reported_at')
-  DateTime? get reportedAt;
+  // "isConfirmbySA" field.
+  bool? _isConfirmbySA;
+  bool get isConfirmbySA => _isConfirmbySA ?? false;
+  bool hasIsConfirmbySA() => _isConfirmbySA != null;
 
-  bool? get isConfirmbySA;
+  // "isDeclined" field.
+  bool? _isDeclined;
+  bool get isDeclined => _isDeclined ?? false;
+  bool hasIsDeclined() => _isDeclined != null;
 
-  bool? get isDeclined;
+  // "reason" field.
+  String? _reason;
+  String get reason => _reason ?? '';
+  bool hasReason() => _reason != null;
 
-  String? get reason;
+  // "isDeleted" field.
+  String? _isDeleted;
+  String get isDeleted => _isDeleted ?? '';
+  bool hasIsDeleted() => _isDeleted != null;
 
-  String? get isDeleted;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "isSeen" field.
+  bool? _isSeen;
+  bool get isSeen => _isSeen ?? false;
+  bool hasIsSeen() => _isSeen != null;
 
-  bool? get isSeen;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(MemoralizationReportRecordBuilder builder) =>
-      builder
-        ..fullName = ''
-        ..photoUrl = ListBuilder()
-        ..isConfirmbySA = false
-        ..isDeclined = false
-        ..reason = ''
-        ..isDeleted = ''
-        ..isSeen = false;
+  void _initializeFields() {
+    _fullName = snapshotData['fullName'] as String?;
+    _dateOfDeath = snapshotData['dateOfDeath'] as DateTime?;
+    _photoUrl = getDataList(snapshotData['photo_url']);
+    _reportBy = snapshotData['report_by'] as DocumentReference?;
+    _reportedAt = snapshotData['reported_at'] as DateTime?;
+    _isConfirmbySA = snapshotData['isConfirmbySA'] as bool?;
+    _isDeclined = snapshotData['isDeclined'] as bool?;
+    _reason = snapshotData['reason'] as String?;
+    _isDeleted = snapshotData['isDeleted'] as String?;
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _isSeen = snapshotData['isSeen'] as bool?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('memoralization_report');
 
   static Stream<MemoralizationReportRecord> getDocument(
           DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.snapshots().map((s) => MemoralizationReportRecord.fromSnapshot(s));
 
   static Future<MemoralizationReportRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => MemoralizationReportRecord.fromSnapshot(s));
 
-  MemoralizationReportRecord._();
-  factory MemoralizationReportRecord(
-          [void Function(MemoralizationReportRecordBuilder) updates]) =
-      _$MemoralizationReportRecord;
+  static MemoralizationReportRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      MemoralizationReportRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static MemoralizationReportRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      MemoralizationReportRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'MemoralizationReportRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createMemoralizationReportRecordData({
@@ -88,22 +123,19 @@ Map<String, dynamic> createMemoralizationReportRecordData({
   DateTime? expiryDate,
   bool? isSeen,
 }) {
-  final firestoreData = serializers.toFirestore(
-    MemoralizationReportRecord.serializer,
-    MemoralizationReportRecord(
-      (m) => m
-        ..fullName = fullName
-        ..dateOfDeath = dateOfDeath
-        ..photoUrl = null
-        ..reportBy = reportBy
-        ..reportedAt = reportedAt
-        ..isConfirmbySA = isConfirmbySA
-        ..isDeclined = isDeclined
-        ..reason = reason
-        ..isDeleted = isDeleted
-        ..expiryDate = expiryDate
-        ..isSeen = isSeen,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'fullName': fullName,
+      'dateOfDeath': dateOfDeath,
+      'report_by': reportBy,
+      'reported_at': reportedAt,
+      'isConfirmbySA': isConfirmbySA,
+      'isDeclined': isDeclined,
+      'reason': reason,
+      'isDeleted': isDeleted,
+      'expiry_date': expiryDate,
+      'isSeen': isSeen,
+    }.withoutNulls,
   );
 
   return firestoreData;

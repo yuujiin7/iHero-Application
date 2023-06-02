@@ -95,6 +95,7 @@ class _AllChatWidgetState extends State<AllChatWidget> {
         elevation: 4.0,
       ),
       body: SafeArea(
+        top: true,
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
           child: StreamBuilder<List<ChatsRecord>>(

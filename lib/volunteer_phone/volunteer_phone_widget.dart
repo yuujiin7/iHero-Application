@@ -41,6 +41,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
     });
 
     _model.phoneNumberFieldController ??= TextEditingController();
+    authManager.handlePhoneAuthStateChanges(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
           _model.phoneNumberFieldController?.text = '+63';
         }));
@@ -63,6 +64,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
       child: Scaffold(
         key: scaffoldKey,
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -235,10 +237,10 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                   await authManager.beginPhoneAuth(
                                     context: context,
                                     phoneNumber: phoneNumberVal,
-                                    onCodeSent: () async {
+                                    onCodeSent: (context) async {
                                       context.goNamedAuth(
                                         'OTPCode',
-                                        mounted,
+                                        context.mounted,
                                         queryParams: {
                                           'phoneNumber': serializeParam(
                                             int.tryParse(_model
@@ -308,6 +310,10 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   5.0, 0.0, 0.0, 0.0),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'VOLUNTEER_PHONE_Text_vue2h61i_ON_TAP');

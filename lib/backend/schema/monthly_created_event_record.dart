@@ -1,99 +1,131 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'monthly_created_event_record.g.dart';
+class MonthlyCreatedEventRecord extends FirestoreRecord {
+  MonthlyCreatedEventRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class MonthlyCreatedEventRecord
-    implements
-        Built<MonthlyCreatedEventRecord, MonthlyCreatedEventRecordBuilder> {
-  static Serializer<MonthlyCreatedEventRecord> get serializer =>
-      _$monthlyCreatedEventRecordSerializer;
+  // "January" field.
+  int? _january;
+  int get january => _january ?? 0;
+  bool hasJanuary() => _january != null;
 
-  @BuiltValueField(wireName: 'January')
-  int? get january;
+  // "February" field.
+  int? _february;
+  int get february => _february ?? 0;
+  bool hasFebruary() => _february != null;
 
-  @BuiltValueField(wireName: 'February')
-  int? get february;
+  // "March" field.
+  int? _march;
+  int get march => _march ?? 0;
+  bool hasMarch() => _march != null;
 
-  @BuiltValueField(wireName: 'March')
-  int? get march;
+  // "April" field.
+  int? _april;
+  int get april => _april ?? 0;
+  bool hasApril() => _april != null;
 
-  @BuiltValueField(wireName: 'April')
-  int? get april;
+  // "May" field.
+  int? _may;
+  int get may => _may ?? 0;
+  bool hasMay() => _may != null;
 
-  @BuiltValueField(wireName: 'May')
-  int? get may;
+  // "June" field.
+  int? _june;
+  int get june => _june ?? 0;
+  bool hasJune() => _june != null;
 
-  @BuiltValueField(wireName: 'June')
-  int? get june;
+  // "July" field.
+  int? _july;
+  int get july => _july ?? 0;
+  bool hasJuly() => _july != null;
 
-  @BuiltValueField(wireName: 'July')
-  int? get july;
+  // "August" field.
+  int? _august;
+  int get august => _august ?? 0;
+  bool hasAugust() => _august != null;
 
-  @BuiltValueField(wireName: 'August')
-  int? get august;
+  // "September" field.
+  int? _september;
+  int get september => _september ?? 0;
+  bool hasSeptember() => _september != null;
 
-  @BuiltValueField(wireName: 'September')
-  int? get september;
+  // "October" field.
+  int? _october;
+  int get october => _october ?? 0;
+  bool hasOctober() => _october != null;
 
-  @BuiltValueField(wireName: 'October')
-  int? get october;
+  // "November" field.
+  int? _november;
+  int get november => _november ?? 0;
+  bool hasNovember() => _november != null;
 
-  @BuiltValueField(wireName: 'November')
-  int? get november;
+  // "December" field.
+  int? _december;
+  int get december => _december ?? 0;
+  bool hasDecember() => _december != null;
 
-  @BuiltValueField(wireName: 'December')
-  int? get december;
+  // "created_date" field.
+  DateTime? _createdDate;
+  DateTime? get createdDate => _createdDate;
+  bool hasCreatedDate() => _createdDate != null;
 
-  @BuiltValueField(wireName: 'created_date')
-  DateTime? get createdDate;
+  // "total" field.
+  double? _total;
+  double get total => _total ?? 0.0;
+  bool hasTotal() => _total != null;
 
-  double? get total;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(MonthlyCreatedEventRecordBuilder builder) =>
-      builder
-        ..january = 0
-        ..february = 0
-        ..march = 0
-        ..april = 0
-        ..may = 0
-        ..june = 0
-        ..july = 0
-        ..august = 0
-        ..september = 0
-        ..october = 0
-        ..november = 0
-        ..december = 0
-        ..total = 0.0;
+  void _initializeFields() {
+    _january = snapshotData['January'] as int?;
+    _february = snapshotData['February'] as int?;
+    _march = snapshotData['March'] as int?;
+    _april = snapshotData['April'] as int?;
+    _may = snapshotData['May'] as int?;
+    _june = snapshotData['June'] as int?;
+    _july = snapshotData['July'] as int?;
+    _august = snapshotData['August'] as int?;
+    _september = snapshotData['September'] as int?;
+    _october = snapshotData['October'] as int?;
+    _november = snapshotData['November'] as int?;
+    _december = snapshotData['December'] as int?;
+    _createdDate = snapshotData['created_date'] as DateTime?;
+    _total = castToType<double>(snapshotData['total']);
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('monthlyCreatedEvent');
 
   static Stream<MonthlyCreatedEventRecord> getDocument(DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.snapshots().map((s) => MonthlyCreatedEventRecord.fromSnapshot(s));
 
   static Future<MonthlyCreatedEventRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => MonthlyCreatedEventRecord.fromSnapshot(s));
 
-  MonthlyCreatedEventRecord._();
-  factory MonthlyCreatedEventRecord(
-          [void Function(MonthlyCreatedEventRecordBuilder) updates]) =
-      _$MonthlyCreatedEventRecord;
+  static MonthlyCreatedEventRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      MonthlyCreatedEventRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static MonthlyCreatedEventRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      MonthlyCreatedEventRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'MonthlyCreatedEventRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createMonthlyCreatedEventRecordData({
@@ -112,25 +144,23 @@ Map<String, dynamic> createMonthlyCreatedEventRecordData({
   DateTime? createdDate,
   double? total,
 }) {
-  final firestoreData = serializers.toFirestore(
-    MonthlyCreatedEventRecord.serializer,
-    MonthlyCreatedEventRecord(
-      (m) => m
-        ..january = january
-        ..february = february
-        ..march = march
-        ..april = april
-        ..may = may
-        ..june = june
-        ..july = july
-        ..august = august
-        ..september = september
-        ..october = october
-        ..november = november
-        ..december = december
-        ..createdDate = createdDate
-        ..total = total,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'January': january,
+      'February': february,
+      'March': march,
+      'April': april,
+      'May': may,
+      'June': june,
+      'July': july,
+      'August': august,
+      'September': september,
+      'October': october,
+      'November': november,
+      'December': december,
+      'created_date': createdDate,
+      'total': total,
+    }.withoutNulls,
   );
 
   return firestoreData;

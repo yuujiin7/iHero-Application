@@ -85,6 +85,7 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
           ),
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,

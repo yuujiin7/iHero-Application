@@ -52,7 +52,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         await authManager.signOut();
         GoRouter.of(context).clearRedirectLocation();
 
-        _navigate = () => context.goNamedAuth('splashScreen', mounted);
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('profileScreen_custom_action');
@@ -113,6 +113,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
             key: scaffoldKey,
             backgroundColor: Color(0xFFEBEFF7),
             body: SafeArea(
+              top: true,
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEFF7),
@@ -277,7 +278,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                         children: [
                                           AutoSizeText(
                                             profileScreenUsersRecord
-                                                .displayName!,
+                                                .displayName,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -295,7 +296,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            profileScreenUsersRecord.userType!,
+                                            profileScreenUsersRecord.userType,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -468,7 +469,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       children: [
                                                         Text(
                                                           profileScreenUsersRecord
-                                                              .location!,
+                                                              .location,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -550,7 +551,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                       children: [
                                                         Text(
                                                           profileScreenUsersRecord
-                                                              .phoneNumber!,
+                                                              .phoneNumber,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -648,6 +649,14 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                             .fromSTEB(0.0, 10.0,
                                                                 0.0, 0.0),
                                                     child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'PROFILE_SCREEN_PAGE_Row_r7pwetq2_ON_TAP');
@@ -892,6 +901,14 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     thickness: 1.0,
                                                   ),
                                                   InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'PROFILE_SCREEN_PAGE_Row_i06svnq7_ON_TAP');
@@ -1041,6 +1058,14 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 10.0),
                                                 child: InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
                                                   onTap: () async {
                                                     logFirebaseEvent(
                                                         'PROFILE_SCREEN_PAGE_Row_ncuixnuo_ON_TAP');
@@ -1127,6 +1152,11 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                 ),
                                               ),
                                               InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
                                                 onTap: () async {
                                                   logFirebaseEvent(
                                                       'PROFILE_SCREEN_PAGE_Row_xfqfxltf_ON_TAP');
@@ -1194,6 +1224,14 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                     .fromSTEB(
                                                         0.0, 10.0, 0.0, 0.0),
                                                 child: InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
                                                   onTap: () async {
                                                     logFirebaseEvent(
                                                         'PROFILE_SCREEN_PAGE_Row_d5rk48jv_ON_TAP');
@@ -1290,6 +1328,10 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 10.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'PROFILE_SCREEN_Container_v5j0jleu_ON_TAP');
@@ -1373,6 +1415,10 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 10.0, 0.0, 10.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'PROFILE_SCREEN_Container_ptn4sbdb_ON_TAP');

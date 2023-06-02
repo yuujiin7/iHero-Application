@@ -62,6 +62,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       child: Scaffold(
         key: scaffoldKey,
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -320,6 +321,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   5.0, 0.0, 0.0, 0.0),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'LOGIN_PAGE_Text_ncc5pr6b_ON_TAP');
@@ -418,7 +423,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             'loginButton_navigate_to');
 
                                         context.goNamedAuth(
-                                            'HomeScreen', mounted);
+                                            'HomeScreen', context.mounted);
 
                                         logFirebaseEvent(
                                             'loginButton_backend_call');
@@ -590,6 +595,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                         child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
                           onTap: () async {
                             logFirebaseEvent('LOGIN_PAGE_Text_uaoe92hk_ON_TAP');
                             logFirebaseEvent('Text_navigate_to');

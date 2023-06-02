@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow_theme.dart';
-import '../../backend/backend.dart';
+import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
@@ -70,14 +71,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? HomeScreenWidget() : SplashScreenWidget(),
+          appStateNotifier.loggedIn ? HomeScreenWidget() : OnboardingWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? HomeScreenWidget()
-              : SplashScreenWidget(),
+              : OnboardingWidget(),
           routes: [
             FFRoute(
               name: 'splashScreen',
@@ -142,7 +143,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'allChat',
               requireAuth: true,
               asyncParams: {
-                'userRecord': getDoc(['users'], UsersRecord.serializer),
+                'userRecord': getDoc(['users'], UsersRecord.fromSnapshot),
               },
               builder: (context, params) => AllChatWidget(
                 userref: params.getParam(
@@ -155,7 +156,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'chatPage',
               requireAuth: true,
               asyncParams: {
-                'chatUser': getDoc(['users'], UsersRecord.serializer),
+                'chatUser': getDoc(['users'], UsersRecord.fromSnapshot),
               },
               builder: (context, params) => ChatPageWidget(
                 chatUser: params.getParam('chatUser', ParamType.Document),
@@ -175,18 +176,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               requireAuth: true,
               asyncParams: {
                 'announcementdetails':
-                    getDoc(['announcement'], AnnouncementRecord.serializer),
+                    getDoc(['announcement'], AnnouncementRecord.fromSnapshot),
               },
               builder: (context, params) => AnnouncementDetailsWidget(
                 announcementdetails:
                     params.getParam('announcementdetails', ParamType.Document),
               ),
-            ),
-            FFRoute(
-              name: 'HomeScreen',
-              path: 'HomeScreen',
-              requireAuth: true,
-              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'volunteerList',
@@ -196,6 +191,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 volunteerList: params.getParam('volunteerList',
                     ParamType.DocumentReference, false, ['users']),
               ),
+            ),
+            FFRoute(
+              name: 'HomeScreen',
+              path: 'HomeScreen',
+              requireAuth: true,
+              builder: (context, params) => HomeScreenWidget(),
             ),
             FFRoute(
               name: 'profileScreen',
@@ -215,7 +216,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               requireAuth: true,
               asyncParams: {
                 'volunteerListofEvent':
-                    getDoc(['events'], EventsRecord.serializer),
+                    getDoc(['events'], EventsRecord.fromSnapshot),
               },
               builder: (context, params) => VolunteerToEventWidget(
                 volunteerListofEvent:
@@ -241,7 +242,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'eventFullDetail',
               requireAuth: true,
               asyncParams: {
-                'eventFullDetails': getDoc(['events'], EventsRecord.serializer),
+                'eventFullDetails':
+                    getDoc(['events'], EventsRecord.fromSnapshot),
               },
               builder: (context, params) => EventFullDetailWidget(
                 eventFullDetails:
@@ -353,6 +355,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -485,7 +488,8 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionNamePath);
+    return deserializeParam<T>(param, type, isList,
+        collectionNamePath: collectionNamePath);
   }
 }
 
@@ -518,7 +522,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/splashScreen';
+            return '/onboarding';
           }
           return null;
         },
@@ -531,13 +535,14 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: SpinKitRipple(
-                      color: Color(0xFFFE2126),
-                      size: 50.0,
+              ? Container(
+                  color: FlutterFlowTheme.of(context).primary,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/IHero_Logo_2_White.png',
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      height: MediaQuery.of(context).size.height * 1.0,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 )

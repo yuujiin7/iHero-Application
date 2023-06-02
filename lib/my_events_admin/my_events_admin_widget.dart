@@ -82,6 +82,10 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
         leading: InkWell(
+          splashColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () async {
             logFirebaseEvent('MY_EVENTS_ADMIN_Icon_hnoqmglp_ON_TAP');
             logFirebaseEvent('Icon_navigate_back');
@@ -108,6 +112,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
         elevation: 0.0,
       ),
       body: SafeArea(
+        top: true,
         child: Container(
           width: double.infinity,
           height: double.infinity,
@@ -128,40 +133,43 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                       4),
                   child: Column(
                     children: [
-                      TabBar(
-                        isScrollable: true,
-                        labelColor: FlutterFlowTheme.of(context).primary,
-                        unselectedLabelColor:
-                            FlutterFlowTheme.of(context).secondaryText,
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .override(
-                              fontFamily:
-                                  FlutterFlowTheme.of(context).bodyMediumFamily,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context)
-                                      .bodyMediumFamily),
+                      Align(
+                        alignment: Alignment(0.0, 0),
+                        child: TabBar(
+                          isScrollable: true,
+                          labelColor: FlutterFlowTheme.of(context).primary,
+                          unselectedLabelColor:
+                              FlutterFlowTheme.of(context).secondaryText,
+                          labelStyle: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .bodyMediumFamily,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .bodyMediumFamily),
+                              ),
+                          indicatorColor: Color(0xFFFFA534),
+                          tabs: [
+                            Tab(
+                              text: 'To be Confirmed',
                             ),
-                        indicatorColor: Color(0xFFFFA534),
-                        tabs: [
-                          Tab(
-                            text: 'To be Confirmed',
-                          ),
-                          Tab(
-                            text: 'Upcoming',
-                          ),
-                          Tab(
-                            text: 'Ongoing',
-                          ),
-                          Tab(
-                            text: 'Finished',
-                          ),
-                          Tab(
-                            text: 'Declined',
-                          ),
-                        ],
+                            Tab(
+                              text: 'Upcoming',
+                            ),
+                            Tab(
+                              text: 'Ongoing',
+                            ),
+                            Tab(
+                              text: 'Finished',
+                            ),
+                            Tab(
+                              text: 'Declined',
+                            ),
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: TabBarView(
@@ -274,7 +282,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartnter!
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
                                                                 maxChars: 25,
                                                                 replacement:
@@ -363,7 +371,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
+                                                                            columnEventsRecord.eventTitle,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -427,6 +435,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_0ulwz2kj_ON_TAP');
@@ -702,7 +718,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartnter!
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
                                                                 maxChars: 25,
                                                                 replacement:
@@ -792,7 +808,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
+                                                                            columnEventsRecord.eventTitle,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -855,6 +871,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_jhqr4rbs_ON_TAP');
@@ -1130,7 +1154,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartnter!
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
                                                                 maxChars: 25,
                                                                 replacement:
@@ -1220,7 +1244,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
+                                                                            columnEventsRecord.eventTitle,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -1283,6 +1307,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_joy2dqyh_ON_TAP');
@@ -1517,7 +1549,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartnter!
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
                                                                 maxChars: 25,
                                                                 replacement:
@@ -1607,7 +1639,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
+                                                                            columnEventsRecord.eventTitle,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -1670,6 +1702,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_xjg64spn_ON_TAP');
@@ -2000,7 +2040,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartnter!
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
                                                                 maxChars: 25,
                                                                 replacement:
@@ -2090,7 +2130,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
+                                                                            columnEventsRecord.eventTitle,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
@@ -2153,6 +2193,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_cngmvd1d_ON_TAP');
@@ -2230,7 +2278,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .reason!,
+                                                                  .reason,
                                                               maxLines: 5,
                                                               style: FlutterFlowTheme
                                                                       .of(context)

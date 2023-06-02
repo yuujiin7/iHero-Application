@@ -170,6 +170,10 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                         ),
                       ),
                       InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () async {
                           logFirebaseEvent(
                               'CHAT_STOP_SCREEN_COPY_Text_dhn7plzd_ON_T');
@@ -184,7 +188,7 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
 
                           logFirebaseEvent('Text_navigate_to');
 
-                          context.pushNamedAuth('Login', mounted);
+                          context.pushNamedAuth('Login', context.mounted);
                         },
                         child: Text(
                           'Click Here',

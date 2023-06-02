@@ -194,6 +194,10 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 5.0, 0.0, 10.0),
                                         child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'HELP_CENTER_Container_63rimofl_ON_TAP');
@@ -564,6 +568,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
           ),
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -765,6 +770,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 5.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_16m7vuzb_ON_TAP');
@@ -849,6 +859,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_f0alh2v5_ON_TAP');
@@ -987,6 +1002,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 5.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_qidtkwls_ON_TAP');
@@ -1072,6 +1092,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_oy67vm7y_ON_TAP');

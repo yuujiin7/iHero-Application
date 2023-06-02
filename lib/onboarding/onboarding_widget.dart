@@ -333,6 +333,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       logFirebaseEvent(
                                           'ONBOARDING_PAGE_Text_tsimbyfv_ON_TAP');
@@ -353,7 +357,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                           .update(usersUpdateData);
 
                                       context.goNamedAuth(
-                                          'HomeScreen', mounted);
+                                          'HomeScreen', context.mounted);
                                     },
                                     child: Text(
                                       'Continue as Guest',

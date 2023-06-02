@@ -82,6 +82,7 @@ class _FAQsWidgetState extends State<FAQsWidget> {
           ),
         ),
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,

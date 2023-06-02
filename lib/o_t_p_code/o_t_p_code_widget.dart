@@ -66,6 +66,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
       child: Scaffold(
         key: scaffoldKey,
         body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -135,6 +136,10 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
                                     'O_T_P_CODE_PAGE_Image_k2prob25_ON_TAP');
@@ -361,7 +366,8 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
                                   return;
                                 }
 
-                                context.goNamedAuth('HomeScreen', mounted);
+                                context.goNamedAuth(
+                                    'HomeScreen', context.mounted);
                               },
                               text: 'Submit',
                               options: FFButtonOptions(

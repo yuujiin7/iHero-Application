@@ -426,9 +426,12 @@ class TabletTypography extends Typography {
         fontWeight: FontWeight.w500,
         fontSize: 11.0,
       );
-  String get bodyLargeFamily => '';
+  String get bodyLargeFamily => 'Ubuntu';
   TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Roboto',
+        'Ubuntu',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
       );
   String get bodyMediumFamily => 'Ubuntu';
   TextStyle get bodyMedium => GoogleFonts.getFont(
@@ -535,9 +538,12 @@ class DesktopTypography extends Typography {
         fontWeight: FontWeight.w500,
         fontSize: 11.0,
       );
-  String get bodyLargeFamily => '';
+  String get bodyLargeFamily => 'Ubuntu';
   TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Roboto',
+        'Ubuntu',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
       );
   String get bodyMediumFamily => 'Ubuntu';
   TextStyle get bodyMedium => GoogleFonts.getFont(

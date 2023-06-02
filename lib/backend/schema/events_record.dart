@@ -1,215 +1,356 @@
 import 'dart:async';
 
 import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/algolia_manager.dart';
+
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'events_record.g.dart';
+class EventsRecord extends FirestoreRecord {
+  EventsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class EventsRecord
-    implements Built<EventsRecord, EventsRecordBuilder> {
-  static Serializer<EventsRecord> get serializer => _$eventsRecordSerializer;
+  // "eventTitle" field.
+  String? _eventTitle;
+  String get eventTitle => _eventTitle ?? '';
+  bool hasEventTitle() => _eventTitle != null;
 
-  String? get eventTitle;
+  // "eventPhotoUrl" field.
+  String? _eventPhotoUrl;
+  String get eventPhotoUrl => _eventPhotoUrl ?? '';
+  bool hasEventPhotoUrl() => _eventPhotoUrl != null;
 
-  String? get eventPhotoUrl;
+  // "eventDescription" field.
+  String? _eventDescription;
+  String get eventDescription => _eventDescription ?? '';
+  bool hasEventDescription() => _eventDescription != null;
 
-  String? get eventDescription;
+  // "eventInChargePerson" field.
+  String? _eventInChargePerson;
+  String get eventInChargePerson => _eventInChargePerson ?? '';
+  bool hasEventInChargePerson() => _eventInChargePerson != null;
 
-  String? get eventInChargePerson;
+  // "event_Location" field.
+  LatLng? _eventLocation;
+  LatLng? get eventLocation => _eventLocation;
+  bool hasEventLocation() => _eventLocation != null;
 
-  @BuiltValueField(wireName: 'event_Location')
-  LatLng? get eventLocation;
+  // "eventAddress" field.
+  String? _eventAddress;
+  String get eventAddress => _eventAddress ?? '';
+  bool hasEventAddress() => _eventAddress != null;
 
-  String? get eventAddress;
+  // "volunteer_names" field.
+  List<String>? _volunteerNames;
+  List<String> get volunteerNames => _volunteerNames ?? const [];
+  bool hasVolunteerNames() => _volunteerNames != null;
 
-  @BuiltValueField(wireName: 'volunteer_names')
-  BuiltList<String>? get volunteerNames;
+  // "needed_volunteer_count" field.
+  double? _neededVolunteerCount;
+  double get neededVolunteerCount => _neededVolunteerCount ?? 0.0;
+  bool hasNeededVolunteerCount() => _neededVolunteerCount != null;
 
-  @BuiltValueField(wireName: 'needed_volunteer_count')
-  double? get neededVolunteerCount;
+  // "neededVolunteer" field.
+  double? _neededVolunteer;
+  double get neededVolunteer => _neededVolunteer ?? 0.0;
+  bool hasNeededVolunteer() => _neededVolunteer != null;
 
-  double? get neededVolunteer;
+  // "created_date" field.
+  DateTime? _createdDate;
+  DateTime? get createdDate => _createdDate;
+  bool hasCreatedDate() => _createdDate != null;
 
-  @BuiltValueField(wireName: 'created_date')
-  DateTime? get createdDate;
+  // "eventTag" field.
+  List<String>? _eventTag;
+  List<String> get eventTag => _eventTag ?? const [];
+  bool hasEventTag() => _eventTag != null;
 
-  BuiltList<String>? get eventTag;
+  // "isEnded" field.
+  bool? _isEnded;
+  bool get isEnded => _isEnded ?? false;
+  bool hasIsEnded() => _isEnded != null;
 
-  bool? get isEnded;
+  // "volunteer_count" field.
+  double? _volunteerCount;
+  double get volunteerCount => _volunteerCount ?? 0.0;
+  bool hasVolunteerCount() => _volunteerCount != null;
 
-  @BuiltValueField(wireName: 'volunteer_count')
-  double? get volunteerCount;
+  // "isDeleted" field.
+  bool? _isDeleted;
+  bool get isDeleted => _isDeleted ?? false;
+  bool hasIsDeleted() => _isDeleted != null;
 
-  bool? get isDeleted;
+  // "eventContactNumber" field.
+  String? _eventContactNumber;
+  String get eventContactNumber => _eventContactNumber ?? '';
+  bool hasEventContactNumber() => _eventContactNumber != null;
 
-  String? get eventContactNumber;
+  // "isConfirmbySA" field.
+  bool? _isConfirmbySA;
+  bool get isConfirmbySA => _isConfirmbySA ?? false;
+  bool hasIsConfirmbySA() => _isConfirmbySA != null;
 
-  bool? get isConfirmbySA;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "admin_ref" field.
+  List<DocumentReference>? _adminRef;
+  List<DocumentReference> get adminRef => _adminRef ?? const [];
+  bool hasAdminRef() => _adminRef != null;
 
-  @BuiltValueField(wireName: 'admin_ref')
-  BuiltList<DocumentReference>? get adminRef;
+  // "eventDateStart" field.
+  DateTime? _eventDateStart;
+  DateTime? get eventDateStart => _eventDateStart;
+  bool hasEventDateStart() => _eventDateStart != null;
 
-  DateTime? get eventDateStart;
+  // "eventDateEnd" field.
+  DateTime? _eventDateEnd;
+  DateTime? get eventDateEnd => _eventDateEnd;
+  bool hasEventDateEnd() => _eventDateEnd != null;
 
-  DateTime? get eventDateEnd;
+  // "isReqCancel" field.
+  bool? _isReqCancel;
+  bool get isReqCancel => _isReqCancel ?? false;
+  bool hasIsReqCancel() => _isReqCancel != null;
 
-  bool? get isReqCancel;
+  // "volunteer_ref" field.
+  List<DocumentReference>? _volunteerRef;
+  List<DocumentReference> get volunteerRef => _volunteerRef ?? const [];
+  bool hasVolunteerRef() => _volunteerRef != null;
 
-  @BuiltValueField(wireName: 'volunteer_ref')
-  BuiltList<DocumentReference>? get volunteerRef;
+  // "partnerOrg_ref" field.
+  DocumentReference? _partnerOrgRef;
+  DocumentReference? get partnerOrgRef => _partnerOrgRef;
+  bool hasPartnerOrgRef() => _partnerOrgRef != null;
 
-  @BuiltValueField(wireName: 'partnerOrg_ref')
-  DocumentReference? get partnerOrgRef;
+  // "volunteer_list" field.
+  List<String>? _volunteerList;
+  List<String> get volunteerList => _volunteerList ?? const [];
+  bool hasVolunteerList() => _volunteerList != null;
 
-  @BuiltValueField(wireName: 'volunteer_list')
-  BuiltList<String>? get volunteerList;
+  // "isRecurring" field.
+  bool? _isRecurring;
+  bool get isRecurring => _isRecurring ?? false;
+  bool hasIsRecurring() => _isRecurring != null;
 
-  bool? get isRecurring;
+  // "rateTotal" field.
+  double? _rateTotal;
+  double get rateTotal => _rateTotal ?? 0.0;
+  bool hasRateTotal() => _rateTotal != null;
 
-  double? get rateTotal;
+  // "rateCount" field.
+  double? _rateCount;
+  double get rateCount => _rateCount ?? 0.0;
+  bool hasRateCount() => _rateCount != null;
 
-  double? get rateCount;
+  // "reason" field.
+  String? _reason;
+  String get reason => _reason ?? '';
+  bool hasReason() => _reason != null;
 
-  String? get reason;
+  // "isDeclined" field.
+  bool? _isDeclined;
+  bool get isDeclined => _isDeclined ?? false;
+  bool hasIsDeclined() => _isDeclined != null;
 
-  bool? get isDeclined;
+  // "rate_ref" field.
+  List<DocumentReference>? _rateRef;
+  List<DocumentReference> get rateRef => _rateRef ?? const [];
+  bool hasRateRef() => _rateRef != null;
 
-  @BuiltValueField(wireName: 'rate_ref')
-  BuiltList<DocumentReference>? get rateRef;
+  // "ageRequirement" field.
+  int? _ageRequirement;
+  int get ageRequirement => _ageRequirement ?? 0;
+  bool hasAgeRequirement() => _ageRequirement != null;
 
-  int? get ageRequirement;
+  // "isMeritScoreUpdated" field.
+  bool? _isMeritScoreUpdated;
+  bool get isMeritScoreUpdated => _isMeritScoreUpdated ?? false;
+  bool hasIsMeritScoreUpdated() => _isMeritScoreUpdated != null;
 
-  bool? get isMeritScoreUpdated;
+  // "addRequirementEvent" field.
+  String? _addRequirementEvent;
+  String get addRequirementEvent => _addRequirementEvent ?? '';
+  bool hasAddRequirementEvent() => _addRequirementEvent != null;
 
-  String? get addRequirementEvent;
+  // "organization_partnter" field.
+  String? _organizationPartnter;
+  String get organizationPartnter => _organizationPartnter ?? '';
+  bool hasOrganizationPartnter() => _organizationPartnter != null;
 
-  @BuiltValueField(wireName: 'organization_partnter')
-  String? get organizationPartnter;
+  // "recurranceDate" field.
+  List<String>? _recurranceDate;
+  List<String> get recurranceDate => _recurranceDate ?? const [];
+  bool hasRecurranceDate() => _recurranceDate != null;
 
-  BuiltList<String>? get recurranceDate;
+  // "registrationDate" field.
+  DateTime? _registrationDate;
+  DateTime? get registrationDate => _registrationDate;
+  bool hasRegistrationDate() => _registrationDate != null;
 
-  DateTime? get registrationDate;
+  // "minimumVolunteer" field.
+  double? _minimumVolunteer;
+  double get minimumVolunteer => _minimumVolunteer ?? 0.0;
+  bool hasMinimumVolunteer() => _minimumVolunteer != null;
 
-  double? get minimumVolunteer;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(EventsRecordBuilder builder) => builder
-    ..eventTitle = ''
-    ..eventPhotoUrl = ''
-    ..eventDescription = ''
-    ..eventInChargePerson = ''
-    ..eventAddress = ''
-    ..volunteerNames = ListBuilder()
-    ..neededVolunteerCount = 0.0
-    ..neededVolunteer = 0.0
-    ..eventTag = ListBuilder()
-    ..isEnded = false
-    ..volunteerCount = 0.0
-    ..isDeleted = false
-    ..eventContactNumber = ''
-    ..isConfirmbySA = false
-    ..adminRef = ListBuilder()
-    ..isReqCancel = false
-    ..volunteerRef = ListBuilder()
-    ..volunteerList = ListBuilder()
-    ..isRecurring = false
-    ..rateTotal = 0.0
-    ..rateCount = 0.0
-    ..reason = ''
-    ..isDeclined = false
-    ..rateRef = ListBuilder()
-    ..ageRequirement = 0
-    ..isMeritScoreUpdated = false
-    ..addRequirementEvent = ''
-    ..organizationPartnter = ''
-    ..recurranceDate = ListBuilder()
-    ..minimumVolunteer = 0.0;
+  void _initializeFields() {
+    _eventTitle = snapshotData['eventTitle'] as String?;
+    _eventPhotoUrl = snapshotData['eventPhotoUrl'] as String?;
+    _eventDescription = snapshotData['eventDescription'] as String?;
+    _eventInChargePerson = snapshotData['eventInChargePerson'] as String?;
+    _eventLocation = snapshotData['event_Location'] as LatLng?;
+    _eventAddress = snapshotData['eventAddress'] as String?;
+    _volunteerNames = getDataList(snapshotData['volunteer_names']);
+    _neededVolunteerCount =
+        castToType<double>(snapshotData['needed_volunteer_count']);
+    _neededVolunteer = castToType<double>(snapshotData['neededVolunteer']);
+    _createdDate = snapshotData['created_date'] as DateTime?;
+    _eventTag = getDataList(snapshotData['eventTag']);
+    _isEnded = snapshotData['isEnded'] as bool?;
+    _volunteerCount = castToType<double>(snapshotData['volunteer_count']);
+    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _eventContactNumber = snapshotData['eventContactNumber'] as String?;
+    _isConfirmbySA = snapshotData['isConfirmbySA'] as bool?;
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _adminRef = getDataList(snapshotData['admin_ref']);
+    _eventDateStart = snapshotData['eventDateStart'] as DateTime?;
+    _eventDateEnd = snapshotData['eventDateEnd'] as DateTime?;
+    _isReqCancel = snapshotData['isReqCancel'] as bool?;
+    _volunteerRef = getDataList(snapshotData['volunteer_ref']);
+    _partnerOrgRef = snapshotData['partnerOrg_ref'] as DocumentReference?;
+    _volunteerList = getDataList(snapshotData['volunteer_list']);
+    _isRecurring = snapshotData['isRecurring'] as bool?;
+    _rateTotal = castToType<double>(snapshotData['rateTotal']);
+    _rateCount = castToType<double>(snapshotData['rateCount']);
+    _reason = snapshotData['reason'] as String?;
+    _isDeclined = snapshotData['isDeclined'] as bool?;
+    _rateRef = getDataList(snapshotData['rate_ref']);
+    _ageRequirement = snapshotData['ageRequirement'] as int?;
+    _isMeritScoreUpdated = snapshotData['isMeritScoreUpdated'] as bool?;
+    _addRequirementEvent = snapshotData['addRequirementEvent'] as String?;
+    _organizationPartnter = snapshotData['organization_partnter'] as String?;
+    _recurranceDate = getDataList(snapshotData['recurranceDate']);
+    _registrationDate = snapshotData['registrationDate'] as DateTime?;
+    _minimumVolunteer = castToType<double>(snapshotData['minimumVolunteer']);
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('events');
 
-  static Stream<EventsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<EventsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => EventsRecord.fromSnapshot(s));
 
-  static Future<EventsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<EventsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => EventsRecord.fromSnapshot(s));
 
-  static EventsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
-      EventsRecord(
-        (c) => c
-          ..eventTitle = snapshot.data['eventTitle']
-          ..eventPhotoUrl = snapshot.data['eventPhotoUrl']
-          ..eventDescription = snapshot.data['eventDescription']
-          ..eventInChargePerson = snapshot.data['eventInChargePerson']
-          ..eventLocation = safeGet(() => LatLng(
-                snapshot.data['_geoloc']['lat'],
-                snapshot.data['_geoloc']['lng'],
-              ))
-          ..eventAddress = snapshot.data['eventAddress']
-          ..volunteerNames =
-              safeGet(() => ListBuilder(snapshot.data['volunteer_names']))
-          ..neededVolunteerCount =
-              snapshot.data['needed_volunteer_count']?.toDouble()
-          ..neededVolunteer = snapshot.data['neededVolunteer']?.toDouble()
-          ..createdDate = safeGet(() => DateTime.fromMillisecondsSinceEpoch(
-              snapshot.data['created_date']))
-          ..eventTag = safeGet(() => ListBuilder(snapshot.data['eventTag']))
-          ..isEnded = snapshot.data['isEnded']
-          ..volunteerCount = snapshot.data['volunteer_count']?.toDouble()
-          ..isDeleted = snapshot.data['isDeleted']
-          ..eventContactNumber = snapshot.data['eventContactNumber']
-          ..isConfirmbySA = snapshot.data['isConfirmbySA']
-          ..expiryDate = safeGet(() =>
-              DateTime.fromMillisecondsSinceEpoch(snapshot.data['expiry_date']))
-          ..adminRef = safeGet(() =>
-              ListBuilder(snapshot.data['admin_ref'].map((s) => toRef(s))))
-          ..eventDateStart = safeGet(() => DateTime.fromMillisecondsSinceEpoch(
-              snapshot.data['eventDateStart']))
-          ..eventDateEnd = safeGet(() => DateTime.fromMillisecondsSinceEpoch(
-              snapshot.data['eventDateEnd']))
-          ..isReqCancel = snapshot.data['isReqCancel']
-          ..volunteerRef = safeGet(() =>
-              ListBuilder(snapshot.data['volunteer_ref'].map((s) => toRef(s))))
-          ..partnerOrgRef =
-              safeGet(() => toRef(snapshot.data['partnerOrg_ref']))
-          ..volunteerList =
-              safeGet(() => ListBuilder(snapshot.data['volunteer_list']))
-          ..isRecurring = snapshot.data['isRecurring']
-          ..rateTotal = snapshot.data['rateTotal']?.toDouble()
-          ..rateCount = snapshot.data['rateCount']?.toDouble()
-          ..reason = snapshot.data['reason']
-          ..isDeclined = snapshot.data['isDeclined']
-          ..rateRef = safeGet(
-              () => ListBuilder(snapshot.data['rate_ref'].map((s) => toRef(s))))
-          ..ageRequirement = snapshot.data['ageRequirement']?.round()
-          ..isMeritScoreUpdated = snapshot.data['isMeritScoreUpdated']
-          ..addRequirementEvent = snapshot.data['addRequirementEvent']
-          ..organizationPartnter = snapshot.data['organization_partnter']
-          ..recurranceDate =
-              safeGet(() => ListBuilder(snapshot.data['recurranceDate']))
-          ..registrationDate = safeGet(() =>
-              DateTime.fromMillisecondsSinceEpoch(
-                  snapshot.data['registrationDate']))
-          ..minimumVolunteer = snapshot.data['minimumVolunteer']?.toDouble()
-          ..ffRef = EventsRecord.collection.doc(snapshot.objectID),
+  static EventsRecord fromSnapshot(DocumentSnapshot snapshot) => EventsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
       );
 
-  static Future<List<EventsRecord>> search(
-          {String? term,
-          FutureOr<LatLng>? location,
-          int? maxResults,
-          double? searchRadiusMeters}) =>
+  static EventsRecord getDocumentFromData(
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      EventsRecord._(reference, mapFromFirestore(data));
+
+  static EventsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      EventsRecord.getDocumentFromData(
+        {
+          'eventTitle': snapshot.data['eventTitle'],
+          'eventPhotoUrl': snapshot.data['eventPhotoUrl'],
+          'eventDescription': snapshot.data['eventDescription'],
+          'eventInChargePerson': snapshot.data['eventInChargePerson'],
+          'event_Location': safeGet(
+            () => LatLng(
+              snapshot.data['_geoloc']['lat'],
+              snapshot.data['_geoloc']['lng'],
+            ),
+          ),
+          'eventAddress': snapshot.data['eventAddress'],
+          'volunteer_names': safeGet(
+            () => snapshot.data['volunteer_names'].toList(),
+          ),
+          'needed_volunteer_count':
+              snapshot.data['needed_volunteer_count']?.toDouble(),
+          'neededVolunteer': snapshot.data['neededVolunteer']?.toDouble(),
+          'created_date': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['created_date']),
+          ),
+          'eventTag': safeGet(
+            () => snapshot.data['eventTag'].toList(),
+          ),
+          'isEnded': snapshot.data['isEnded'],
+          'volunteer_count': snapshot.data['volunteer_count']?.toDouble(),
+          'isDeleted': snapshot.data['isDeleted'],
+          'eventContactNumber': snapshot.data['eventContactNumber'],
+          'isConfirmbySA': snapshot.data['isConfirmbySA'],
+          'expiry_date': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['expiry_date']),
+          ),
+          'admin_ref': safeGet(
+            () => snapshot.data['admin_ref'].map((s) => toRef(s)).toList(),
+          ),
+          'eventDateStart': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['eventDateStart']),
+          ),
+          'eventDateEnd': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['eventDateEnd']),
+          ),
+          'isReqCancel': snapshot.data['isReqCancel'],
+          'volunteer_ref': safeGet(
+            () => snapshot.data['volunteer_ref'].map((s) => toRef(s)).toList(),
+          ),
+          'partnerOrg_ref': safeGet(
+            () => toRef(snapshot.data['partnerOrg_ref']),
+          ),
+          'volunteer_list': safeGet(
+            () => snapshot.data['volunteer_list'].toList(),
+          ),
+          'isRecurring': snapshot.data['isRecurring'],
+          'rateTotal': snapshot.data['rateTotal']?.toDouble(),
+          'rateCount': snapshot.data['rateCount']?.toDouble(),
+          'reason': snapshot.data['reason'],
+          'isDeclined': snapshot.data['isDeclined'],
+          'rate_ref': safeGet(
+            () => snapshot.data['rate_ref'].map((s) => toRef(s)).toList(),
+          ),
+          'ageRequirement': snapshot.data['ageRequirement']?.round(),
+          'isMeritScoreUpdated': snapshot.data['isMeritScoreUpdated'],
+          'addRequirementEvent': snapshot.data['addRequirementEvent'],
+          'organization_partnter': snapshot.data['organization_partnter'],
+          'recurranceDate': safeGet(
+            () => snapshot.data['recurranceDate'].toList(),
+          ),
+          'registrationDate': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['registrationDate']),
+          ),
+          'minimumVolunteer': snapshot.data['minimumVolunteer']?.toDouble(),
+        },
+        EventsRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<EventsRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
       FFAlgoliaManager.instance
           .algoliaQuery(
             index: 'events',
@@ -217,17 +358,13 @@ abstract class EventsRecord
             maxResults: maxResults,
             location: location,
             searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
           )
           .then((r) => r.map(fromAlgolia).toList());
 
-  EventsRecord._();
-  factory EventsRecord([void Function(EventsRecordBuilder) updates]) =
-      _$EventsRecord;
-
-  static EventsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+  @override
+  String toString() =>
+      'EventsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createEventsRecordData({
@@ -262,48 +399,39 @@ Map<String, dynamic> createEventsRecordData({
   DateTime? registrationDate,
   double? minimumVolunteer,
 }) {
-  final firestoreData = serializers.toFirestore(
-    EventsRecord.serializer,
-    EventsRecord(
-      (e) => e
-        ..eventTitle = eventTitle
-        ..eventPhotoUrl = eventPhotoUrl
-        ..eventDescription = eventDescription
-        ..eventInChargePerson = eventInChargePerson
-        ..eventLocation = eventLocation
-        ..eventAddress = eventAddress
-        ..volunteerNames = null
-        ..neededVolunteerCount = neededVolunteerCount
-        ..neededVolunteer = neededVolunteer
-        ..createdDate = createdDate
-        ..eventTag = null
-        ..isEnded = isEnded
-        ..volunteerCount = volunteerCount
-        ..isDeleted = isDeleted
-        ..eventContactNumber = eventContactNumber
-        ..isConfirmbySA = isConfirmbySA
-        ..expiryDate = expiryDate
-        ..adminRef = null
-        ..eventDateStart = eventDateStart
-        ..eventDateEnd = eventDateEnd
-        ..isReqCancel = isReqCancel
-        ..volunteerRef = null
-        ..partnerOrgRef = partnerOrgRef
-        ..volunteerList = null
-        ..isRecurring = isRecurring
-        ..rateTotal = rateTotal
-        ..rateCount = rateCount
-        ..reason = reason
-        ..isDeclined = isDeclined
-        ..rateRef = null
-        ..ageRequirement = ageRequirement
-        ..isMeritScoreUpdated = isMeritScoreUpdated
-        ..addRequirementEvent = addRequirementEvent
-        ..organizationPartnter = organizationPartnter
-        ..recurranceDate = null
-        ..registrationDate = registrationDate
-        ..minimumVolunteer = minimumVolunteer,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'eventTitle': eventTitle,
+      'eventPhotoUrl': eventPhotoUrl,
+      'eventDescription': eventDescription,
+      'eventInChargePerson': eventInChargePerson,
+      'event_Location': eventLocation,
+      'eventAddress': eventAddress,
+      'needed_volunteer_count': neededVolunteerCount,
+      'neededVolunteer': neededVolunteer,
+      'created_date': createdDate,
+      'isEnded': isEnded,
+      'volunteer_count': volunteerCount,
+      'isDeleted': isDeleted,
+      'eventContactNumber': eventContactNumber,
+      'isConfirmbySA': isConfirmbySA,
+      'expiry_date': expiryDate,
+      'eventDateStart': eventDateStart,
+      'eventDateEnd': eventDateEnd,
+      'isReqCancel': isReqCancel,
+      'partnerOrg_ref': partnerOrgRef,
+      'isRecurring': isRecurring,
+      'rateTotal': rateTotal,
+      'rateCount': rateCount,
+      'reason': reason,
+      'isDeclined': isDeclined,
+      'ageRequirement': ageRequirement,
+      'isMeritScoreUpdated': isMeritScoreUpdated,
+      'addRequirementEvent': addRequirementEvent,
+      'organization_partnter': organizationPartnter,
+      'registrationDate': registrationDate,
+      'minimumVolunteer': minimumVolunteer,
+    }.withoutNulls,
   );
 
   return firestoreData;

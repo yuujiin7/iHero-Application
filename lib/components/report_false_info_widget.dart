@@ -502,6 +502,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                                     height:
                                                         m.dimensions?.height,
                                                     width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
                                                   ))
                                               .toList();
 

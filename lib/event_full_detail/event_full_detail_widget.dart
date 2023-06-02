@@ -157,7 +157,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                       }
                       final textPartnerOrgRecord = snapshot.data!;
                       return AutoSizeText(
-                        textPartnerOrgRecord.orgName!,
+                        textPartnerOrgRecord.orgName,
                         style: FlutterFlowTheme.of(context)
                             .titleMedium
                             .override(
@@ -213,7 +213,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                       visible:
                           (valueOrDefault(currentUserDocument?.userType, '') ==
                                   'Admin') &&
-                              !eventFullDetailEventsRecord.isEnded!,
+                              !eventFullDetailEventsRecord.isEnded,
                       child: AuthUserStreamWidget(
                         builder: (context) => FlutterFlowIconButton(
                           borderColor: Colors.transparent,
@@ -309,6 +309,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
               body: Builder(
                 builder: (context) {
                   return SafeArea(
+                    top: false,
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
@@ -329,6 +330,10 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                 color: Color(0xFFEEEEEE),
                               ),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'EVENT_FULL_DETAIL_Image_th6ft5kf_ON_TAP');
@@ -864,7 +869,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                                 Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                                                                                   child: Text(
-                                                                                    rowUsersRecord.displayName!,
+                                                                                    rowUsersRecord.displayName,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                           color: FlutterFlowTheme.of(context).primary,
@@ -878,7 +883,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                               mainAxisSize: MainAxisSize.max,
                                                                               children: [
                                                                                 Text(
-                                                                                  listViewCommentsAndRateRecord.comment!,
+                                                                                  listViewCommentsAndRateRecord.comment,
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Barlow',
                                                                                         fontSize: 12.0,
@@ -909,7 +914,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                           direction:
                                                                               Axis.horizontal,
                                                                           rating:
-                                                                              listViewCommentsAndRateRecord.rating!,
+                                                                              listViewCommentsAndRateRecord.rating,
                                                                           unratedColor:
                                                                               Color(0xFF9E9E9E),
                                                                           itemCount:
