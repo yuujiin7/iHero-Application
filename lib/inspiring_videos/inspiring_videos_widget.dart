@@ -44,21 +44,21 @@ class _InspiringVideosWidgetState extends State<InspiringVideosWidget> {
     context.watch<FFAppState>();
 
     return YoutubeFullScreenWrapper(
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        child: Scaffold(
+          key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          iconTheme:
-              IconThemeData(color: FlutterFlowTheme.of(context).tertiaryColor),
-          automaticallyImplyLeading: true,
-          actions: [],
-          centerTitle: false,
-          elevation: 0.0,
-        ),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            iconTheme:
+                IconThemeData(color: FlutterFlowTheme.of(context).tertiary),
+            automaticallyImplyLeading: true,
+            actions: [],
+            centerTitle: false,
+            elevation: 0.0,
+          ),
+          body: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               SingleChildScrollView(
@@ -79,16 +79,16 @@ class _InspiringVideosWidgetState extends State<InspiringVideosWidget> {
                             child: Text(
                               'From volunteers like you',
                               style: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .titleSmall
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .subtitle2Family,
+                                        .titleSmallFamily,
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .subtitle2Family),
+                                                .titleSmallFamily),
                                   ),
                             ),
                           ),
@@ -146,16 +146,16 @@ class _InspiringVideosWidgetState extends State<InspiringVideosWidget> {
                                       'Philippine Red Cross salutes our volunteer firefighters this FIRE PREVENTION MONTH!',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle1
+                                          .titleMedium
                                           .override(
                                             fontFamily:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1Family,
+                                                    .titleMediumFamily,
                                             fontSize: 14.0,
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle1Family),
+                                                        .titleMediumFamily),
                                           ),
                                     ),
                                   ),

@@ -181,6 +181,162 @@ class CountryCodeSearchCall {
       );
 }
 
+class NewEventSendGridCall {
+  static Future<ApiCallResponse> call({
+    String? toEmail = '',
+    String? subject = '',
+    String? title = '',
+    String? description = '',
+    String? eventAddress = '',
+    String? startDate = '',
+    String? endDate = '',
+    String? startTime = '',
+    String? endTime = '',
+    String? personInCharge = '',
+    String? contactNumber = '',
+    String? photoUrl = '',
+  }) {
+    final body = '''
+{
+  "from": {
+    "email": "ihero.info@gmail.com"
+  },
+  "personalizations": [
+    {
+      "to": [
+        {
+          "email": "${toEmail}"
+        }
+      ],
+      "dynamic_template_data": {
+        "photo_url": "${photoUrl}",
+        "title": "${title}",
+        "description": "${description}",
+        "eventAddress": "${eventAddress}",
+        "startDate": "${startDate}",
+        "endDate": "${endDate}",
+        "startTime": "${startTime}",
+        "endTime": "${endTime}",
+        "personIncharge": "${personInCharge}",
+        "contactNumber": "${contactNumber}"
+      }
+    }
+  ],
+  "template_id": "d-71a1cf855c0548a497807aa6aebb00a1"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'New Event SendGrid',
+      apiUrl: 'https://api.sendgrid.com/v3/mail/send',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization':
+            'Bearer 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',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class NewAnnouncementSendGridCall {
+  static Future<ApiCallResponse> call({
+    String? toEmail = '',
+    String? subject = '',
+    String? title = '',
+    String? description = '',
+  }) {
+    final body = '''
+{
+  "from": {
+    "email": "ihero.info@gmail.com"
+  },
+  "personalizations": [
+    {
+      "to": [
+        {
+          "email": "${toEmail}"
+        }
+      ],
+      "dynamic_template_data": {
+        "title": "${title}",
+        "description": "${description}"
+      }
+    }
+  ],
+  "template_id": "d-9169d5ce98654d2386c49dd4fd37513d"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'New Announcement SendGrid ',
+      apiUrl: 'https://api.sendgrid.com/v3/mail/send',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization':
+            'Bearer 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',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class ChangePasswordSendGridCall {
+  static Future<ApiCallResponse> call({
+    String? toEmail = '',
+    String? subject = '',
+    String? date = '',
+    String? time = '',
+    String? toName = '',
+  }) {
+    final body = '''
+{
+  "from": {
+    "email": "ihero.info@gmail.com"
+  },
+  "personalizations": [
+    {
+      "to": [
+        {
+          "email": "${toEmail}"
+        }
+      ],
+      "dynamic_template_data": {
+        "Date": "${date}",
+        "Time": "${time}",
+        "to_name": "${toName}"
+      }
+    }
+  ],
+  "template_id": "d-002ec12126a34bc6a3d39484e595969c"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Change Password SendGrid',
+      apiUrl: 'https://api.sendgrid.com/v3/mail/send',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization':
+            'Bearer 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',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

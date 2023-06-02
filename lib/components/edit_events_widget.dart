@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -10,8 +10,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
-import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
@@ -51,6 +53,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EditEventsModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -75,7 +79,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: SpinKitSquareCircle(
+                child: SpinKitRipple(
                   color: Color(0xFFFE2126),
                   size: 50.0,
                 ),
@@ -108,7 +112,16 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                         children: [
                           Text(
                             'Upload Image',
-                            style: FlutterFlowTheme.of(context).bodyText1,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily),
+                                ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -134,6 +147,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'EDIT_EVENTS_COMP_Image_h3wwvzsg_ON_TAP');
@@ -151,7 +168,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                             validateFileFormat(
                                                 m.storagePath, context))) {
                                       setState(
-                                          () => _model.isMediaUploading = true);
+                                          () => _model.isDataUploading = true);
                                       var selectedUploadedFiles =
                                           <FFUploadedFile>[];
                                       var downloadUrls = <String>[];
@@ -169,6 +186,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   bytes: m.bytes,
                                                   height: m.dimensions?.height,
                                                   width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
                                                 ))
                                             .toList();
 
@@ -184,7 +202,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       } finally {
                                         ScaffoldMessenger.of(context)
                                             .hideCurrentSnackBar();
-                                        _model.isMediaUploading = false;
+                                        _model.isDataUploading = false;
                                       }
                                       if (selectedUploadedFiles.length ==
                                               selectedMedia.length &&
@@ -200,13 +218,14 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       } else {
                                         setState(() {});
                                         showUploadMessage(
-                                            context, 'Failed to upload media');
+                                            context, 'Failed to upload data');
                                         return;
                                       }
                                     }
                                   },
-                                  child: Image.network(
-                                    containerEventsRecord.eventPhotoUrl!,
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        containerEventsRecord.eventPhotoUrl,
                                     width: 100.0,
                                     height: 100.0,
                                     fit: BoxFit.cover,
@@ -217,333 +236,294 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                                0.0, 20.0, 0.0, 0.0),
+                            child: TextFormField(
+                              controller: _model.titleEventController ??=
+                                  TextEditingController(
+                                text: containerEventsRecord.eventTitle,
                               ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextFormField(
-                                  controller: _model.titleEventController ??=
-                                      TextEditingController(
-                                    text: containerEventsRecord.eventTitle,
-                                  ),
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.titleEventController',
-                                    Duration(milliseconds: 2000),
-                                    () async {
-                                      logFirebaseEvent(
-                                          'EDIT_EVENTS_TitleEvent_ON_TEXTFIELD_CHAN');
-                                      logFirebaseEvent(
-                                          'TitleEvent_update_app_state');
-                                      setState(() {});
-                                    },
-                                  ),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'Event Title',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Ubuntu',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w600,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.title,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      size: 20.0,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
-                                  validator: _model
-                                      .titleEventControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[a-zA-Z0-9]'))
-                                  ],
-                                ),
+                              onChanged: (_) => EasyDebounce.debounce(
+                                '_model.titleEventController',
+                                Duration(milliseconds: 200),
+                                () async {
+                                  logFirebaseEvent(
+                                      'EDIT_EVENTS_TitleEvent_ON_TEXTFIELD_CHAN');
+                                  logFirebaseEvent(
+                                      'TitleEvent_update_app_state');
+                                  setState(() {});
+                                },
                               ),
+                              textCapitalization: TextCapitalization.sentences,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Event Title',
+                                hintText: 'Event Title',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Ubuntu',
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      fontWeight: FontWeight.w600,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily),
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              validator: _model.titleEventControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^[\\s\\S]{0,65}'))
+                              ],
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
+                            child: TextFormField(
+                              controller: _model.descriptionEventController ??=
+                                  TextEditingController(
+                                text: valueOrDefault<String>(
+                                  containerEventsRecord.eventDescription,
+                                  'Description',
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    TextFormField(
-                                      controller:
-                                          _model.descriptionEventController ??=
-                                              TextEditingController(
-                                        text: containerEventsRecord
-                                            .eventDescription,
-                                      ),
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        hintText: 'Event Description',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Ubuntu',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              fontWeight: FontWeight.w600,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
-                                            ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Barlow',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontWeight: FontWeight.w500,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
-                                          ),
-                                      maxLines: 20,
-                                      minLines: 1,
-                                      keyboardType: TextInputType.multiline,
-                                      validator: _model
-                                          .descriptionEventControllerValidator
-                                          .asValidator(context),
+                              ),
+                              textCapitalization: TextCapitalization.sentences,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Event Description',
+                                hintText: 'Event Description',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Ubuntu',
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      fontWeight: FontWeight.w600,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily),
                                     ),
-                                  ],
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              maxLines: 20,
+                              minLines: 1,
+                              keyboardType: TextInputType.multiline,
+                              validator: _model
+                                  .descriptionEventControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^[\\s\\S]{0,500}'))
+                              ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextFormField(
-                                  controller:
-                                      _model.addRequirementEventController ??=
-                                          TextEditingController(
-                                    text: containerEventsRecord
-                                        .addRequirementEvent,
-                                  ),
-                                  textCapitalization: TextCapitalization.words,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'Event Description',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Ubuntu',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w600,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
-                                  maxLines: 20,
-                                  minLines: 1,
-                                  keyboardType: TextInputType.multiline,
-                                  validator: _model
-                                      .addRequirementEventControllerValidator
-                                      .asValidator(context),
-                                ),
+                          TextFormField(
+                            controller: _model.addRequirementEventController ??=
+                                TextEditingController(
+                              text: valueOrDefault<String>(
+                                containerEventsRecord.addRequirementEvent,
+                                'Requirement',
                               ),
                             ),
+                            textCapitalization: TextCapitalization.sentences,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Requirements/Reminders',
+                              hintText: 'Requirements/Reminders',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Ubuntu',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontWeight: FontWeight.w600,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1.0,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  width: 1.0,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  width: 1.0,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  width: 1.0,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              filled: true,
+                              fillColor:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Barlow',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontWeight: FontWeight.w500,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily),
+                                ),
+                            maxLines: 20,
+                            minLines: 1,
+                            keyboardType: TextInputType.multiline,
+                            validator: _model
+                                .addRequirementEventControllerValidator
+                                .asValidator(context),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp('^[\\s\\S]{0,500}'))
+                            ],
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -582,26 +562,26 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               'Start Date',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isDateSet
+                                              FFAppState().startDate == null
                                                   ? dateTimeFormat(
                                                       'yMMMd',
                                                       containerEventsRecord
@@ -621,7 +601,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     ),
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodyText1
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Barlow',
                                                     color: FlutterFlowTheme.of(
@@ -633,7 +613,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         .containsKey(
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family),
+                                                                .bodyMediumFamily),
                                                   ),
                                             ),
                                           ],
@@ -670,26 +650,26 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               'End Date',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isDateSet
+                                              FFAppState().endDate == null
                                                   ? dateTimeFormat(
                                                       'yMMMd',
                                                       containerEventsRecord
@@ -709,7 +689,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     ),
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodyText1
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Barlow',
                                                     color: FlutterFlowTheme.of(
@@ -721,7 +701,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         .containsKey(
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family),
+                                                                .bodyMediumFamily),
                                                   ),
                                             ),
                                           ],
@@ -734,14 +714,14 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       child: FlutterFlowIconButton(
                                         borderColor:
                                             FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                         borderRadius: 10.0,
                                         borderWidth: 1.0,
                                         buttonSize: 42.0,
                                         icon: Icon(
                                           Icons.date_range_rounded,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           size: 25.0,
                                         ),
                                         showLoadingIndicator: true,
@@ -753,11 +733,13 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0x00000000),
                                             enableDrag: false,
                                             context: context,
-                                            builder: (context) {
+                                            builder: (bottomSheetContext) {
                                               return Padding(
-                                                padding: MediaQuery.of(context)
+                                                padding: MediaQuery.of(
+                                                        bottomSheetContext)
                                                     .viewInsets,
                                                 child: CalendarWidget(),
                                               );
@@ -812,22 +794,22 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               'Event Address',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                             Expanded(
@@ -845,7 +827,11 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   ),
                                                   child: Text(
                                                     valueOrDefault<String>(
-                                                      !_model.isLocSet
+                                                      FFAppState().address ==
+                                                                  null ||
+                                                              FFAppState()
+                                                                      .address ==
+                                                                  ''
                                                           ? containerEventsRecord
                                                               .eventAddress
                                                           : valueOrDefault<
@@ -861,7 +847,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: FlutterFlowTheme
@@ -874,7 +860,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                                   ),
                                                 ),
@@ -890,14 +876,14 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       child: FlutterFlowIconButton(
                                         borderColor:
                                             FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                         borderRadius: 10.0,
                                         borderWidth: 1.0,
                                         buttonSize: 42.0,
                                         icon: Icon(
                                           Icons.place,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           size: 25.0,
                                         ),
                                         showLoadingIndicator: true,
@@ -909,11 +895,13 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0x00000000),
                                             enableDrag: false,
                                             context: context,
-                                            builder: (context) {
+                                            builder: (bottomSheetContext) {
                                               return Padding(
-                                                padding: MediaQuery.of(context)
+                                                padding: MediaQuery.of(
+                                                        bottomSheetContext)
                                                     .viewInsets,
                                                 child: LocationPickerWidget(),
                                               );
@@ -962,30 +950,30 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               'Start Time',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isTimeSet
+                                              FFAppState().startTime == null
                                                   ? dateTimeFormat(
                                                       'jm',
                                                       containerEventsRecord
-                                                          .startTime!,
+                                                          .eventDateStart!,
                                                       locale:
                                                           FFLocalizations.of(
                                                                   context)
@@ -1001,7 +989,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     ),
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodyText1
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Barlow',
                                                     color: FlutterFlowTheme.of(
@@ -1013,7 +1001,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         .containsKey(
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family),
+                                                                .bodyMediumFamily),
                                                   ),
                                             ),
                                           ],
@@ -1021,6 +1009,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       ),
                                     ),
                                     InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'EDIT_EVENTS_Container_pkk0sm94_ON_TAP');
@@ -1098,30 +1090,30 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               'End Time',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                             ),
                                             Text(
-                                              !_model.isTimeSet
+                                              FFAppState().endTime == null
                                                   ? dateTimeFormat(
                                                       'jm',
                                                       containerEventsRecord
-                                                          .endTime!,
+                                                          .eventDateEnd!,
                                                       locale:
                                                           FFLocalizations.of(
                                                                   context)
@@ -1137,7 +1129,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     ),
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodyText1
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Barlow',
                                                     color: FlutterFlowTheme.of(
@@ -1149,7 +1141,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                         .containsKey(
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family),
+                                                                .bodyMediumFamily),
                                                   ),
                                             ),
                                           ],
@@ -1160,6 +1152,10 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 5.0, 0.0),
                                       child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'EDIT_EVENTS_Container_bnb0kdx1_ON_TAP');
@@ -1249,19 +1245,19 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                 'Is Recurring?',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           fontSize: 16.0,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -1269,8 +1265,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                         ),
                                         Switch(
                                           value: _model.switchValue ??=
-                                              containerEventsRecord
-                                                  .isRecurring!,
+                                              containerEventsRecord.isRecurring,
                                           onChanged: (newValue) async {
                                             setState(() =>
                                                 _model.switchValue = newValue!);
@@ -1298,9 +1293,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   children: [
                                     Expanded(
                                       child: FlutterFlowChoiceChips(
-                                        initiallySelected: [
-                                          containerEventsRecord.recurranceDate!
-                                        ],
                                         options: [
                                           ChipData('Sunday'),
                                           ChipData('Monday'),
@@ -1312,26 +1304,25 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           ChipData('Everyday')
                                         ],
                                         onChanged: (val) => setState(() =>
-                                            _model.choiceChipsValue =
-                                                val?.first),
+                                            _model.choiceChipsValues = val),
                                         selectedChipStyle: ChipStyle(
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
-                                                  .primaryColor,
+                                                  .primary,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1Family,
+                                                        .bodyMediumFamily,
                                                 color: Colors.white,
                                                 useGoogleFonts: GoogleFonts
                                                         .asMap()
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                           iconColor: Colors.white,
                                           iconSize: 18.0,
@@ -1343,18 +1334,18 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   .alternate,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .bodyText2
+                                              .bodySmall
                                               .override(
                                                 fontFamily:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText2Family,
+                                                        .bodySmallFamily,
                                                 color: Color(0xFFE3E7ED),
                                                 useGoogleFonts: GoogleFonts
                                                         .asMap()
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText2Family),
+                                                            .bodySmallFamily),
                                               ),
                                           iconColor: Color(0xFFE3E7ED),
                                           iconSize: 18.0,
@@ -1362,10 +1353,15 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                         ),
                                         chipSpacing: 20.0,
                                         rowSpacing: 5.0,
-                                        multiselect: false,
+                                        multiselect: true,
                                         initialized:
-                                            _model.choiceChipsValue != null,
+                                            _model.choiceChipsValues != null,
                                         alignment: WrapAlignment.spaceEvenly,
+                                        controller: _model
+                                                .choiceChipsValueController ??=
+                                            FormFieldController<List<String>>(
+                                          [],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1375,434 +1371,456 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                            child: TextFormField(
+                              controller: _model.personInChargeController ??=
+                                  TextEditingController(
+                                text: containerEventsRecord.eventInChargePerson,
                               ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextFormField(
-                                  controller:
-                                      _model.personInChargeController ??=
-                                          TextEditingController(
-                                    text: containerEventsRecord
-                                        .eventInChargePerson,
-                                  ),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'Who is in charge?',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily:
+                              textCapitalization: TextCapitalization.sentences,
+                              readOnly: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Event in charge Person',
+                                hintText: 'Who is in charge?',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                                  .bodyMediumFamily),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
-                                  validator: _model
-                                      .personInChargeControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[a-zA-Z]'))
-                                  ],
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              validator: _model
+                                  .personInChargeControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,50}'))
+                              ],
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                            child: TextFormField(
+                              controller: _model.contactNumberController ??=
+                                  TextEditingController(
+                                text: containerEventsRecord.eventContactNumber,
                               ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextFormField(
-                                  controller: _model.contactNumberController ??=
-                                      TextEditingController(
-                                    text: containerEventsRecord
-                                        .eventContactNumber,
-                                  ),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'Contact Number',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily:
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Contact Numer',
+                                hintText: 'Contact Number',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                                  .bodyMediumFamily),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
-                                  keyboardType: TextInputType.phone,
-                                  validator: _model
-                                      .contactNumberControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('^[\\d+\\-\\s]*\$'))
-                                  ],
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              keyboardType: TextInputType.phone,
+                              validator: _model.contactNumberControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^[\\d+\\-\\s]*\$'))
+                              ],
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                            child: TextFormField(
+                              controller: _model.ageRequirementController ??=
+                                  TextEditingController(
+                                text: containerEventsRecord.ageRequirement
+                                    .toString(),
                               ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextFormField(
-                                  controller:
-                                      _model.ageRequirementController ??=
-                                          TextEditingController(
-                                    text: containerEventsRecord.ageRequirement
-                                        .toString(),
-                                  ),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'Age Requirement',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily:
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Age Requirements',
+                                hintText: 'Age Requirement',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                                  .bodyMediumFamily),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
-                                  keyboardType: TextInputType.number,
-                                  validator: _model
-                                      .ageRequirementControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9]'))
-                                  ],
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
                               ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              keyboardType: TextInputType.number,
+                              validator: _model
+                                  .ageRequirementControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^\\d{0,3}'))
+                              ],
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
+                            child: TextFormField(
+                              controller: _model.neededVolunteerController ??=
+                                  TextEditingController(
+                                text: formatNumber(
+                                  containerEventsRecord.neededVolunteer,
+                                  formatType: FormatType.compact,
                                 ),
-                                child: TextFormField(
-                                  controller:
-                                      _model.neededVolunteerController ??=
-                                          TextEditingController(
-                                    text: formatNumber(
-                                      containerEventsRecord.neededVolunteer,
-                                      formatType: FormatType.compact,
+                              ),
+                              onChanged: (_) => EasyDebounce.debounce(
+                                '_model.neededVolunteerController',
+                                Duration(milliseconds: 2000),
+                                () async {
+                                  logFirebaseEvent(
+                                      'EDIT_EVENTS_neededVolunteer_ON_TEXTFIELD');
+                                  logFirebaseEvent(
+                                      'neededVolunteer_set_form_field');
+                                  setState(() {
+                                    _model.sliderValue = 0.0;
+                                  });
+                                },
+                              ),
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Volunteer Needed',
+                                hintText: 'No. of volunteer needed',
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily),
                                     ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
                                   ),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'No. of volunteer needed',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Barlow',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontWeight: FontWeight.w500,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              keyboardType: TextInputType.number,
+                              validator: _model
+                                  .neededVolunteerControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^\\d{1,4}'))
+                              ],
+                            ),
+                          ),
+                          if ((_model.neededVolunteerController.text != null &&
+                                  _model.neededVolunteerController.text !=
+                                      '') ||
+                              (containerEventsRecord.minimumVolunteer == null))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 5.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    'Set a minimum volunteer count',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
                                         .override(
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
+                                                  .bodyMediumFamily,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
-                                    ),
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
-                                      ),
-                                  keyboardType: TextInputType.number,
-                                  validator: _model
-                                      .neededVolunteerControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp('[0-9]'))
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                          if ((_model.neededVolunteerController.text != null &&
+                                  _model.neededVolunteerController.text !=
+                                      '') ||
+                              (containerEventsRecord.minimumVolunteer == null))
+                            SliderTheme(
+                              data: SliderThemeData(
+                                showValueIndicator: ShowValueIndicator.always,
+                              ),
+                              child: Slider.adaptive(
+                                activeColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                inactiveColor:
+                                    FlutterFlowTheme.of(context).accent2,
+                                min: 0.0,
+                                max: valueOrDefault<double>(
+                                  double.tryParse(
+                                      _model.neededVolunteerController.text),
+                                  0.0,
+                                ),
+                                value: _model.sliderValue ??= 0.0,
+                                label: _model.sliderValue.toString(),
+                                onChanged: (newValue) {
+                                  newValue =
+                                      double.parse(newValue.toStringAsFixed(0));
+                                  setState(() => _model.sliderValue = newValue);
+                                },
+                              ),
                             ),
-                            child: wrapWithModel(
-                              model: _model.selectCauseEditModel,
-                              updateCallback: () => setState(() {}),
-                              child: SelectCauseEditWidget(
-                                eventRef: widget.eventsDetails,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: wrapWithModel(
+                                model: _model.selectCauseEditModel,
+                                updateCallback: () => setState(() {}),
+                                child: SelectCauseEditWidget(
+                                  eventRef: widget.eventsDetails,
+                                ),
                               ),
                             ),
                           ),
@@ -1847,8 +1865,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       child: SizedBox(
                                                         width: 50.0,
                                                         height: 50.0,
-                                                        child:
-                                                            SpinKitSquareCircle(
+                                                        child: SpinKitRipple(
                                                           color:
                                                               Color(0xFFFE2126),
                                                           size: 50.0,
@@ -1861,18 +1878,18 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                       snapshot.data!;
                                                   return FlutterFlowDropDown<
                                                       String>(
-                                                    initialOption: _model
-                                                            .partnerDropDownValue ??=
-                                                        containerEventsRecord
-                                                            .organizationPartner!
-                                                            .toList()
-                                                            .first,
+                                                    controller: _model
+                                                            .partnerDropDownValueController ??=
+                                                        FormFieldController<
+                                                            String>(
+                                                      _model.partnerDropDownValue ??=
+                                                          containerEventsRecord
+                                                              .organizationPartnter,
+                                                    ),
                                                     options:
                                                         partnerDropDownPartnerOrgRecordList
                                                             .map((e) =>
                                                                 e.orgName)
-                                                            .withoutNulls
-                                                            .toList()
                                                             .toList(),
                                                     onChanged: (val) async {
                                                       setState(() => _model
@@ -1886,25 +1903,26 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     },
                                                     width: 300.0,
                                                     height: 50.0,
-                                                    textStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyText1
-                                                            .override(
-                                                              fontFamily:
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumFamily,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          useGoogleFonts: GoogleFonts
+                                                                  .asMap()
+                                                              .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryColor,
-                                                              useGoogleFonts: GoogleFonts
-                                                                      .asMap()
-                                                                  .containsKey(
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyText1Family),
-                                                            ),
+                                                                      .bodyMediumFamily),
+                                                        ),
                                                     hintText:
                                                         'Partner Organization',
                                                     fillColor: Colors.white,
@@ -1918,6 +1936,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                             .fromSTEB(12.0, 4.0,
                                                                 12.0, 4.0),
                                                     hidesUnderline: true,
+                                                    isSearchable: true,
                                                   );
                                                 },
                                               ),
@@ -1956,7 +1975,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: SpinKitSquareCircle(
+                                            child: SpinKitRipple(
                                               color: Color(0xFFFE2126),
                                               size: 50.0,
                                             ),
@@ -1979,6 +1998,20 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           logFirebaseEvent(
                                               'ButtonCancel_bottom_sheet');
                                           Navigator.pop(context);
+                                          logFirebaseEvent(
+                                              'ButtonCancel_update_app_state');
+                                          setState(() {
+                                            FFAppState().deleteLocationLatLng();
+                                            FFAppState().locationLatLng = null;
+
+                                            FFAppState().deleteAddress();
+                                            FFAppState().address = '';
+
+                                            FFAppState().startDate = null;
+                                            FFAppState().endDate = null;
+                                            FFAppState().startTime = null;
+                                            FFAppState().endTime = null;
+                                          });
                                         },
                                         text: 'Cancel',
                                         options: FFButtonOptions(
@@ -1991,14 +2024,14 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily:
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle2Family,
+                                                        .titleSmallFamily,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryBtnText,
@@ -2007,7 +2040,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .subtitle2Family),
+                                                            .titleSmallFamily),
                                               ),
                                           elevation: 3.0,
                                           borderSide: BorderSide(
@@ -2039,7 +2072,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: SpinKitSquareCircle(
+                                            child: SpinKitRipple(
                                               color: Color(0xFFFE2126),
                                               size: 50.0,
                                             ),
@@ -2056,359 +2089,417 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                   .first
                                               : null;
                                       return FFButtonWidget(
-                                        onPressed: (FFAppState().startDate ==
-                                                    null) &&
-                                                (FFAppState().endDate ==
-                                                    null) &&
-                                                (FFAppState().address == null ||
-                                                    FFAppState().address == '')
-                                            ? null
-                                            : () async {
-                                                logFirebaseEvent(
-                                                    'EDIT_EVENTS_COMP_ButtonSubmit_ON_TAP');
-                                                var _shouldSetState = false;
-                                                logFirebaseEvent(
-                                                    'ButtonSubmit_validate_form');
-                                                if (_model.formKey
-                                                            .currentState ==
-                                                        null ||
-                                                    !_model
-                                                        .formKey.currentState!
-                                                        .validate()) {
-                                                  return;
-                                                }
-                                                logFirebaseEvent(
-                                                    'ButtonSubmit_alert_dialog');
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Submit '),
-                                                              content: Text(
-                                                                  'Are you sure?'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: Text(
-                                                                      'Cancel'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: Text(
-                                                                      'Confirm'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ) ??
-                                                        false;
-                                                if (confirmDialogResponse) {
-                                                  logFirebaseEvent(
-                                                      'ButtonSubmit_custom_action');
-                                                  _model.isEventExist =
-                                                      await actions
-                                                          .documentExists(
-                                                    FFAppState().address,
-                                                    FFAppState().startDate!,
-                                                    FFAppState().endDate!,
+                                        onPressed: () async {
+                                          logFirebaseEvent(
+                                              'EDIT_EVENTS_COMP_ButtonSubmit_ON_TAP');
+                                          logFirebaseEvent(
+                                              'ButtonSubmit_validate_form');
+                                          if (_model.formKey.currentState ==
+                                                  null ||
+                                              !_model.formKey.currentState!
+                                                  .validate()) {
+                                            return;
+                                          }
+                                          if (_model.datePicked1 == null) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Please set the start time.',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                          if (_model.datePicked2 == null) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Please set the end time.',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                          if (_model.selectCauseEditModel
+                                                  .dropDownValue ==
+                                              null) {
+                                            ScaffoldMessenger.of(context)
+                                                .clearSnackBars();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Please pick atleast one cause',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                          if (_model.partnerDropDownValue ==
+                                              null) {
+                                            ScaffoldMessenger.of(context)
+                                                .clearSnackBars();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Please pick a paertner organiztion',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                          logFirebaseEvent(
+                                              'ButtonSubmit_alert_dialog');
+                                          var confirmDialogResponse =
+                                              await showDialog<bool>(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: Text('Submit '),
+                                                        content: Text(
+                                                            'Are you sure?'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext,
+                                                                    false),
+                                                            child:
+                                                                Text('Cancel'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext,
+                                                                    true),
+                                                            child:
+                                                                Text('Confirm'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ) ??
+                                                  false;
+                                          if (confirmDialogResponse) {
+                                            if (_model.switchValue!) {
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_backend_call');
+
+                                              final eventsUpdateData1 = {
+                                                ...createEventsRecordData(
+                                                  eventTitle: _model
+                                                      .titleEventController
+                                                      .text,
+                                                  eventPhotoUrl:
+                                                      _model.uploadedFileUrl,
+                                                  eventDescription: _model
+                                                      .descriptionEventController
+                                                      .text,
+                                                  eventInChargePerson: _model
+                                                      .personInChargeController
+                                                      .text,
+                                                  eventLocation: FFAppState()
+                                                              .locationLatLng ==
+                                                          null
+                                                      ? containerEventsRecord
+                                                          .eventLocation
+                                                      : FFAppState()
+                                                          .locationLatLng,
+                                                  eventAddress: FFAppState()
+                                                                  .address !=
+                                                              null &&
+                                                          FFAppState()
+                                                                  .address !=
+                                                              ''
+                                                      ? containerEventsRecord
+                                                          .eventAddress
+                                                      : FFAppState().address,
+                                                  neededVolunteerCount:
+                                                      double.tryParse(_model
+                                                          .neededVolunteerController
+                                                          .text),
+                                                  neededVolunteer:
+                                                      double.tryParse(_model
+                                                          .neededVolunteerController
+                                                          .text),
+                                                  isEnded: false,
+                                                  isDeleted: false,
+                                                  eventContactNumber: _model
+                                                      .contactNumberController
+                                                      .text,
+                                                  isConfirmbySA: false,
+                                                  eventDateStart: FFAppState()
+                                                              .startDate ==
+                                                          null
+                                                      ? containerEventsRecord
+                                                          .eventDateStart
+                                                      : functions
+                                                          .overwriteEvent(
+                                                              FFAppState()
+                                                                  .startDate!,
+                                                              FFAppState()
+                                                                  .startTime!),
+                                                  eventDateEnd: FFAppState()
+                                                              .endDate ==
+                                                          null
+                                                      ? containerEventsRecord
+                                                          .eventDateEnd
+                                                      : functions
+                                                          .overwriteEvent(
+                                                              FFAppState()
+                                                                  .endDate!,
+                                                              FFAppState()
+                                                                  .endTime!),
+                                                  isReqCancel: false,
+                                                  partnerOrgRef:
+                                                      buttonSubmitPartnerOrgRecord!
+                                                          .reference,
+                                                  isRecurring:
+                                                      _model.switchValue,
+                                                  volunteerCount: 0.0,
+                                                  addRequirementEvent: _model
+                                                      .addRequirementEventController
+                                                      .text,
+                                                  organizationPartnter: _model
+                                                      .partnerDropDownValue,
+                                                ),
+                                                'recurranceDate':
+                                                    _model.choiceChipsValues,
+                                              };
+                                              await widget.eventsDetails!
+                                                  .update(eventsUpdateData1);
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_alert_dialog');
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('Done'),
+                                                    content: Text(
+                                                        'Event has been edited.'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Dismiss'),
+                                                      ),
+                                                    ],
                                                   );
-                                                  _shouldSetState = true;
-                                                  if (_model.isEventExist!) {
-                                                    logFirebaseEvent(
-                                                        'ButtonSubmit_alert_dialog');
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text('Failed'),
-                                                          content: Text(
-                                                              'Another Events has the same Location and Date is scanned.'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext),
-                                                              child: Text('Ok'),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
-                                                    if (_shouldSetState)
-                                                      setState(() {});
-                                                    return;
-                                                  } else {
-                                                    if (_model.switchValue!) {
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_backend_call');
+                                                },
+                                              );
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_backend_call');
 
-                                                      final eventsUpdateData1 =
-                                                          {
-                                                        ...createEventsRecordData(
-                                                          eventTitle: _model
-                                                              .titleEventController
-                                                              .text,
-                                                          eventPhotoUrl: _model
-                                                              .uploadedFileUrl,
-                                                          eventDescription: _model
-                                                              .descriptionEventController
-                                                              .text,
-                                                          eventInChargePerson:
-                                                              _model
-                                                                  .personInChargeController
-                                                                  .text,
-                                                          eventLocation:
-                                                              FFAppState()
-                                                                  .locationLatLng,
-                                                          eventAddress:
-                                                              FFAppState()
-                                                                  .address,
-                                                          neededVolunteerCount:
-                                                              double.tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          neededVolunteer: double
-                                                              .tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          isEnded: false,
-                                                          isDeleted: false,
-                                                          eventContactNumber: _model
-                                                              .contactNumberController
-                                                              .text,
-                                                          isConfirmbySA: false,
-                                                          eventDateStart:
-                                                              FFAppState()
-                                                                  .startDate,
-                                                          eventDateEnd:
-                                                              FFAppState()
-                                                                  .endDate,
-                                                          isReqCancel: false,
-                                                          partnerOrgRef:
-                                                              buttonSubmitPartnerOrgRecord!
-                                                                  .reference,
-                                                          startTime: _model
-                                                              .datePicked1,
-                                                          endTime: _model
-                                                              .datePicked2,
-                                                          isRecurring: _model
-                                                              .switchValue,
-                                                          recurranceDate: _model
-                                                              .choiceChipsValue,
-                                                          volunteerCount: 0.0,
-                                                          addRequirementEvent:
-                                                              _model
-                                                                  .addRequirementEventController
-                                                                  .text,
-                                                        ),
-                                                        'organization_partner':
-                                                            FFAppState()
-                                                                .forOrgList,
-                                                      };
-                                                      await widget
-                                                          .eventsDetails!
-                                                          .update(
-                                                              eventsUpdateData1);
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_alert_dialog');
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title: Text('Done'),
-                                                            content: Text(
-                                                                'Event has been edited.'),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child: Text(
-                                                                    'Dismiss'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_widget_state');
-                                                      setState(() {
-                                                        _model.isDateSet =
-                                                            false;
-                                                        _model.isTimeSet =
-                                                            false;
-                                                        _model.isLocSet = false;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_app_state');
-                                                      setState(() {
-                                                        FFAppState()
-                                                            .deleteLocationLatLng();
-                                                        FFAppState()
-                                                                .locationLatLng =
-                                                            null;
+                                              final logsCreateData =
+                                                  createLogsRecordData(
+                                                date: getCurrentTimestamp,
+                                                action: 'Edited an event',
+                                                userRef: currentUserReference,
+                                                eventRef: widget.eventsDetails,
+                                              );
+                                              await LogsRecord.createDoc(
+                                                      currentUserReference!)
+                                                  .set(logsCreateData);
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_update_app_state');
+                                              setState(() {
+                                                FFAppState()
+                                                    .deleteLocationLatLng();
+                                                FFAppState().locationLatLng =
+                                                    null;
 
-                                                        FFAppState()
-                                                            .deleteAddress();
-                                                        FFAppState().address =
-                                                            '';
+                                                FFAppState().deleteAddress();
+                                                FFAppState().address = '';
 
-                                                        FFAppState().startDate =
-                                                            null;
-                                                        FFAppState().endDate =
-                                                            null;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_bottom_sheet');
-                                                      Navigator.pop(context);
-                                                      if (_shouldSetState)
-                                                        setState(() {});
-                                                      return;
-                                                    } else {
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_backend_call');
+                                                FFAppState().startDate = null;
+                                                FFAppState().endDate = null;
+                                              });
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_bottom_sheet');
+                                              Navigator.pop(context);
+                                              return;
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_backend_call');
 
-                                                      final eventsUpdateData2 =
-                                                          {
-                                                        ...createEventsRecordData(
-                                                          eventTitle: _model
-                                                              .titleEventController
-                                                              .text,
-                                                          eventPhotoUrl: _model
-                                                              .uploadedFileUrl,
-                                                          eventDescription: _model
-                                                              .descriptionEventController
-                                                              .text,
-                                                          eventInChargePerson:
-                                                              _model
-                                                                  .personInChargeController
-                                                                  .text,
-                                                          eventLocation:
+                                              final eventsUpdateData2 = {
+                                                ...createEventsRecordData(
+                                                  eventTitle: _model
+                                                      .titleEventController
+                                                      .text,
+                                                  eventPhotoUrl:
+                                                      _model.uploadedFileUrl,
+                                                  eventDescription: _model
+                                                      .descriptionEventController
+                                                      .text,
+                                                  eventInChargePerson: _model
+                                                      .personInChargeController
+                                                      .text,
+                                                  eventLocation: FFAppState()
+                                                              .locationLatLng ==
+                                                          null
+                                                      ? containerEventsRecord
+                                                          .eventLocation
+                                                      : FFAppState()
+                                                          .locationLatLng,
+                                                  eventAddress: FFAppState()
+                                                                  .address !=
+                                                              null &&
+                                                          FFAppState()
+                                                                  .address !=
+                                                              ''
+                                                      ? containerEventsRecord
+                                                          .eventAddress
+                                                      : FFAppState().address,
+                                                  neededVolunteerCount:
+                                                      double.tryParse(_model
+                                                          .neededVolunteerController
+                                                          .text),
+                                                  neededVolunteer:
+                                                      double.tryParse(_model
+                                                          .neededVolunteerController
+                                                          .text),
+                                                  isEnded: false,
+                                                  isDeleted: false,
+                                                  eventContactNumber: _model
+                                                      .contactNumberController
+                                                      .text,
+                                                  isConfirmbySA: false,
+                                                  eventDateStart: FFAppState()
+                                                              .startDate ==
+                                                          null
+                                                      ? containerEventsRecord
+                                                          .eventDateStart
+                                                      : functions
+                                                          .overwriteEvent(
                                                               FFAppState()
-                                                                  .locationLatLng,
-                                                          eventAddress:
+                                                                  .startDate!,
                                                               FFAppState()
-                                                                  .address,
-                                                          neededVolunteerCount:
-                                                              double.tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          neededVolunteer: double
-                                                              .tryParse(_model
-                                                                  .neededVolunteerController
-                                                                  .text),
-                                                          isEnded: false,
-                                                          isDeleted: false,
-                                                          eventContactNumber: _model
-                                                              .contactNumberController
-                                                              .text,
-                                                          isConfirmbySA: false,
-                                                          eventDateStart:
+                                                                  .startTime!),
+                                                  eventDateEnd: FFAppState()
+                                                              .endDate ==
+                                                          null
+                                                      ? containerEventsRecord
+                                                          .eventDateEnd
+                                                      : functions
+                                                          .overwriteEvent(
                                                               FFAppState()
-                                                                  .startDate,
-                                                          eventDateEnd:
+                                                                  .endDate!,
                                                               FFAppState()
-                                                                  .endDate,
-                                                          isReqCancel: false,
-                                                          partnerOrgRef:
-                                                              buttonSubmitPartnerOrgRecord!
-                                                                  .reference,
-                                                          startTime: _model
-                                                              .datePicked1,
-                                                          endTime: _model
-                                                              .datePicked2,
-                                                          isRecurring: _model
-                                                              .switchValue,
-                                                          recurranceDate: _model
-                                                              .choiceChipsValue,
-                                                          volunteerCount: 0.0,
-                                                        ),
-                                                        'organization_partner':
-                                                            FFAppState()
-                                                                .forOrgList,
-                                                      };
-                                                      await widget
-                                                          .eventsDetails!
-                                                          .update(
-                                                              eventsUpdateData2);
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_alert_dialog');
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title: Text('Done'),
-                                                            content: Text(
-                                                                'Event has been edited.'),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child: Text(
-                                                                    'Dismiss'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_widget_state');
-                                                      setState(() {
-                                                        _model.isDateSet =
-                                                            false;
-                                                        _model.isTimeSet =
-                                                            false;
-                                                        _model.isLocSet = false;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_update_app_state');
-                                                      setState(() {
-                                                        FFAppState()
-                                                            .deleteLocationLatLng();
-                                                        FFAppState()
-                                                                .locationLatLng =
-                                                            null;
+                                                                  .endTime!),
+                                                  isReqCancel: false,
+                                                  partnerOrgRef:
+                                                      buttonSubmitPartnerOrgRecord!
+                                                          .reference,
+                                                  isRecurring:
+                                                      _model.switchValue,
+                                                  volunteerCount: 0.0,
+                                                  organizationPartnter: _model
+                                                      .partnerDropDownValue,
+                                                ),
+                                                'recurranceDate':
+                                                    FieldValue.delete(),
+                                              };
+                                              await widget.eventsDetails!
+                                                  .update(eventsUpdateData2);
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_backend_call');
 
-                                                        FFAppState()
-                                                            .deleteAddress();
-                                                        FFAppState().address =
-                                                            '';
+                                              final eventsUpdateData3 = {
+                                                'recurranceDate':
+                                                    FieldValue.arrayUnion(
+                                                        ['Everyday']),
+                                              };
+                                              await widget.eventsDetails!
+                                                  .update(eventsUpdateData3);
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_alert_dialog');
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('Done'),
+                                                    content: Text(
+                                                        'Event has been edited.'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Dismiss'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_update_app_state');
+                                              setState(() {
+                                                FFAppState()
+                                                    .deleteLocationLatLng();
+                                                FFAppState().locationLatLng =
+                                                    null;
 
-                                                        FFAppState().startDate =
-                                                            null;
-                                                        FFAppState().endDate =
-                                                            null;
-                                                      });
-                                                      logFirebaseEvent(
-                                                          'ButtonSubmit_bottom_sheet');
-                                                      Navigator.pop(context);
-                                                      if (_shouldSetState)
-                                                        setState(() {});
-                                                      return;
-                                                    }
-                                                  }
-                                                } else {
-                                                  if (_shouldSetState)
-                                                    setState(() {});
-                                                  return;
-                                                }
+                                                FFAppState().deleteAddress();
+                                                FFAppState().address = '';
 
-                                                if (_shouldSetState)
-                                                  setState(() {});
-                                              },
+                                                FFAppState().startDate = null;
+                                                FFAppState().endDate = null;
+                                              });
+                                              logFirebaseEvent(
+                                                  'ButtonSubmit_bottom_sheet');
+                                              Navigator.pop(context);
+                                              return;
+                                            }
+                                          } else {
+                                            return;
+                                          }
+                                        },
                                         text: 'Submit',
                                         options: FFButtonOptions(
                                           width: 130.0,
@@ -2422,18 +2513,18 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           color: Color(0xFF2B8C2A),
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily:
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle2Family,
+                                                        .titleSmallFamily,
                                                 color: Colors.white,
                                                 useGoogleFonts: GoogleFonts
                                                         .asMap()
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .subtitle2Family),
+                                                            .titleSmallFamily),
                                               ),
                                           elevation: 3.0,
                                           borderSide: BorderSide(

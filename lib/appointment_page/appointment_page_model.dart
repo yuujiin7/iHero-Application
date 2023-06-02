@@ -1,19 +1,18 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/components/back_component_widget.dart';
 import '/components/email_confirmation_widget.dart';
-import '/components/search_for_country_code_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cached_network_image/cached_network_image.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,9 +26,7 @@ class AppointmentPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // Model for backComponent component.
-  late BackComponentModel backComponentModel;
-  bool isMediaUploading1 = false;
+  bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl1 = '';
@@ -57,6 +54,7 @@ class AppointmentPageModel extends FlutterFlowModel {
   bool? age;
   // State field(s) for gender widget.
   String? genderValue;
+  FormFieldController<String>? genderValueController;
   // State field(s) for nationality widget.
   TextEditingController? nationalityController;
   String? Function(BuildContext, String?)? nationalityControllerValidator;
@@ -66,7 +64,7 @@ class AppointmentPageModel extends FlutterFlowModel {
     }
 
     if (val.length < 1) {
-      return 'Max 50 character';
+      return 'Requires at least 1 characters.';
     }
     if (val.length > 50) {
       return 'Maximum 50 characters allowed, currently ${val.length}.';
@@ -76,9 +74,12 @@ class AppointmentPageModel extends FlutterFlowModel {
   }
 
   // State field(s) for civilStatus widget.
-  TextEditingController? civilStatusController;
-  String? Function(BuildContext, String?)? civilStatusControllerValidator;
-  String? _civilStatusControllerValidator(BuildContext context, String? val) {
+  String? civilStatusValue;
+  FormFieldController<String>? civilStatusValueController;
+  // State field(s) for streetAddress widget.
+  TextEditingController? streetAddressController;
+  String? Function(BuildContext, String?)? streetAddressControllerValidator;
+  String? _streetAddressControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -87,32 +88,46 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 50) {
-      return 'Max 50 character';
+      return 'Maximum 50 characters allowed, currently ${val.length}.';
     }
 
     return null;
   }
 
-  // State field(s) for address widget.
-  TextEditingController? addressController;
-  String? Function(BuildContext, String?)? addressControllerValidator;
-  String? _addressControllerValidator(BuildContext context, String? val) {
+  // State field(s) for unitAddress widget.
+  TextEditingController? unitAddressController;
+  String? Function(BuildContext, String?)? unitAddressControllerValidator;
+  // State field(s) for cityAddress widget.
+  TextEditingController? cityAddressController;
+  String? Function(BuildContext, String?)? cityAddressControllerValidator;
+  String? _cityAddressControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Max 255 character';
-    }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 50) {
+      return 'Maximum 50 characters allowed, currently ${val.length}.';
     }
 
     return null;
   }
 
-  // Model for searchForCountryCode component.
-  late SearchForCountryCodeModel searchForCountryCodeModel;
+  // State field(s) for provinceAddress widget.
+  TextEditingController? provinceAddressController;
+  String? Function(BuildContext, String?)? provinceAddressControllerValidator;
+  String? _provinceAddressControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 50) {
+      return 'Maximum 50 characters allowed, currently ${val.length}.';
+    }
+
+    return null;
+  }
+
   // State field(s) for contactNumber widget.
   TextEditingController? contactNumberController;
   String? Function(BuildContext, String?)? contactNumberControllerValidator;
@@ -124,10 +139,12 @@ class AppointmentPageModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 15) {
-      return 'Max 15 character';
+    if (val.length > 13) {
+      return 'Maximum 13 characters allowed, currently ${val.length}.';
     }
-
+    if (!RegExp('^(09|\\+639)\\d{9}\$').hasMatch(val)) {
+      return 'Invalid text';
+    }
     return null;
   }
 
@@ -143,7 +160,7 @@ class AppointmentPageModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 50) {
-      return 'Max 50 character';
+      return 'Maximum 50 characters allowed, currently ${val.length}.';
     }
     if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
       return 'Has to be a valid email address.';
@@ -151,31 +168,32 @@ class AppointmentPageModel extends FlutterFlowModel {
     return null;
   }
 
-  bool isMediaUploading2 = false;
+  bool isDataUploading2 = false;
   List<FFUploadedFile> uploadedLocalFiles2 = [];
   List<String> uploadedFileUrls2 = [];
+
+  // Stores action output result for [Backend Call - Create Document] action in Button-Login widget.
+  RegistrationRecord? success;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
-    backComponentModel = createModel(context, () => BackComponentModel());
     fullNameControllerValidator = _fullNameControllerValidator;
     nationalityControllerValidator = _nationalityControllerValidator;
-    civilStatusControllerValidator = _civilStatusControllerValidator;
-    addressControllerValidator = _addressControllerValidator;
-    searchForCountryCodeModel =
-        createModel(context, () => SearchForCountryCodeModel());
+    streetAddressControllerValidator = _streetAddressControllerValidator;
+    cityAddressControllerValidator = _cityAddressControllerValidator;
+    provinceAddressControllerValidator = _provinceAddressControllerValidator;
     contactNumberControllerValidator = _contactNumberControllerValidator;
     emailControllerValidator = _emailControllerValidator;
   }
 
   void dispose() {
-    backComponentModel.dispose();
     fullNameController?.dispose();
     nationalityController?.dispose();
-    civilStatusController?.dispose();
-    addressController?.dispose();
-    searchForCountryCodeModel.dispose();
+    streetAddressController?.dispose();
+    unitAddressController?.dispose();
+    cityAddressController?.dispose();
+    provinceAddressController?.dispose();
     contactNumberController?.dispose();
     emailController?.dispose();
   }

@@ -1,130 +1,198 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'registration_record.g.dart';
+class RegistrationRecord extends FirestoreRecord {
+  RegistrationRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class RegistrationRecord
-    implements Built<RegistrationRecord, RegistrationRecordBuilder> {
-  static Serializer<RegistrationRecord> get serializer =>
-      _$registrationRecordSerializer;
+  // "display_name" field.
+  String? _displayName;
+  String get displayName => _displayName ?? '';
+  bool hasDisplayName() => _displayName != null;
 
-  @BuiltValueField(wireName: 'display_name')
-  String? get displayName;
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
 
-  String? get address;
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  String? get email;
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  String? get photoUrl;
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
 
-  @BuiltValueField(wireName: 'created_time')
-  DateTime? get createdTime;
+  // "created_by" field.
+  DocumentReference? _createdBy;
+  DocumentReference? get createdBy => _createdBy;
+  bool hasCreatedBy() => _createdBy != null;
 
-  String? get uid;
+  // "birth_date" field.
+  DateTime? _birthDate;
+  DateTime? get birthDate => _birthDate;
+  bool hasBirthDate() => _birthDate != null;
 
-  @BuiltValueField(wireName: 'created_by')
-  DocumentReference? get createdBy;
+  // "age" field.
+  int? _age;
+  int get age => _age ?? 0;
+  bool hasAge() => _age != null;
 
-  String? get profession;
+  // "gender" field.
+  String? _gender;
+  String get gender => _gender ?? '';
+  bool hasGender() => _gender != null;
 
-  @BuiltValueField(wireName: 'birth_date')
-  DateTime? get birthDate;
+  // "nationality" field.
+  String? _nationality;
+  String get nationality => _nationality ?? '';
+  bool hasNationality() => _nationality != null;
 
-  int? get age;
+  // "civil_status" field.
+  String? _civilStatus;
+  String get civilStatus => _civilStatus ?? '';
+  bool hasCivilStatus() => _civilStatus != null;
 
-  String? get gender;
+  // "appointmentDate" field.
+  DateTime? _appointmentDate;
+  DateTime? get appointmentDate => _appointmentDate;
+  bool hasAppointmentDate() => _appointmentDate != null;
 
-  String? get nationality;
+  // "ID_url" field.
+  List<String>? _iDUrl;
+  List<String> get iDUrl => _iDUrl ?? const [];
+  bool hasIDUrl() => _iDUrl != null;
 
-  @BuiltValueField(wireName: 'civil_status')
-  String? get civilStatus;
+  // "isDeleted" field.
+  bool? _isDeleted;
+  bool get isDeleted => _isDeleted ?? false;
+  bool hasIsDeleted() => _isDeleted != null;
 
-  @BuiltValueField(wireName: 'emergency_contact')
-  String? get emergencyContact;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  DateTime? get appointmentDate;
+  // "isConfirmbySA" field.
+  bool? _isConfirmbySA;
+  bool get isConfirmbySA => _isConfirmbySA ?? false;
+  bool hasIsConfirmbySA() => _isConfirmbySA != null;
 
-  @BuiltValueField(wireName: 'ID_url')
-  BuiltList<String>? get iDUrl;
+  // "phone_number" field.
+  String? _phoneNumber;
+  String get phoneNumber => _phoneNumber ?? '';
+  bool hasPhoneNumber() => _phoneNumber != null;
 
-  bool? get isDeleted;
+  // "isDeclined" field.
+  bool? _isDeclined;
+  bool get isDeclined => _isDeclined ?? false;
+  bool hasIsDeclined() => _isDeclined != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "reason" field.
+  String? _reason;
+  String get reason => _reason ?? '';
+  bool hasReason() => _reason != null;
 
-  bool? get isConfirmbySA;
+  // "streetAddress" field.
+  String? _streetAddress;
+  String get streetAddress => _streetAddress ?? '';
+  bool hasStreetAddress() => _streetAddress != null;
 
-  @BuiltValueField(wireName: 'phone_number')
-  String? get phoneNumber;
+  // "aptSuiteorUnitAddress" field.
+  String? _aptSuiteorUnitAddress;
+  String get aptSuiteorUnitAddress => _aptSuiteorUnitAddress ?? '';
+  bool hasAptSuiteorUnitAddress() => _aptSuiteorUnitAddress != null;
 
-  bool? get isDeclined;
+  // "City" field.
+  String? _city;
+  String get city => _city ?? '';
+  bool hasCity() => _city != null;
 
-  String? get reason;
+  // "Province" field.
+  String? _province;
+  String get province => _province ?? '';
+  bool hasProvince() => _province != null;
 
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(RegistrationRecordBuilder builder) => builder
-    ..displayName = ''
-    ..address = ''
-    ..email = ''
-    ..photoUrl = ''
-    ..uid = ''
-    ..profession = ''
-    ..age = 0
-    ..gender = ''
-    ..nationality = ''
-    ..civilStatus = ''
-    ..emergencyContact = ''
-    ..iDUrl = ListBuilder()
-    ..isDeleted = false
-    ..isConfirmbySA = false
-    ..phoneNumber = ''
-    ..isDeclined = false
-    ..reason = '';
+  void _initializeFields() {
+    _displayName = snapshotData['display_name'] as String?;
+    _email = snapshotData['email'] as String?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _uid = snapshotData['uid'] as String?;
+    _createdBy = snapshotData['created_by'] as DocumentReference?;
+    _birthDate = snapshotData['birth_date'] as DateTime?;
+    _age = snapshotData['age'] as int?;
+    _gender = snapshotData['gender'] as String?;
+    _nationality = snapshotData['nationality'] as String?;
+    _civilStatus = snapshotData['civil_status'] as String?;
+    _appointmentDate = snapshotData['appointmentDate'] as DateTime?;
+    _iDUrl = getDataList(snapshotData['ID_url']);
+    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _isConfirmbySA = snapshotData['isConfirmbySA'] as bool?;
+    _phoneNumber = snapshotData['phone_number'] as String?;
+    _isDeclined = snapshotData['isDeclined'] as bool?;
+    _reason = snapshotData['reason'] as String?;
+    _streetAddress = snapshotData['streetAddress'] as String?;
+    _aptSuiteorUnitAddress = snapshotData['aptSuiteorUnitAddress'] as String?;
+    _city = snapshotData['City'] as String?;
+    _province = snapshotData['Province'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('registration');
 
-  static Stream<RegistrationRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<RegistrationRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => RegistrationRecord.fromSnapshot(s));
 
   static Future<RegistrationRecord> getDocumentOnce(DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => RegistrationRecord.fromSnapshot(s));
 
-  RegistrationRecord._();
-  factory RegistrationRecord(
-          [void Function(RegistrationRecordBuilder) updates]) =
-      _$RegistrationRecord;
+  static RegistrationRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      RegistrationRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static RegistrationRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      RegistrationRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'RegistrationRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createRegistrationRecordData({
   String? displayName,
-  String? address,
   String? email,
   String? photoUrl,
   DateTime? createdTime,
   String? uid,
   DocumentReference? createdBy,
-  String? profession,
   DateTime? birthDate,
   int? age,
   String? gender,
   String? nationality,
   String? civilStatus,
-  String? emergencyContact,
   DateTime? appointmentDate,
   bool? isDeleted,
   DateTime? expiryDate,
@@ -132,34 +200,36 @@ Map<String, dynamic> createRegistrationRecordData({
   String? phoneNumber,
   bool? isDeclined,
   String? reason,
+  String? streetAddress,
+  String? aptSuiteorUnitAddress,
+  String? city,
+  String? province,
 }) {
-  final firestoreData = serializers.toFirestore(
-    RegistrationRecord.serializer,
-    RegistrationRecord(
-      (r) => r
-        ..displayName = displayName
-        ..address = address
-        ..email = email
-        ..photoUrl = photoUrl
-        ..createdTime = createdTime
-        ..uid = uid
-        ..createdBy = createdBy
-        ..profession = profession
-        ..birthDate = birthDate
-        ..age = age
-        ..gender = gender
-        ..nationality = nationality
-        ..civilStatus = civilStatus
-        ..emergencyContact = emergencyContact
-        ..appointmentDate = appointmentDate
-        ..iDUrl = null
-        ..isDeleted = isDeleted
-        ..expiryDate = expiryDate
-        ..isConfirmbySA = isConfirmbySA
-        ..phoneNumber = phoneNumber
-        ..isDeclined = isDeclined
-        ..reason = reason,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'display_name': displayName,
+      'email': email,
+      'photo_url': photoUrl,
+      'created_time': createdTime,
+      'uid': uid,
+      'created_by': createdBy,
+      'birth_date': birthDate,
+      'age': age,
+      'gender': gender,
+      'nationality': nationality,
+      'civil_status': civilStatus,
+      'appointmentDate': appointmentDate,
+      'isDeleted': isDeleted,
+      'expiry_date': expiryDate,
+      'isConfirmbySA': isConfirmbySA,
+      'phone_number': phoneNumber,
+      'isDeclined': isDeclined,
+      'reason': reason,
+      'streetAddress': streetAddress,
+      'aptSuiteorUnitAddress': aptSuiteorUnitAddress,
+      'City': city,
+      'Province': province,
+    }.withoutNulls,
   );
 
   return firestoreData;

@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -87,7 +87,7 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
             width: 300.0,
             height: 520.0,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).tertiaryColor,
+              color: FlutterFlowTheme.of(context).tertiary,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -101,14 +101,15 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                     children: [
                       Text(
                         'OOPS',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Comfortaa',
                               color: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               fontSize: 26.0,
                               fontWeight: FontWeight.bold,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).bodyText1Family),
+                                  FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily),
                             ),
                       ),
                     ],
@@ -132,12 +133,12 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                     Text(
                       'You need to be a volunteer to\naccess these feature',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Comfortaa',
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).bodyText1Family),
+                                FlutterFlowTheme.of(context).bodyMediumFamily),
                           ),
                     ),
                   ],
@@ -155,7 +156,7 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                           'Already have an account?',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color: FlutterFlowTheme.of(context)
@@ -164,29 +165,35 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),
                       InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () async {
                           logFirebaseEvent(
                               'CHAT_STOP_SCREEN_COPY_Text_dhn7plzd_ON_T');
                           logFirebaseEvent('Text_backend_call');
                           await currentUserReference!.delete();
                           logFirebaseEvent('Text_auth');
-                          await deleteUser(context);
+                          await authManager.deleteUser(context);
                           logFirebaseEvent('Text_auth');
                           GoRouter.of(context).prepareAuthEvent();
-                          await signOut();
+                          await authManager.signOut();
+                          GoRouter.of(context).clearRedirectLocation();
+
                           logFirebaseEvent('Text_navigate_to');
 
-                          context.pushNamedAuth('Login', mounted);
+                          context.pushNamedAuth('Login', context.mounted);
                         },
                         child: Text(
                           'Click Here',
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color:
@@ -195,7 +202,7 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),

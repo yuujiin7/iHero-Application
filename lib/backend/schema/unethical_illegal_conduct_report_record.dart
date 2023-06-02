@@ -1,85 +1,125 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'unethical_illegal_conduct_report_record.g.dart';
+class UnethicalIllegalConductReportRecord extends FirestoreRecord {
+  UnethicalIllegalConductReportRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class UnethicalIllegalConductReportRecord
-    implements
-        Built<UnethicalIllegalConductReportRecord,
-            UnethicalIllegalConductReportRecordBuilder> {
-  static Serializer<UnethicalIllegalConductReportRecord> get serializer =>
-      _$unethicalIllegalConductReportRecordSerializer;
+  // "fullName" field.
+  String? _fullName;
+  String get fullName => _fullName ?? '';
+  bool hasFullName() => _fullName != null;
 
-  String? get fullName;
+  // "report_behavior" field.
+  List<String>? _reportBehavior;
+  List<String> get reportBehavior => _reportBehavior ?? const [];
+  bool hasReportBehavior() => _reportBehavior != null;
 
-  @BuiltValueField(wireName: 'report_behavior')
-  BuiltList<String>? get reportBehavior;
+  // "dateOfIncident" field.
+  DateTime? _dateOfIncident;
+  DateTime? get dateOfIncident => _dateOfIncident;
+  bool hasDateOfIncident() => _dateOfIncident != null;
 
-  DateTime? get dateOfIncident;
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  String? get photoUrl;
+  // "report_by" field.
+  DocumentReference? _reportBy;
+  DocumentReference? get reportBy => _reportBy;
+  bool hasReportBy() => _reportBy != null;
 
-  @BuiltValueField(wireName: 'report_by')
-  DocumentReference? get reportBy;
+  // "reported_at" field.
+  DateTime? _reportedAt;
+  DateTime? get reportedAt => _reportedAt;
+  bool hasReportedAt() => _reportedAt != null;
 
-  @BuiltValueField(wireName: 'reported_at')
-  DateTime? get reportedAt;
+  // "isConfirmbySA" field.
+  bool? _isConfirmbySA;
+  bool get isConfirmbySA => _isConfirmbySA ?? false;
+  bool hasIsConfirmbySA() => _isConfirmbySA != null;
 
-  bool? get isConfirmbySA;
+  // "isDeclined" field.
+  bool? _isDeclined;
+  bool get isDeclined => _isDeclined ?? false;
+  bool hasIsDeclined() => _isDeclined != null;
 
-  bool? get isDeclined;
+  // "expiry_date" field.
+  DateTime? _expiryDate;
+  DateTime? get expiryDate => _expiryDate;
+  bool hasExpiryDate() => _expiryDate != null;
 
-  @BuiltValueField(wireName: 'expiry_date')
-  DateTime? get expiryDate;
+  // "isDeleted" field.
+  bool? _isDeleted;
+  bool get isDeleted => _isDeleted ?? false;
+  bool hasIsDeleted() => _isDeleted != null;
 
-  bool? get isDeleted;
+  // "reason" field.
+  String? _reason;
+  String get reason => _reason ?? '';
+  bool hasReason() => _reason != null;
 
-  String? get reason;
+  // "isSeen" field.
+  bool? _isSeen;
+  bool get isSeen => _isSeen ?? false;
+  bool hasIsSeen() => _isSeen != null;
 
-  bool? get isSeen;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(
-          UnethicalIllegalConductReportRecordBuilder builder) =>
-      builder
-        ..fullName = ''
-        ..reportBehavior = ListBuilder()
-        ..photoUrl = ''
-        ..isConfirmbySA = false
-        ..isDeclined = false
-        ..isDeleted = false
-        ..reason = ''
-        ..isSeen = false;
+  void _initializeFields() {
+    _fullName = snapshotData['fullName'] as String?;
+    _reportBehavior = getDataList(snapshotData['report_behavior']);
+    _dateOfIncident = snapshotData['dateOfIncident'] as DateTime?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _reportBy = snapshotData['report_by'] as DocumentReference?;
+    _reportedAt = snapshotData['reported_at'] as DateTime?;
+    _isConfirmbySA = snapshotData['isConfirmbySA'] as bool?;
+    _isDeclined = snapshotData['isDeclined'] as bool?;
+    _expiryDate = snapshotData['expiry_date'] as DateTime?;
+    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _reason = snapshotData['reason'] as String?;
+    _isSeen = snapshotData['isSeen'] as bool?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('unethical_illegal_conduct_report');
 
   static Stream<UnethicalIllegalConductReportRecord> getDocument(
           DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref
+          .snapshots()
+          .map((s) => UnethicalIllegalConductReportRecord.fromSnapshot(s));
 
   static Future<UnethicalIllegalConductReportRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref
+          .get()
+          .then((s) => UnethicalIllegalConductReportRecord.fromSnapshot(s));
 
-  UnethicalIllegalConductReportRecord._();
-  factory UnethicalIllegalConductReportRecord(
-          [void Function(UnethicalIllegalConductReportRecordBuilder) updates]) =
-      _$UnethicalIllegalConductReportRecord;
+  static UnethicalIllegalConductReportRecord fromSnapshot(
+          DocumentSnapshot snapshot) =>
+      UnethicalIllegalConductReportRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static UnethicalIllegalConductReportRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      UnethicalIllegalConductReportRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'UnethicalIllegalConductReportRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createUnethicalIllegalConductReportRecordData({
@@ -95,23 +135,20 @@ Map<String, dynamic> createUnethicalIllegalConductReportRecordData({
   String? reason,
   bool? isSeen,
 }) {
-  final firestoreData = serializers.toFirestore(
-    UnethicalIllegalConductReportRecord.serializer,
-    UnethicalIllegalConductReportRecord(
-      (u) => u
-        ..fullName = fullName
-        ..reportBehavior = null
-        ..dateOfIncident = dateOfIncident
-        ..photoUrl = photoUrl
-        ..reportBy = reportBy
-        ..reportedAt = reportedAt
-        ..isConfirmbySA = isConfirmbySA
-        ..isDeclined = isDeclined
-        ..expiryDate = expiryDate
-        ..isDeleted = isDeleted
-        ..reason = reason
-        ..isSeen = isSeen,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'fullName': fullName,
+      'dateOfIncident': dateOfIncident,
+      'photo_url': photoUrl,
+      'report_by': reportBy,
+      'reported_at': reportedAt,
+      'isConfirmbySA': isConfirmbySA,
+      'isDeclined': isDeclined,
+      'expiry_date': expiryDate,
+      'isDeleted': isDeleted,
+      'reason': reason,
+      'isSeen': isSeen,
+    }.withoutNulls,
   );
 
   return firestoreData;

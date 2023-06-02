@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -5,6 +7,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/permissions_util.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,6 +27,11 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
   late OnboardingModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int get pageViewCurrentIndex => _model.pageViewController != null &&
+          _model.pageViewController!.hasClients &&
+          _model.pageViewController!.page != null
+      ? _model.pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState() {
@@ -33,7 +41,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Onboarding'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('ONBOARDING_PAGE_Onboarding_ON_PAGE_LOAD');
+      logFirebaseEvent('ONBOARDING_PAGE_Onboarding_ON_INIT_STATE');
       logFirebaseEvent('Onboarding_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('Onboarding_request_permissions');
@@ -76,7 +84,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                         width: 100.0,
                         height: double.infinity,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -112,14 +120,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                     'Community',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
-                                        .title1
+                                        .displaySmall
                                         .override(
                                           fontFamily: 'Ubuntu',
                                           color: Colors.white,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .title1Family),
+                                                      .displaySmallFamily),
                                         ),
                                   ),
                                 ],
@@ -137,14 +145,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                       'Find volunteering opportunites around your city, by exploring the curated lists.',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2
+                                          .titleSmall
                                           .override(
                                             fontFamily: 'Barlow',
                                             color: Color(0xC8FFFFFF),
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle2Family),
+                                                        .titleSmallFamily),
                                           ),
                                     ),
                                   ),
@@ -158,7 +166,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                         width: 100.0,
                         height: 100.0,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -193,7 +201,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                   Text(
                                     'All in one place',
                                     style: FlutterFlowTheme.of(context)
-                                        .title1
+                                        .displaySmall
                                         .override(
                                           fontFamily: 'Ubuntu',
                                           color: FlutterFlowTheme.of(context)
@@ -201,7 +209,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .title1Family),
+                                                      .displaySmallFamily),
                                         ),
                                   ),
                                 ],
@@ -217,7 +225,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                     'iHero is more than just a volunteering app.',
                                     textAlign: TextAlign.justify,
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Barlow',
                                           color: FlutterFlowTheme.of(context)
@@ -225,7 +233,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle2Family),
+                                                      .titleSmallFamily),
                                         ),
                                   ),
                                 ),
@@ -236,7 +244,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                     'It\'s a smart workplace where events, announcements and communication come together.',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Barlow',
                                           color: FlutterFlowTheme.of(context)
@@ -245,7 +253,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle2Family),
+                                                      .titleSmallFamily),
                                         ),
                                   ),
                                 ),
@@ -264,7 +272,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         logFirebaseEvent(
-                                            'ONBOARDING_PAGE_CONTINUE_BTN_ON_TAP');
+                                            'ONBOARDING_PAGE_LOGIN_BTN_ON_TAP');
                                         logFirebaseEvent('Button_navigate_to');
 
                                         context.goNamed(
@@ -280,7 +288,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                           },
                                         );
                                       },
-                                      text: 'Continue',
+                                      text: 'Login',
                                       options: FFButtonOptions(
                                         width: 180.0,
                                         height: 50.0,
@@ -291,18 +299,18 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                                 0.0, 0.0, 0.0, 0.0),
                                         color: Colors.white,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Barlow',
                                               color: Color(0xFFFF0000),
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.bold,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle2Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmallFamily),
                                             ),
                                         elevation: 2.0,
                                         borderSide: BorderSide(
@@ -312,6 +320,60 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                         borderRadius:
                                             BorderRadius.circular(12.0),
                                       ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 0.0, 20.0, 8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'ONBOARDING_PAGE_Text_tsimbyfv_ON_TAP');
+                                      logFirebaseEvent('Text_auth');
+                                      GoRouter.of(context).prepareAuthEvent();
+                                      final user = await authManager
+                                          .signInAnonymously(context);
+                                      if (user == null) {
+                                        return;
+                                      }
+                                      logFirebaseEvent('Text_backend_call');
+
+                                      final usersUpdateData =
+                                          createUsersRecordData(
+                                        userType: 'Anonymous',
+                                      );
+                                      await currentUserReference!
+                                          .update(usersUpdateData);
+
+                                      context.goNamedAuth(
+                                          'HomeScreen', context.mounted);
+                                    },
+                                    child: Text(
+                                      'Continue as Guest',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily),
+                                          ),
                                     ),
                                   ),
                                 ],
@@ -332,8 +394,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                             PageController(initialPage: 0),
                         count: 2,
                         axisDirection: Axis.vertical,
-                        onDotClicked: (i) {
-                          _model.pageViewController!.animateToPage(
+                        onDotClicked: (i) async {
+                          await _model.pageViewController!.animateToPage(
                             i,
                             duration: Duration(milliseconds: 500),
                             curve: Curves.ease,

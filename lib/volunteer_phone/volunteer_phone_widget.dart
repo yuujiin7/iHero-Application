@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -35,12 +35,16 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
         parameters: {'screen_name': 'VolunteerPhone'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('VOLUNTEER_PHONE_VolunteerPhone_ON_LOAD');
+      logFirebaseEvent('VOLUNTEER_PHONE_VolunteerPhone_ON_INIT_S');
       logFirebaseEvent('VolunteerPhone_custom_action');
       await actions.lockOrientation();
     });
 
-    _model.phoneNumberFieldController ??= TextEditingController(text: '+63');
+    _model.phoneNumberFieldController ??= TextEditingController();
+    authManager.handlePhoneAuthStateChanges(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+          _model.phoneNumberFieldController?.text = '+63';
+        }));
   }
 
   @override
@@ -55,19 +59,20 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  FlutterFlowTheme.of(context).primaryColor,
-                  FlutterFlowTheme.of(context).tertiaryColor
+                  FlutterFlowTheme.of(context).primary,
+                  FlutterFlowTheme.of(context).tertiary
                 ],
                 stops: [0.0, 1.0],
                 begin: AlignmentDirectional(0.0, -1.0),
@@ -120,7 +125,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Comfortaa',
                                             color: FlutterFlowTheme.of(context)
@@ -129,24 +134,24 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
+                                                        .bodyMediumFamily),
                                           ),
                                       hintText: 'Mobile Number',
                                       hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Comfortaa',
                                             color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
+                                                .tertiary,
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
+                                                        .bodyMediumFamily),
                                           ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
+                                              .tertiary,
                                           width: 1.0,
                                         ),
                                         borderRadius:
@@ -184,15 +189,15 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                               10.0, 10.0, 10.0, 10.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Comfortaa',
                                           color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
+                                              .tertiary,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                     keyboardType: TextInputType.phone,
                                     validator: _model
@@ -229,13 +234,13 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                     );
                                     return;
                                   }
-                                  await beginPhoneAuth(
+                                  await authManager.beginPhoneAuth(
                                     context: context,
                                     phoneNumber: phoneNumberVal,
-                                    onCodeSent: () async {
+                                    onCodeSent: (context) async {
                                       context.goNamedAuth(
                                         'OTPCode',
-                                        mounted,
+                                        context.mounted,
                                         queryParams: {
                                           'phoneNumber': serializeParam(
                                             int.tryParse(_model
@@ -257,17 +262,16 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .titleSmall
                                       .override(
                                         fontFamily: 'Comfortaa',
                                         color: Colors.white,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2Family),
+                                                    .titleSmallFamily),
                                       ),
                                   elevation: 2.0,
                                   borderSide: BorderSide(
@@ -290,7 +294,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                               child: Text(
                                 'Not a Volunteer?',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Comfortaa',
                                       fontSize: 12.0,
@@ -298,7 +302,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                               ),
                             ),
@@ -306,6 +310,10 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   5.0, 0.0, 0.0, 0.0),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'VOLUNTEER_PHONE_Text_vue2h61i_ON_TAP');
@@ -316,7 +324,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                 child: Text(
                                   'Click Here',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Comfortaa',
                                         color: FlutterFlowTheme.of(context)
@@ -326,7 +334,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ),
@@ -346,7 +354,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                             Text(
                               'LogIn with',
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Comfortaa',
                                     fontSize: 12.0,
@@ -354,7 +362,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ],

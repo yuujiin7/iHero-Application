@@ -1,8 +1,10 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/event_or_announcement_widget.dart';
 import '/components/feedback_report_widget.dart';
 import '/components/memoralization_report_widget.dart';
+import '/components/registration_date_warning_widget.dart';
+import '/components/stop_screen_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -44,7 +46,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'HomeScreen'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('HOME_SCREEN_PAGE_HomeScreen_ON_PAGE_LOAD');
+      logFirebaseEvent('HOME_SCREEN_HomeScreen_ON_INIT_STATE');
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
       Function() _navigate = () {};
@@ -53,12 +55,18 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('HomeScreen_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('HomeScreen_custom_action');
         _model.updateMerit = await actions.updateMeritScoreForCurrentUser1();
+        logFirebaseEvent('HomeScreen_update_app_state');
+        FFAppState().update(() {
+          FFAppState().userlocation = currentUserLocationValue;
+        });
         logFirebaseEvent('HomeScreen_backend_call');
 
         final usersUpdateData = createUsersRecordData(
@@ -76,10 +84,30 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           age: functions.calculateAge(currentUserDocument!.birthday!),
         );
         await currentUserReference!.update(usersUpdateData);
-        logFirebaseEvent('HomeScreen_update_app_state');
-        FFAppState().update(() {
-          FFAppState().userlocation = currentUserLocationValue;
-        });
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.nearEvents = await actions.getNearEvents(
+          currentUserUid,
+        );
+        if (_model.nearEvents!.length > 0) {
+          logFirebaseEvent('HomeScreen_bottom_sheet');
+          await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            enableDrag: false,
+            context: context,
+            builder: (bottomSheetContext) {
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                child: Padding(
+                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  child: RegistrationDateWarningWidget(
+                    eventRef: _model.nearEvents,
+                  ),
+                ),
+              );
+            },
+          ).then((value) => setState(() {}));
+        }
         logFirebaseEvent('HomeScreen_custom_action');
         _model.unethical = await actions.getUnseenReportByCurrentUser();
         if (_model.unethical != null) {
@@ -87,13 +115,65 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           await showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
+            barrierColor: Color(0x00000000),
             enableDrag: false,
             context: context,
-            builder: (context) {
-              return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: FeedbackReportWidget(
-                  unethical: _model.unethical,
+            builder: (bottomSheetContext) {
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                child: Padding(
+                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  child: FeedbackReportWidget(
+                    unethical: _model.unethical,
+                  ),
+                ),
+              );
+            },
+          ).then((value) => setState(() {}));
+        }
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.falseInfo =
+            await actions.getUnseenReportByCurrentUserFalseInfo();
+        if (_model.falseInfo != null) {
+          logFirebaseEvent('HomeScreen_bottom_sheet');
+          await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            barrierColor: Color(0x00000000),
+            enableDrag: false,
+            context: context,
+            builder: (bottomSheetContext) {
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                child: Padding(
+                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  child: FeedbackReportWidget(
+                    falseInfo: _model.falseInfo,
+                  ),
+                ),
+              );
+            },
+          ).then((value) => setState(() {}));
+        }
+        logFirebaseEvent('HomeScreen_custom_action');
+        _model.memo =
+            await actions.getUnseenReportByCurrentUserMemorialization();
+        if (_model.memo != null) {
+          logFirebaseEvent('HomeScreen_bottom_sheet');
+          await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            barrierColor: Color(0x00000000),
+            enableDrag: false,
+            context: context,
+            builder: (bottomSheetContext) {
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                child: Padding(
+                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  child: MemoralizationReportWidget(
+                    memoRef: _model.memo,
+                  ),
                 ),
               );
             },
@@ -101,53 +181,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
           return;
         } else {
-          logFirebaseEvent('HomeScreen_custom_action');
-          _model.falseInfo =
-              await actions.getUnseenReportByCurrentUserFalseInfo();
-          if (_model.falseInfo != null) {
-            logFirebaseEvent('HomeScreen_bottom_sheet');
-            await showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              enableDrag: false,
-              context: context,
-              builder: (context) {
-                return Padding(
-                  padding: MediaQuery.of(context).viewInsets,
-                  child: FeedbackReportWidget(
-                    falseInfo: _model.falseInfo,
-                  ),
-                );
-              },
-            ).then((value) => setState(() {}));
-
-            return;
-          } else {
-            logFirebaseEvent('HomeScreen_custom_action');
-            _model.memo =
-                await actions.getUnseenReportByCurrentUserMemorialization();
-            if (_model.memo != null) {
-              logFirebaseEvent('HomeScreen_bottom_sheet');
-              await showModalBottomSheet(
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                enableDrag: false,
-                context: context,
-                builder: (context) {
-                  return Padding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    child: MemoralizationReportWidget(
-                      memoRef: _model.memo,
-                    ),
-                  );
-                },
-              ).then((value) => setState(() {}));
-
-              return;
-            } else {
-              return;
-            }
-          }
+          return;
         }
       }
 
@@ -167,12 +201,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
+          top: true,
           child: Stack(
             children: [
               Container(
@@ -187,7 +222,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -217,7 +252,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               'Hi ',
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .bodyText1
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Ubuntu',
                                                     color: FlutterFlowTheme.of(
@@ -230,16 +265,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                         .containsKey(
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family),
+                                                                .bodyMediumFamily),
                                                   ),
                                             ),
                                             AuthUserStreamWidget(
                                               builder: (context) =>
                                                   AutoSizeText(
-                                                currentUserDisplayName,
+                                                valueOrDefault<String>(
+                                                  currentUserDisplayName,
+                                                  'Anonymous',
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
@@ -253,7 +291,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ),
@@ -271,19 +309,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   '',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1Family,
+                                                                .bodyMediumFamily,
                                                         color: Colors.white,
                                                         useGoogleFonts: GoogleFonts
                                                                 .asMap()
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                                 showBadge: true,
@@ -318,14 +356,49 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     child: AuthUserStreamWidget(
                                                       builder: (context) =>
                                                           InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
                                                               'HOME_SCREEN_CircleImage_u7u1hehe_ON_TAP');
-                                                          logFirebaseEvent(
-                                                              'CircleImage_navigate_to');
+                                                          if (valueOrDefault(
+                                                                  currentUserDocument
+                                                                      ?.userType,
+                                                                  '') ==
+                                                              'Anonymous') {
+                                                            logFirebaseEvent(
+                                                                'CircleImage_navigate_to');
 
-                                                          context.goNamed(
-                                                              'profileScreen');
+                                                            context.goNamed(
+                                                              'AnonymousProfile',
+                                                              extra: <String,
+                                                                  dynamic>{
+                                                                kTransitionInfoKey:
+                                                                    TransitionInfo(
+                                                                  hasTransition:
+                                                                      true,
+                                                                  transitionType:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  duration: Duration(
+                                                                      milliseconds:
+                                                                          0),
+                                                                ),
+                                                              },
+                                                            );
+                                                          } else {
+                                                            logFirebaseEvent(
+                                                                'CircleImage_navigate_to');
+
+                                                            context.goNamed(
+                                                                'profileScreen');
+                                                          }
                                                         },
                                                         child: Container(
                                                           width: 120.0,
@@ -372,7 +445,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                   Text(
                                     'Thanks for making a difference!',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText1
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Barlow',
                                           color: FlutterFlowTheme.of(context)
@@ -382,15 +455,18 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
+                                                      .bodyMediumFamily),
                                         ),
                                   ),
                                 ],
                               ),
                             ),
-                            if (valueOrDefault(
-                                    currentUserDocument?.userType, '') ==
-                                'Volunteer')
+                            if ((valueOrDefault(
+                                        currentUserDocument?.userType, '') ==
+                                    'Volunteer') ||
+                                (valueOrDefault(
+                                        currentUserDocument?.userType, '') ==
+                                    'Anonymous'))
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10.0, 10.0, 10.0, 10.0),
@@ -399,8 +475,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     width: double.infinity,
                                     height: 100.0,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       image: DecorationImage(
                                         fit: BoxFit.fitWidth,
                                         image: Image.asset(
@@ -437,7 +513,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Ubuntu',
                                                         color: FlutterFlowTheme
@@ -451,7 +527,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -502,7 +578,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .titleSmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
@@ -515,8 +591,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .subtitle2Family),
+                                                                            .titleSmallFamily),
                                                               ),
+                                                      elevation: 2.0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -548,8 +625,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     width: double.infinity,
                                     height: 100.0,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       image: DecorationImage(
                                         fit: BoxFit.fitWidth,
                                         image: Image.asset(
@@ -585,7 +662,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   'Volunteer List',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Ubuntu',
                                                         color: FlutterFlowTheme
@@ -599,7 +676,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -649,7 +726,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .titleSmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
@@ -663,8 +740,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .subtitle2Family),
+                                                                            .titleSmallFamily),
                                                               ),
+                                                      elevation: 2.0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -696,8 +774,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     width: double.infinity,
                                     height: 100.0,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       image: DecorationImage(
                                         fit: BoxFit.fitWidth,
                                         image: Image.asset(
@@ -734,7 +812,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Ubuntu',
                                                         color: FlutterFlowTheme
@@ -748,7 +826,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             .containsKey(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1Family),
+                                                                    .bodyMediumFamily),
                                                       ),
                                                 ),
                                               ],
@@ -775,16 +853,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             true,
                                                         backgroundColor:
                                                             Colors.transparent,
+                                                        barrierColor:
+                                                            Color(0x00000000),
                                                         enableDrag: false,
                                                         context: context,
-                                                        builder: (context) {
-                                                          return Padding(
-                                                            padding:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .viewInsets,
-                                                            child:
-                                                                EventOrAnnouncementWidget(),
+                                                        builder:
+                                                            (bottomSheetContext) {
+                                                          return GestureDetector(
+                                                            onTap: () => FocusScope
+                                                                    .of(context)
+                                                                .requestFocus(
+                                                                    _unfocusNode),
+                                                            child: Padding(
+                                                              padding: MediaQuery.of(
+                                                                      bottomSheetContext)
+                                                                  .viewInsets,
+                                                              child:
+                                                                  EventOrAnnouncementWidget(),
+                                                            ),
                                                           );
                                                         },
                                                       ).then((value) =>
@@ -814,7 +900,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .titleSmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
@@ -828,8 +914,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .subtitle2Family),
+                                                                            .titleSmallFamily),
                                                               ),
+                                                      elevation: 2.0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -863,9 +950,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (valueOrDefault(
-                                      currentUserDocument?.userType, '') ==
-                                  'Volunteer')
+                              if ((valueOrDefault(
+                                          currentUserDocument?.userType, '') ==
+                                      'Volunteer') ||
+                                  (valueOrDefault(
+                                          currentUserDocument?.userType, '') ==
+                                      'Anonymous'))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       5.0, 12.0, 5.0, 0.0),
@@ -878,7 +968,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         Text(
                                           'Announcements',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Ubuntu',
                                                 useGoogleFonts: GoogleFonts
@@ -886,22 +976,58 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'HOME_SCREEN_PAGE_Text_dir4oixb_ON_TAP');
-                                            logFirebaseEvent(
-                                                'Text_navigate_to');
+                                            if (valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.userType,
+                                                    '') ==
+                                                'Anonymous') {
+                                              logFirebaseEvent(
+                                                  'Text_bottom_sheet');
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                enableDrag: false,
+                                                context: context,
+                                                builder: (bottomSheetContext) {
+                                                  return GestureDetector(
+                                                    onTap: () =>
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                _unfocusNode),
+                                                    child: Padding(
+                                                      padding: MediaQuery.of(
+                                                              bottomSheetContext)
+                                                          .viewInsets,
+                                                      child: StopScreenWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then(
+                                                  (value) => setState(() {}));
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'Text_navigate_to');
 
-                                            context.goNamed('announcementFeed');
+                                              context
+                                                  .goNamed('announcementFeed');
+                                            }
                                           },
                                           child: Text(
                                             'see all',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   color: Color(0xFF0B266B),
@@ -912,7 +1038,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ),
@@ -920,9 +1046,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     ),
                                   ),
                                 ),
-                              if (valueOrDefault(
-                                      currentUserDocument?.userType, '') ==
-                                  'Volunteer')
+                              if ((valueOrDefault(
+                                          currentUserDocument?.userType, '') ==
+                                      'Volunteer') ||
+                                  (valueOrDefault(
+                                          currentUserDocument?.userType, '') ==
+                                      'Anonymous'))
                                 AuthUserStreamWidget(
                                   builder: (context) => Container(
                                     width: double.infinity,
@@ -951,7 +1080,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child: SpinKitSquareCircle(
+                                                child: SpinKitRipple(
                                                   color: Color(0xFFFE2126),
                                                   size: 50.0,
                                                 ),
@@ -1069,16 +1198,20 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           5.0),
                                                                       child:
                                                                           Text(
-                                                                        announcementAnnouncementRecord
-                                                                            .title!,
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          announcementAnnouncementRecord
+                                                                              .title,
+                                                                          'Title',
+                                                                        ),
                                                                         textAlign:
                                                                             TextAlign.start,
                                                                         style: FlutterFlowTheme.of(context)
-                                                                            .bodyText1
+                                                                            .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Ubuntu',
                                                                               fontWeight: FontWeight.w500,
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                             ),
                                                                       ),
                                                                     ),
@@ -1100,12 +1233,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               AutoSizeText(
-                                                                            announcementAnnouncementRecord.body!.maybeHandleOverflow(maxChars: 100),
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            valueOrDefault<String>(
+                                                                              announcementAnnouncementRecord.body,
+                                                                              'Description',
+                                                                            ).maybeHandleOverflow(maxChars: 100),
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1133,6 +1269,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -1175,7 +1320,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       'Read more',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Barlow',
@@ -1184,7 +1329,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             fontSize:
                                                                                 12.0,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                   ],
@@ -1217,18 +1362,22 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       Text(
                                         'Participated Events',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'HOME_SCREEN_PAGE_Text_ox9fm537_ON_TAP');
@@ -1239,7 +1388,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         child: Text(
                                           'see all',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Barlow',
                                                 color: Color(0xFF0B266B),
@@ -1250,7 +1399,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                       ),
@@ -1271,21 +1420,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 5.0, 0.0, 5.0),
                                       child: FutureBuilder<List<EventsRecord>>(
-                                        future: queryEventsRecordOnce(
-                                          queryBuilder: (eventsRecord) =>
-                                              eventsRecord
-                                                  .where('volunteer_ref',
-                                                      arrayContains:
-                                                          currentUserReference)
-                                                  .where('isEnded',
-                                                      isEqualTo: false)
-                                                  .where('isDeleted',
-                                                      isEqualTo: false)
-                                                  .where('isReqCancel',
-                                                      isEqualTo: false)
-                                                  .where('isConfirmbySA',
-                                                      isEqualTo: true),
-                                          limit: 5,
+                                        future: FFAppState().participatedEvents(
+                                          requestFn: () =>
+                                              queryEventsRecordOnce(
+                                            queryBuilder: (eventsRecord) =>
+                                                eventsRecord
+                                                    .where('volunteer_ref',
+                                                        arrayContains:
+                                                            currentUserReference)
+                                                    .where('isEnded',
+                                                        isEqualTo: false)
+                                                    .where('isDeleted',
+                                                        isEqualTo: false)
+                                                    .where('isReqCancel',
+                                                        isEqualTo: false)
+                                                    .where('isConfirmbySA',
+                                                        isEqualTo: true),
+                                            limit: 5,
+                                          ),
                                         ),
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
@@ -1294,7 +1446,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child: SpinKitSquareCircle(
+                                                child: SpinKitRipple(
                                                   color: Color(0xFFFE2126),
                                                   size: 50.0,
                                                 ),
@@ -1410,13 +1562,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       child:
                                                                           Text(
                                                                         myEventsListEventsRecord
-                                                                            .eventTitle!,
+                                                                            .eventTitle,
                                                                         style: FlutterFlowTheme.of(context)
-                                                                            .bodyText1
+                                                                            .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Ubuntu',
                                                                               fontWeight: FontWeight.w500,
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                             ),
                                                                       ),
                                                                     ),
@@ -1438,12 +1590,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               AutoSizeText(
-                                                                            myEventsListEventsRecord.eventDescription!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            myEventsListEventsRecord.eventDescription,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1471,6 +1623,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -1513,7 +1674,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       'Read more',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Barlow',
@@ -1522,7 +1683,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             fontSize:
                                                                                 12.0,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                   ],
@@ -1558,7 +1719,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         Text(
                                           'Created Events',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Ubuntu',
                                                 useGoogleFonts: GoogleFonts
@@ -1566,10 +1727,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'HOME_SCREEN_PAGE_Text_91lxbgfv_ON_TAP');
@@ -1581,7 +1746,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                           child: Text(
                                             'see all',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily: 'Barlow',
                                                   color: Color(0xFF0B266B),
@@ -1592,7 +1757,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ),
@@ -1622,8 +1787,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                           currentUserReference)
                                                   .where('isDeleted',
                                                       isEqualTo: false)
-                                                  .where('isConfirmbySA',
-                                                      isEqualTo: true)
                                                   .orderBy('created_date',
                                                       descending: true),
                                           limit: 5,
@@ -1635,7 +1798,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child: SpinKitSquareCircle(
+                                                child: SpinKitRipple(
                                                   color: Color(0xFFFE2126),
                                                   size: 50.0,
                                                 ),
@@ -1753,12 +1916,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       child:
                                                                           Text(
                                                                         myCreatedEventsListEventsRecord
-                                                                            .eventTitle!,
+                                                                            .eventTitle,
                                                                         style: FlutterFlowTheme.of(context)
-                                                                            .bodyText1
+                                                                            .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Ubuntu',
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                             ),
                                                                       ),
                                                                     ),
@@ -1780,12 +1943,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               Text(
-                                                                            myCreatedEventsListEventsRecord.eventDescription!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            myCreatedEventsListEventsRecord.eventDescription,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1813,6 +1976,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -1855,7 +2027,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       'Read more',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Barlow',
@@ -1864,7 +2036,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             fontSize:
                                                                                 12.0,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                   ],
@@ -1897,18 +2069,22 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       Text(
                                         'Created Announcements',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'HOME_SCREEN_PAGE_Text_czcprkmq_ON_TAP');
@@ -1919,7 +2095,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         child: Text(
                                           'see all',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Barlow',
                                                 color: Color(0xFF0B266B),
@@ -1930,7 +2106,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     .containsKey(
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyText1Family),
+                                                            .bodyMediumFamily),
                                               ),
                                         ),
                                       ),
@@ -1969,7 +2145,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
-                                                child: SpinKitSquareCircle(
+                                                child: SpinKitRipple(
                                                   color: Color(0xFFFE2126),
                                                   size: 50.0,
                                                 ),
@@ -2087,12 +2263,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       child:
                                                                           Text(
                                                                         myCreatedAnnouncementListAnnouncementRecord
-                                                                            .title!,
+                                                                            .title,
                                                                         style: FlutterFlowTheme.of(context)
-                                                                            .bodyText1
+                                                                            .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Ubuntu',
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                             ),
                                                                       ),
                                                                     ),
@@ -2114,12 +2290,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                               5.0),
                                                                           child:
                                                                               Text(
-                                                                            myCreatedAnnouncementListAnnouncementRecord.body!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            myCreatedAnnouncementListAnnouncementRecord.body,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
                                                                                   fontSize: 12.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -2147,6 +2323,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           10.0,
                                                                           0.0),
                                                               child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
                                                                 onTap:
                                                                     () async {
                                                                   logFirebaseEvent(
@@ -2189,7 +2374,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                       'Read more',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1
+                                                                          .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Barlow',
@@ -2198,7 +2383,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             fontSize:
                                                                                 12.0,
                                                                             useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                           ),
                                                                     ),
                                                                   ],
@@ -2231,32 +2416,32 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       Text(
                                         'Stories of Hope',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Ubuntu',
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                       Text(
                                         'more',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Barlow',
                                               color: Color(0xFF0B266B),
                                               decoration:
                                                   TextDecoration.underline,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
                                             ),
                                       ),
                                     ],
@@ -2378,14 +2563,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                           .center,
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1
+                                                                      .bodyMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Ubuntu',
                                                                         fontSize:
                                                                             16.0,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                       ),
                                                                 ),
                                                               ),
@@ -2499,14 +2684,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
                                                                               'Ubuntu',
                                                                           fontSize:
                                                                               16.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ),
@@ -2621,14 +2806,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
                                                                               'Ubuntu',
                                                                           fontSize:
                                                                               16.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ),
@@ -2743,14 +2928,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
                                                                               'Ubuntu',
                                                                           fontSize:
                                                                               16.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ),
@@ -2865,14 +3050,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
                                                                               'Ubuntu',
                                                                           fontSize:
                                                                               16.0,
                                                                           useGoogleFonts:
-                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                         ),
                                                                   ),
                                                                 ),

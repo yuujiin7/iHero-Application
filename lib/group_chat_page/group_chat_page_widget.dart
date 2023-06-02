@@ -37,7 +37,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
         parameters: {'screen_name': 'groupChatPage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('GROUP_CHAT_groupChatPage_ON_LOAD');
+      logFirebaseEvent('GROUP_CHAT_groupChatPage_ON_INIT_STATE');
       logFirebaseEvent('groupChatPage_custom_action');
       await actions.lockOrientation();
     });
@@ -83,24 +83,24 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
           children: [
             Text(
               'Create Group Chat',
-              style: FlutterFlowTheme.of(context).subtitle1.override(
+              style: FlutterFlowTheme.of(context).titleMedium.override(
                     fontFamily: 'Lexend Deca',
                     color: Color(0xFF95A1AC),
                     fontSize: 18.0,
                     fontWeight: FontWeight.w500,
                     useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).subtitle1Family),
+                        FlutterFlowTheme.of(context).titleMediumFamily),
                   ),
             ),
             Text(
               'Select the friends to add to chat.',
-              style: FlutterFlowTheme.of(context).bodyText2.override(
+              style: FlutterFlowTheme.of(context).bodySmall.override(
                     fontFamily: 'Lexend Deca',
                     color: Color(0xFF1A1F24),
                     fontSize: 14.0,
                     fontWeight: FontWeight.normal,
                     useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).bodyText2Family),
+                        FlutterFlowTheme.of(context).bodySmallFamily),
                   ),
             ),
           ],
@@ -110,6 +110,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
         elevation: 0.0,
       ),
       body: SafeArea(
+        top: true,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -133,13 +134,13 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                 obscureText: false,
                 decoration: InputDecoration(
                   hintText: 'Search for friends...',
-                  hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                  hintStyle: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Lexend Deca',
                         color: Color(0xFF95A1AC),
                         fontSize: 14.0,
                         fontWeight: FontWeight.normal,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).bodyText1Family),
+                            FlutterFlowTheme.of(context).bodyMediumFamily),
                       ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -189,13 +190,13 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                     size: 24.0,
                   ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Lexend Deca',
                       color: Color(0xFF95A1AC),
                       fontSize: 14.0,
                       fontWeight: FontWeight.normal,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).bodyText1Family),
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
                     ),
                 validator: _model.textControllerValidator.asValidator(context),
               ),
@@ -258,6 +259,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                 }(),
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
+                reverse: false,
                 scrollDirection: Axis.vertical,
                 builderDelegate: PagedChildBuilderDelegate<UsersRecord>(
                   // Customize what your widget looks like when it's loading the first page.
@@ -265,7 +267,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                     child: SizedBox(
                       width: 50.0,
                       height: 50.0,
-                      child: SpinKitSquareCircle(
+                      child: SpinKitRipple(
                         color: Color(0xFFFE2126),
                         size: 50.0,
                       ),
@@ -340,26 +342,26 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                                             listViewUsersRecord] = newValue!);
                                       },
                                       title: Text(
-                                        listViewUsersRecord.displayName!,
+                                        listViewUsersRecord.displayName,
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Lexend Deca',
                                               color: Color(0xFF95A1AC),
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.w500,
-                                              useGoogleFonts:
-                                                  GoogleFonts.asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1Family),
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleMediumFamily),
                                             ),
                                       ),
                                       subtitle: Text(
-                                        listViewUsersRecord.userType!,
+                                        listViewUsersRecord.userType,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText2
+                                            .bodySmall
                                             .override(
                                               fontFamily: 'Lexend Deca',
                                               color: Color(0xFF1A1F24),
@@ -370,7 +372,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText2Family),
+                                                              .bodySmallFamily),
                                             ),
                                       ),
                                       tileColor: Color(0xFFF5F5F5),
@@ -395,7 +397,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
               width: double.infinity,
               height: 100.0,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).tertiaryColor,
+                color: FlutterFlowTheme.of(context).tertiary,
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 4.0,
@@ -440,15 +442,18 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                    textStyle: FlutterFlowTheme.of(context).title3.override(
+                    color: FlutterFlowTheme.of(context).tertiary,
+                    textStyle: FlutterFlowTheme.of(context)
+                        .headlineSmall
+                        .override(
                           fontFamily: 'Lexend Deca',
                           color: Colors.white,
                           fontSize: 20.0,
                           fontWeight: FontWeight.w500,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).title3Family),
+                              FlutterFlowTheme.of(context).headlineSmallFamily),
                         ),
+                    elevation: 2.0,
                     borderSide: BorderSide(
                       color: Colors.transparent,
                       width: 1.0,

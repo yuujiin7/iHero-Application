@@ -7,6 +7,7 @@ export 'create_client.dart' show createClient;
 export 'document_exists.dart' show documentExists;
 export 'get_document_reference.dart' show getDocumentReference;
 export 'batch_update_ended_events.dart' show batchUpdateEndedEvents;
+export 'document_exists_copy.dart' show documentExistsCopy;
 export 'update_session.dart' show updateSession;
 export 'update_session_logout.dart' show updateSessionLogout;
 export 'get_user_ids.dart' show getUserIds;
@@ -25,3 +26,7 @@ export 'update_merit_score_for_current_user.dart'
     show updateMeritScoreForCurrentUser;
 export 'update_merit_score_for_current_user1.dart'
     show updateMeritScoreForCurrentUser1;
+export 'checkifhourbefore.dart' show checkifhourbefore;
+export 'get_near_events.dart' show getNearEvents;
+export 'has_joined_event_within_hour.dart' show hasJoinedEventWithinHour;
+export 'can_volunteer_join_event.dart' show canVolunteerJoinEvent;

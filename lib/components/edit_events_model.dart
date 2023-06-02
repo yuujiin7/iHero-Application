@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -10,8 +10,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
-import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
@@ -35,7 +37,7 @@ class EditEventsModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();
-  bool isMediaUploading = false;
+  bool isDataUploading = false;
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
@@ -51,8 +53,8 @@ class EditEventsModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 255) {
-      return 'Max 255 character';
+    if (val.length > 65) {
+      return 'Maximum 65 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -96,7 +98,8 @@ class EditEventsModel extends FlutterFlowModel {
   // State field(s) for Switch widget.
   bool? switchValue;
   // State field(s) for ChoiceChips widget.
-  String? choiceChipsValue;
+  List<String>? choiceChipsValues;
+  FormFieldController<List<String>>? choiceChipsValueController;
   // State field(s) for PersonInCharge widget.
   TextEditingController? personInChargeController;
   String? Function(BuildContext, String?)? personInChargeControllerValidator;
@@ -128,7 +131,7 @@ class EditEventsModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 13) {
-      return 'Max 13 character';
+      return 'Maximum 13 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -144,11 +147,9 @@ class EditEventsModel extends FlutterFlowModel {
     }
 
     if (val.length > 3) {
-      return 'Max 3 character';
+      return 'Maximum 3 characters allowed, currently ${val.length}.';
     }
-    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
-      return 'Invalid text';
-    }
+
     return null;
   }
 
@@ -168,12 +169,13 @@ class EditEventsModel extends FlutterFlowModel {
     return null;
   }
 
+  // State field(s) for Slider widget.
+  double? sliderValue;
   // Model for selectCauseEdit component.
   late SelectCauseEditModel selectCauseEditModel;
   // State field(s) for PartnerDropDown widget.
   String? partnerDropDownValue;
-  // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
-  bool? isEventExist;
+  FormFieldController<String>? partnerDropDownValueController;
 
   /// Initialization and disposal methods.
 

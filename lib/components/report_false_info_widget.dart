@@ -1,14 +1,15 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -90,17 +91,17 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                           children: [
                             Text(
                               'Report False Information',
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .title2Family,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .title2Family),
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .headlineMediumFamily),
+                                  ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -108,17 +109,17 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               child: Text(
                                 'Defamation Reporting Form',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText2
+                                    .bodySmall
                                     .override(
                                       fontFamily: FlutterFlowTheme.of(context)
-                                          .bodyText2Family,
+                                          .bodySmallFamily,
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       fontWeight: FontWeight.w500,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText2Family),
+                                                  .bodySmallFamily),
                                     ),
                               ),
                             ),
@@ -150,11 +151,11 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                   child: Text(
                     'This form is intended for reporting content posted on iHero that you believe is defamatory.',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 13.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -171,17 +172,17 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                           Text(
                             'Please provide the reported complainant\'s information',
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyText1Family,
+                                      .bodyMediumFamily,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w500,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                           Padding(
@@ -204,21 +205,21 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                   counterText: "",
                                   hintText: 'Full Name',
                                   hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Ubuntu',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         fontWeight: FontWeight.w600,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(10.0),
@@ -248,7 +249,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: Colors.black,
@@ -256,10 +257,14 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 validator: _model.fullNameControllerValidator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^.{1,50}'))
+                                ],
                               ),
                             ),
                           ),
@@ -270,10 +275,10 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               'Please explain where the content appears, the specific statements you believe are defamatory, and why you believe they are defamatory.',
                               textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                     fontSize: 12.0,
@@ -281,7 +286,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -305,16 +310,16 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                   counterText: "",
                                   hintText: 'Description',
                                   hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Ubuntu',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .primary,
                                         fontWeight: FontWeight.w600,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -348,7 +353,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: Colors.black,
@@ -356,13 +361,17 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                                 maxLines: 12,
                                 keyboardType: TextInputType.multiline,
                                 validator: _model
                                     .descriptionEventControllerValidator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^.{1,500}'))
+                                ],
                               ),
                             ),
                           ),
@@ -373,10 +382,10 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               'Please provide any additional evidence or court orders demonstrating that the statements are defamatory.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                     fontSize: 12.0,
@@ -384,7 +393,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -396,8 +405,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                   .secondaryBackground,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                                color: FlutterFlowTheme.of(context).primary,
                                 width: 1.0,
                               ),
                             ),
@@ -432,7 +440,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                                 ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Barlow',
                                                           color: Colors.black,
@@ -444,7 +452,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -463,8 +471,8 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                     buttonSize: 50.0,
                                     icon: Icon(
                                       Icons.photo_camera,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       size: 25.0,
                                     ),
                                     onPressed: () async {
@@ -484,7 +492,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                               validateFileFormat(
                                                   m.storagePath, context))) {
                                         setState(() =>
-                                            _model.isMediaUploading = true);
+                                            _model.isDataUploading = true);
                                         var selectedUploadedFiles =
                                             <FFUploadedFile>[];
                                         var downloadUrls = <String>[];
@@ -498,6 +506,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                                     height:
                                                         m.dimensions?.height,
                                                     width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
                                                   ))
                                               .toList();
 
@@ -511,7 +520,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                               .map((u) => u!)
                                               .toList();
                                         } finally {
-                                          _model.isMediaUploading = false;
+                                          _model.isDataUploading = false;
                                         }
                                         if (selectedUploadedFiles.length ==
                                                 selectedMedia.length &&
@@ -551,16 +560,16 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                             child: Text(
                               'DECLARATION STATEMENT',
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: FlutterFlowTheme.of(context)
-                                        .bodyText1Family,
+                                        .bodyMediumFamily,
                                     color: Color(0xFFB51E1E),
                                     fontSize: 12.0,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -571,7 +580,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               'By submitting this notice, you state: that you have a good faith belief that the content you are reporting is unlawful in the manner described above; that the information contained in this report is accurate to submit this report.',
                               textAlign: TextAlign.justify,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Barlow',
                                     color: Colors.black,
@@ -579,7 +588,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
-                                                .bodyText1Family),
+                                                .bodyMediumFamily),
                                   ),
                             ),
                           ),
@@ -662,6 +671,15 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                                 );
                               },
                             );
+                            logFirebaseEvent('Button_backend_call');
+
+                            final logsCreateData = createLogsRecordData(
+                              date: getCurrentTimestamp,
+                              action: 'Created  a false information report',
+                              userRef: currentUserReference,
+                            );
+                            await LogsRecord.createDoc(currentUserReference!)
+                                .set(logsCreateData);
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             return;
@@ -681,15 +699,16 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           color: Color(0xFF2B8C2A),
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
-                                    .subtitle2Family,
+                                    .titleSmallFamily,
                                 color: Colors.white,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .subtitle2Family),
+                                        .titleSmallFamily),
                               ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

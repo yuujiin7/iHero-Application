@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
@@ -36,15 +36,17 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
         parameters: {'screen_name': 'announcementFeed'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('ANNOUNCEMENT_FEED_announcementFeed_ON_LO');
+      logFirebaseEvent('ANNOUNCEMENT_FEED_announcementFeed_ON_IN');
       Function() _navigate = () {};
       logFirebaseEvent('announcementFeed_custom_action');
       await actions.lockOrientation();
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('announcementFeed_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('announcementFeed_custom_action');
@@ -82,57 +84,66 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      floatingActionButton: Visibility(
-        visible: valueOrDefault(currentUserDocument?.userType, '') == 'Admin',
-        child: AuthUserStreamWidget(
-          builder: (context) => FloatingActionButton(
-            onPressed: () async {
-              logFirebaseEvent('ANNOUNCEMENT_FEED_FloatingActionButton_7');
-              logFirebaseEvent('FloatingActionButton_navigate_to');
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        floatingActionButton: Visibility(
+          visible: valueOrDefault(currentUserDocument?.userType, '') == 'Admin',
+          child: AuthUserStreamWidget(
+            builder: (context) => FloatingActionButton(
+              onPressed: () async {
+                logFirebaseEvent('ANNOUNCEMENT_FEED_FloatingActionButton_7');
+                logFirebaseEvent('FloatingActionButton_navigate_to');
 
-              context.pushNamed('eventCreate');
-            },
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-            elevation: 8.0,
-            child: Icon(
-              Icons.create_rounded,
-              color: Colors.white,
-              size: 24.0,
+                context.goNamed(
+                  'eventCreate',
+                  queryParams: {
+                    'tabIndex': serializeParam(
+                      1,
+                      ParamType.int,
+                    ),
+                  }.withoutNulls,
+                );
+              },
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              elevation: 8.0,
+              child: Icon(
+                Icons.create_rounded,
+                color: Colors.white,
+                size: 24.0,
+              ),
             ),
           ),
         ),
-      ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, _) => [
-          SliverAppBar(
-            pinned: false,
-            floating: true,
-            snap: false,
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-            automaticallyImplyLeading: true,
-            title: Text(
-              'Announcement',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    fontSize: 22.0,
-                    useGoogleFonts: GoogleFonts.asMap().containsKey(
-                        FlutterFlowTheme.of(context).bodyText1Family),
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 4.0,
-          )
-        ],
-        body: Builder(
-          builder: (context) {
-            return SafeArea(
-              child: GestureDetector(
-                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: NestedScrollView(
+          headerSliverBuilder: (context, _) => [
+            SliverAppBar(
+              pinned: false,
+              floating: true,
+              snap: false,
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: true,
+              title: Text(
+                'Announcement',
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 22.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
+                    ),
+              ),
+              actions: [],
+              centerTitle: true,
+              elevation: 4.0,
+            )
+          ],
+          body: Builder(
+            builder: (context) {
+              return SafeArea(
+                top: false,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -177,7 +188,8 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                 ),
                                 Text(
                                   'Welcome',
-                                  style: FlutterFlowTheme.of(context).title2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineMedium,
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -186,17 +198,17 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                     builder: (context) => Text(
                                       currentUserDisplayName,
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle1
+                                          .titleMedium
                                           .override(
                                             fontFamily:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1Family,
+                                                    .titleMediumFamily,
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle1Family),
+                                                        .titleMediumFamily),
                                           ),
                                     ),
                                   ),
@@ -216,17 +228,17 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                   child: Text(
                                     'Checkout news and announcement below.',
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText2
+                                        .bodySmall
                                         .override(
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText2Family,
+                                                  .bodySmallFamily,
                                           color: Color(0xFF8B97A2),
                                           fontWeight: FontWeight.w500,
                                           useGoogleFonts: GoogleFonts.asMap()
                                               .containsKey(
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2Family),
+                                                      .bodySmallFamily),
                                         ),
                                   ),
                                 ),
@@ -330,6 +342,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                       return _model.pagingController!;
                                     }(),
                                     padding: EdgeInsets.zero,
+                                    reverse: false,
                                     scrollDirection: Axis.vertical,
                                     builderDelegate: PagedChildBuilderDelegate<
                                         AnnouncementRecord>(
@@ -339,7 +352,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: SpinKitSquareCircle(
+                                          child: SpinKitRipple(
                                             color: Color(0xFFFE2126),
                                             size: 50.0,
                                           ),
@@ -401,7 +414,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                               width: 50.0,
                                                               height: 50.0,
                                                               child:
-                                                                  SpinKitSquareCircle(
+                                                                  SpinKitRipple(
                                                                 color: Color(
                                                                     0xFFFE2126),
                                                                 size: 50.0,
@@ -420,7 +433,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                   .antiAliasWithSaveLayer,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primaryColor,
+                                                                  .primary,
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -479,10 +492,10 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                             0.0),
                                                                     child: Text(
                                                                       userInfoUsersRecord
-                                                                          .displayName!,
+                                                                          .displayName,
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText1,
+                                                                          .bodyMedium,
                                                                     ),
                                                                   ),
                                                                 ],
@@ -526,6 +539,14 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                 .circular(0.0),
                                                       ),
                                                       child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
                                                               'ANNOUNCEMENT_FEED_Image_q5q8xxnh_ON_TAP');
@@ -607,8 +628,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                           listViewAnnouncementRecord
                                                                               .reference;
                                                                       final likedByUpdate = listViewAnnouncementRecord
-                                                                              .likedBy!
-                                                                              .toList()
+                                                                              .likedBy
                                                                               .contains(
                                                                                   likedByElement)
                                                                           ? FieldValue
@@ -630,8 +650,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                               announcementUpdateData);
                                                                     },
                                                                     value: listViewAnnouncementRecord
-                                                                        .likedBy!
-                                                                        .toList()
+                                                                        .likedBy
                                                                         .contains(
                                                                             listViewAnnouncementRecord.reference),
                                                                     onIcon:
@@ -640,7 +659,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                           .favorite_rounded,
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .primaryColor,
+                                                                          .primary,
                                                                       size:
                                                                           25.0,
                                                                     ),
@@ -665,15 +684,14 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                     child: Text(
                                                                       formatNumber(
                                                                         listViewAnnouncementRecord
-                                                                            .likedBy!
-                                                                            .toList()
+                                                                            .likedBy
                                                                             .length,
                                                                         formatType:
                                                                             FormatType.compact,
                                                                       ),
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyText2,
+                                                                          .bodySmall,
                                                                     ),
                                                                   ),
                                                                 ],
@@ -704,10 +722,10 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                         10.0),
                                                             child: Text(
                                                               listViewAnnouncementRecord
-                                                                  .title!,
+                                                                  .title,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1,
+                                                                  .bodyMedium,
                                                             ),
                                                           ),
                                                         ),
@@ -731,9 +749,9 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                     ),
                   ],
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

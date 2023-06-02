@@ -80,18 +80,18 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                           children: [
                             Text(
                               'Consequences',
-                              style:
-                                  FlutterFlowTheme.of(context).title2.override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .title2Family,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        fontSize: 30.0,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .title2Family),
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .headlineMediumFamily,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontSize: 30.0,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .headlineMediumFamily),
+                                  ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -99,7 +99,7 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                               child: Text(
                                 'Credit Score Rules',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText2
+                                    .bodySmall
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: FlutterFlowTheme.of(context)
@@ -108,7 +108,7 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText2Family),
+                                                  .bodySmallFamily),
                                     ),
                               ),
                             ),
@@ -140,14 +140,14 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                   child: Text(
                     'If a volunteer\'s credit score falls within the Extremely Low range, they may face the following consequences:',
                     textAlign: TextAlign.justify,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily:
-                              FlutterFlowTheme.of(context).bodyText1Family,
+                              FlutterFlowTheme.of(context).bodyMediumFamily,
                           color: FlutterFlowTheme.of(context).primaryText,
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -163,15 +163,15 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                           Text(
                             'INELIGIBILITY AND SUSPENSION',
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyText1Family,
+                                      .bodyMediumFamily,
                                   color: Color(0xFFB51E1E),
                                   fontSize: 18.0,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                         ],
@@ -183,13 +183,13 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                           'The volunteer\'s account will be temporarily suspended and is ieneligible to join any events or activities organized by the organization.',
                           textAlign: TextAlign.justify,
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Barlow',
                                 fontSize: 16.0,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),
@@ -199,15 +199,15 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                           Text(
                             'OFFICE VISIT',
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: FlutterFlowTheme.of(context)
-                                      .bodyText1Family,
+                                      .bodyMediumFamily,
                                   color: Color(0xFFB51E1E),
                                   fontSize: 18.0,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                         ],
@@ -219,13 +219,13 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
                           'The volunteer is required to visit the organization\'s office to discuss their performance and reactivate their account. The visit provides an opportunity for the volunteer to discuss their performance and take the necessary steps to reactivate the account and improve their credit score.',
                           textAlign: TextAlign.justify,
                           style: FlutterFlowTheme.of(context)
-                              .bodyText1
+                              .bodyMedium
                               .override(
                                 fontFamily: 'Barlow',
                                 fontSize: 16.0,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .bodyText1Family),
+                                        .bodyMediumFamily),
                               ),
                         ),
                       ),

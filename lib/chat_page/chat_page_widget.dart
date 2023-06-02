@@ -50,7 +50,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'chatPage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('CHAT_PAGE_PAGE_chatPage_ON_PAGE_LOAD');
+      logFirebaseEvent('CHAT_PAGE_PAGE_chatPage_ON_INIT_STATE');
       logFirebaseEvent('chatPage_custom_action');
       await actions.lockOrientation();
     });
@@ -103,26 +103,26 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
           children: [
             if (!isGroupChat())
               Text(
-                widget.chatUser!.displayName!,
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+                widget.chatUser!.displayName,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Comfortaa',
                       color: Colors.black,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).bodyText1Family),
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
                     ),
               ),
             if (isGroupChat())
               Text(
                 'Group Chat',
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Lexend Deca',
                       color: Colors.black,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).bodyText1Family),
+                          FlutterFlowTheme.of(context).bodyMediumFamily),
                     ),
               ),
           ],
@@ -133,6 +133,10 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
               child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onTap: () async {
                   logFirebaseEvent('CHAT_PAGE_PAGE_Icon_41kduqdl_ON_TAP');
                   logFirebaseEvent('Icon_navigate_to');
@@ -152,6 +156,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
         elevation: 2.0,
       ),
       body: SafeArea(
+        top: true,
         child: StreamBuilder<FFChatInfo>(
           stream: FFChatManager.instance.getChatInfo(
             otherUserRecord: widget.chatUser,
@@ -171,7 +176,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   otherUsersBoxDecoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    color: FlutterFlowTheme.of(context).tertiary,
                     border: Border.all(
                       color: Colors.transparent,
                     ),
@@ -211,7 +216,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: SpinKitSquareCircle(
+                    child: SpinKitRipple(
                       color: Color(0xFFFE2126),
                       size: 50.0,
                     ),

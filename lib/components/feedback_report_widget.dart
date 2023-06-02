@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -86,14 +86,14 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                     Text(
                       'INSTANT FEEDBACK REPORT',
                       textAlign: TextAlign.justify,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily:
-                                FlutterFlowTheme.of(context).bodyText1Family,
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                                FlutterFlowTheme.of(context).bodyMediumFamily,
+                            color: FlutterFlowTheme.of(context).primary,
                             fontSize: 25.0,
                             fontWeight: FontWeight.bold,
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).bodyText1Family),
+                                FlutterFlowTheme.of(context).bodyMediumFamily),
                           ),
                     ),
                   ],
@@ -104,12 +104,12 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                   child: Text(
                     'Your recent report to another volunteer was verified and a penalty was issued.',
                     textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -119,11 +119,11 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                   child: Text(
                     'One penalty prevents most volunteers from disrupting any more peace in the organization. Thanks for the assist!',
                     textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
                           fontSize: 20.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).bodyText1Family),
+                              FlutterFlowTheme.of(context).bodyMediumFamily),
                         ),
                   ),
                 ),
@@ -188,18 +188,19 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
-                                    .subtitle2Family,
+                                    .titleSmallFamily,
                                 color: Colors.white,
                                 fontSize: 25.0,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .subtitle2Family),
+                                        .titleSmallFamily),
                               ),
+                          elevation: 2.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,

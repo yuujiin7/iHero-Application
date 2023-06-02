@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -34,7 +34,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'helpCenter'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('HELP_CENTER_PAGE_helpCenter_ON_PAGE_LOAD');
+      logFirebaseEvent('HELP_CENTER_helpCenter_ON_INIT_STATE');
       logFirebaseEvent('helpCenter_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('helpCenter_custom_action');
@@ -68,140 +68,221 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      endDrawer: Drawer(
-        elevation: 16.0,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 150.0,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 110.0, 0.0, 0.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        endDrawer: Drawer(
+          elevation: 16.0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              45.0, 0.0, 45.0, 0.0),
-                          child: Material(
-                            color: Colors.transparent,
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(45.0),
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              height: 70.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: BorderRadius.circular(45.0),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'HELP CENTER',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyText1Family,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.w600,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1Family),
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                        Container(
+                          width: double.infinity,
+                          height: 150.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context).primary,
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 25.0, 20.0, 0.0),
-                          child: Material(
-                            color: Colors.transparent,
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                borderRadius: BorderRadius.circular(16.0),
+                      ],
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 110.0, 0.0, 0.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                45.0, 0.0, 45.0, 0.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(45.0),
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    15.0, 10.0, 15.0, 10.0),
+                              child: Container(
+                                width: double.infinity,
+                                height: 70.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.circular(45.0),
+                                ),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'User Guide',
+                                      'HELP CENTER',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family,
+                                                    .bodyMediumFamily,
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.w600,
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
+                                                        .bodyMediumFamily),
                                           ),
                                     ),
-                                    Divider(
-                                      thickness: 1.0,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 5.0, 0.0, 10.0),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          logFirebaseEvent(
-                                              'HELP_CENTER_Container_63rimofl_ON_TAP');
-                                          logFirebaseEvent(
-                                              'Container_navigate_to');
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 25.0, 20.0, 0.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 1.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      15.0, 10.0, 15.0, 10.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'User Guide',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w600,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
+                                            ),
+                                      ),
+                                      Divider(
+                                        thickness: 1.0,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 5.0, 0.0, 10.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'HELP_CENTER_Container_63rimofl_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Container_navigate_to');
 
-                                          context.pushNamed('FAQs');
-                                        },
+                                            context.pushNamed('FAQs');
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      15.0, 5.0, 15.0, 5.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .volunteer_activism,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryBtnText,
+                                                        size: 50.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'Volunteer Service FAQs',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Barlow',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBtnText,
+                                                                fontSize: 18.0,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily),
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 10.0),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
@@ -219,7 +300,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Icon(
-                                                      Icons.volunteer_activism,
+                                                      Icons.star_half_rounded,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -237,11 +318,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        'Volunteer Service FAQs',
+                                                        'Credit Score Rules',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Barlow',
@@ -254,7 +335,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ],
@@ -265,285 +346,229 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 10.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  15.0, 5.0, 15.0, 5.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Icon(
-                                                    Icons.star_half_rounded,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryBtnText,
-                                                    size: 50.0,
-                                                  ),
-                                                ],
-                                              ),
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Credit Score Rules',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Barlow',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBtnText,
-                                                                fontSize: 18.0,
-                                                                useGoogleFonts: GoogleFonts
-                                                                        .asMap()
-                                                                    .containsKey(
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
-                                                              ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 25.0, 20.0, 0.0),
-                          child: Material(
-                            color: Colors.transparent,
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 25.0, 20.0, 0.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 1.0,
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16.0),
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    15.0, 10.0, 15.0, 10.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Policies and Reporting',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText1Family,
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.w600,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1Family),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      15.0, 10.0, 15.0, 10.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Policies and Reporting',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w600,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
+                                            ),
+                                      ),
+                                      Divider(
+                                        thickness: 1.0,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 5.0, 0.0, 10.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                    ),
-                                    Divider(
-                                      thickness: 1.0,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 5.0, 0.0, 10.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  15.0, 5.0, 15.0, 5.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  FaIcon(
-                                                    FontAwesomeIcons.angry,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryBtnText,
-                                                    size: 50.0,
-                                                  ),
-                                                ],
-                                              ),
-                                              Expanded(
-                                                child: Row(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    15.0, 5.0, 15.0, 5.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
                                                   children: [
-                                                    Text(
-                                                      'Reporting Abuse',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Barlow',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBtnText,
-                                                                fontSize: 18.0,
-                                                                useGoogleFonts: GoogleFonts
-                                                                        .asMap()
-                                                                    .containsKey(
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
-                                                              ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 10.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  15.0, 5.0, 15.0, 5.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons
-                                                          .solidIdBadge,
+                                                    FaIcon(
+                                                      FontAwesomeIcons.angry,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primaryBtnText,
                                                       size: 50.0,
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Expanded(
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Managing a deceased\nperson\'s Account',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Barlow',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBtnText,
-                                                                fontSize: 18.0,
-                                                                useGoogleFonts: GoogleFonts
-                                                                        .asMap()
-                                                                    .containsKey(
-                                                                        FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family),
-                                                              ),
-                                                    ),
                                                   ],
                                                 ),
-                                              ),
-                                            ],
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'Reporting Abuse',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBtnText,
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 10.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    15.0, 5.0, 15.0, 5.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  5.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: FaIcon(
+                                                        FontAwesomeIcons
+                                                            .solidIdBadge,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryBtnText,
+                                                        size: 50.0,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'Managing a deceased\nperson\'s Account',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBtnText,
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+        body: SafeArea(
+          top: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -562,9 +587,9 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 150.0,
+                            height: 200.0,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                              color: FlutterFlowTheme.of(context).primary,
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -610,7 +635,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 'HELP CENTER',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Ubuntu',
                                                           color: FlutterFlowTheme
@@ -622,7 +647,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                             ],
@@ -659,12 +684,12 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             'How Can We Help You?',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyText1Family,
+                                                          .bodyMediumFamily,
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w600,
                                                   useGoogleFonts: GoogleFonts
@@ -672,7 +697,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                         ],
@@ -721,12 +746,12 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             'User Guide',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyText1Family,
+                                                          .bodyMediumFamily,
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w600,
                                                   useGoogleFonts: GoogleFonts
@@ -734,7 +759,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                           Divider(
@@ -745,6 +770,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 5.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_16m7vuzb_ON_TAP');
@@ -758,7 +788,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0),
@@ -800,7 +830,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                               'Volunteer Service FAQs',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Barlow',
@@ -812,7 +842,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ],
@@ -829,6 +859,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_f0alh2v5_ON_TAP');
@@ -843,7 +878,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0),
@@ -885,7 +920,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                               'Credit Score Rules',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Barlow',
@@ -897,7 +932,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ],
@@ -943,12 +978,12 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                             'Policies and Reporting',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText1
+                                                .bodyMedium
                                                 .override(
                                                   fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyText1Family,
+                                                          .bodyMediumFamily,
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w600,
                                                   useGoogleFonts: GoogleFonts
@@ -956,7 +991,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                       .containsKey(
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1Family),
+                                                              .bodyMediumFamily),
                                                 ),
                                           ),
                                           Divider(
@@ -967,6 +1002,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 5.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_qidtkwls_ON_TAP');
@@ -981,7 +1021,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0),
@@ -1023,7 +1063,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                               'Reporting Abuse',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Barlow',
@@ -1035,7 +1075,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ],
@@ -1052,6 +1092,11 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 10.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'HELP_CENTER_Container_oy67vm7y_ON_TAP');
@@ -1065,7 +1110,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primaryColor,
+                                                      .primary,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0),
@@ -1119,7 +1164,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Barlow',
@@ -1131,7 +1176,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ],
@@ -1182,12 +1227,12 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyText1Family,
+                                                                  .bodyMediumFamily,
                                                           fontSize: 20.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -1196,7 +1241,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family),
+                                                                      .bodyMediumFamily),
                                                         ),
                                               ),
                                               Divider(

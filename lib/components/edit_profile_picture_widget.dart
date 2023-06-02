@@ -1,10 +1,10 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -83,7 +83,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                 if (selectedMedia != null &&
                     selectedMedia.every(
                         (m) => validateFileFormat(m.storagePath, context))) {
-                  setState(() => _model.isMediaUploading = true);
+                  setState(() => _model.isDataUploading = true);
                   var selectedUploadedFiles = <FFUploadedFile>[];
                   var downloadUrls = <String>[];
                   try {
@@ -98,6 +98,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                               bytes: m.bytes,
                               height: m.dimensions?.height,
                               width: m.dimensions?.width,
+                              blurHash: m.blurHash,
                             ))
                         .toList();
 
@@ -111,7 +112,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                         .toList();
                   } finally {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    _model.isMediaUploading = false;
+                    _model.isDataUploading = false;
                   }
                   if (selectedUploadedFiles.length == selectedMedia.length &&
                       downloadUrls.length == selectedMedia.length) {
@@ -122,7 +123,7 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                     showUploadMessage(context, 'Success!');
                   } else {
                     setState(() {});
-                    showUploadMessage(context, 'Failed to upload media');
+                    showUploadMessage(context, 'Failed to upload data');
                     return;
                   }
                 }
@@ -135,6 +136,16 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                     photoUrl: _model.uploadedFileUrl,
                   );
                   await currentUserReference!.update(usersUpdateData);
+                  logFirebaseEvent('Button_backend_call');
+
+                  final logsCreateData = createLogsRecordData(
+                    date: getCurrentTimestamp,
+                    action: 'Edited profile picture.',
+                    userRef: currentUserReference,
+                    fileUrl: _model.uploadedFileUrl,
+                  );
+                  await LogsRecord.createDoc(currentUserReference!)
+                      .set(logsCreateData);
                   logFirebaseEvent('Button_bottom_sheet');
                   Navigator.pop(context);
                   return;
@@ -163,14 +174,14 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                 height: 60.0,
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                color: FlutterFlowTheme.of(context).primaryColor,
-                textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                color: FlutterFlowTheme.of(context).primary,
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Ubuntu',
                       color: Colors.white,
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).subtitle2Family),
+                          FlutterFlowTheme.of(context).titleSmallFamily),
                     ),
                 elevation: 4.0,
                 borderSide: BorderSide(
@@ -196,12 +207,12 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily:
-                            FlutterFlowTheme.of(context).subtitle2Family,
+                            FlutterFlowTheme.of(context).titleSmallFamily,
                         fontSize: 20.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).subtitle2Family),
+                            FlutterFlowTheme.of(context).titleSmallFamily),
                       ),
                   elevation: 4.0,
                   borderSide: BorderSide(

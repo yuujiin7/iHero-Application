@@ -1,8 +1,10 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/event_or_announcement_widget.dart';
 import '/components/feedback_report_widget.dart';
 import '/components/memoralization_report_widget.dart';
+import '/components/registration_date_warning_widget.dart';
+import '/components/stop_screen_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -25,6 +27,8 @@ class HomeScreenModel extends FlutterFlowModel {
 
   // Stores action output result for [Custom Action - updateMeritScoreForCurrentUser1] action in HomeScreen widget.
   String? updateMerit;
+  // Stores action output result for [Custom Action - getNearEvents] action in HomeScreen widget.
+  List<DocumentReference>? nearEvents;
   // Stores action output result for [Custom Action - getUnseenReportByCurrentUser] action in HomeScreen widget.
   DocumentReference? unethical;
   // Stores action output result for [Custom Action - getUnseenReportByCurrentUserFalseInfo] action in HomeScreen widget.

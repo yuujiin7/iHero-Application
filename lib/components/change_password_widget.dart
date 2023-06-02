@@ -1,10 +1,14 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -96,7 +100,8 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                     24.0, 12.0, 0.0, 12.0),
                                 child: Text(
                                   'Change Password',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                               ),
                             ],
@@ -117,15 +122,16 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 Duration(milliseconds: 200),
                                 () => setState(() {}),
                               ),
-                              autofocus: true,
                               autofillHints: [AutofillHints.password],
                               obscureText: !_model.currentPasswordVisibility,
                               decoration: InputDecoration(
                                 counterText: "",
                                 labelText: 'Current Password',
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).bodyMedium,
                                 hintText: 'Current password...',
                                 hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
+                                    FlutterFlowTheme.of(context).bodySmall,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context)
@@ -171,10 +177,14 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
                               validator: _model
                                   .currentPasswordControllerValidator
                                   .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,100}'))
+                              ],
                             ),
                           ),
                           Padding(
@@ -188,7 +198,6 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 Duration(milliseconds: 200),
                                 () => setState(() {}),
                               ),
-                              autofocus: true,
                               autofillHints: [AutofillHints.password],
                               obscureText: !_model.newPasswordVisibility,
                               decoration: InputDecoration(
@@ -196,7 +205,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 labelText: 'New Password',
                                 hintText: 'New password...',
                                 hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
+                                    FlutterFlowTheme.of(context).bodySmall,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context)
@@ -242,9 +251,13 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
                               validator: _model.newPasswordControllerValidator
                                   .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,100}'))
+                              ],
                             ),
                           ),
                           Padding(
@@ -277,7 +290,6 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   }
                                 },
                               ),
-                              autofocus: true,
                               autofillHints: [AutofillHints.password],
                               obscureText: !_model.confirmNewPsswrodVisibility,
                               decoration: InputDecoration(
@@ -285,7 +297,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 labelText: 'Confirm new password',
                                 hintText: 'Confirm new password',
                                 hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
+                                    FlutterFlowTheme.of(context).bodySmall,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context)
@@ -331,10 +343,14 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
                               validator: _model
                                   .confirmNewPsswrodControllerValidator
                                   .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('^.{1,100}'))
+                              ],
                             ),
                           ),
                           if (_model.notMatch)
@@ -344,16 +360,16 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 Text(
                                   'New password does not match.',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyText1Family,
+                                            .bodyMediumFamily,
                                         color: Color(0xFFFF0006),
                                         fontSize: 10.0,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ],
@@ -413,9 +429,9 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
-                                .bodyText2
+                                .bodySmall
                                 .override(
                                   fontFamily: 'Lexend Deca',
                                   color: FlutterFlowTheme.of(context)
@@ -424,7 +440,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   fontWeight: FontWeight.normal,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText2Family),
+                                          .bodySmallFamily),
                                 ),
                             elevation: 1.0,
                             borderSide: BorderSide(
@@ -459,6 +475,34 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 _model.confirmNewPsswrodController.text,
                               );
                               if (_model.success!) {
+                                logFirebaseEvent('Button_backend_call');
+
+                                final logsCreateData = createLogsRecordData(
+                                  date: getCurrentTimestamp,
+                                  action: 'Changed Password',
+                                  userRef: currentUserReference,
+                                );
+                                await LogsRecord.createDoc(
+                                        currentUserReference!)
+                                    .set(logsCreateData);
+                                logFirebaseEvent('Button_backend_call');
+                                _model.isChangePassword =
+                                    await ChangePasswordSendGridCall.call(
+                                  toEmail: currentUserEmail,
+                                  date: dateTimeFormat(
+                                    'yMMMd',
+                                    getCurrentTimestamp,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  ),
+                                  time: dateTimeFormat(
+                                    'jm',
+                                    getCurrentTimestamp,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  ),
+                                  toName: currentUserDisplayName,
+                                );
                                 logFirebaseEvent('Button_alert_dialog');
                                 await showDialog(
                                   context: context,
@@ -516,7 +560,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).customColor1,
                             textStyle: FlutterFlowTheme.of(context)
-                                .bodyText2
+                                .bodySmall
                                 .override(
                                   fontFamily: 'Lexend Deca',
                                   color: FlutterFlowTheme.of(context)
@@ -525,7 +569,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                   fontWeight: FontWeight.normal,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText2Family),
+                                          .bodySmallFamily),
                                 ),
                             elevation: 1.0,
                             borderSide: BorderSide(

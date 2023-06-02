@@ -7,9 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
 import 'place.dart';
-import '../backend/backend.dart';
+import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 
 String? getUserStatus(
   bool? isDeceased,
@@ -338,7 +338,7 @@ bool showSearchResultCopy(
   DateTime searchDateEndFor,
   DateTime searchDateEndIn,
   String searchOrgFor,
-  List<String> searchOrgIn,
+  String searchOrgIn,
 ) {
   if ((searchDateStartIn.isAfter(searchDateEndFor) ||
           searchDateStartIn.isBefore(searchDateStartFor)) ||
@@ -348,22 +348,22 @@ bool showSearchResultCopy(
           !searchDateEndIn.isAtSameMomentAs(searchDateEndFor))) {
     return false;
   }
+
+  bool tagFound = false;
   for (var tag in searchTagIn) {
     if (tag.contains(searchTagFor)) {
+      tagFound = true;
       break;
     }
-    if (tag == searchTagIn.last) {
-      return false;
-    }
   }
-  for (var org in searchOrgIn) {
-    if (org.contains(searchOrgFor)) {
-      break;
-    }
-    if (org == searchOrgIn.last) {
-      return false;
-    }
+  if (!tagFound) {
+    return false;
   }
+
+  if (searchOrgFor == searchOrgIn) {
+    return true;
+  }
+
   return true;
 }
 
@@ -567,4 +567,23 @@ int calculateAge(DateTime birthday) {
     age--;
   }
   return age;
+}
+
+DateTime overwriteEvent(
+  DateTime eventDate,
+  DateTime eventTime,
+) {
+  return DateTime(eventDate.year, eventDate.month, eventDate.day,
+      eventTime.hour, eventTime.minute);
+}
+
+DateTime daysBefore(
+  DateTime? startDate,
+  int days,
+) {
+  // decrease startDate  7 days
+  if (startDate == null) {
+    return DateTime.now();
+  }
+  return startDate.subtract(Duration(days: days));
 }

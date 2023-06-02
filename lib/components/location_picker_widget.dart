@@ -47,8 +47,8 @@ class _LocationPickerWidgetState extends State<LocationPickerWidget> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            FlutterFlowTheme.of(context).primaryColor,
-            FlutterFlowTheme.of(context).tertiaryColor
+            FlutterFlowTheme.of(context).primary,
+            FlutterFlowTheme.of(context).tertiary
           ],
           stops: [0.0, 1.0],
           begin: AlignmentDirectional(0.0, -1.0),

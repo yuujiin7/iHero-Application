@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -43,7 +42,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
         parameters: {'screen_name': 'MyEventsAdmin'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('MY_EVENTS_ADMIN_MyEventsAdmin_ON_LOAD');
+      logFirebaseEvent('MY_EVENTS_ADMIN_MyEventsAdmin_ON_INIT_ST');
       logFirebaseEvent('MyEventsAdmin_custom_action');
       await actions.lockOrientation();
       logFirebaseEvent('MyEventsAdmin_custom_action');
@@ -80,9 +79,13 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
         leading: InkWell(
+          splashColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () async {
             logFirebaseEvent('MY_EVENTS_ADMIN_Icon_hnoqmglp_ON_TAP');
             logFirebaseEvent('Icon_navigate_back');
@@ -96,12 +99,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
         ),
         title: Text(
           'My Events',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                 color: FlutterFlowTheme.of(context).primaryBtnText,
                 fontSize: 20.0,
                 useGoogleFonts: GoogleFonts.asMap()
-                    .containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                    .containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
               ),
         ),
         actions: [],
@@ -109,6 +112,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
         elevation: 0.0,
       ),
       body: SafeArea(
+        top: true,
         child: Container(
           width: double.infinity,
           height: double.infinity,
@@ -129,39 +133,43 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                       4),
                   child: Column(
                     children: [
-                      TabBar(
-                        isScrollable: true,
-                        labelColor: FlutterFlowTheme.of(context).primaryColor,
-                        unselectedLabelColor:
-                            FlutterFlowTheme.of(context).secondaryText,
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .bodyText1
-                            .override(
-                              fontFamily:
-                                  FlutterFlowTheme.of(context).bodyText1Family,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).bodyText1Family),
+                      Align(
+                        alignment: Alignment(0.0, 0),
+                        child: TabBar(
+                          isScrollable: true,
+                          labelColor: FlutterFlowTheme.of(context).primary,
+                          unselectedLabelColor:
+                              FlutterFlowTheme.of(context).secondaryText,
+                          labelStyle: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .bodyMediumFamily,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500,
+                                useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                    FlutterFlowTheme.of(context)
+                                        .bodyMediumFamily),
+                              ),
+                          indicatorColor: Color(0xFFFFA534),
+                          tabs: [
+                            Tab(
+                              text: 'To be Confirmed',
                             ),
-                        indicatorColor: Color(0xFFFFA534),
-                        tabs: [
-                          Tab(
-                            text: 'To be Confirmed',
-                          ),
-                          Tab(
-                            text: 'Upcoming',
-                          ),
-                          Tab(
-                            text: 'Ongoing',
-                          ),
-                          Tab(
-                            text: 'Finished',
-                          ),
-                          Tab(
-                            text: 'Declined',
-                          ),
-                        ],
+                            Tab(
+                              text: 'Upcoming',
+                            ),
+                            Tab(
+                              text: 'Ongoing',
+                            ),
+                            Tab(
+                              text: 'Finished',
+                            ),
+                            Tab(
+                              text: 'Declined',
+                            ),
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: TabBarView(
@@ -194,7 +202,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: SpinKitSquareCircle(
+                                          child: SpinKitRipple(
                                             color: Color(0xFFFE2126),
                                             size: 50.0,
                                           ),
@@ -223,7 +231,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                             ),
                                             child: Container(
                                               width: double.infinity,
-                                              height: 270.0,
+                                              height: 225.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -274,22 +282,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     fontSize:
                                                                         20.0,
                                                                     fontWeight:
@@ -298,7 +303,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -366,12 +371,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                                                                            columnEventsRecord.eventTitle,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -399,20 +404,20 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
                                                                                 2,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                  color: FlutterFlowTheme.of(context).primary,
                                                                                   fontWeight: FontWeight.bold,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -430,6 +435,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_0ulwz2kj_ON_TAP');
@@ -464,11 +477,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                             'View More',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -476,7 +489,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -525,11 +538,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -541,7 +554,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -557,11 +570,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               'Day/s left',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -573,7 +586,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -582,107 +595,6 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                     ),
                                                     Divider(
                                                       thickness: 1.0,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                columnEventsRecord
-                                                                            .isReqCancel ==
-                                                                        true
-                                                                    ? null
-                                                                    : () async {
-                                                                        logFirebaseEvent(
-                                                                            'MY_EVENTS_ADMIN_REQUEST_CANCELLATION_BTN');
-                                                                        logFirebaseEvent(
-                                                                            'Button_backend_call');
-
-                                                                        final eventsUpdateData =
-                                                                            createEventsRecordData(
-                                                                          isReqCancel:
-                                                                              true,
-                                                                        );
-                                                                        await columnEventsRecord
-                                                                            .reference
-                                                                            .update(eventsUpdateData);
-                                                                      },
-                                                            text: columnEventsRecord
-                                                                    .isReqCancel!
-                                                                ? 'In Progress'
-                                                                : 'Request Cancellation',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 190.0,
-                                                              height: 35.0,
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryBtnText,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .subtitle2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).subtitle2Family,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).subtitle2Family),
-                                                                      ),
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              disabledColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryColor,
-                                                              disabledTextColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -723,7 +635,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: SpinKitSquareCircle(
+                                          child: SpinKitRipple(
                                             color: Color(0xFFFE2126),
                                             size: 50.0,
                                           ),
@@ -759,7 +671,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                               ),
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 270.0,
+                                                height: 225.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -806,22 +718,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     fontSize:
                                                                         20.0,
                                                                     fontWeight:
@@ -830,7 +739,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -899,12 +808,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                                                                            columnEventsRecord.eventTitle,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -932,19 +841,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
                                                                                 2,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -962,6 +871,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_jhqr4rbs_ON_TAP');
@@ -996,11 +913,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                             'View More',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -1008,7 +925,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -1057,11 +974,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1073,7 +990,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1089,11 +1006,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               'Day/s left',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1105,7 +1022,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1114,107 +1031,6 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                     ),
                                                     Divider(
                                                       thickness: 1.0,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                columnEventsRecord
-                                                                            .isReqCancel ==
-                                                                        true
-                                                                    ? null
-                                                                    : () async {
-                                                                        logFirebaseEvent(
-                                                                            'MY_EVENTS_ADMIN_REQUEST_CANCELLATION_BTN');
-                                                                        logFirebaseEvent(
-                                                                            'Button_backend_call');
-
-                                                                        final eventsUpdateData =
-                                                                            createEventsRecordData(
-                                                                          isReqCancel:
-                                                                              true,
-                                                                        );
-                                                                        await columnEventsRecord
-                                                                            .reference
-                                                                            .update(eventsUpdateData);
-                                                                      },
-                                                            text: columnEventsRecord
-                                                                    .isReqCancel!
-                                                                ? 'In Progress'
-                                                                : 'Request Cancellation',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 190.0,
-                                                              height: 35.0,
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryBtnText,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .subtitle2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).subtitle2Family,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).subtitle2Family),
-                                                                      ),
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              disabledColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryColor,
-                                                              disabledTextColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -1255,7 +1071,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: SpinKitSquareCircle(
+                                          child: SpinKitRipple(
                                             color: Color(0xFFFE2126),
                                             size: 50.0,
                                           ),
@@ -1338,22 +1154,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     fontSize:
                                                                         20.0,
                                                                     fontWeight:
@@ -1362,7 +1175,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1431,12 +1244,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                                                                            columnEventsRecord.eventTitle,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -1464,19 +1277,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
                                                                                 2,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -1494,6 +1307,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_joy2dqyh_ON_TAP');
@@ -1528,11 +1349,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                             'View More',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -1540,7 +1361,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -1581,11 +1402,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               'Ongoing',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1597,7 +1418,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1645,7 +1466,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: SpinKitSquareCircle(
+                                          child: SpinKitRipple(
                                             color: Color(0xFFFE2126),
                                             size: 50.0,
                                           ),
@@ -1728,22 +1549,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     fontSize:
                                                                         20.0,
                                                                     fontWeight:
@@ -1752,7 +1570,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -1821,12 +1639,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                                                                            columnEventsRecord.eventTitle,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -1854,19 +1672,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
                                                                                 2,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -1884,6 +1702,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_xjg64spn_ON_TAP');
@@ -1918,11 +1744,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                             'View More',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -1930,7 +1756,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -1971,11 +1797,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               'Event is finished',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -1987,7 +1813,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -2063,24 +1889,25 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                               textStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2
+                                                                      .titleSmall
                                                                       .override(
                                                                         fontFamily:
-                                                                            FlutterFlowTheme.of(context).subtitle2Family,
+                                                                            FlutterFlowTheme.of(context).titleSmallFamily,
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
+                                                                            .primary,
                                                                         fontSize:
                                                                             14.0,
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                         useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).subtitle2Family),
+                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
                                                                       ),
+                                                              elevation: 2.0,
                                                               borderSide:
                                                                   BorderSide(
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .primaryColor,
+                                                                    .primary,
                                                                 width: 1.0,
                                                               ),
                                                               borderRadius:
@@ -2131,7 +1958,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                         child: SizedBox(
                                           width: 50.0,
                                           height: 50.0,
-                                          child: SpinKitSquareCircle(
+                                          child: SpinKitRipple(
                                             color: Color(0xFFFE2126),
                                             size: 50.0,
                                           ),
@@ -2213,22 +2040,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .organizationPartner!
-                                                                  .toList()
-                                                                  .first
+                                                                  .organizationPartnter
                                                                   .maybeHandleOverflow(
-                                                                    maxChars:
-                                                                        25,
-                                                                    replacement:
-                                                                        '…',
-                                                                  ),
+                                                                maxChars: 25,
+                                                                replacement:
+                                                                    '…',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     fontSize:
                                                                         20.0,
                                                                     fontWeight:
@@ -2237,7 +2061,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),
@@ -2306,12 +2130,12 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                             MainAxisSize.max,
                                                                         children: [
                                                                           Text(
-                                                                            columnEventsRecord.eventTitle!,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                                                                            columnEventsRecord.eventTitle,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                   fontSize: 16.0,
                                                                                   fontWeight: FontWeight.w500,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -2339,19 +2163,19 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.startTime,
+                                                                              columnEventsRecord.eventDateStart,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )} - ${dateTimeFormat(
                                                                               'jm',
-                                                                              columnEventsRecord.endTime,
+                                                                              columnEventsRecord.eventDateEnd,
                                                                               locale: FFLocalizations.of(context).languageCode,
                                                                             )}',
                                                                             maxLines:
                                                                                 2,
-                                                                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: 'Barlow',
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyText1Family),
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                                 ),
                                                                           ),
                                                                         ],
@@ -2369,6 +2193,14 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                       thickness: 1.0,
                                                     ),
                                                     InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         logFirebaseEvent(
                                                             'MY_EVENTS_ADMIN_PAGE_Row_cngmvd1d_ON_TAP');
@@ -2403,11 +2235,11 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                             'View More',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText1Family,
+                                                                      .bodyMediumFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
@@ -2415,7 +2247,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                           ),
                                                         ],
@@ -2446,15 +2278,15 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                         0.0),
                                                             child: Text(
                                                               columnEventsRecord
-                                                                  .reason!,
+                                                                  .reason,
                                                               maxLines: 5,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .bodyText1Family,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
@@ -2466,7 +2298,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                                                     useGoogleFonts: GoogleFonts
                                                                             .asMap()
                                                                         .containsKey(
-                                                                            FlutterFlowTheme.of(context).bodyText1Family),
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
                                                                   ),
                                                             ),
                                                           ),

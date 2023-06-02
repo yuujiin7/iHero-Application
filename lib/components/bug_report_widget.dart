@@ -1,9 +1,12 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/upload_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -76,7 +79,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                       children: [
                         FaIcon(
                           FontAwesomeIcons.solidHandPeace,
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                           size: 60.0,
                         ),
                         Expanded(
@@ -91,26 +94,26 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                 Text(
                                   'Hi There!',
                                   style: FlutterFlowTheme.of(context)
-                                      .title1
+                                      .displaySmall
                                       .override(
                                         fontFamily: 'Ubuntu',
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .title1Family),
+                                                    .displaySmallFamily),
                                       ),
                                 ),
                                 Text(
                                   'Reporting a bug? Let us know so we can forward this to our bug control.',
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText2
+                                      .bodySmall
                                       .override(
                                         fontFamily: 'Barlow',
                                         fontWeight: FontWeight.w500,
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText2Family),
+                                                    .bodySmallFamily),
                                       ),
                                 ),
                               ],
@@ -186,13 +189,13 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                 16.0, 0.0, 16.0, 80.0),
                           ),
                           style: FlutterFlowTheme.of(context)
-                              .subtitle1
+                              .titleMedium
                               .override(
                                 fontFamily: 'Comfortaa',
                                 color: FlutterFlowTheme.of(context).grayIcon,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
-                                        .subtitle1Family),
+                                        .titleMediumFamily),
                               ),
                           textAlign: TextAlign.start,
                           maxLines: 10,
@@ -236,7 +239,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                               if (selectedMedia != null &&
                                   selectedMedia.every((m) => validateFileFormat(
                                       m.storagePath, context))) {
-                                setState(() => _model.isMediaUploading = true);
+                                setState(() => _model.isDataUploading = true);
                                 var selectedUploadedFiles = <FFUploadedFile>[];
                                 var downloadUrls = <String>[];
                                 try {
@@ -251,6 +254,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                             bytes: m.bytes,
                                             height: m.dimensions?.height,
                                             width: m.dimensions?.width,
+                                            blurHash: m.blurHash,
                                           ))
                                       .toList();
 
@@ -266,7 +270,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                 } finally {
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
-                                  _model.isMediaUploading = false;
+                                  _model.isDataUploading = false;
                                 }
                                 if (selectedUploadedFiles.length ==
                                         selectedMedia.length &&
@@ -281,7 +285,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                 } else {
                                   setState(() {});
                                   showUploadMessage(
-                                      context, 'Failed to upload media');
+                                      context, 'Failed to upload data');
                                   return;
                                 }
                               }
@@ -339,9 +343,9 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                         textStyle: FlutterFlowTheme.of(context)
-                            .subtitle2
+                            .titleSmall
                             .override(
                               fontFamily: 'Ubuntu',
                               color:
@@ -349,7 +353,8 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                               fontSize: 18.0,
                               fontWeight: FontWeight.w500,
                               useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).subtitle2Family),
+                                  FlutterFlowTheme.of(context)
+                                      .titleSmallFamily),
                             ),
                         elevation: 0.0,
                         borderSide: BorderSide(
@@ -374,6 +379,15 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                 .map((MapEntry<String, String> e) =>
                                     '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
                                 .join('&')));
+                        logFirebaseEvent('Button_backend_call');
+
+                        final logsCreateData = createLogsRecordData(
+                          date: getCurrentTimestamp,
+                          action: 'Reported a bug',
+                          userRef: currentUserReference,
+                        );
+                        await LogsRecord.createDoc(currentUserReference!)
+                            .set(logsCreateData);
                       },
                       text: 'Send',
                       options: FFButtonOptions(
@@ -384,16 +398,17 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: Color(0xFF2B8C2A),
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle2
-                            .override(
-                              fontFamily: 'Ubuntu',
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FlutterFlowTheme.of(context).subtitle2Family),
-                            ),
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                  useGoogleFonts: GoogleFonts.asMap()
+                                      .containsKey(FlutterFlowTheme.of(context)
+                                          .titleSmallFamily),
+                                ),
+                        elevation: 2.0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,

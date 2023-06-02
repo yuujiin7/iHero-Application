@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/confirm_delete_widget.dart';
 import '/components/edit_announcement_widget.dart';
@@ -54,8 +54,10 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
       if (valueOrDefault(currentUserDocument?.userType, '') == 'SuperAdmin') {
         logFirebaseEvent('announcementDetails_auth');
         GoRouter.of(context).prepareAuthEvent();
-        await signOut();
-        _navigate = () => context.goNamedAuth('Onboarding', mounted);
+        await authManager.signOut();
+        GoRouter.of(context).clearRedirectLocation();
+
+        _navigate = () => context.goNamedAuth('Onboarding', context.mounted);
         return;
       } else {
         logFirebaseEvent('announcementDetails_custom_action');
@@ -103,7 +105,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: SpinKitSquareCircle(
+              child: SpinKitRipple(
                 color: Color(0xFFFE2126),
                 size: 50.0,
               ),
@@ -111,124 +113,138 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
           );
         }
         final announcementDetailsAnnouncementRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-            automaticallyImplyLeading: false,
-            leading: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 54.0,
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: FlutterFlowTheme.of(context).primaryBtnText,
-                size: 24.0,
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: false,
+              leading: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 54.0,
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                  size: 24.0,
+                ),
+                onPressed: () async {
+                  logFirebaseEvent('ANNOUNCEMENT_DETAILS_arrow_back_rounded_');
+                  logFirebaseEvent('IconButton_navigate_back');
+                  context.safePop();
+                },
               ),
-              onPressed: () async {
-                logFirebaseEvent('ANNOUNCEMENT_DETAILS_arrow_back_rounded_');
-                logFirebaseEvent('IconButton_navigate_back');
-                context.safePop();
-              },
-            ),
-            title: AutoSizeText(
-              widget.announcementdetails!.title!,
-              style: FlutterFlowTheme.of(context).title2.override(
-                    fontFamily: 'Ubuntu',
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                    useGoogleFonts: GoogleFonts.asMap()
-                        .containsKey(FlutterFlowTheme.of(context).title2Family),
-                  ),
-            ),
-            actions: [
-              Visibility(
-                visible: (currentUserReference ==
-                        widget.announcementdetails!.createdBy) &&
-                    (valueOrDefault(currentUserDocument?.userType, '') ==
-                        'Admin'),
-                child: AuthUserStreamWidget(
-                  builder: (context) => FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30.0,
-                    borderWidth: 1.0,
-                    buttonSize: 60.0,
-                    icon: Icon(
-                      Icons.edit,
+              title: AutoSizeText(
+                widget.announcementdetails!.title,
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Ubuntu',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
-                      size: 20.0,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).headlineMediumFamily),
                     ),
-                    onPressed: () async {
-                      logFirebaseEvent('ANNOUNCEMENT_DETAILS_edit_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_bottom_sheet');
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        enableDrag: false,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.of(context).viewInsets,
-                            child: EditAnnouncementWidget(
-                              announcementDetails:
-                                  widget.announcementdetails!.reference,
-                            ),
-                          );
-                        },
-                      ).then((value) => setState(() {}));
-                    },
+              ),
+              actions: [
+                Visibility(
+                  visible: (currentUserReference ==
+                          widget.announcementdetails!.createdBy) &&
+                      (valueOrDefault(currentUserDocument?.userType, '') ==
+                          'Admin'),
+                  child: AuthUserStreamWidget(
+                    builder: (context) => FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30.0,
+                      borderWidth: 1.0,
+                      buttonSize: 60.0,
+                      icon: Icon(
+                        Icons.edit,
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                        size: 20.0,
+                      ),
+                      onPressed: () async {
+                        logFirebaseEvent(
+                            'ANNOUNCEMENT_DETAILS_edit_ICN_ON_TAP');
+                        logFirebaseEvent('IconButton_bottom_sheet');
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          barrierColor: Color(0x00000000),
+                          enableDrag: false,
+                          context: context,
+                          builder: (bottomSheetContext) {
+                            return GestureDetector(
+                              onTap: () => FocusScope.of(context)
+                                  .requestFocus(_unfocusNode),
+                              child: Padding(
+                                padding: MediaQuery.of(bottomSheetContext)
+                                    .viewInsets,
+                                child: EditAnnouncementWidget(
+                                  announcementDetails:
+                                      widget.announcementdetails!.reference,
+                                ),
+                              ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: (currentUserReference ==
-                        widget.announcementdetails!.createdBy) &&
-                    (valueOrDefault(currentUserDocument?.userType, '') ==
-                        'Admin'),
-                child: AuthUserStreamWidget(
-                  builder: (context) => FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30.0,
-                    borderWidth: 1.0,
-                    buttonSize: 60.0,
-                    icon: FaIcon(
-                      FontAwesomeIcons.trashAlt,
-                      color: FlutterFlowTheme.of(context).primaryBtnText,
-                      size: 20.0,
+                Visibility(
+                  visible: (currentUserReference ==
+                          widget.announcementdetails!.createdBy) &&
+                      (valueOrDefault(currentUserDocument?.userType, '') ==
+                          'Admin'),
+                  child: AuthUserStreamWidget(
+                    builder: (context) => FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30.0,
+                      borderWidth: 1.0,
+                      buttonSize: 60.0,
+                      icon: FaIcon(
+                        FontAwesomeIcons.trashAlt,
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                        size: 20.0,
+                      ),
+                      onPressed: () async {
+                        logFirebaseEvent(
+                            'ANNOUNCEMENT_DETAILS_trashAlt_ICN_ON_TAP');
+                        logFirebaseEvent('IconButton_bottom_sheet');
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          barrierColor: Color(0x00000000),
+                          enableDrag: false,
+                          context: context,
+                          builder: (bottomSheetContext) {
+                            return GestureDetector(
+                              onTap: () => FocusScope.of(context)
+                                  .requestFocus(_unfocusNode),
+                              child: Padding(
+                                padding: MediaQuery.of(bottomSheetContext)
+                                    .viewInsets,
+                                child: ConfirmDeleteWidget(
+                                  aannouncementref:
+                                      widget.announcementdetails!.reference,
+                                  isEvent: false,
+                                  isAnnouncement: true,
+                                ),
+                              ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+                      },
                     ),
-                    onPressed: () async {
-                      logFirebaseEvent(
-                          'ANNOUNCEMENT_DETAILS_trashAlt_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_bottom_sheet');
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        enableDrag: false,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.of(context).viewInsets,
-                            child: ConfirmDeleteWidget(
-                              aannouncementref:
-                                  widget.announcementdetails!.reference,
-                              isEvent: false,
-                              isAnnouncement: true,
-                            ),
-                          );
-                        },
-                      ).then((value) => setState(() {}));
-                    },
                   ),
                 ),
-              ),
-            ],
-            centerTitle: false,
-            elevation: 0.0,
-          ),
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+              ],
+              centerTitle: false,
+              elevation: 0.0,
+            ),
+            body: SafeArea(
+              top: true,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -248,6 +264,10 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                         color: Color(0xFFEEEEEE),
                       ),
                       child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () async {
                           logFirebaseEvent(
                               'ANNOUNCEMENT_DETAILS_Image_wsxsam92_ON_T');
@@ -299,18 +319,17 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           AutoSizeText(
-                            widget.announcementdetails!.title!,
+                            widget.announcementdetails!.title,
                             style: FlutterFlowTheme.of(context)
-                                .bodyText1
+                                .bodyMedium
                                 .override(
                                   fontFamily: 'Ubuntu',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.bold,
                                   useGoogleFonts: GoogleFonts.asMap()
                                       .containsKey(FlutterFlowTheme.of(context)
-                                          .bodyText1Family),
+                                          .bodyMediumFamily),
                                 ),
                           ),
                         ],
@@ -330,9 +349,9 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AutoSizeText(
-                                  widget.announcementdetails!.body!,
+                                  widget.announcementdetails!.body,
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         fontSize: 18.0,
@@ -340,7 +359,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ],
@@ -365,7 +384,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                               Text(
                                 'Date Posted:',
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .bodyMedium
                                     .override(
                                       fontFamily: 'Barlow',
                                       color: Color(0xFF0B266B),
@@ -374,7 +393,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
-                                                  .bodyText1Family),
+                                                  .bodyMediumFamily),
                                     ),
                               ),
                               Padding(
@@ -388,7 +407,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                                         .languageCode,
                                   ),
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Barlow',
                                         color: Color(0xFF0B266B),
@@ -397,7 +416,7 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                                         useGoogleFonts: GoogleFonts.asMap()
                                             .containsKey(
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1Family),
+                                                    .bodyMediumFamily),
                                       ),
                                 ),
                               ),

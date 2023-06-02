@@ -1,32 +1,41 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'comments_record.g.dart';
+class CommentsRecord extends FirestoreRecord {
+  CommentsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class CommentsRecord
-    implements Built<CommentsRecord, CommentsRecordBuilder> {
-  static Serializer<CommentsRecord> get serializer =>
-      _$commentsRecordSerializer;
+  // "created_by" field.
+  DocumentReference? _createdBy;
+  DocumentReference? get createdBy => _createdBy;
+  bool hasCreatedBy() => _createdBy != null;
 
-  @BuiltValueField(wireName: 'created_by')
-  DocumentReference? get createdBy;
+  // "created_at" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
-  @BuiltValueField(wireName: 'created_at')
-  DateTime? get createdAt;
-
-  String? get comment;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
+  // "comment" field.
+  String? _comment;
+  String get comment => _comment ?? '';
+  bool hasComment() => _comment != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  static void _initializeBuilder(CommentsRecordBuilder builder) =>
-      builder..comment = '';
+  void _initializeFields() {
+    _createdBy = snapshotData['created_by'] as DocumentReference?;
+    _createdAt = snapshotData['created_at'] as DateTime?;
+    _comment = snapshotData['comment'] as String?;
+  }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -36,22 +45,27 @@ abstract class CommentsRecord
   static DocumentReference createDoc(DocumentReference parent) =>
       parent.collection('comments').doc();
 
-  static Stream<CommentsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<CommentsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => CommentsRecord.fromSnapshot(s));
 
-  static Future<CommentsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<CommentsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => CommentsRecord.fromSnapshot(s));
 
-  CommentsRecord._();
-  factory CommentsRecord([void Function(CommentsRecordBuilder) updates]) =
-      _$CommentsRecord;
+  static CommentsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      CommentsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static CommentsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      CommentsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'CommentsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createCommentsRecordData({
@@ -59,14 +73,12 @@ Map<String, dynamic> createCommentsRecordData({
   DateTime? createdAt,
   String? comment,
 }) {
-  final firestoreData = serializers.toFirestore(
-    CommentsRecord.serializer,
-    CommentsRecord(
-      (c) => c
-        ..createdBy = createdBy
-        ..createdAt = createdAt
-        ..comment = comment,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'created_by': createdBy,
+      'created_at': createdAt,
+      'comment': comment,
+    }.withoutNulls,
   );
 
   return firestoreData;

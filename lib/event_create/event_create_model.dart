@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
@@ -10,7 +10,8 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_media.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,7 +31,7 @@ class EventCreateModel extends FlutterFlowModel {
   final formKey2 = GlobalKey<FormState>();
   // Stores action output result for [Custom Action - getUserEmails] action in eventCreate widget.
   List<String>? emailList;
-  bool isMediaUploading1 = false;
+  bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl1 = '';
@@ -43,11 +44,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 5) {
-      return 'Min 65 character';
-    }
     if (val.length > 65) {
-      return 'Max 65 character';
+      return 'Maximum 65 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -88,10 +86,12 @@ class EventCreateModel extends FlutterFlowModel {
 
   DateTime? datePicked1;
   DateTime? datePicked2;
+  DateTime? datePicked3;
   // State field(s) for Switch widget.
   bool? switchValue;
   // State field(s) for ChoiceChips widget.
-  String? choiceChipsValue;
+  List<String>? choiceChipsValues;
+  FormFieldController<List<String>>? choiceChipsValueController;
   // State field(s) for PersonInCharge widget.
   TextEditingController? personInChargeController;
   String? Function(BuildContext, String?)? personInChargeControllerValidator;
@@ -101,11 +101,8 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (val.length < 1) {
-      return 'Requires at least 1 characters.';
-    }
     if (val.length > 50) {
-      return 'Max 50 character';
+      return 'Maximum 50 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -120,9 +117,9 @@ class EventCreateModel extends FlutterFlowModel {
     }
 
     if (val.length > 13) {
-      return 'Max 13 character';
+      return 'Maximum 13 characters allowed, currently ${val.length}.';
     }
-    if (!RegExp('^(09|\\+639)\\d{8}\$').hasMatch(val)) {
+    if (!RegExp('^(09|\\+639)\\d{9}\$').hasMatch(val)) {
       return 'Include the + symbol, country code (63). ';
     }
     return null;
@@ -154,21 +151,28 @@ class EventCreateModel extends FlutterFlowModel {
     }
 
     if (val.length > 4) {
-      return 'Max 4 character';
+      return 'Maximum 4 characters allowed, currently ${val.length}.';
     }
-
+    if (!RegExp('^(?:[1-9]|[1-9]\\d{1,2}|1000)\$').hasMatch(val)) {
+      return 'The input must be an integer between 1 and 1000. Please enter a valid number.';
+    }
     return null;
   }
 
+  // State field(s) for Slider widget.
+  double? sliderValue;
   // Model for selectCauseCreate component.
   late SelectCauseCreateModel selectCauseCreateModel;
   // State field(s) for PartnerDropDown widget.
   String? partnerDropDownValue;
+  FormFieldController<String>? partnerDropDownValueController;
   // Stores action output result for [Custom Action - documentExists] action in ButtonSubmit widget.
   bool? isEventExist;
   // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.
   EventsRecord? isCreated1;
-  bool isMediaUploading2 = false;
+  // Stores action output result for [Backend Call - Create Document] action in ButtonSubmit widget.
+  EventsRecord? isCreated2;
+  bool isDataUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl2 = '';
@@ -185,8 +189,8 @@ class EventCreateModel extends FlutterFlowModel {
     if (val.length < 1) {
       return 'Requires at least 1 characters.';
     }
-    if (val.length > 65) {
-      return 'Max 65 character';
+    if (val.length > 50) {
+      return 'Maximum 50 characters allowed, currently ${val.length}.';
     }
 
     return null;
@@ -206,11 +210,14 @@ class EventCreateModel extends FlutterFlowModel {
       return 'Requires at least 1 characters.';
     }
     if (val.length > 500) {
-      return 'Max 500 character';
+      return 'Maximum 500 characters allowed, currently ${val.length}.';
     }
 
     return null;
   }
+
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  AnnouncementRecord? announcement;
 
   /// Initialization and disposal methods.
 

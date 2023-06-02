@@ -22,6 +22,11 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
   late RegistrationStepsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int get pageViewCurrentIndex => _model.pageViewController != null &&
+          _model.pageViewController!.hasClients &&
+          _model.pageViewController!.page != null
+      ? _model.pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState() {
@@ -52,23 +57,24 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
             pinned: false,
             floating: true,
             snap: true,
-            backgroundColor: Color(0xFFFFA534),
+            backgroundColor: FlutterFlowTheme.of(context).primary,
             iconTheme: IconThemeData(
                 color: FlutterFlowTheme.of(context).primaryBtnText),
             automaticallyImplyLeading: true,
             actions: [],
             centerTitle: true,
-            elevation: 4.0,
+            elevation: 0.0,
           )
         ],
         body: Builder(
           builder: (context) {
             return SafeArea(
+              top: false,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primary,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -151,7 +157,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
@@ -166,7 +172,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                     ),
                                                     Padding(
@@ -184,7 +190,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Barlow',
@@ -194,7 +200,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ),
@@ -228,15 +234,15 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                 0.0, 0.0),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .alternate,
+                                                        .tertiary,
                                                     textStyle: FlutterFlowTheme
                                                             .of(context)
-                                                        .subtitle2
+                                                        .titleSmall
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .subtitle2Family,
+                                                                  .titleSmallFamily,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -245,8 +251,9 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2Family),
+                                                                      .titleSmallFamily),
                                                         ),
+                                                    elevation: 2.0,
                                                     borderSide: BorderSide(
                                                       color: Colors.transparent,
                                                       width: 1.0,
@@ -329,7 +336,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
@@ -344,7 +351,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                     ),
                                                     Padding(
@@ -362,7 +369,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Barlow',
@@ -372,7 +379,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ),
@@ -406,15 +413,15 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                 0.0, 0.0),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .alternate,
+                                                        .tertiary,
                                                     textStyle: FlutterFlowTheme
                                                             .of(context)
-                                                        .subtitle2
+                                                        .titleSmall
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .subtitle2Family,
+                                                                  .titleSmallFamily,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -423,8 +430,9 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2Family),
+                                                                      .titleSmallFamily),
                                                         ),
+                                                    elevation: 2.0,
                                                     borderSide: BorderSide(
                                                       color: Colors.transparent,
                                                       width: 1.0,
@@ -507,7 +515,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .title1
+                                                              .displaySmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Ubuntu',
@@ -522,7 +530,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                         .asMap()
                                                                     .containsKey(
                                                                         FlutterFlowTheme.of(context)
-                                                                            .title1Family),
+                                                                            .displaySmallFamily),
                                                               ),
                                                     ),
                                                     Padding(
@@ -540,7 +548,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Barlow',
@@ -550,7 +558,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                           .asMap()
                                                                       .containsKey(
                                                                           FlutterFlowTheme.of(context)
-                                                                              .bodyText1Family),
+                                                                              .bodyMediumFamily),
                                                                 ),
                                                       ),
                                                     ),
@@ -564,7 +572,19 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                         'Button_navigate_to');
 
                                                     context.goNamed(
-                                                        'appointmentPage');
+                                                      'appointmentPage',
+                                                      extra: <String, dynamic>{
+                                                        kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                        ),
+                                                      },
+                                                    );
                                                   },
                                                   text: 'Apply for Appointment',
                                                   options: FFButtonOptions(
@@ -580,15 +600,15 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                                 0.0, 0.0),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primaryColor,
+                                                        .primary,
                                                     textStyle: FlutterFlowTheme
                                                             .of(context)
-                                                        .subtitle2
+                                                        .titleSmall
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .subtitle2Family,
+                                                                  .titleSmallFamily,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -597,8 +617,9 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                                               .containsKey(
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2Family),
+                                                                      .titleSmallFamily),
                                                         ),
+                                                    elevation: 2.0,
                                                     borderSide: BorderSide(
                                                       color: Colors.transparent,
                                                       width: 1.0,
@@ -629,8 +650,9 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
                                       PageController(initialPage: 0),
                                   count: 3,
                                   axisDirection: Axis.horizontal,
-                                  onDotClicked: (i) {
-                                    _model.pageViewController!.animateToPage(
+                                  onDotClicked: (i) async {
+                                    await _model.pageViewController!
+                                        .animateToPage(
                                       i,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.ease,
