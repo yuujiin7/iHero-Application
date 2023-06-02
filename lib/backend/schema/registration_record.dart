@@ -129,6 +129,11 @@ class RegistrationRecord extends FirestoreRecord {
   String get province => _province ?? '';
   bool hasProvince() => _province != null;
 
+  // "approvalDate" field.
+  DateTime? _approvalDate;
+  DateTime? get approvalDate => _approvalDate;
+  bool hasApprovalDate() => _approvalDate != null;
+
   void _initializeFields() {
     _displayName = snapshotData['display_name'] as String?;
     _email = snapshotData['email'] as String?;
@@ -153,6 +158,7 @@ class RegistrationRecord extends FirestoreRecord {
     _aptSuiteorUnitAddress = snapshotData['aptSuiteorUnitAddress'] as String?;
     _city = snapshotData['City'] as String?;
     _province = snapshotData['Province'] as String?;
+    _approvalDate = snapshotData['approvalDate'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -204,6 +210,7 @@ Map<String, dynamic> createRegistrationRecordData({
   String? aptSuiteorUnitAddress,
   String? city,
   String? province,
+  DateTime? approvalDate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -229,6 +236,7 @@ Map<String, dynamic> createRegistrationRecordData({
       'aptSuiteorUnitAddress': aptSuiteorUnitAddress,
       'City': city,
       'Province': province,
+      'approvalDate': approvalDate,
     }.withoutNulls,
   );
 
