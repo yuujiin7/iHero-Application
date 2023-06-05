@@ -736,10 +736,9 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                             barrierColor: Color(0x00000000),
                                             enableDrag: false,
                                             context: context,
-                                            builder: (bottomSheetContext) {
+                                            builder: (context) {
                                               return Padding(
-                                                padding: MediaQuery.of(
-                                                        bottomSheetContext)
+                                                padding: MediaQuery.of(context)
                                                     .viewInsets,
                                                 child: CalendarWidget(),
                                               );
@@ -898,10 +897,9 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                             barrierColor: Color(0x00000000),
                                             enableDrag: false,
                                             context: context,
-                                            builder: (bottomSheetContext) {
+                                            builder: (context) {
                                               return Padding(
-                                                padding: MediaQuery.of(
-                                                        bottomSheetContext)
+                                                padding: MediaQuery.of(context)
                                                     .viewInsets,
                                                 child: LocationPickerWidget(),
                                               );
@@ -1292,75 +1290,81 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Expanded(
-                                      child: FlutterFlowChoiceChips(
-                                        options: [
-                                          ChipData('Sunday'),
-                                          ChipData('Monday'),
-                                          ChipData('Tuesday'),
-                                          ChipData('Wednesday'),
-                                          ChipData('Thursday'),
-                                          ChipData('Friday'),
-                                          ChipData('saturday'),
-                                          ChipData('Everyday')
-                                        ],
-                                        onChanged: (val) => setState(() =>
-                                            _model.choiceChipsValues = val),
-                                        selectedChipStyle: ChipStyle(
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily,
-                                                color: Colors.white,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMediumFamily),
-                                              ),
-                                          iconColor: Colors.white,
-                                          iconSize: 18.0,
-                                          elevation: 4.0,
-                                        ),
-                                        unselectedChipStyle: ChipStyle(
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodySmall
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmallFamily,
-                                                color: Color(0xFFE3E7ED),
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodySmallFamily),
-                                              ),
-                                          iconColor: Color(0xFFE3E7ED),
-                                          iconSize: 18.0,
-                                          elevation: 4.0,
-                                        ),
-                                        chipSpacing: 20.0,
-                                        rowSpacing: 5.0,
-                                        multiselect: true,
-                                        initialized:
-                                            _model.choiceChipsValues != null,
-                                        alignment: WrapAlignment.spaceEvenly,
-                                        controller: _model
-                                                .choiceChipsValueController ??=
-                                            FormFieldController<List<String>>(
-                                          [],
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 8.0),
+                                        child: FlutterFlowChoiceChips(
+                                          options: [
+                                            ChipData('Sunday'),
+                                            ChipData('Monday'),
+                                            ChipData('Tuesday'),
+                                            ChipData('Wednesday'),
+                                            ChipData('Thursday'),
+                                            ChipData('Friday'),
+                                            ChipData('saturday'),
+                                            ChipData('Everyday')
+                                          ],
+                                          onChanged: (val) => setState(() =>
+                                              _model.choiceChipsValues = val),
+                                          selectedChipStyle: ChipStyle(
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMediumFamily,
+                                                      color: Colors.white,
+                                                      useGoogleFonts: GoogleFonts
+                                                              .asMap()
+                                                          .containsKey(
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumFamily),
+                                                    ),
+                                            iconColor: Colors.white,
+                                            iconSize: 18.0,
+                                            elevation: 4.0,
+                                          ),
+                                          unselectedChipStyle: ChipStyle(
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .override(
+                                                      fontFamily:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmallFamily,
+                                                      color: Color(0xFFE3E7ED),
+                                                      useGoogleFonts: GoogleFonts
+                                                              .asMap()
+                                                          .containsKey(
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodySmallFamily),
+                                                    ),
+                                            iconColor: Color(0xFFE3E7ED),
+                                            iconSize: 18.0,
+                                            elevation: 4.0,
+                                          ),
+                                          chipSpacing: 20.0,
+                                          rowSpacing: 17.0,
+                                          multiselect: true,
+                                          initialized:
+                                              _model.choiceChipsValues != null,
+                                          alignment: WrapAlignment.spaceEvenly,
+                                          controller: _model
+                                                  .choiceChipsValueController ??=
+                                              FormFieldController<List<String>>(
+                                            [],
+                                          ),
                                         ),
                                       ),
                                     ),

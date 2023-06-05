@@ -101,13 +101,16 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 50.0,
-              height: 50.0,
-              child: SpinKitRipple(
-                color: Color(0xFFFE2126),
-                size: 50.0,
+          return Scaffold(
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: SpinKitRipple(
+                  color: Color(0xFFFE2126),
+                  size: 50.0,
+                ),
               ),
             ),
           );
@@ -173,13 +176,12 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                           barrierColor: Color(0x00000000),
                           enableDrag: false,
                           context: context,
-                          builder: (bottomSheetContext) {
+                          builder: (context) {
                             return GestureDetector(
                               onTap: () => FocusScope.of(context)
                                   .requestFocus(_unfocusNode),
                               child: Padding(
-                                padding: MediaQuery.of(bottomSheetContext)
-                                    .viewInsets,
+                                padding: MediaQuery.of(context).viewInsets,
                                 child: EditAnnouncementWidget(
                                   announcementDetails:
                                       widget.announcementdetails!.reference,
@@ -218,13 +220,12 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
                           barrierColor: Color(0x00000000),
                           enableDrag: false,
                           context: context,
-                          builder: (bottomSheetContext) {
+                          builder: (context) {
                             return GestureDetector(
                               onTap: () => FocusScope.of(context)
                                   .requestFocus(_unfocusNode),
                               child: Padding(
-                                padding: MediaQuery.of(bottomSheetContext)
-                                    .viewInsets,
+                                padding: MediaQuery.of(context).viewInsets,
                                 child: ConfirmDeleteWidget(
                                   aannouncementref:
                                       widget.announcementdetails!.reference,

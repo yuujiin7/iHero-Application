@@ -1148,14 +1148,14 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       context:
                                                                           context,
                                                                       builder:
-                                                                          (bottomSheetContext) {
+                                                                          (context) {
                                                                         return GestureDetector(
                                                                           onTap: () =>
                                                                               FocusScope.of(context).requestFocus(_unfocusNode),
                                                                           child:
                                                                               Padding(
                                                                             padding:
-                                                                                MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                MediaQuery.of(context).viewInsets,
                                                                             child:
                                                                                 CalendarWidget(),
                                                                           ),
@@ -1559,14 +1559,14 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                       context:
                                                                           context,
                                                                       builder:
-                                                                          (bottomSheetContext) {
+                                                                          (context) {
                                                                         return GestureDetector(
                                                                           onTap: () =>
                                                                               FocusScope.of(context).requestFocus(_unfocusNode),
                                                                           child:
                                                                               Padding(
                                                                             padding:
-                                                                                MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                MediaQuery.of(context).viewInsets,
                                                                             child:
                                                                                 LocationPickerWidget(),
                                                                           ),
@@ -2158,87 +2158,97 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                 MainAxisSize
                                                                     .max,
                                                             children: [
-                                                              FlutterFlowChoiceChips(
-                                                                options: functions
-                                                                    .getDaysBetweenDates(
-                                                                        FFAppState()
-                                                                            .startDate,
-                                                                        FFAppState()
-                                                                            .endDate)!
-                                                                    .map((label) =>
-                                                                        ChipData(
-                                                                            label))
-                                                                    .toList(),
-                                                                onChanged: (val) =>
-                                                                    setState(() =>
-                                                                        _model.choiceChipsValues =
-                                                                            val),
-                                                                selectedChipStyle:
-                                                                    ChipStyle(
-                                                                  backgroundColor:
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                        color: Colors
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            8.0),
+                                                                child:
+                                                                    FlutterFlowChoiceChips(
+                                                                  options: functions
+                                                                      .getDaysBetweenDates(
+                                                                          FFAppState()
+                                                                              .startDate,
+                                                                          FFAppState()
+                                                                              .endDate)!
+                                                                      .map((label) =>
+                                                                          ChipData(
+                                                                              label))
+                                                                      .toList(),
+                                                                  onChanged: (val) =>
+                                                                      setState(() =>
+                                                                          _model.choiceChipsValues =
+                                                                              val),
+                                                                  selectedChipStyle:
+                                                                      ChipStyle(
+                                                                    backgroundColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          useGoogleFonts:
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                        ),
+                                                                    iconColor:
+                                                                        Colors
                                                                             .white,
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                      ),
-                                                                  iconColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  iconSize:
-                                                                      18.0,
-                                                                  elevation:
-                                                                      4.0,
-                                                                ),
-                                                                unselectedChipStyle:
-                                                                    ChipStyle(
-                                                                  backgroundColor:
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .alternate,
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context).bodySmallFamily,
-                                                                        color: Color(
+                                                                    iconSize:
+                                                                        18.0,
+                                                                    elevation:
+                                                                        4.0,
+                                                                  ),
+                                                                  unselectedChipStyle:
+                                                                      ChipStyle(
+                                                                    backgroundColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodySmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              FlutterFlowTheme.of(context).bodySmallFamily,
+                                                                          color:
+                                                                              Color(0xFFE3E7ED),
+                                                                          useGoogleFonts:
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodySmallFamily),
+                                                                        ),
+                                                                    iconColor:
+                                                                        Color(
                                                                             0xFFE3E7ED),
-                                                                        useGoogleFonts:
-                                                                            GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodySmallFamily),
-                                                                      ),
-                                                                  iconColor: Color(
-                                                                      0xFFE3E7ED),
-                                                                  iconSize:
-                                                                      18.0,
-                                                                  elevation:
-                                                                      4.0,
-                                                                ),
-                                                                chipSpacing:
-                                                                    20.0,
-                                                                rowSpacing: 5.0,
-                                                                multiselect:
-                                                                    true,
-                                                                initialized:
-                                                                    _model.choiceChipsValues !=
-                                                                        null,
-                                                                alignment:
-                                                                    WrapAlignment
-                                                                        .spaceEvenly,
-                                                                controller: _model
-                                                                        .choiceChipsValueController ??=
-                                                                    FormFieldController<
-                                                                        List<
-                                                                            String>>(
-                                                                  [],
+                                                                    iconSize:
+                                                                        18.0,
+                                                                    elevation:
+                                                                        4.0,
+                                                                  ),
+                                                                  chipSpacing:
+                                                                      20.0,
+                                                                  rowSpacing:
+                                                                      17.0,
+                                                                  multiselect:
+                                                                      true,
+                                                                  initialized:
+                                                                      _model.choiceChipsValues !=
+                                                                          null,
+                                                                  alignment:
+                                                                      WrapAlignment
+                                                                          .spaceEvenly,
+                                                                  controller: _model
+                                                                          .choiceChipsValueController ??=
+                                                                      FormFieldController<
+                                                                          List<
+                                                                              String>>(
+                                                                    [],
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],

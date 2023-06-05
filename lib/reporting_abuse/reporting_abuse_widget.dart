@@ -350,14 +350,13 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
                                     barrierColor: Color(0x00000000),
                                     enableDrag: false,
                                     context: context,
-                                    builder: (bottomSheetContext) {
+                                    builder: (context) {
                                       return GestureDetector(
                                         onTap: () => FocusScope.of(context)
                                             .requestFocus(_unfocusNode),
                                         child: Padding(
                                           padding:
-                                              MediaQuery.of(bottomSheetContext)
-                                                  .viewInsets,
+                                              MediaQuery.of(context).viewInsets,
                                           child: ReportVolunteerWidget(),
                                         ),
                                       );
@@ -408,14 +407,13 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
                                     barrierColor: Color(0x00000000),
                                     enableDrag: false,
                                     context: context,
-                                    builder: (bottomSheetContext) {
+                                    builder: (context) {
                                       return GestureDetector(
                                         onTap: () => FocusScope.of(context)
                                             .requestFocus(_unfocusNode),
                                         child: Padding(
                                           padding:
-                                              MediaQuery.of(bottomSheetContext)
-                                                  .viewInsets,
+                                              MediaQuery.of(context).viewInsets,
                                           child: ReportFalseInfoWidget(),
                                         ),
                                       );

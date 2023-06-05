@@ -241,7 +241,7 @@ class _VolunteerPhoneWidgetState extends State<VolunteerPhoneWidget> {
                                       context.goNamedAuth(
                                         'OTPCode',
                                         context.mounted,
-                                        queryParams: {
+                                        queryParameters: {
                                           'phoneNumber': serializeParam(
                                             int.tryParse(_model
                                                 .phoneNumberFieldController

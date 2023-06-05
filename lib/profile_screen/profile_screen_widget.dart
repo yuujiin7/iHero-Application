@@ -95,13 +95,16 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 50.0,
-              height: 50.0,
-              child: SpinKitRipple(
-                color: Color(0xFFFE2126),
-                size: 50.0,
+          return Scaffold(
+            backgroundColor: Color(0xFFEBEFF7),
+            body: Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: SpinKitRipple(
+                  color: Color(0xFFFE2126),
+                  size: 50.0,
+                ),
               ),
             ),
           );
@@ -188,13 +191,12 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                       barrierColor: Color(0x00000000),
                                       enableDrag: false,
                                       context: context,
-                                      builder: (bottomSheetContext) {
+                                      builder: (context) {
                                         return GestureDetector(
                                           onTap: () => FocusScope.of(context)
                                               .requestFocus(_unfocusNode),
                                           child: Padding(
-                                            padding: MediaQuery.of(
-                                                    bottomSheetContext)
+                                            padding: MediaQuery.of(context)
                                                 .viewInsets,
                                             child: EditProfilePictureWidget(),
                                           ),
@@ -917,7 +919,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
 
                                                       context.goNamed(
                                                         'myPerformance',
-                                                        queryParams: {
+                                                        queryParameters: {
                                                           'points':
                                                               serializeParam(
                                                             profileScreenUsersRecord
@@ -1079,17 +1081,17 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                           Color(0x00000000),
                                                       enableDrag: false,
                                                       context: context,
-                                                      builder:
-                                                          (bottomSheetContext) {
+                                                      builder: (context) {
                                                         return GestureDetector(
                                                           onTap: () => FocusScope
                                                                   .of(context)
                                                               .requestFocus(
                                                                   _unfocusNode),
                                                           child: Padding(
-                                                            padding: MediaQuery.of(
-                                                                    bottomSheetContext)
-                                                                .viewInsets,
+                                                            padding:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets,
                                                             child:
                                                                 ChangePasswordWidget(),
                                                           ),
@@ -1245,17 +1247,17 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                           Color(0x00000000),
                                                       enableDrag: false,
                                                       context: context,
-                                                      builder:
-                                                          (bottomSheetContext) {
+                                                      builder: (context) {
                                                         return GestureDetector(
                                                           onTap: () => FocusScope
                                                                   .of(context)
                                                               .requestFocus(
                                                                   _unfocusNode),
                                                           child: Padding(
-                                                            padding: MediaQuery.of(
-                                                                    bottomSheetContext)
-                                                                .viewInsets,
+                                                            padding:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets,
                                                             child:
                                                                 BugReportWidget(),
                                                           ),
@@ -1430,14 +1432,13 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                           barrierColor: Color(0x00000000),
                                           enableDrag: false,
                                           context: context,
-                                          builder: (bottomSheetContext) {
+                                          builder: (context) {
                                             return GestureDetector(
                                               onTap: () => FocusScope.of(
                                                       context)
                                                   .requestFocus(_unfocusNode),
                                               child: Padding(
-                                                padding: MediaQuery.of(
-                                                        bottomSheetContext)
+                                                padding: MediaQuery.of(context)
                                                     .viewInsets,
                                                 child: ConfirmLogoutWidget(),
                                               ),

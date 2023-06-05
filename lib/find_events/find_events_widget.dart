@@ -134,13 +134,16 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 50.0,
-              height: 50.0,
-              child: SpinKitRipple(
-                color: Color(0xFFFE2126),
-                size: 50.0,
+          return Scaffold(
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: SpinKitRipple(
+                  color: Color(0xFFFE2126),
+                  size: 50.0,
+                ),
               ),
             ),
           );
@@ -450,13 +453,12 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                         barrierColor: Color(0x00000000),
                                         enableDrag: false,
                                         context: context,
-                                        builder: (bottomSheetContext) {
+                                        builder: (context) {
                                           return GestureDetector(
                                             onTap: () => FocusScope.of(context)
                                                 .requestFocus(_unfocusNode),
                                             child: Padding(
-                                              padding: MediaQuery.of(
-                                                      bottomSheetContext)
+                                              padding: MediaQuery.of(context)
                                                   .viewInsets,
                                               child: CalendarWidget(),
                                             ),
@@ -674,7 +676,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
 
                                   context.goNamed(
                                     'eventMap',
-                                    queryParams: {
+                                    queryParameters: {
                                       'eventLocationLatLng': serializeParam(
                                         currentUserLocationValue,
                                         ParamType.LatLng,
@@ -1416,14 +1418,14 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                       context:
                                                                           context,
                                                                       builder:
-                                                                          (bottomSheetContext) {
+                                                                          (context) {
                                                                         return GestureDetector(
                                                                           onTap: () =>
                                                                               FocusScope.of(context).requestFocus(_unfocusNode),
                                                                           child:
                                                                               Padding(
                                                                             padding:
-                                                                                MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                MediaQuery.of(context).viewInsets,
                                                                             child:
                                                                                 EventDetailBottomWidget(
                                                                               eventDetails: eventListItem,
@@ -2035,11 +2037,11 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                           context:
                                                                               context,
                                                                           builder:
-                                                                              (bottomSheetContext) {
+                                                                              (context) {
                                                                             return GestureDetector(
                                                                               onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
                                                                               child: Padding(
-                                                                                padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                padding: MediaQuery.of(context).viewInsets,
                                                                                 child: EventDetailBottomWidget(
                                                                                   eventDetails: eventListItem,
                                                                                 ),

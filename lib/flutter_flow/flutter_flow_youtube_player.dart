@@ -65,6 +65,7 @@ class _FlutterFlowYoutubePlayerState extends State<FlutterFlowYoutubePlayer>
   YoutubePlayerController? _controller;
   String? _videoId;
   _YoutubeFullScreenWrapperState? _youtubeWrapper;
+  bool _subscribedRoute = false;
 
   bool get handleFullScreen =>
       !kIsWeb && widget.showFullScreen && _youtubeWrapper != null;
@@ -78,6 +79,9 @@ class _FlutterFlowYoutubePlayerState extends State<FlutterFlowYoutubePlayer>
   @override
   void dispose() {
     if (!handleFullScreen || _youtubeWrapper?._controller == null) {
+      if (_subscribedRoute) {
+        routeObserver.unsubscribe(this);
+      }
       _controller?.close();
       _youtubeFullScreenControllerMap[_videoId]?.close();
       _youtubeFullScreenControllerMap.remove(_videoId);
@@ -88,7 +92,8 @@ class _FlutterFlowYoutubePlayerState extends State<FlutterFlowYoutubePlayer>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.pauseOnNavigate) {
+    if (widget.pauseOnNavigate && ModalRoute.of(context) is PageRoute) {
+      _subscribedRoute = true;
       routeObserver.subscribe(this, ModalRoute.of(context)!);
     }
   }

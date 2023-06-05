@@ -18,15 +18,23 @@ class FFAppState extends ChangeNotifier {
 
   Future initializePersistedState() async {
     secureStorage = FlutterSecureStorage();
-    _address = await secureStorage.getString('ff_address') ?? _address;
-    _locationLatLng =
-        _latLngFromString(await secureStorage.getString('ff_locationLatLng')) ??
-            _locationLatLng;
-    _CauseList =
-        await secureStorage.getStringList('ff_CauseList') ?? _CauseList;
-    _ratingSuggestion =
-        await secureStorage.getStringList('ff_ratingSuggestion') ??
-            _ratingSuggestion;
+    await _safeInitAsync(() async {
+      _address = await secureStorage.getString('ff_address') ?? _address;
+    });
+    await _safeInitAsync(() async {
+      _locationLatLng = _latLngFromString(
+              await secureStorage.getString('ff_locationLatLng')) ??
+          _locationLatLng;
+    });
+    await _safeInitAsync(() async {
+      _CauseList =
+          await secureStorage.getStringList('ff_CauseList') ?? _CauseList;
+    });
+    await _safeInitAsync(() async {
+      _ratingSuggestion =
+          await secureStorage.getStringList('ff_ratingSuggestion') ??
+              _ratingSuggestion;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -411,6 +419,18 @@ LatLng? _latLngFromString(String? val) {
   final lat = double.parse(split.first);
   final lng = double.parse(split.last);
   return LatLng(lat, lng);
+}
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
 }
 
 extension FlutterSecureStorageExtensions on FlutterSecureStorage {

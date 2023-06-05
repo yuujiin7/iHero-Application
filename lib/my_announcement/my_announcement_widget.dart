@@ -449,7 +449,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
 
                                                         context.goNamed(
                                                           'announcementDetails',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'announcementdetails':
                                                                 serializeParam(
                                                               columnAnnouncementRecord,
@@ -790,7 +790,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
 
                                                         context.goNamed(
                                                           'announcementDetails',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'announcementdetails':
                                                                 serializeParam(
                                                               columnAnnouncementRecord,
@@ -1131,7 +1131,7 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
 
                                                         context.goNamed(
                                                           'announcementDetails',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'announcementdetails':
                                                                 serializeParam(
                                                               columnAnnouncementRecord,

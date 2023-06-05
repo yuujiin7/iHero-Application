@@ -135,7 +135,7 @@ class _AllChatWidgetState extends State<AllChatWidget> {
                       return FFChatPreview(
                         onTap: () => context.pushNamed(
                           'chatPage',
-                          queryParams: {
+                          queryParameters: {
                             'chatUser': serializeParam(
                               chatInfo.otherUsers.length == 1
                                   ? chatInfo.otherUsersList.first

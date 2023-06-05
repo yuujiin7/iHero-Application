@@ -95,11 +95,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             backgroundColor: Colors.transparent,
             enableDrag: false,
             context: context,
-            builder: (bottomSheetContext) {
+            builder: (context) {
               return GestureDetector(
                 onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
                 child: Padding(
-                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  padding: MediaQuery.of(context).viewInsets,
                   child: RegistrationDateWarningWidget(
                     eventRef: _model.nearEvents,
                   ),
@@ -118,11 +118,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             barrierColor: Color(0x00000000),
             enableDrag: false,
             context: context,
-            builder: (bottomSheetContext) {
+            builder: (context) {
               return GestureDetector(
                 onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
                 child: Padding(
-                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  padding: MediaQuery.of(context).viewInsets,
                   child: FeedbackReportWidget(
                     unethical: _model.unethical,
                   ),
@@ -142,11 +142,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             barrierColor: Color(0x00000000),
             enableDrag: false,
             context: context,
-            builder: (bottomSheetContext) {
+            builder: (context) {
               return GestureDetector(
                 onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
                 child: Padding(
-                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  padding: MediaQuery.of(context).viewInsets,
                   child: FeedbackReportWidget(
                     falseInfo: _model.falseInfo,
                   ),
@@ -166,11 +166,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             barrierColor: Color(0x00000000),
             enableDrag: false,
             context: context,
-            builder: (bottomSheetContext) {
+            builder: (context) {
               return GestureDetector(
                 onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
                 child: Padding(
-                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  padding: MediaQuery.of(context).viewInsets,
                   child: MemoralizationReportWidget(
                     memoRef: _model.memo,
                   ),
@@ -857,16 +857,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                             Color(0x00000000),
                                                         enableDrag: false,
                                                         context: context,
-                                                        builder:
-                                                            (bottomSheetContext) {
+                                                        builder: (context) {
                                                           return GestureDetector(
                                                             onTap: () => FocusScope
                                                                     .of(context)
                                                                 .requestFocus(
                                                                     _unfocusNode),
                                                             child: Padding(
-                                                              padding: MediaQuery.of(
-                                                                      bottomSheetContext)
+                                                              padding: MediaQuery
+                                                                      .of(context)
                                                                   .viewInsets,
                                                               child:
                                                                   EventOrAnnouncementWidget(),
@@ -1000,16 +999,16 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                     Colors.transparent,
                                                 enableDrag: false,
                                                 context: context,
-                                                builder: (bottomSheetContext) {
+                                                builder: (context) {
                                                   return GestureDetector(
                                                     onTap: () =>
                                                         FocusScope.of(context)
                                                             .requestFocus(
                                                                 _unfocusNode),
                                                     child: Padding(
-                                                      padding: MediaQuery.of(
-                                                              bottomSheetContext)
-                                                          .viewInsets,
+                                                      padding:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets,
                                                       child: StopScreenWidget(),
                                                     ),
                                                   );
@@ -1288,7 +1287,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                   context
                                                                       .goNamed(
                                                                     'announcementDetails',
-                                                                    queryParams:
+                                                                    queryParameters:
                                                                         {
                                                                       'announcementdetails':
                                                                           serializeParam(
@@ -1642,7 +1641,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                   context
                                                                       .goNamed(
                                                                     'eventFullDetail',
-                                                                    queryParams:
+                                                                    queryParameters:
                                                                         {
                                                                       'eventFullDetails':
                                                                           serializeParam(
@@ -1995,7 +1994,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                   context
                                                                       .goNamed(
                                                                     'eventFullDetail',
-                                                                    queryParams:
+                                                                    queryParameters:
                                                                         {
                                                                       'eventFullDetails':
                                                                           serializeParam(
@@ -2342,7 +2341,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                   context
                                                                       .goNamed(
                                                                     'announcementDetails',
-                                                                    queryParams:
+                                                                    queryParameters:
                                                                         {
                                                                       'announcementdetails':
                                                                           serializeParam(

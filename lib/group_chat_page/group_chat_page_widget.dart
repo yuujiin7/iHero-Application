@@ -425,7 +425,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
                     );
                     context.pushNamed(
                       'chatPage',
-                      queryParams: {
+                      queryParameters: {
                         'chatRef': serializeParam(
                           _model.groupChat?.reference,
                           ParamType.DocumentReference,

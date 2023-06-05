@@ -90,13 +90,16 @@ class _DataPrivacyPolicyWidgetState extends State<DataPrivacyPolicyWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 50.0,
-              height: 50.0,
-              child: SpinKitRipple(
-                color: Color(0xFFFE2126),
-                size: 50.0,
+          return Scaffold(
+            backgroundColor: Color(0xFFEBEFF7),
+            body: Center(
+              child: SizedBox(
+                width: 50.0,
+                height: 50.0,
+                child: SpinKitRipple(
+                  color: Color(0xFFFE2126),
+                  size: 50.0,
+                ),
               ),
             ),
           );

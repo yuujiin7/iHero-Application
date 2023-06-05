@@ -99,7 +99,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
 
                 context.goNamed(
                   'eventCreate',
-                  queryParams: {
+                  queryParameters: {
                     'tabIndex': serializeParam(
                       1,
                       ParamType.int,
@@ -555,7 +555,7 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
 
                                                           context.pushNamed(
                                                             'announcementDetails',
-                                                            queryParams: {
+                                                            queryParameters: {
                                                               'announcementdetails':
                                                                   serializeParam(
                                                                 listViewAnnouncementRecord,

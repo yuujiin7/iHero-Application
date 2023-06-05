@@ -451,7 +451,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
 
                                                         context.pushNamed(
                                                           'eventFullDetail',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'eventFullDetails':
                                                                 serializeParam(
                                                               columnEventsRecord,
@@ -887,7 +887,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
 
                                                         context.pushNamed(
                                                           'eventFullDetail',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'eventFullDetails':
                                                                 serializeParam(
                                                               columnEventsRecord,
@@ -1323,7 +1323,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
 
                                                         context.pushNamed(
                                                           'eventFullDetail',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'eventFullDetails':
                                                                 serializeParam(
                                                               columnEventsRecord,
@@ -1718,7 +1718,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
 
                                                         context.pushNamed(
                                                           'eventFullDetail',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'eventFullDetails':
                                                                 serializeParam(
                                                               columnEventsRecord,
@@ -1848,7 +1848,8 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
 
                                                               context.pushNamed(
                                                                 'eventFullDetail',
-                                                                queryParams: {
+                                                                queryParameters:
+                                                                    {
                                                                   'eventFullDetails':
                                                                       serializeParam(
                                                                     columnEventsRecord,
@@ -2209,7 +2210,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
 
                                                         context.pushNamed(
                                                           'eventFullDetail',
-                                                          queryParams: {
+                                                          queryParameters: {
                                                             'eventFullDetails':
                                                                 serializeParam(
                                                               columnEventsRecord,

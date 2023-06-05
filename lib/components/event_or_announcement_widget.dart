@@ -75,7 +75,7 @@ class _EventOrAnnouncementWidgetState extends State<EventOrAnnouncementWidget> {
 
                   context.goNamed(
                     'eventCreate',
-                    queryParams: {
+                    queryParameters: {
                       'tabIndex': serializeParam(
                         0,
                         ParamType.int,
@@ -117,7 +117,7 @@ class _EventOrAnnouncementWidgetState extends State<EventOrAnnouncementWidget> {
 
                   context.goNamed(
                     'eventCreate',
-                    queryParams: {
+                    queryParameters: {
                       'tabIndex': serializeParam(
                         1,
                         ParamType.int,
