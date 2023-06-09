@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 class OurTeamModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // Model for backComponent component.
   late BackComponentModel backComponentModel;
 
@@ -25,8 +26,11 @@ class OurTeamModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     backComponentModel.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

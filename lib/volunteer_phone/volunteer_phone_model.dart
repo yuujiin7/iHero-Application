@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 class VolunteerPhoneModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for phoneNumberField widget.
   TextEditingController? phoneNumberFieldController;
@@ -38,8 +39,11 @@ class VolunteerPhoneModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     phoneNumberFieldController?.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

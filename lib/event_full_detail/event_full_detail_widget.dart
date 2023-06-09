@@ -39,7 +39,6 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
   late EventFullDetailModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -83,7 +82,6 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -112,7 +110,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
         }
         final eventFullDetailEventsRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -241,7 +239,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                               builder: (context) {
                                 return GestureDetector(
                                   onTap: () => FocusScope.of(context)
-                                      .requestFocus(_unfocusNode),
+                                      .requestFocus(_model.unfocusNode),
                                   child: Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: EditEventsWidget(
@@ -285,7 +283,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                               builder: (context) {
                                 return GestureDetector(
                                   onTap: () => FocusScope.of(context)
-                                      .requestFocus(_unfocusNode),
+                                      .requestFocus(_model.unfocusNode),
                                   child: Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: ConfirmDeleteWidget(

@@ -25,7 +25,6 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
   late TermsOfServiceModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -76,7 +75,6 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -105,7 +103,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
         }
         final termsOfServiceUsersRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFEBEFF7),

@@ -31,7 +31,6 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
   late MyPerformanceModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -68,7 +67,6 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -77,7 +75,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -161,7 +159,7 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
                                   builder: (context) {
                                     return GestureDetector(
                                       onTap: () => FocusScope.of(context)
-                                          .requestFocus(_unfocusNode),
+                                          .requestFocus(_model.unfocusNode),
                                       child: Padding(
                                         padding:
                                             MediaQuery.of(context).viewInsets,

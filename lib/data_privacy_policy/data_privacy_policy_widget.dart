@@ -26,7 +26,6 @@ class _DataPrivacyPolicyWidgetState extends State<DataPrivacyPolicyWidget> {
   late DataPrivacyPolicyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -77,7 +76,6 @@ class _DataPrivacyPolicyWidgetState extends State<DataPrivacyPolicyWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -106,7 +104,7 @@ class _DataPrivacyPolicyWidgetState extends State<DataPrivacyPolicyWidget> {
         }
         final dataPrivacyPolicyUsersRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFEBEFF7),

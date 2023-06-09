@@ -46,6 +46,8 @@ class GroupChatPageModel extends FlutterFlowModel {
     streamSubscriptions.forEach((s) => s?.cancel());
   }
 
+  /// Action blocks are added here.
+
   /// Additional helper methods are added here.
 
 }

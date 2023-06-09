@@ -83,6 +83,14 @@ class LogsRecord extends FirestoreRecord {
   @override
   String toString() =>
       'LogsRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is LogsRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createLogsRecordData({

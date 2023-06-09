@@ -641,8 +641,10 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                               functions.getFileNamesFromUrls(
                                                   _model.uploadedFileUrls
                                                       .toList());
-                                          _model.imageUrl =
-                                              _model.uploadedFileUrls.toList();
+                                          _model.imageUrl = _model
+                                              .uploadedFileUrls
+                                              .toList()
+                                              .cast<String>();
                                         });
                                       },
                                     ),

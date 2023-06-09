@@ -27,6 +27,7 @@ import 'package:provider/provider.dart';
 class EventCreateModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   final formKey1 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
   // Stores action output result for [Custom Action - getUserEmails] action in eventCreate widget.
@@ -239,6 +240,7 @@ class EventCreateModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     titleEventController?.dispose();
     descriptionEventController?.dispose();
     addRequirementsEventController?.dispose();
@@ -250,6 +252,8 @@ class EventCreateModel extends FlutterFlowModel {
     titleAnnouncementController?.dispose();
     descriptionAnnouncementController?.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

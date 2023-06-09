@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:814825895000:ios:e2964cb3dfb016862d062d</string>
+	<string>1:814825895000:ios:d755bf79a9961c362d062d</string>
 	<key>DATABASE_URL</key>
 	<string>https://ihero-43ccd-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>

@@ -26,7 +26,6 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
   late ReportingAbuseModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -63,7 +62,6 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -72,7 +70,7 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -353,7 +351,7 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
                                     builder: (context) {
                                       return GestureDetector(
                                         onTap: () => FocusScope.of(context)
-                                            .requestFocus(_unfocusNode),
+                                            .requestFocus(_model.unfocusNode),
                                         child: Padding(
                                           padding:
                                               MediaQuery.of(context).viewInsets,
@@ -410,7 +408,7 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
                                     builder: (context) {
                                       return GestureDetector(
                                         onTap: () => FocusScope.of(context)
-                                            .requestFocus(_unfocusNode),
+                                            .requestFocus(_model.unfocusNode),
                                         child: Padding(
                                           padding:
                                               MediaQuery.of(context).viewInsets,

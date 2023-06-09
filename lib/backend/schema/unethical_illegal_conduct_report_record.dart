@@ -120,6 +120,14 @@ class UnethicalIllegalConductReportRecord extends FirestoreRecord {
   @override
   String toString() =>
       'UnethicalIllegalConductReportRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is UnethicalIllegalConductReportRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createUnethicalIllegalConductReportRecordData({

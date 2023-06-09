@@ -35,7 +35,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
   late FindEventsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
   LatLng? currentUserLocationValue;
 
   @override
@@ -98,7 +97,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -150,7 +148,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
         }
         List<EventsRecord> findEventsEventsRecordList = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -456,7 +454,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                         builder: (context) {
                                           return GestureDetector(
                                             onTap: () => FocusScope.of(context)
-                                                .requestFocus(_unfocusNode),
+                                                .requestFocus(
+                                                    _model.unfocusNode),
                                             child: Padding(
                                               padding: MediaQuery.of(context)
                                                   .viewInsets,
@@ -1421,7 +1420,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                           (context) {
                                                                         return GestureDetector(
                                                                           onTap: () =>
-                                                                              FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                              FocusScope.of(context).requestFocus(_model.unfocusNode),
                                                                           child:
                                                                               Padding(
                                                                             padding:
@@ -2039,7 +2038,7 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                           builder:
                                                                               (context) {
                                                                             return GestureDetector(
-                                                                              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                              onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
                                                                               child: Padding(
                                                                                 padding: MediaQuery.of(context).viewInsets,
                                                                                 child: EventDetailBottomWidget(

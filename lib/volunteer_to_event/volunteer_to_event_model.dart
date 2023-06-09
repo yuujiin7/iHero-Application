@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 class VolunteerToEventModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // State field(s) for searchField widget.
   final searchFieldKey = GlobalKey();
   TextEditingController? searchFieldController;
@@ -28,7 +29,11 @@ class VolunteerToEventModel extends FlutterFlowModel {
 
   void initState(BuildContext context) {}
 
-  void dispose() {}
+  void dispose() {
+    unfocusNode.dispose();
+  }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

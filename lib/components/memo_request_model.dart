@@ -26,6 +26,8 @@ class MemoRequestModel extends FlutterFlowModel {
   void addToImageUrl(String item) => imageUrl.add(item);
   void removeFromImageUrl(String item) => imageUrl.remove(item);
   void removeAtIndexFromImageUrl(int index) => imageUrl.removeAt(index);
+  void updateImageUrlAtIndex(int index, Function(String) updateFn) =>
+      imageUrl[index] = updateFn(imageUrl[index]);
 
   ///  State fields for stateful widgets in this component.
 
@@ -62,6 +64,8 @@ class MemoRequestModel extends FlutterFlowModel {
   void dispose() {
     textFieldController?.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

@@ -25,6 +25,7 @@ import 'package:provider/provider.dart';
 class AppointmentPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
@@ -188,6 +189,7 @@ class AppointmentPageModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     fullNameController?.dispose();
     nationalityController?.dispose();
     streetAddressController?.dispose();
@@ -197,6 +199,8 @@ class AppointmentPageModel extends FlutterFlowModel {
     contactNumberController?.dispose();
     emailController?.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

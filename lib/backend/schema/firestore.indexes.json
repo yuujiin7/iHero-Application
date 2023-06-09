@@ -169,6 +169,36 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "isDeclined",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "admin_ref",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "eventDateStart",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "events",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "isEnded",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isDeleted",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isConfirmbySA",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "admin_ref",
           "arrayConfig": "CONTAINS"
         },

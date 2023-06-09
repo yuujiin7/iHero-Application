@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 class FAQsModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // Model for helpCenterDrawer component.
   late HelpCenterDrawerModel helpCenterDrawerModel;
 
@@ -24,8 +25,11 @@ class FAQsModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     helpCenterDrawerModel.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

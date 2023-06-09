@@ -25,7 +25,6 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
   late CreditScoreModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -61,7 +60,6 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -70,7 +68,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -335,7 +333,7 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
                                     builder: (context) {
                                       return GestureDetector(
                                         onTap: () => FocusScope.of(context)
-                                            .requestFocus(_unfocusNode),
+                                            .requestFocus(_model.unfocusNode),
                                         child: Padding(
                                           padding:
                                               MediaQuery.of(context).viewInsets,

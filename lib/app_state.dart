@@ -82,9 +82,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateRecentSearchesAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_recentSearches[_index]);
+    _recentSearches[_index] = updateFn(_recentSearches[_index]);
   }
 
   List<String> _SearchFilter = [];
@@ -107,9 +107,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateSearchFilterAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_SearchFilter[_index]);
+    _SearchFilter[_index] = updateFn(_SearchFilter[_index]);
   }
 
   bool _volunteerSearchActive = false;
@@ -226,9 +226,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateCauseListAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_CauseList[_index]);
+    _CauseList[_index] = updateFn(_CauseList[_index]);
     secureStorage.setStringList('ff_CauseList', _CauseList);
   }
 
@@ -272,9 +272,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateRatingSuggestionAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_ratingSuggestion[_index]);
+    _ratingSuggestion[_index] = updateFn(_ratingSuggestion[_index]);
     secureStorage.setStringList('ff_ratingSuggestion', _ratingSuggestion);
   }
 
@@ -304,9 +304,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateForOrgListAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_forOrgList[_index]);
+    _forOrgList[_index] = updateFn(_forOrgList[_index]);
   }
 
   bool _isFromFirestore = false;
@@ -335,9 +335,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateUserIDsAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_userIDs[_index]);
+    _userIDs[_index] = updateFn(_userIDs[_index]);
   }
 
   List<String> _emailList = [];
@@ -360,9 +360,9 @@ class FFAppState extends ChangeNotifier {
 
   void updateEmailListAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_emailList[_index]);
+    _emailList[_index] = updateFn(_emailList[_index]);
   }
 
   DateTime? _startTime;

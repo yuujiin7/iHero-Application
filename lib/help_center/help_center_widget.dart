@@ -24,7 +24,6 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
   late HelpCenterModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -60,7 +59,6 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -69,7 +67,7 @@ class _HelpCenterWidgetState extends State<HelpCenterWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

@@ -31,7 +31,6 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
   late ProfileScreenModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -82,7 +81,6 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -111,7 +109,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
         }
         final profileScreenUsersRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFEBEFF7),
@@ -194,7 +192,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                       builder: (context) {
                                         return GestureDetector(
                                           onTap: () => FocusScope.of(context)
-                                              .requestFocus(_unfocusNode),
+                                              .requestFocus(_model.unfocusNode),
                                           child: Padding(
                                             padding: MediaQuery.of(context)
                                                 .viewInsets,
@@ -470,8 +468,7 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                           MainAxisSize.max,
                                                       children: [
                                                         Text(
-                                                          profileScreenUsersRecord
-                                                              .location,
+                                                          '${profileScreenUsersRecord.city},${profileScreenUsersRecord.province}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -1085,8 +1082,8 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                         return GestureDetector(
                                                           onTap: () => FocusScope
                                                                   .of(context)
-                                                              .requestFocus(
-                                                                  _unfocusNode),
+                                                              .requestFocus(_model
+                                                                  .unfocusNode),
                                                           child: Padding(
                                                             padding:
                                                                 MediaQuery.of(
@@ -1251,8 +1248,8 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                         return GestureDetector(
                                                           onTap: () => FocusScope
                                                                   .of(context)
-                                                              .requestFocus(
-                                                                  _unfocusNode),
+                                                              .requestFocus(_model
+                                                                  .unfocusNode),
                                                           child: Padding(
                                                             padding:
                                                                 MediaQuery.of(
@@ -1434,9 +1431,10 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
-                                              onTap: () => FocusScope.of(
-                                                      context)
-                                                  .requestFocus(_unfocusNode),
+                                              onTap: () =>
+                                                  FocusScope.of(context)
+                                                      .requestFocus(
+                                                          _model.unfocusNode),
                                               child: Padding(
                                                 padding: MediaQuery.of(context)
                                                     .viewInsets,

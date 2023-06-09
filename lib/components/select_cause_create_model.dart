@@ -18,6 +18,8 @@ class SelectCauseCreateModel extends FlutterFlowModel {
   void removeFromSelectedTagsList(String item) => selectedTagsList.remove(item);
   void removeAtIndexFromSelectedTagsList(int index) =>
       selectedTagsList.removeAt(index);
+  void updateSelectedTagsListAtIndex(int index, Function(String) updateFn) =>
+      selectedTagsList[index] = updateFn(selectedTagsList[index]);
 
   ///  State fields for stateful widgets in this component.
 
@@ -30,6 +32,8 @@ class SelectCauseCreateModel extends FlutterFlowModel {
   void initState(BuildContext context) {}
 
   void dispose() {}
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

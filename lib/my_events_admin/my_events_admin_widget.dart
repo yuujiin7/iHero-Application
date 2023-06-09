@@ -192,6 +192,7 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
                                             isEqualTo: false)
                                         .where('admin_ref',
                                             arrayContains: currentUserReference)
+                                        .where('isDeclined', isEqualTo: false)
                                         .orderBy('eventDateStart',
                                             descending: true),
                                   ),

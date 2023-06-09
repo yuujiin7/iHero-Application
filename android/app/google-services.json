@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:814825895000:android:afbde948a9f3ac0c2d062d",
+        "mobilesdk_app_id": "1:814825895000:android:4bb59e814f10b6112d062d",
         "android_client_info": {
-          "package_name": "com.iHero.WebApp"
+          "package_name": "com.iHero.web"
         }
       },
       "oauth_client": [
         {
-          "client_id": "814825895000-t2c952g5jkvuqn801d46qu27flmk78da.apps.googleusercontent.com",
+          "client_id": "814825895000-ben6prulf89rkvpjfgbjj5frscr5cbmj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.iHero.WebApp",
+            "package_name": "com.iHero.web",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
@@ -52,7 +52,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:814825895000:android:5559c7c21dd70dd82d062d",
+        "mobilesdk_app_id": "1:814825895000:android:d6b2d1ad4e5e30b82d062d",
         "android_client_info": {
           "package_name": "com.volunteer.ihero"
         }

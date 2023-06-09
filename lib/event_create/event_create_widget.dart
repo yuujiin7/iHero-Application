@@ -43,7 +43,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
   late EventCreateModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -94,7 +93,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
           FFAppState().deleteLocationLatLng();
           FFAppState().locationLatLng = null;
 
-          FFAppState().emailList = _model.emailList!.toList();
+          FFAppState().emailList = _model.emailList!.toList().cast<String>();
           FFAppState().startTime = null;
           FFAppState().endTime = null;
           FFAppState().registrationDate = null;
@@ -124,7 +123,6 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -133,7 +131,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -1151,7 +1149,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                           (context) {
                                                                         return GestureDetector(
                                                                           onTap: () =>
-                                                                              FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                              FocusScope.of(context).requestFocus(_model.unfocusNode),
                                                                           child:
                                                                               Padding(
                                                                             padding:
@@ -1562,7 +1560,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                           (context) {
                                                                         return GestureDetector(
                                                                           onTap: () =>
-                                                                              FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                              FocusScope.of(context).requestFocus(_model.unfocusNode),
                                                                           child:
                                                                               Padding(
                                                                             padding:

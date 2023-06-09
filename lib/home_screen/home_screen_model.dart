@@ -25,6 +25,7 @@ import 'package:provider/provider.dart';
 class HomeScreenModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - updateMeritScoreForCurrentUser1] action in HomeScreen widget.
   String? updateMerit;
   // Stores action output result for [Custom Action - getNearEvents] action in HomeScreen widget.
@@ -40,7 +41,11 @@ class HomeScreenModel extends FlutterFlowModel {
 
   void initState(BuildContext context) {}
 
-  void dispose() {}
+  void dispose() {
+    unfocusNode.dispose();
+  }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 
