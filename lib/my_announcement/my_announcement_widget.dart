@@ -58,6 +58,8 @@ class _MyAnnouncementWidgetState extends State<MyAnnouncementWidget> {
         'My Announcement',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

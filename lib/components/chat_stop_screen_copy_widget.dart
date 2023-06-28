@@ -30,6 +30,8 @@ class _ChatStopScreenCopyWidgetState extends State<ChatStopScreenCopyWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChatStopScreenCopyModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

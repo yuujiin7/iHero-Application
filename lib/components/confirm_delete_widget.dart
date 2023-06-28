@@ -43,6 +43,8 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ConfirmDeleteModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -96,11 +98,10 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                   }()) {
                     logFirebaseEvent('Button_backend_call');
 
-                    final eventsUpdateData = createEventsRecordData(
+                    await widget.eventRef!.update(createEventsRecordData(
                       isDeleted: true,
                       expiryDate: functions.addExpiry(getCurrentTimestamp),
-                    );
-                    await widget.eventRef!.update(eventsUpdateData);
+                    ));
                     logFirebaseEvent('Button_alert_dialog');
                     await showDialog(
                       context: context,
@@ -119,23 +120,21 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                     );
                     logFirebaseEvent('Button_backend_call');
 
-                    final logsCreateData1 = createLogsRecordData(
+                    await LogsRecord.createDoc(currentUserReference!)
+                        .set(createLogsRecordData(
                       date: getCurrentTimestamp,
                       action: 'Deleted an event',
                       userRef: currentUserReference,
                       eventRef: widget.eventRef,
-                    );
-                    await LogsRecord.createDoc(currentUserReference!)
-                        .set(logsCreateData1);
+                    ));
                   } else {
                     logFirebaseEvent('Button_backend_call');
 
-                    final announcementUpdateData = createAnnouncementRecordData(
+                    await widget.aannouncementref!
+                        .update(createAnnouncementRecordData(
                       expiryDate: functions.addExpiry(getCurrentTimestamp),
                       isDeleted: true,
-                    );
-                    await widget.aannouncementref!
-                        .update(announcementUpdateData);
+                    ));
                     logFirebaseEvent('Button_alert_dialog');
                     await showDialog(
                       context: context,
@@ -154,14 +153,13 @@ class _ConfirmDeleteWidgetState extends State<ConfirmDeleteWidget> {
                     );
                     logFirebaseEvent('Button_backend_call');
 
-                    final logsCreateData2 = createLogsRecordData(
+                    await LogsRecord.createDoc(currentUserReference!)
+                        .set(createLogsRecordData(
                       date: getCurrentTimestamp,
                       action: 'Deleted an announcement',
                       userRef: currentUserReference,
                       announcementRef: widget.aannouncementref,
-                    );
-                    await LogsRecord.createDoc(currentUserReference!)
-                        .set(logsCreateData2);
+                    ));
                   }
 
                   logFirebaseEvent('Button_navigate_to');

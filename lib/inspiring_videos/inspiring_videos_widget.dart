@@ -28,6 +28,7 @@ class _InspiringVideosWidgetState extends State<InspiringVideosWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'InspiringVideos'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

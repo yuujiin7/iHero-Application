@@ -43,6 +43,7 @@ class _GroupChatPageWidgetState extends State<GroupChatPageWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

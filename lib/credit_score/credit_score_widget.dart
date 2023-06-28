@@ -54,6 +54,8 @@ class _CreditScoreWidgetState extends State<CreditScoreWidget> {
         'Help Center',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

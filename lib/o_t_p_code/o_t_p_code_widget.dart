@@ -46,6 +46,7 @@ class _OTPCodeWidgetState extends State<OTPCodeWidget> {
     });
 
     _model.verificationCodeFieldController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

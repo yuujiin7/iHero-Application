@@ -33,6 +33,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
     _model = createModel(context, () => CountryCodeModel());
 
     _model.textController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

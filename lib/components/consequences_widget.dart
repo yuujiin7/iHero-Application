@@ -28,6 +28,8 @@ class _ConsequencesWidgetState extends State<ConsequencesWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ConsequencesModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

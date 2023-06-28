@@ -38,6 +38,8 @@ class _JourneyScreenWidgetState extends State<JourneyScreenWidget> {
       logFirebaseEvent('journeyScreen_custom_action');
       await actions.lockOrientation();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

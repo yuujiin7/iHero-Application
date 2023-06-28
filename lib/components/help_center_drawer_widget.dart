@@ -28,6 +28,8 @@ class _HelpCenterDrawerWidgetState extends State<HelpCenterDrawerWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HelpCenterDrawerModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

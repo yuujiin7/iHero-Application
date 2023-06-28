@@ -75,6 +75,8 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -468,7 +470,15 @@ class _ProfileScreenWidgetState extends State<ProfileScreenWidget> {
                                                           MainAxisSize.max,
                                                       children: [
                                                         Text(
-                                                          '${profileScreenUsersRecord.city},${profileScreenUsersRecord.province}',
+                                                          valueOrDefault<
+                                                              String>(
+                                                            '${profileScreenUsersRecord.streetAddress},${valueOrDefault<String>(
+                                                              profileScreenUsersRecord
+                                                                  .city,
+                                                              'City',
+                                                            )},${profileScreenUsersRecord.province}',
+                                                            'Address',
+                                                          ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium

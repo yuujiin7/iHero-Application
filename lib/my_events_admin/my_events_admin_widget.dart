@@ -62,6 +62,8 @@ class _MyEventsAdminWidgetState extends State<MyEventsAdminWidget> {
         'My Events Admin',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

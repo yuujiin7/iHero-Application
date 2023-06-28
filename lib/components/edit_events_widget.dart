@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
-import '/components/location_picker_widget.dart';
 import '/components/select_cause_edit_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -750,161 +749,6 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                           setState(() {
                                             _model.isDateSet = true;
                                           });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 2.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 5.0, 20.0, 0.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Event Address',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMediumFamily,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMediumFamily),
-                                                      ),
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 2.0, 0.0, 0.0),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  height: 25.0,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                  ),
-                                                  child: Text(
-                                                    valueOrDefault<String>(
-                                                      FFAppState().address ==
-                                                                  null ||
-                                                              FFAppState()
-                                                                      .address ==
-                                                                  ''
-                                                          ? containerEventsRecord
-                                                              .eventAddress
-                                                          : valueOrDefault<
-                                                              String>(
-                                                              FFAppState()
-                                                                  .address,
-                                                              'Address',
-                                                            ),
-                                                      'Address',
-                                                    ).maybeHandleOverflow(
-                                                      maxChars: 30,
-                                                      replacement: '…',
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Barlow',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMediumFamily),
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 5.0, 0.0),
-                                      child: FlutterFlowIconButton(
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                        borderRadius: 10.0,
-                                        borderWidth: 1.0,
-                                        buttonSize: 42.0,
-                                        icon: Icon(
-                                          Icons.place,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 25.0,
-                                        ),
-                                        showLoadingIndicator: true,
-                                        onPressed: () async {
-                                          logFirebaseEvent(
-                                              'EDIT_EVENTS_COMP_place_ICN_ON_TAP');
-                                          logFirebaseEvent(
-                                              'IconButton_bottom_sheet');
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            barrierColor: Color(0x00000000),
-                                            enableDrag: false,
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: LocationPickerWidget(),
-                                              );
-                                            },
-                                          ).then((value) => setState(() {}));
                                         },
                                       ),
                                     ),
@@ -2233,7 +2077,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               logFirebaseEvent(
                                                   'ButtonSubmit_backend_call');
 
-                                              final eventsUpdateData1 = {
+                                              await widget.eventsDetails!
+                                                  .update({
                                                 ...createEventsRecordData(
                                                   eventTitle: _model
                                                       .titleEventController
@@ -2313,9 +2158,7 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                 ),
                                                 'recurranceDate':
                                                     _model.choiceChipsValues,
-                                              };
-                                              await widget.eventsDetails!
-                                                  .update(eventsUpdateData1);
+                                              });
                                               logFirebaseEvent(
                                                   'ButtonSubmit_alert_dialog');
                                               await showDialog(
@@ -2339,16 +2182,14 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               logFirebaseEvent(
                                                   'ButtonSubmit_backend_call');
 
-                                              final logsCreateData =
-                                                  createLogsRecordData(
+                                              await LogsRecord.createDoc(
+                                                      currentUserReference!)
+                                                  .set(createLogsRecordData(
                                                 date: getCurrentTimestamp,
                                                 action: 'Edited an event',
                                                 userRef: currentUserReference,
                                                 eventRef: widget.eventsDetails,
-                                              );
-                                              await LogsRecord.createDoc(
-                                                      currentUserReference!)
-                                                  .set(logsCreateData);
+                                              ));
                                               logFirebaseEvent(
                                                   'ButtonSubmit_update_app_state');
                                               setState(() {
@@ -2371,7 +2212,8 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                               logFirebaseEvent(
                                                   'ButtonSubmit_backend_call');
 
-                                              final eventsUpdateData2 = {
+                                              await widget.eventsDetails!
+                                                  .update({
                                                 ...createEventsRecordData(
                                                   eventTitle: _model
                                                       .titleEventController
@@ -2448,19 +2290,16 @@ class _EditEventsWidgetState extends State<EditEventsWidget> {
                                                 ),
                                                 'recurranceDate':
                                                     FieldValue.delete(),
-                                              };
-                                              await widget.eventsDetails!
-                                                  .update(eventsUpdateData2);
+                                              });
                                               logFirebaseEvent(
                                                   'ButtonSubmit_backend_call');
 
-                                              final eventsUpdateData3 = {
+                                              await widget.eventsDetails!
+                                                  .update({
                                                 'recurranceDate':
                                                     FieldValue.arrayUnion(
                                                         ['Everyday']),
-                                              };
-                                              await widget.eventsDetails!
-                                                  .update(eventsUpdateData3);
+                                              });
                                               logFirebaseEvent(
                                                   'ButtonSubmit_alert_dialog');
                                               await showDialog(

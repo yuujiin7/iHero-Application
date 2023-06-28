@@ -70,6 +70,8 @@ class _DataPrivacyPolicyWidgetState extends State<DataPrivacyPolicyWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

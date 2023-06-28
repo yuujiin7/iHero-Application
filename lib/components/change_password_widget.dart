@@ -39,6 +39,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
     _model.currentPasswordController ??= TextEditingController();
     _model.newPasswordController ??= TextEditingController();
     _model.confirmNewPsswrodController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -471,14 +472,13 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               if (_model.success!) {
                                 logFirebaseEvent('Button_backend_call');
 
-                                final logsCreateData = createLogsRecordData(
+                                await LogsRecord.createDoc(
+                                        currentUserReference!)
+                                    .set(createLogsRecordData(
                                   date: getCurrentTimestamp,
                                   action: 'Changed Password',
                                   userRef: currentUserReference,
-                                );
-                                await LogsRecord.createDoc(
-                                        currentUserReference!)
-                                    .set(logsCreateData);
+                                ));
                                 logFirebaseEvent('Button_backend_call');
                                 _model.isChangePassword =
                                     await ChangePasswordSendGridCall.call(

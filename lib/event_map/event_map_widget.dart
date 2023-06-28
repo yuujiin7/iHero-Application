@@ -72,6 +72,8 @@ class _EventMapWidgetState extends State<EventMapWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -161,8 +163,8 @@ class _EventMapWidgetState extends State<EventMapWidget> {
                                   snapshot.data!;
                               return FlutterFlowGoogleMap(
                                 controller: _model.googleMapsController,
-                                onCameraIdle: (latLng) => setState(
-                                    () => _model.googleMapsCenter = latLng),
+                                onCameraIdle: (latLng) =>
+                                    _model.googleMapsCenter = latLng,
                                 initialLocation: _model.googleMapsCenter ??=
                                     widget.eventLocationLatLng!,
                                 markers: googleMapEventsRecordList
@@ -214,7 +216,7 @@ class _EventMapWidgetState extends State<EventMapWidget> {
                                 showLocation: true,
                                 showCompass: true,
                                 showMapToolbar: true,
-                                showTraffic: true,
+                                showTraffic: false,
                                 centerMapOnMarkerTap: true,
                               );
                             },

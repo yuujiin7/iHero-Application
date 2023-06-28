@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
-import '/components/location_picker_widget.dart';
 import '/components/select_cause_edit_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -205,5 +204,4 @@ class EditEventsModel extends FlutterFlowModel {
   /// Action blocks are added here.
 
   /// Additional helper methods are added here.
-
 }

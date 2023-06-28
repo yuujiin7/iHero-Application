@@ -68,7 +68,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         });
         logFirebaseEvent('HomeScreen_backend_call');
 
-        final usersUpdateData = createUsersRecordData(
+        await currentUserReference!.update(createUsersRecordData(
           startTime: getCurrentTimestamp,
           screenName: 'Home Screen',
           deviceType: () {
@@ -81,8 +81,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             }
           }(),
           age: functions.calculateAge(currentUserDocument!.birthday!),
-        );
-        await currentUserReference!.update(usersUpdateData);
+        ));
         logFirebaseEvent('HomeScreen_custom_action');
         _model.nearEvents = await actions.getNearEvents(
           currentUserUid,
@@ -190,6 +189,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -1298,8 +1299,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .Document,
                                                                       ),
                                                                     }.withoutNulls,
-                                                                    extra: <
-                                                                        String,
+                                                                    extra: <String,
                                                                         dynamic>{
                                                                       'announcementdetails':
                                                                           announcementAnnouncementRecord,
@@ -1652,8 +1652,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .Document,
                                                                       ),
                                                                     }.withoutNulls,
-                                                                    extra: <
-                                                                        String,
+                                                                    extra: <String,
                                                                         dynamic>{
                                                                       'eventFullDetails':
                                                                           myEventsListEventsRecord,
@@ -2005,8 +2004,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .Document,
                                                                       ),
                                                                     }.withoutNulls,
-                                                                    extra: <
-                                                                        String,
+                                                                    extra: <String,
                                                                         dynamic>{
                                                                       'eventFullDetails':
                                                                           myCreatedEventsListEventsRecord,
@@ -2352,8 +2350,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                                                             .Document,
                                                                       ),
                                                                     }.withoutNulls,
-                                                                    extra: <
-                                                                        String,
+                                                                    extra: <String,
                                                                         dynamic>{
                                                                       'announcementdetails':
                                                                           myCreatedAnnouncementListAnnouncementRecord,
@@ -3090,7 +3087,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 Container(
                   width: double.infinity,
                   height: double.infinity,
-                  child: custom_widgets.ConfettiOverlay(
+                  child: custom_widgets.ConfettiOverlayCopy(
                     width: double.infinity,
                     height: double.infinity,
                     loop: false,

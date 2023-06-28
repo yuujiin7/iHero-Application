@@ -42,6 +42,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     _model.emailFieldController ??= TextEditingController();
     _model.passwordFieldController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -367,157 +368,127 @@ class _LoginWidgetState extends State<LoginWidget> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 10.0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'LOGIN_PAGE_loginButton_ON_TAP');
-                                  logFirebaseEvent('loginButton_validate_form');
-                                  if (_model.formKey.currentState == null ||
-                                      !_model.formKey.currentState!
-                                          .validate()) {
-                                    return;
-                                  }
-                                  logFirebaseEvent('loginButton_auth');
-                                  GoRouter.of(context).prepareAuthEvent();
+                            FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'LOGIN_PAGE_loginButton_ON_TAP');
+                                logFirebaseEvent('loginButton_validate_form');
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                logFirebaseEvent('loginButton_auth');
+                                GoRouter.of(context).prepareAuthEvent();
 
-                                  final user =
-                                      await authManager.signInWithEmail(
-                                    context,
-                                    _model.emailFieldController.text,
-                                    _model.passwordFieldController.text,
-                                  );
-                                  if (user == null) {
-                                    return;
-                                  }
+                                final user = await authManager.signInWithEmail(
+                                  context,
+                                  _model.emailFieldController.text,
+                                  _model.passwordFieldController.text,
+                                );
+                                if (user == null) {
+                                  return;
+                                }
 
-                                  if (currentUserEmailVerified) {
-                                    if (valueOrDefault(
-                                                currentUserDocument?.userType,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.userType,
-                                                '') !=
-                                            '') {
-                                      if (() {
-                                        if (valueOrDefault(
-                                                currentUserDocument?.userType,
-                                                '') ==
-                                            'Volunteer') {
-                                          return true;
-                                        } else if (valueOrDefault(
-                                                currentUserDocument?.userType,
-                                                '') ==
-                                            'Admin') {
-                                          return true;
-                                        } else {
-                                          return false;
-                                        }
-                                      }()) {
-                                        logFirebaseEvent(
-                                            'loginButton_navigate_to');
-
-                                        context.goNamedAuth(
-                                            'HomeScreen', context.mounted);
-
-                                        logFirebaseEvent(
-                                            'loginButton_backend_call');
-
-                                        final logsCreateData =
-                                            createLogsRecordData(
-                                          date: getCurrentTimestamp,
-                                          action: 'Login',
-                                          userRef: currentUserReference,
-                                        );
-                                        await LogsRecord.createDoc(
-                                                currentUserReference!)
-                                            .set(logsCreateData);
+                                if (currentUserEmailVerified) {
+                                  if (valueOrDefault(
+                                              currentUserDocument?.userType,
+                                              '') !=
+                                          null &&
+                                      valueOrDefault(
+                                              currentUserDocument?.userType,
+                                              '') !=
+                                          '') {
+                                    if (() {
+                                      if (valueOrDefault(
+                                              currentUserDocument?.userType,
+                                              '') ==
+                                          'Volunteer') {
+                                        return true;
+                                      } else if (valueOrDefault(
+                                              currentUserDocument?.userType,
+                                              '') ==
+                                          'Admin') {
+                                        return true;
                                       } else {
-                                        if (valueOrDefault(
-                                                currentUserDocument?.userType,
-                                                '') ==
-                                            'SuperAdmin') {
-                                          logFirebaseEvent(
-                                              'loginButton_alert_dialog');
-                                          await showDialog(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                    'You are a Super Admin'),
-                                                content: Text(
-                                                    'please go to this link https://i-hero-web-ikk2sd.flutterflow.app'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: Text('Ok'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        } else {
-                                          logFirebaseEvent(
-                                              'loginButton_alert_dialog');
-                                          await showDialog(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: Text('Sorry'),
-                                                content: Text(
-                                                    'You have not permission to Login. Please contact the Admin'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: Text('Ok'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }
+                                        return false;
                                       }
-                                    } else {
+                                    }()) {
                                       logFirebaseEvent(
-                                          'loginButton_alert_dialog');
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text(
-                                                'Your Account is still in Progress'),
-                                            content: Text(
-                                                'You have not permission to Login. Please contact the Admin'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
+                                          'loginButton_navigate_to');
+
+                                      context.goNamedAuth(
+                                          'HomeScreen', context.mounted);
+
+                                      logFirebaseEvent(
+                                          'loginButton_backend_call');
+
+                                      await LogsRecord.createDoc(
+                                              currentUserReference!)
+                                          .set(createLogsRecordData(
+                                        date: getCurrentTimestamp,
+                                        action: 'Login',
+                                        userRef: currentUserReference,
+                                      ));
+                                    } else {
+                                      if (valueOrDefault(
+                                              currentUserDocument?.userType,
+                                              '') ==
+                                          'SuperAdmin') {
+                                        logFirebaseEvent(
+                                            'loginButton_alert_dialog');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  Text('You are a Super Admin'),
+                                              content: Text(
+                                                  'please go to this link https://i-hero-web-ikk2sd.flutterflow.app'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        logFirebaseEvent(
+                                            'loginButton_alert_dialog');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Sorry'),
+                                              content: Text(
+                                                  'You have not permission to Login. Please contact the Admin'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
                                     }
                                   } else {
-                                    logFirebaseEvent('loginButton_auth');
-                                    await authManager.sendEmailVerification();
                                     logFirebaseEvent(
                                         'loginButton_alert_dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
-                                          title: Text('Verify your account.'),
+                                          title: Text(
+                                              'Your Account is still in Progress'),
                                           content: Text(
-                                              'An Email verification Link have been sent to you'),
+                                              'You have not permission to Login. Please contact the Admin'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
@@ -529,33 +500,54 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       },
                                     );
                                   }
-                                },
-                                text: 'Login',
-                                options: FFButtonOptions(
-                                  width: 130.0,
-                                  height: 40.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Barlow',
-                                        color: Colors.white,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmallFamily),
-                                      ),
-                                  elevation: 2.0,
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
+                                } else {
+                                  logFirebaseEvent('loginButton_auth');
+                                  await authManager.sendEmailVerification();
+                                  logFirebaseEvent('loginButton_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('Verify your account.'),
+                                        content: Text(
+                                            'An Email verification Link have been sent to you'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              text: 'Login',
+                              options: FFButtonOptions(
+                                width: 130.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).tertiary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Barlow',
+                                      color: Colors.white,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily),
+                                    ),
+                                elevation: 2.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
                                 ),
+                                borderRadius: BorderRadius.circular(12.0),
                               ),
                             ),
                           ],

@@ -29,6 +29,8 @@ class _EventOrAnnouncementWidgetState extends State<EventOrAnnouncementWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EventOrAnnouncementModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

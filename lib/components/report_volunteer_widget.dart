@@ -42,6 +42,7 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
 
     _model.textFieldController ??= TextEditingController();
     _model.descriptionEventController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -804,7 +805,11 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                             }
                             logFirebaseEvent('Button_backend_call');
 
-                            final unethicalIllegalConductReportCreateData = {
+                            var unethicalIllegalConductReportRecordReference =
+                                UnethicalIllegalConductReportRecord.collection
+                                    .doc();
+                            await unethicalIllegalConductReportRecordReference
+                                .set({
                               ...createUnethicalIllegalConductReportRecordData(
                                 fullName: _model.textFieldController.text,
                                 dateOfIncident: _model.datePicked,
@@ -816,16 +821,21 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                                 isSeen: false,
                               ),
                               'report_behavior': _model.checkboxGroupValues,
-                            };
-                            var unethicalIllegalConductReportRecordReference =
-                                UnethicalIllegalConductReportRecord.collection
-                                    .doc();
-                            await unethicalIllegalConductReportRecordReference
-                                .set(unethicalIllegalConductReportCreateData);
+                            });
                             _model.success = UnethicalIllegalConductReportRecord
-                                .getDocumentFromData(
-                                    unethicalIllegalConductReportCreateData,
-                                    unethicalIllegalConductReportRecordReference);
+                                .getDocumentFromData({
+                              ...createUnethicalIllegalConductReportRecordData(
+                                fullName: _model.textFieldController.text,
+                                dateOfIncident: _model.datePicked,
+                                photoUrl: _model.uploadedFileUrl,
+                                reportBy: currentUserReference,
+                                reportedAt: getCurrentTimestamp,
+                                isConfirmbySA: false,
+                                isDeclined: false,
+                                isSeen: false,
+                              ),
+                              'report_behavior': _model.checkboxGroupValues,
+                            }, unethicalIllegalConductReportRecordReference);
                             _shouldSetState = true;
                             logFirebaseEvent('Button_alert_dialog');
                             await showDialog(
@@ -846,14 +856,13 @@ class _ReportVolunteerWidgetState extends State<ReportVolunteerWidget> {
                             );
                             logFirebaseEvent('Button_backend_call');
 
-                            final logsCreateData = createLogsRecordData(
+                            await LogsRecord.createDoc(currentUserReference!)
+                                .set(createLogsRecordData(
                               date: getCurrentTimestamp,
                               action:
                                   'Created a unethical/illegal conduct report',
                               userRef: currentUserReference,
-                            );
-                            await LogsRecord.createDoc(currentUserReference!)
-                                .set(logsCreateData);
+                            ));
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             if (_shouldSetState) setState(() {});

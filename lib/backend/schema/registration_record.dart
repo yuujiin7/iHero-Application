@@ -142,7 +142,7 @@ class RegistrationRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdBy = snapshotData['created_by'] as DocumentReference?;
     _birthDate = snapshotData['birth_date'] as DateTime?;
-    _age = snapshotData['age'] as int?;
+    _age = castToType<int>(snapshotData['age']);
     _gender = snapshotData['gender'] as String?;
     _nationality = snapshotData['nationality'] as String?;
     _civilStatus = snapshotData['civil_status'] as String?;

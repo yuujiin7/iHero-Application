@@ -104,6 +104,8 @@ class _FlutterFlowCheckboxGroupState extends State<FlutterFlowCheckboxGroup> {
                       borderRadius:
                           widget.checkboxBorderRadius ?? BorderRadius.zero,
                     ),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
                   ),
                   Padding(
                     padding: widget.labelPadding ?? EdgeInsets.zero,

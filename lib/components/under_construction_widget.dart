@@ -29,6 +29,8 @@ class _UnderConstructionWidgetState extends State<UnderConstructionWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UnderConstructionModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

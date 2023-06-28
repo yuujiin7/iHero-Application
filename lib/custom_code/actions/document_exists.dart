@@ -8,11 +8,15 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<bool> documentExists(
-    String eventAddress, DateTime eventStartDate, DateTime eventEndDate) async {
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+Future<bool> documentExists(String streetAddress, String city, String province,
+    DateTime eventStartDate, DateTime eventEndDate) async {
   var query = await FirebaseFirestore.instance
       .collection("events")
-      .where("eventAddress", isEqualTo: eventAddress)
+      .where("streetAddress", isEqualTo: streetAddress)
+      .where("City", isEqualTo: city)
+      .where("Province", isEqualTo: province)
       .orderBy("eventDateStart")
       .orderBy("eventDateEnd")
       .limit(1)

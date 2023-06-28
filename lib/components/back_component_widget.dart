@@ -28,6 +28,8 @@ class _BackComponentWidgetState extends State<BackComponentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => BackComponentModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

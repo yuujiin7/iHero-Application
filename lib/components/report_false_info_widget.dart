@@ -39,6 +39,7 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
 
     _model.fullNameController ??= TextEditingController();
     _model.descriptionEventController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -635,21 +636,19 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                             }
                             logFirebaseEvent('Button_backend_call');
 
-                            final falseInformationReportCreateData =
-                                createFalseInformationReportRecordData(
-                              fullName: _model.fullNameController.text,
-                              reportDetail:
-                                  _model.descriptionEventController.text,
-                              photoUrl: _model.uploadedFileUrl,
-                              reportBy: currentUserReference,
-                              reportedAt: getCurrentTimestamp,
-                              isConfirmbySA: false,
-                              isDeclined: false,
-                              isSeen: false,
-                            );
                             await FalseInformationReportRecord.collection
                                 .doc()
-                                .set(falseInformationReportCreateData);
+                                .set(createFalseInformationReportRecordData(
+                                  fullName: _model.fullNameController.text,
+                                  reportDetail:
+                                      _model.descriptionEventController.text,
+                                  photoUrl: _model.uploadedFileUrl,
+                                  reportBy: currentUserReference,
+                                  reportedAt: getCurrentTimestamp,
+                                  isConfirmbySA: false,
+                                  isDeclined: false,
+                                  isSeen: false,
+                                ));
                             logFirebaseEvent('Button_alert_dialog');
                             await showDialog(
                               context: context,
@@ -669,13 +668,12 @@ class _ReportFalseInfoWidgetState extends State<ReportFalseInfoWidget> {
                             );
                             logFirebaseEvent('Button_backend_call');
 
-                            final logsCreateData = createLogsRecordData(
+                            await LogsRecord.createDoc(currentUserReference!)
+                                .set(createLogsRecordData(
                               date: getCurrentTimestamp,
                               action: 'Created  a false information report',
                               userRef: currentUserReference,
-                            );
-                            await LogsRecord.createDoc(currentUserReference!)
-                                .set(logsCreateData);
+                            ));
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             return;

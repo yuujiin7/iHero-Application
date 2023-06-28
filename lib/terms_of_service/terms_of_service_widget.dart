@@ -69,6 +69,8 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

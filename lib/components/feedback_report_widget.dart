@@ -40,6 +40,8 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FeedbackReportModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -140,12 +142,10 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                           if (widget.falseInfo != null) {
                             logFirebaseEvent('Button_backend_call');
 
-                            final falseInformationReportUpdateData =
-                                createFalseInformationReportRecordData(
-                              isSeen: true,
-                            );
                             await widget.falseInfo!
-                                .update(falseInformationReportUpdateData);
+                                .update(createFalseInformationReportRecordData(
+                              isSeen: true,
+                            ));
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             return;
@@ -153,12 +153,10 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                             if (widget.memoralization != null) {
                               logFirebaseEvent('Button_backend_call');
 
-                              final memoralizationReportUpdateData =
-                                  createMemoralizationReportRecordData(
-                                isSeen: true,
-                              );
                               await widget.memoralization!
-                                  .update(memoralizationReportUpdateData);
+                                  .update(createMemoralizationReportRecordData(
+                                isSeen: true,
+                              ));
                               logFirebaseEvent('Button_bottom_sheet');
                               Navigator.pop(context);
                               return;
@@ -166,12 +164,10 @@ class _FeedbackReportWidgetState extends State<FeedbackReportWidget> {
                               if (widget.unethical != null) {
                                 logFirebaseEvent('Button_backend_call');
 
-                                final unethicalIllegalConductReportUpdateData =
+                                await widget.unethical!.update(
                                     createUnethicalIllegalConductReportRecordData(
                                   isSeen: true,
-                                );
-                                await widget.unethical!.update(
-                                    unethicalIllegalConductReportUpdateData);
+                                ));
                                 logFirebaseEvent('Button_bottom_sheet');
                                 Navigator.pop(context);
                                 return;

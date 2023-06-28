@@ -45,6 +45,8 @@ class _AllChatWidgetState extends State<AllChatWidget> {
       logFirebaseEvent('allChat_custom_action');
       await actions.lockOrientation();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

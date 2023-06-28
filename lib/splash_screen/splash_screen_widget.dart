@@ -39,6 +39,8 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
 
       context.goNamed('Onboarding');
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

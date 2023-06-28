@@ -46,6 +46,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
       logFirebaseEvent('Onboarding_request_permissions');
       await requestPermission(photoLibraryPermission);
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -344,12 +346,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                       }
                                       logFirebaseEvent('Text_backend_call');
 
-                                      final usersUpdateData =
-                                          createUsersRecordData(
-                                        userType: 'Anonymous',
-                                      );
                                       await currentUserReference!
-                                          .update(usersUpdateData);
+                                          .update(createUsersRecordData(
+                                        userType: 'Anonymous',
+                                      ));
 
                                       context.goNamedAuth(
                                           'HomeScreen', context.mounted);

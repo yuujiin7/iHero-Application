@@ -85,18 +85,18 @@ class MonthlyCreatedEventRecord extends FirestoreRecord {
   bool hasTotal() => _total != null;
 
   void _initializeFields() {
-    _january = snapshotData['January'] as int?;
-    _february = snapshotData['February'] as int?;
-    _march = snapshotData['March'] as int?;
-    _april = snapshotData['April'] as int?;
-    _may = snapshotData['May'] as int?;
-    _june = snapshotData['June'] as int?;
-    _july = snapshotData['July'] as int?;
-    _august = snapshotData['August'] as int?;
-    _september = snapshotData['September'] as int?;
-    _october = snapshotData['October'] as int?;
-    _november = snapshotData['November'] as int?;
-    _december = snapshotData['December'] as int?;
+    _january = castToType<int>(snapshotData['January']);
+    _february = castToType<int>(snapshotData['February']);
+    _march = castToType<int>(snapshotData['March']);
+    _april = castToType<int>(snapshotData['April']);
+    _may = castToType<int>(snapshotData['May']);
+    _june = castToType<int>(snapshotData['June']);
+    _july = castToType<int>(snapshotData['July']);
+    _august = castToType<int>(snapshotData['August']);
+    _september = castToType<int>(snapshotData['September']);
+    _october = castToType<int>(snapshotData['October']);
+    _november = castToType<int>(snapshotData['November']);
+    _december = castToType<int>(snapshotData['December']);
     _createdDate = snapshotData['created_date'] as DateTime?;
     _total = castToType<double>(snapshotData['total']);
   }

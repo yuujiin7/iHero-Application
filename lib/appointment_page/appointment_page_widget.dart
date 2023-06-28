@@ -59,9 +59,6 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
     _model.contactNumberController ??= TextEditingController();
     _model.emailController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-          _model.streetAddressController?.text = '123, Tandang Sora Avenue';
-          _model.unitAddressController?.text = 'First Floor, Room 22';
-          _model.provinceAddressController?.text = 'Laguna';
           _model.contactNumberController?.text = '+63';
         }));
   }
@@ -1363,293 +1360,289 @@ class _AppointmentPageWidgetState extends State<AppointmentPageWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
                       child: FFButtonWidget(
-                        onPressed: (FFAppState().birthday == null) &&
-                                (_model.uploadedFileUrls2.length == null)
-                            ? null
-                            : () async {
-                                logFirebaseEvent(
-                                    'APPOINTMENT_Button-Login_ON_TAP');
-                                var _shouldSetState = false;
-                                logFirebaseEvent('Button-Login_validate_form');
-                                if (_model.formKey.currentState == null ||
-                                    !_model.formKey.currentState!.validate()) {
-                                  return;
-                                }
-                                if (_model.uploadedFileUrl1 == null ||
-                                    _model.uploadedFileUrl1.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Please upload a picture of you.',
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
+                        onPressed: () async {
+                          logFirebaseEvent('APPOINTMENT_Button-Login_ON_TAP');
+                          var _shouldSetState = false;
+                          logFirebaseEvent('Button-Login_validate_form');
+                          if (_model.formKey.currentState == null ||
+                              !_model.formKey.currentState!.validate()) {
+                            return;
+                          }
+                          if (_model.uploadedFileUrl1 == null ||
+                              _model.uploadedFileUrl1.isEmpty) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Please upload a picture of you.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            return;
+                          }
+                          if (_model.datePicked == null) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Please pick a date.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            return;
+                          }
+                          if (_model.genderValue == null) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Gender is not defined.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            return;
+                          }
+                          if (_model.uploadedFileUrls2 == null ||
+                              _model.uploadedFileUrls2.isEmpty) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Please upload images of your ID',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            return;
+                          }
+                          logFirebaseEvent('Button-Login_alert_dialog');
+                          var confirmDialogResponse = await showDialog<bool>(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Submit'),
+                                    content: Text('Do you want to submit?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, false),
+                                        child: Text('Cancel'),
                                       ),
-                                      duration: Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondary,
-                                    ),
-                                  );
-                                  return;
-                                }
-                                if (_model.datePicked == null) {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Please pick a date.',
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, true),
+                                        child: Text('Confirm'),
                                       ),
-                                      duration: Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondary,
-                                    ),
+                                    ],
                                   );
-                                  return;
-                                }
-                                if (_model.genderValue == null) {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Gender is not defined.',
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                      ),
-                                      duration: Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondary,
-                                    ),
-                                  );
-                                  return;
-                                }
-                                if (_model.uploadedFileUrls2 == null ||
-                                    _model.uploadedFileUrls2.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Please upload images of your ID',
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                      ),
-                                      duration: Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondary,
-                                    ),
-                                  );
-                                  return;
-                                }
-                                logFirebaseEvent('Button-Login_alert_dialog');
-                                var confirmDialogResponse = await showDialog<
-                                        bool>(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Submit'),
-                                          content:
-                                              Text('Do you want to submit?'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext, false),
-                                              child: Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext, true),
-                                              child: Text('Confirm'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ) ??
-                                    false;
-                                if (confirmDialogResponse) {
-                                  logFirebaseEvent('Button-Login_backend_call');
+                                },
+                              ) ??
+                              false;
+                          if (confirmDialogResponse) {
+                            logFirebaseEvent('Button-Login_backend_call');
 
-                                  final registrationCreateData = {
-                                    ...createRegistrationRecordData(
-                                      displayName:
-                                          _model.fullNameController.text,
-                                      phoneNumber:
-                                          '+${FFAppState().selectedCountryCode}${_model.contactNumberController.text}',
-                                      email: _model.emailController.text,
-                                      photoUrl: _model.uploadedFileUrl1,
-                                      birthDate: _model.datePicked,
-                                      gender: _model.genderValue,
-                                      nationality:
-                                          _model.nationalityController.text,
-                                      civilStatus: _model.civilStatusValue,
-                                      createdTime: getCurrentTimestamp,
-                                      isDeleted: false,
-                                      isConfirmbySA: false,
-                                      isDeclined: false,
-                                      age: functions
-                                          .calculateAge(_model.datePicked!),
-                                      streetAddress:
-                                          _model.streetAddressController.text,
-                                      aptSuiteorUnitAddress:
-                                          _model.unitAddressController.text,
-                                      city: _model.cityAddressController.text,
-                                      province:
-                                          _model.provinceAddressController.text,
-                                    ),
-                                    'ID_url': _model.uploadedFileUrls2
-                                        .map((e) => e)
-                                        .toList(),
-                                  };
-                                  var registrationRecordReference =
-                                      RegistrationRecord.collection.doc();
-                                  await registrationRecordReference
-                                      .set(registrationCreateData);
-                                  _model.success =
-                                      RegistrationRecord.getDocumentFromData(
-                                          registrationCreateData,
-                                          registrationRecordReference);
-                                  _shouldSetState = true;
-                                  logFirebaseEvent('Button-Login_bottom_sheet');
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    barrierColor: Color(0x00000000),
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () => FocusScope.of(context)
-                                            .requestFocus(_model.unfocusNode),
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: EmailConfirmationWidget(),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => setState(() {}));
-
-                                  logFirebaseEvent(
-                                      'Button-Login_clear_text_fields');
-                                  setState(() {
-                                    _model.fullNameController?.clear();
-                                    _model.nationalityController?.clear();
-                                    _model.streetAddressController?.clear();
-                                    _model.unitAddressController?.clear();
-                                    _model.cityAddressController?.clear();
-                                    _model.provinceAddressController?.clear();
-                                    _model.emailController?.clear();
-                                    _model.contactNumberController?.clear();
-                                  });
-                                  logFirebaseEvent(
-                                      'Button-Login_update_app_state');
-                                  setState(() {
-                                    FFAppState().birthday = null;
-                                  });
-                                  logFirebaseEvent(
-                                      'Button-Login_reset_form_fields');
-                                  setState(() {
-                                    _model.genderValueController?.reset();
-                                    _model.civilStatusValueController?.reset();
-                                  });
-                                  logFirebaseEvent(
-                                      'Button-Login_clear_uploaded_data');
-                                  setState(() {
-                                    _model.isDataUploading2 = false;
-                                    _model.uploadedLocalFiles2 = [];
-                                    _model.uploadedFileUrls2 = [];
-                                  });
-
-                                  logFirebaseEvent(
-                                      'Button-Login_clear_uploaded_data');
-                                  setState(() {
-                                    _model.isDataUploading1 = false;
-                                    _model.uploadedLocalFile1 = FFUploadedFile(
-                                        bytes: Uint8List.fromList([]));
-                                    _model.uploadedFileUrl1 = '';
-                                  });
-
-                                  if (_model.success!.reference != null) {
-                                    logFirebaseEvent(
-                                        'Button-Login_alert_dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Success'),
-                                          content: Text(
-                                              'Expect appointment date in your email'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    logFirebaseEvent(
-                                        'Button-Login_navigate_to');
-
-                                    context.goNamed(
-                                      'Login',
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                        ),
-                                      },
-                                    );
-
-                                    if (_shouldSetState) setState(() {});
-                                    return;
-                                  } else {
-                                    logFirebaseEvent(
-                                        'Button-Login_alert_dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Failed'),
-                                          content: Text('Please try again'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    if (_shouldSetState) setState(() {});
-                                    return;
-                                  }
-                                } else {
-                                  if (_shouldSetState) setState(() {});
-                                  return;
-                                }
-
-                                if (_shouldSetState) setState(() {});
+                            var registrationRecordReference =
+                                RegistrationRecord.collection.doc();
+                            await registrationRecordReference.set({
+                              ...createRegistrationRecordData(
+                                displayName: _model.fullNameController.text,
+                                phoneNumber:
+                                    _model.contactNumberController.text,
+                                email: _model.emailController.text,
+                                photoUrl: _model.uploadedFileUrl1,
+                                birthDate: _model.datePicked,
+                                gender: _model.genderValue,
+                                nationality: _model.nationalityController.text,
+                                civilStatus: _model.civilStatusValue,
+                                createdTime: getCurrentTimestamp,
+                                isDeleted: false,
+                                isConfirmbySA: false,
+                                isDeclined: false,
+                                age: functions.calculateAge(_model.datePicked!),
+                                streetAddress:
+                                    _model.streetAddressController.text,
+                                aptSuiteorUnitAddress:
+                                    _model.unitAddressController.text,
+                                city: _model.cityAddressController.text,
+                                province: _model.provinceAddressController.text,
+                              ),
+                              'ID_url': _model.uploadedFileUrls2
+                                  .map((e) => e)
+                                  .toList(),
+                            });
+                            _model.success =
+                                RegistrationRecord.getDocumentFromData({
+                              ...createRegistrationRecordData(
+                                displayName: _model.fullNameController.text,
+                                phoneNumber:
+                                    _model.contactNumberController.text,
+                                email: _model.emailController.text,
+                                photoUrl: _model.uploadedFileUrl1,
+                                birthDate: _model.datePicked,
+                                gender: _model.genderValue,
+                                nationality: _model.nationalityController.text,
+                                civilStatus: _model.civilStatusValue,
+                                createdTime: getCurrentTimestamp,
+                                isDeleted: false,
+                                isConfirmbySA: false,
+                                isDeclined: false,
+                                age: functions.calculateAge(_model.datePicked!),
+                                streetAddress:
+                                    _model.streetAddressController.text,
+                                aptSuiteorUnitAddress:
+                                    _model.unitAddressController.text,
+                                city: _model.cityAddressController.text,
+                                province: _model.provinceAddressController.text,
+                              ),
+                              'ID_url': _model.uploadedFileUrls2
+                                  .map((e) => e)
+                                  .toList(),
+                            }, registrationRecordReference);
+                            _shouldSetState = true;
+                            logFirebaseEvent('Button-Login_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              barrierColor: Color(0x00000000),
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode),
+                                  child: Padding(
+                                    padding: MediaQuery.of(context).viewInsets,
+                                    child: EmailConfirmationWidget(),
+                                  ),
+                                );
                               },
+                            ).then((value) => setState(() {}));
+
+                            logFirebaseEvent('Button-Login_clear_text_fields');
+                            setState(() {
+                              _model.fullNameController?.clear();
+                              _model.nationalityController?.clear();
+                              _model.streetAddressController?.clear();
+                              _model.unitAddressController?.clear();
+                              _model.cityAddressController?.clear();
+                              _model.provinceAddressController?.clear();
+                              _model.emailController?.clear();
+                              _model.contactNumberController?.clear();
+                            });
+                            logFirebaseEvent('Button-Login_update_app_state');
+                            setState(() {
+                              FFAppState().birthday = null;
+                            });
+                            logFirebaseEvent('Button-Login_reset_form_fields');
+                            setState(() {
+                              _model.genderValueController?.reset();
+                              _model.civilStatusValueController?.reset();
+                            });
+                            logFirebaseEvent(
+                                'Button-Login_clear_uploaded_data');
+                            setState(() {
+                              _model.isDataUploading2 = false;
+                              _model.uploadedLocalFiles2 = [];
+                              _model.uploadedFileUrls2 = [];
+                            });
+
+                            logFirebaseEvent(
+                                'Button-Login_clear_uploaded_data');
+                            setState(() {
+                              _model.isDataUploading1 = false;
+                              _model.uploadedLocalFile1 =
+                                  FFUploadedFile(bytes: Uint8List.fromList([]));
+                              _model.uploadedFileUrl1 = '';
+                            });
+
+                            if (_model.success!.reference != null) {
+                              logFirebaseEvent('Button-Login_alert_dialog');
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Success'),
+                                    content: Text(
+                                        'Expect appointment date in your email'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              logFirebaseEvent('Button-Login_navigate_to');
+
+                              context.goNamed(
+                                'Login',
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            } else {
+                              logFirebaseEvent('Button-Login_alert_dialog');
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Failed'),
+                                    content: Text('Please try again'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            }
+                          } else {
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+
+                          if (_shouldSetState) setState(() {});
+                        },
                         text: 'Submit',
                         options: FFButtonOptions(
                           width: 150.0,

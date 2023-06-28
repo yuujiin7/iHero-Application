@@ -202,6 +202,21 @@ class EventsRecord extends FirestoreRecord {
   double get minimumVolunteer => _minimumVolunteer ?? 0.0;
   bool hasMinimumVolunteer() => _minimumVolunteer != null;
 
+  // "streetAddress" field.
+  String? _streetAddress;
+  String get streetAddress => _streetAddress ?? '';
+  bool hasStreetAddress() => _streetAddress != null;
+
+  // "City" field.
+  String? _city;
+  String get city => _city ?? '';
+  bool hasCity() => _city != null;
+
+  // "Province" field.
+  String? _province;
+  String get province => _province ?? '';
+  bool hasProvince() => _province != null;
+
   void _initializeFields() {
     _eventTitle = snapshotData['eventTitle'] as String?;
     _eventPhotoUrl = snapshotData['eventPhotoUrl'] as String?;
@@ -234,13 +249,16 @@ class EventsRecord extends FirestoreRecord {
     _reason = snapshotData['reason'] as String?;
     _isDeclined = snapshotData['isDeclined'] as bool?;
     _rateRef = getDataList(snapshotData['rate_ref']);
-    _ageRequirement = snapshotData['ageRequirement'] as int?;
+    _ageRequirement = castToType<int>(snapshotData['ageRequirement']);
     _isMeritScoreUpdated = snapshotData['isMeritScoreUpdated'] as bool?;
     _addRequirementEvent = snapshotData['addRequirementEvent'] as String?;
     _organizationPartnter = snapshotData['organization_partnter'] as String?;
     _recurranceDate = getDataList(snapshotData['recurranceDate']);
     _registrationDate = snapshotData['registrationDate'] as DateTime?;
     _minimumVolunteer = castToType<double>(snapshotData['minimumVolunteer']);
+    _streetAddress = snapshotData['streetAddress'] as String?;
+    _city = snapshotData['City'] as String?;
+    _province = snapshotData['Province'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -340,6 +358,9 @@ class EventsRecord extends FirestoreRecord {
                 snapshot.data['registrationDate']),
           ),
           'minimumVolunteer': snapshot.data['minimumVolunteer']?.toDouble(),
+          'streetAddress': snapshot.data['streetAddress'],
+          'City': snapshot.data['City'],
+          'Province': snapshot.data['Province'],
         },
         EventsRecord.collection.doc(snapshot.objectID),
       );
@@ -406,6 +427,9 @@ Map<String, dynamic> createEventsRecordData({
   String? organizationPartnter,
   DateTime? registrationDate,
   double? minimumVolunteer,
+  String? streetAddress,
+  String? city,
+  String? province,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -439,6 +463,9 @@ Map<String, dynamic> createEventsRecordData({
       'organization_partnter': organizationPartnter,
       'registrationDate': registrationDate,
       'minimumVolunteer': minimumVolunteer,
+      'streetAddress': streetAddress,
+      'City': city,
+      'Province': province,
     }.withoutNulls,
   );
 

@@ -39,6 +39,8 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EventDetailBottomModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -399,7 +401,7 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                   widget.eventDetails!.eventDateStart!,
                                 );
                                 _shouldSetState = true;
-                                if (!_model.hasJoined!) {
+                                if (_model.hasJoined!) {
                                   logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
@@ -451,7 +453,8 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                         null) {
                                       logFirebaseEvent('Button_backend_call');
 
-                                      final eventsUpdateData1 = {
+                                      await widget.eventDetails!.reference
+                                          .update({
                                         'volunteer_names':
                                             FieldValue.arrayUnion(
                                                 [currentUserDisplayName]),
@@ -463,33 +466,27 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                             [currentUserReference]),
                                         'volunteer_list': FieldValue.arrayUnion(
                                             [currentUserUid]),
-                                      };
-                                      await widget.eventDetails!.reference
-                                          .update(eventsUpdateData1);
+                                      });
                                       logFirebaseEvent('Button_backend_call');
 
-                                      final logsCreateData1 =
-                                          createLogsRecordData(
+                                      await LogsRecord.createDoc(
+                                              currentUserReference!)
+                                          .set(createLogsRecordData(
                                         date: getCurrentTimestamp,
                                         action: 'Joined an Event',
                                         userRef: currentUserReference,
                                         eventRef:
                                             widget.eventDetails!.reference,
-                                      );
-                                      await LogsRecord.createDoc(
-                                              currentUserReference!)
-                                          .set(logsCreateData1);
+                                      ));
                                       logFirebaseEvent('Button_backend_call');
 
-                                      final myEventsCreateData1 =
-                                          createMyEventsRecordData(
+                                      await MyEventsRecord.createDoc(
+                                              currentUserReference!)
+                                          .set(createMyEventsRecordData(
                                         dateJoined: getCurrentTimestamp,
                                         eventReference:
                                             widget.eventDetails!.reference,
-                                      );
-                                      await MyEventsRecord.createDoc(
-                                              currentUserReference!)
-                                          .set(myEventsCreateData1);
+                                      ));
                                       logFirebaseEvent('Button_alert_dialog');
                                       await showDialog(
                                         context: context,
@@ -543,7 +540,8 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                       } else {
                                         logFirebaseEvent('Button_backend_call');
 
-                                        final eventsUpdateData2 = {
+                                        await widget.eventDetails!.reference
+                                            .update({
                                           'volunteer_names':
                                               FieldValue.arrayUnion(
                                                   [currentUserDisplayName]),
@@ -557,33 +555,27 @@ class _EventDetailBottomWidgetState extends State<EventDetailBottomWidget> {
                                           'volunteer_list':
                                               FieldValue.arrayUnion(
                                                   [currentUserUid]),
-                                        };
-                                        await widget.eventDetails!.reference
-                                            .update(eventsUpdateData2);
+                                        });
                                         logFirebaseEvent('Button_backend_call');
 
-                                        final myEventsCreateData2 =
-                                            createMyEventsRecordData(
+                                        await MyEventsRecord.createDoc(
+                                                currentUserReference!)
+                                            .set(createMyEventsRecordData(
                                           dateJoined: getCurrentTimestamp,
                                           eventReference:
                                               widget.eventDetails!.reference,
-                                        );
-                                        await MyEventsRecord.createDoc(
-                                                currentUserReference!)
-                                            .set(myEventsCreateData2);
+                                        ));
                                         logFirebaseEvent('Button_backend_call');
 
-                                        final logsCreateData2 =
-                                            createLogsRecordData(
+                                        await LogsRecord.createDoc(
+                                                currentUserReference!)
+                                            .set(createLogsRecordData(
                                           date: getCurrentTimestamp,
                                           action: 'Joined an Event',
                                           userRef: currentUserReference,
                                           eventRef:
                                               widget.eventDetails!.reference,
-                                        );
-                                        await LogsRecord.createDoc(
-                                                currentUserReference!)
-                                            .set(logsCreateData2);
+                                        ));
                                         logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,

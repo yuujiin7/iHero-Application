@@ -54,6 +54,8 @@ class _ManageDPAWidgetState extends State<ManageDPAWidget> {
         'Help Center',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

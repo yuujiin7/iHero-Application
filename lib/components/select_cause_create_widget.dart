@@ -33,6 +33,8 @@ class _SelectCauseCreateWidgetState extends State<SelectCauseCreateWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectCauseCreateModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

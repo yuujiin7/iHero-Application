@@ -69,6 +69,8 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -637,15 +639,12 @@ class _AnnouncementFeedWidgetState extends State<AnnouncementFeedWidget> {
                                                                               .arrayUnion([
                                                                               likedByElement
                                                                             ]);
-                                                                      final announcementUpdateData =
-                                                                          {
-                                                                        'liked_by':
-                                                                            likedByUpdate,
-                                                                      };
                                                                       await listViewAnnouncementRecord
                                                                           .reference
-                                                                          .update(
-                                                                              announcementUpdateData);
+                                                                          .update({
+                                                                        'liked_by':
+                                                                            likedByUpdate,
+                                                                      });
                                                                     },
                                                                     value: listViewAnnouncementRecord
                                                                         .likedBy

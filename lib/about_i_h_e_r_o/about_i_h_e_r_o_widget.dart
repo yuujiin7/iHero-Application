@@ -68,6 +68,8 @@ class _AboutIHEROWidgetState extends State<AboutIHEROWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

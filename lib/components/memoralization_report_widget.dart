@@ -38,6 +38,8 @@ class _MemoralizationReportWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => MemoralizationReportModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -137,12 +139,10 @@ class _MemoralizationReportWidgetState
                               'MEMORALIZATION_REPORT_COMP_OK_BTN_ON_TAP');
                           logFirebaseEvent('Button_backend_call');
 
-                          final memoralizationReportUpdateData =
-                              createMemoralizationReportRecordData(
-                            isSeen: true,
-                          );
                           await widget.memoRef!
-                              .update(memoralizationReportUpdateData);
+                              .update(createMemoralizationReportRecordData(
+                            isSeen: true,
+                          ));
                         },
                         text: 'Ok',
                         options: FFButtonOptions(

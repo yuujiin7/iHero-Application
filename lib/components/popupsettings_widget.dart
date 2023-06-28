@@ -28,6 +28,8 @@ class _PopupsettingsWidgetState extends State<PopupsettingsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PopupsettingsModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

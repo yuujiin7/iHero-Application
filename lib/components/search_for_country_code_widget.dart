@@ -30,6 +30,8 @@ class _SearchForCountryCodeWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => SearchForCountryCodeModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
-import '/components/location_picker_widget.dart';
 import '/components/select_cause_create_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -85,6 +84,39 @@ class EventCreateModel extends FlutterFlowModel {
     return null;
   }
 
+  // State field(s) for Street widget.
+  TextEditingController? streetController;
+  String? Function(BuildContext, String?)? streetControllerValidator;
+  String? _streetControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    return null;
+  }
+
+  // State field(s) for City widget.
+  TextEditingController? cityController1;
+  String? Function(BuildContext, String?)? cityController1Validator;
+  String? _cityController1Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    return null;
+  }
+
+  // State field(s) for City widget.
+  TextEditingController? cityController2;
+  String? Function(BuildContext, String?)? cityController2Validator;
+  String? _cityController2Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    return null;
+  }
+
   DateTime? datePicked1;
   DateTime? datePicked2;
   DateTime? datePicked3;
@@ -133,10 +165,6 @@ class EventCreateModel extends FlutterFlowModel {
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
-    }
-
-    if (val.length > 3) {
-      return 'Max 3 character';
     }
 
     return null;
@@ -227,6 +255,9 @@ class EventCreateModel extends FlutterFlowModel {
     descriptionEventControllerValidator = _descriptionEventControllerValidator;
     addRequirementsEventControllerValidator =
         _addRequirementsEventControllerValidator;
+    streetControllerValidator = _streetControllerValidator;
+    cityController1Validator = _cityController1Validator;
+    cityController2Validator = _cityController2Validator;
     personInChargeControllerValidator = _personInChargeControllerValidator;
     contactNumberControllerValidator = _contactNumberControllerValidator;
     ageRequirementControllerValidator = _ageRequirementControllerValidator;
@@ -244,6 +275,9 @@ class EventCreateModel extends FlutterFlowModel {
     titleEventController?.dispose();
     descriptionEventController?.dispose();
     addRequirementsEventController?.dispose();
+    streetController?.dispose();
+    cityController1?.dispose();
+    cityController2?.dispose();
     personInChargeController?.dispose();
     contactNumberController?.dispose();
     ageRequirementController?.dispose();
@@ -256,5 +290,4 @@ class EventCreateModel extends FlutterFlowModel {
   /// Action blocks are added here.
 
   /// Additional helper methods are added here.
-
 }

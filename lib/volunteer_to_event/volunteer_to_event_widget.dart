@@ -64,6 +64,7 @@ class _VolunteerToEventWidgetState extends State<VolunteerToEventWidget> {
     });
 
     _model.searchFieldController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

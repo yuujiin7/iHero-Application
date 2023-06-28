@@ -34,6 +34,8 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EditProfilePictureModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -132,20 +134,18 @@ class _EditProfilePictureWidgetState extends State<EditProfilePictureWidget> {
                     _model.uploadedFileUrl != '') {
                   logFirebaseEvent('Button_backend_call');
 
-                  final usersUpdateData = createUsersRecordData(
+                  await currentUserReference!.update(createUsersRecordData(
                     photoUrl: _model.uploadedFileUrl,
-                  );
-                  await currentUserReference!.update(usersUpdateData);
+                  ));
                   logFirebaseEvent('Button_backend_call');
 
-                  final logsCreateData = createLogsRecordData(
+                  await LogsRecord.createDoc(currentUserReference!)
+                      .set(createLogsRecordData(
                     date: getCurrentTimestamp,
                     action: 'Edited profile picture.',
                     userRef: currentUserReference,
                     fileUrl: _model.uploadedFileUrl,
-                  );
-                  await LogsRecord.createDoc(currentUserReference!)
-                      .set(logsCreateData);
+                  ));
                   logFirebaseEvent('Button_bottom_sheet');
                   Navigator.pop(context);
                   return;

@@ -29,6 +29,8 @@ class _MyPerfWidgetState extends State<MyPerfWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MyPerfModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

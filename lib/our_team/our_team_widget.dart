@@ -68,6 +68,8 @@ class _OurTeamWidgetState extends State<OurTeamWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

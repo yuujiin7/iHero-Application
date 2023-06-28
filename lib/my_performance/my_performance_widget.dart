@@ -61,6 +61,8 @@ class _MyPerformanceWidgetState extends State<MyPerformanceWidget> {
         'My Performance',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

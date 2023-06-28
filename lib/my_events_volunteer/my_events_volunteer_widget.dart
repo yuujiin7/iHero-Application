@@ -62,6 +62,8 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
         'My Events Volunteer',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -1427,8 +1429,7 @@ class _MyEventsVolunteerWidgetState extends State<MyEventsVolunteerWidget> {
                                                                             .Document,
                                                                       ),
                                                                     }.withoutNulls,
-                                                                    extra: <
-                                                                        String,
+                                                                    extra: <String,
                                                                         dynamic>{
                                                                       'eventFullDetails':
                                                                           finishedItem,

@@ -31,6 +31,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CalendarModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

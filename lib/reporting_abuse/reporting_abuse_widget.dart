@@ -56,6 +56,8 @@ class _ReportingAbuseWidgetState extends State<ReportingAbuseWidget> {
         'Help Center',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

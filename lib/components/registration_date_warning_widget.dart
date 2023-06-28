@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/instant_timer.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,6 +38,8 @@ class _RegistrationDateWarningWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => RegistrationDateWarningModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -128,7 +132,7 @@ class _RegistrationDateWarningWidgetState
                   padding:
                       EdgeInsetsDirectional.fromSTEB(32.0, 25.0, 32.0, 0.0),
                   child: Text(
-                    'Hey there! The registration date for your event is approaching, but we haven\'t reached the minimum number of volunteers yet. Would you like to extend the registration date or cancel the event?',
+                    'Hey there! The registration date for your event is approaching, but we haven\'t reached the minimum number of volunteers yet. Would you like to extend the registration date for 1 day or cancel the event?',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Barlow',
@@ -180,8 +184,35 @@ class _RegistrationDateWarningWidgetState
                         ),
                       ),
                       FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'REGISTRATION_DATE_WARNING_YES_BTN_ON_TAP');
+                          logFirebaseEvent('Button_update_widget_state');
+                          setState(() {
+                            _model.eventCount = widget.eventRef?.length;
+                          });
+                          logFirebaseEvent('Button_start_periodic_action');
+                          _model.instantTimer = InstantTimer.periodic(
+                            duration: Duration(milliseconds: 1000),
+                            callback: (timer) async {
+                              if (_model.count == _model.eventCount) {
+                                logFirebaseEvent('Button_stop_periodic_action');
+                                _model.instantTimer?.cancel();
+                                return;
+                              } else {
+                                logFirebaseEvent('Button_custom_action');
+                                await actions.addDaysToRegistrationDate(
+                                  widget.eventRef![_model.count!],
+                                  1,
+                                );
+                                logFirebaseEvent('Button_update_widget_state');
+                                setState(() {
+                                  _model.count = _model.count! + 1;
+                                });
+                              }
+                            },
+                            startImmediately: true,
+                          );
                         },
                         text: 'Yes',
                         options: FFButtonOptions(

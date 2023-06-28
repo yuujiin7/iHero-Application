@@ -74,6 +74,8 @@ class _VolunteerListWidgetState extends State<VolunteerListWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

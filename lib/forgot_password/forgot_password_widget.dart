@@ -40,6 +40,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
     });
 
     _model.emailAddressController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

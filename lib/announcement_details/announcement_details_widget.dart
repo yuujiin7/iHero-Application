@@ -80,6 +80,8 @@ class _AnnouncementDetailsWidgetState extends State<AnnouncementDetailsWidget> {
 
       _navigate();
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

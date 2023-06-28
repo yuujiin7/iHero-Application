@@ -29,6 +29,8 @@ class _EmailConfirmationWidgetState extends State<EmailConfirmationWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmailConfirmationModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

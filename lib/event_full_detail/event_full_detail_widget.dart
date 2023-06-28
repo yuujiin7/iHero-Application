@@ -76,6 +76,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -1262,8 +1263,12 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                               logFirebaseEvent(
                                                                   'IconButton_backend_call');
 
-                                                              final commentsAndRateCreateData =
-                                                                  createCommentsAndRateRecordData(
+                                                              await CommentsAndRateRecord
+                                                                      .createDoc(
+                                                                          eventFullDetailEventsRecord
+                                                                              .reference)
+                                                                  .set(
+                                                                      createCommentsAndRateRecordData(
                                                                 createdBy:
                                                                     currentUserReference,
                                                                 createdAt:
@@ -1276,18 +1281,13 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                 postType:
                                                                     eventFullDetailEventsRecord
                                                                         .reference,
-                                                              );
-                                                              await CommentsAndRateRecord
-                                                                      .createDoc(
-                                                                          eventFullDetailEventsRecord
-                                                                              .reference)
-                                                                  .set(
-                                                                      commentsAndRateCreateData);
+                                                              ));
                                                               logFirebaseEvent(
                                                                   'IconButton_backend_call');
 
-                                                              final eventsUpdateData =
-                                                                  {
+                                                              await eventFullDetailEventsRecord
+                                                                  .reference
+                                                                  .update({
                                                                 ...createEventsRecordData(
                                                                   rateTotal: _model
                                                                       .ratingBarValue2,
@@ -1296,11 +1296,7 @@ class _EventFullDetailWidgetState extends State<EventFullDetailWidget> {
                                                                     FieldValue
                                                                         .increment(
                                                                             1.0),
-                                                              };
-                                                              await eventFullDetailEventsRecord
-                                                                  .reference
-                                                                  .update(
-                                                                      eventsUpdateData);
+                                                              });
                                                             },
                                                           ),
                                                         ],

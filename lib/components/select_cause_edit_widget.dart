@@ -40,6 +40,8 @@ class _SelectCauseEditWidgetState extends State<SelectCauseEditWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SelectCauseEditModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -264,13 +266,12 @@ class _SelectCauseEditWidgetState extends State<SelectCauseEditWidget> {
                                             logFirebaseEvent(
                                                 'IconButton_backend_call');
 
-                                            final eventsUpdateData = {
+                                            await listViewEventsRecord.reference
+                                                .update({
                                               'eventTag':
                                                   FieldValue.arrayRemove(
                                                       [eventTagsItem]),
-                                            };
-                                            await listViewEventsRecord.reference
-                                                .update(eventsUpdateData);
+                                            });
                                           },
                                         ),
                                       ],

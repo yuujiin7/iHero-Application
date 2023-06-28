@@ -39,6 +39,7 @@ class _BugReportWidgetState extends State<BugReportWidget> {
     _model = createModel(context, () => BugReportModel());
 
     _model.textController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -381,13 +382,12 @@ class _BugReportWidgetState extends State<BugReportWidget> {
                                 .join('&')));
                         logFirebaseEvent('Button_backend_call');
 
-                        final logsCreateData = createLogsRecordData(
+                        await LogsRecord.createDoc(currentUserReference!)
+                            .set(createLogsRecordData(
                           date: getCurrentTimestamp,
                           action: 'Reported a bug',
                           userRef: currentUserReference,
-                        );
-                        await LogsRecord.createDoc(currentUserReference!)
-                            .set(logsCreateData);
+                        ));
                       },
                       text: 'Send',
                       options: FFButtonOptions(

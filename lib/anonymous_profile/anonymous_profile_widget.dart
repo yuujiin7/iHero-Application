@@ -27,6 +27,7 @@ class _AnonymousProfileWidgetState extends State<AnonymousProfileWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'AnonymousProfile'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

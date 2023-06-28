@@ -30,6 +30,7 @@ class _RegistrationStepsWidgetState extends State<RegistrationStepsWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'RegistrationSteps'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

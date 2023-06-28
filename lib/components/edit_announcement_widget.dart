@@ -39,6 +39,8 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EditAnnouncementModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -521,8 +523,8 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                 if (confirmDialogResponse) {
                                   logFirebaseEvent('Button_backend_call');
 
-                                  final announcementUpdateData =
-                                      createAnnouncementRecordData(
+                                  await widget.announcementDetails!
+                                      .update(createAnnouncementRecordData(
                                     title:
                                         _model.titleAnnouncementController.text,
                                     body: _model
@@ -534,9 +536,7 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                           : _model.uploadedFileUrl,
                                       'https://firebasestorage.googleapis.com/v0/b/ihero-43ccd.appspot.com/o/users%2FAdd-Add-New-Icon-Add-Media-Icon-Add-New-New-2935429.png?alt=media&token=a221a5bb-ecee-4a16-9947-cda153dc3966',
                                     ),
-                                  );
-                                  await widget.announcementDetails!
-                                      .update(announcementUpdateData);
+                                  ));
                                   logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
@@ -557,15 +557,14 @@ class _EditAnnouncementWidgetState extends State<EditAnnouncementWidget> {
                                   );
                                   logFirebaseEvent('Button_backend_call');
 
-                                  final logsCreateData = createLogsRecordData(
+                                  await LogsRecord.createDoc(
+                                          currentUserReference!)
+                                      .set(createLogsRecordData(
                                     date: getCurrentTimestamp,
                                     action: 'Edited an announcement',
                                     userRef: currentUserReference,
                                     announcementRef: widget.announcementDetails,
-                                  );
-                                  await LogsRecord.createDoc(
-                                          currentUserReference!)
-                                      .set(logsCreateData);
+                                  ));
                                   logFirebaseEvent('Button_navigate_to');
 
                                   context.goNamed('HomeScreen');

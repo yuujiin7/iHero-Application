@@ -55,6 +55,8 @@ class _AppointmentsWidgetState extends State<AppointmentsWidget> {
         'Appointments',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

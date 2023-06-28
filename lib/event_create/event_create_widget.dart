@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/calendar_widget.dart';
-import '/components/location_picker_widget.dart';
 import '/components/select_cause_create_widget.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -107,6 +106,9 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
     _model.titleEventController ??= TextEditingController();
     _model.descriptionEventController ??= TextEditingController();
     _model.addRequirementsEventController ??= TextEditingController();
+    _model.streetController ??= TextEditingController();
+    _model.cityController1 ??= TextEditingController();
+    _model.cityController2 ??= TextEditingController();
     _model.personInChargeController ??=
         TextEditingController(text: currentUserDisplayName);
     _model.contactNumberController ??= TextEditingController();
@@ -938,6 +940,413 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                   10.0,
                                                                   0.0,
                                                                   0.0),
+                                                      child: TextFormField(
+                                                        controller: _model
+                                                            .streetController,
+                                                        autofillHints: [
+                                                          AutofillHints
+                                                              .fullStreetAddress
+                                                        ],
+                                                        textCapitalization:
+                                                            TextCapitalization
+                                                                .sentences,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText:
+                                                              'Street Address',
+                                                          hintText:
+                                                              'Street Address',
+                                                          hintStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    useGoogleFonts: GoogleFonts
+                                                                            .asMap()
+                                                                        .containsKey(
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                  ),
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color(
+                                                                  0x00000000),
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          errorBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          focusedErrorBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          filled: true,
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryBtnText,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                        maxLines: 20,
+                                                        minLines: 1,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .multiline,
+                                                        validator: _model
+                                                            .streetControllerValidator
+                                                            .asValidator(
+                                                                context),
+                                                        inputFormatters: [
+                                                          FilteringTextInputFormatter
+                                                              .allow(RegExp(
+                                                                  '^[\\s\\S]{0,255}'))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: TextFormField(
+                                                        controller: _model
+                                                            .cityController1,
+                                                        autofillHints: [
+                                                          AutofillHints
+                                                              .fullStreetAddress
+                                                        ],
+                                                        textCapitalization:
+                                                            TextCapitalization
+                                                                .sentences,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText: 'City',
+                                                          hintText: 'City',
+                                                          hintStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    useGoogleFonts: GoogleFonts
+                                                                            .asMap()
+                                                                        .containsKey(
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                  ),
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color(
+                                                                  0x00000000),
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          errorBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          focusedErrorBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          filled: true,
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryBtnText,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                        maxLines: 20,
+                                                        minLines: 1,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .multiline,
+                                                        validator: _model
+                                                            .cityController1Validator
+                                                            .asValidator(
+                                                                context),
+                                                        inputFormatters: [
+                                                          FilteringTextInputFormatter
+                                                              .allow(RegExp(
+                                                                  '^[\\s\\S]{0,255}'))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: TextFormField(
+                                                        controller: _model
+                                                            .cityController2,
+                                                        autofillHints: [
+                                                          AutofillHints
+                                                              .fullStreetAddress
+                                                        ],
+                                                        textCapitalization:
+                                                            TextCapitalization
+                                                                .sentences,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText: 'Province',
+                                                          hintText: 'Province',
+                                                          hintStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    useGoogleFonts: GoogleFonts
+                                                                            .asMap()
+                                                                        .containsKey(
+                                                                            FlutterFlowTheme.of(context).bodyMediumFamily),
+                                                                  ),
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color(
+                                                                  0x00000000),
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          errorBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          focusedErrorBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 1.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          filled: true,
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryBtnText,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Barlow',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  useGoogleFonts: GoogleFonts
+                                                                          .asMap()
+                                                                      .containsKey(
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .bodyMediumFamily),
+                                                                ),
+                                                        maxLines: 20,
+                                                        minLines: 1,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .multiline,
+                                                        validator: _model
+                                                            .cityController2Validator
+                                                            .asValidator(
+                                                                context),
+                                                        inputFormatters: [
+                                                          FilteringTextInputFormatter
+                                                              .allow(RegExp(
+                                                                  '^[\\s\\S]{0,255}'))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0),
                                                       child: Material(
                                                         color:
                                                             Colors.transparent,
@@ -1170,6 +1579,43 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                         ),
                                                       ),
                                                     ),
+                                                    if ((FFAppState()
+                                                                .startDate ==
+                                                            null) &&
+                                                        (FFAppState().endDate ==
+                                                            null))
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5.0,
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'Field is Required',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .displaySmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 10.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .displaySmallFamily),
+                                                              ),
+                                                        ),
+                                                      ),
                                                     Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -1400,187 +1846,41 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 2.0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0),
-                                                        ),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 50.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryBackground,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          5.0,
-                                                                          20.0,
-                                                                          0.0),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Text(
-                                                                        'Event Address',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                            ),
-                                                                      ),
-                                                                      Expanded(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              2.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            height:
-                                                                                25.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            ),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 0.0),
-                                                                              child: Text(
-                                                                                FFAppState().address.maybeHandleOverflow(
-                                                                                      maxChars: 30,
-                                                                                      replacement: '…',
-                                                                                    ),
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Barlow',
-                                                                                      color: FlutterFlowTheme.of(context).primaryText,
-                                                                                      fontWeight: FontWeight.w500,
-                                                                                      useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                                    ),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
+                                                    if (FFAppState()
+                                                            .registrationDate ==
+                                                        null)
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5.0,
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'Field is Required',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .displaySmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 10.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .displaySmallFamily),
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            5.0,
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0),
-                                                                child:
-                                                                    FlutterFlowIconButton(
-                                                                  borderColor:
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                  borderRadius:
-                                                                      10.0,
-                                                                  borderWidth:
-                                                                      1.0,
-                                                                  buttonSize:
-                                                                      42.0,
-                                                                  icon: Icon(
-                                                                    Icons.place,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 25.0,
-                                                                  ),
-                                                                  showLoadingIndicator:
-                                                                      true,
-                                                                  onPressed:
-                                                                      () async {
-                                                                    logFirebaseEvent(
-                                                                        'EVENT_CREATE_PAGE_place_ICN_ON_TAP');
-                                                                    logFirebaseEvent(
-                                                                        'IconButton_bottom_sheet');
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      barrierColor:
-                                                                          Color(
-                                                                              0x00000000),
-                                                                      enableDrag:
-                                                                          false,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return GestureDetector(
-                                                                          onTap: () =>
-                                                                              FocusScope.of(context).requestFocus(_model.unfocusNode),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.of(context).viewInsets,
-                                                                            child:
-                                                                                LocationPickerWidget(),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        setState(
-                                                                            () {}));
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
                                                         ),
                                                       ),
-                                                    ),
                                                     Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -2043,6 +2343,43 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                         ),
                                                       ),
                                                     ),
+                                                    if ((FFAppState()
+                                                                .startTime ==
+                                                            null) &&
+                                                        (FFAppState().endTime ==
+                                                            null))
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5.0,
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'Field is Required',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .displaySmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 10.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .displaySmallFamily),
+                                                              ),
+                                                        ),
+                                                      ),
                                                     if ((FFAppState().startDate != null) &&
                                                         (FFAppState().endDate !=
                                                             null) &&
@@ -2955,6 +3292,43 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                             SelectCauseCreateWidget(),
                                                       ),
                                                     ),
+                                                    if (_model
+                                                            .selectCauseCreateModel
+                                                            .selectedTagsList
+                                                            .length ==
+                                                        0)
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5.0,
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'Field is Required',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .displaySmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 10.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .displaySmallFamily),
+                                                              ),
+                                                        ),
+                                                      ),
                                                     Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -3065,6 +3439,42 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                         ),
                                                       ),
                                                     ),
+                                                    if (_model.partnerDropDownValue ==
+                                                            null ||
+                                                        _model.partnerDropDownValue ==
+                                                            '')
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    10.0,
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'Field is Required',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .displaySmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                fontSize: 10.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                useGoogleFonts: GoogleFonts
+                                                                        .asMap()
+                                                                    .containsKey(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .displaySmallFamily),
+                                                              ),
+                                                        ),
+                                                      ),
                                                     Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -3134,466 +3544,628 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                                             .first
                                                                         : null;
                                                                 return FFButtonWidget(
-                                                                  onPressed: ((FFAppState().startDate == null) && (FFAppState().endDate == null)) ||
-                                                                          (FFAppState().address == null ||
-                                                                              FFAppState().address ==
-                                                                                  '') ||
-                                                                          (_model.selectCauseCreateModel.selectedTagsList.length ==
-                                                                              0) ||
-                                                                          ((FFAppState().startTime == null) &&
-                                                                              (FFAppState().endTime ==
-                                                                                  null)) ||
-                                                                          (_model.sliderValue ==
-                                                                              null)
-                                                                      ? null
-                                                                      : () async {
-                                                                          logFirebaseEvent(
-                                                                              'EVENT_CREATE_PAGE_ButtonSubmit_ON_TAP');
-                                                                          var _shouldSetState =
-                                                                              false;
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_validate_form');
-                                                                          if (_model.formKey1.currentState == null ||
-                                                                              !_model.formKey1.currentState!.validate()) {
-                                                                            return;
-                                                                          }
-                                                                          if (_model.datePicked1 ==
-                                                                              null) {
-                                                                            ScaffoldMessenger.of(context).clearSnackBars();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                                              SnackBar(
-                                                                                content: Text(
-                                                                                  'Pick a registration date.',
-                                                                                  style: TextStyle(
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  ),
-                                                                                ),
-                                                                                duration: Duration(milliseconds: 4000),
-                                                                                backgroundColor: FlutterFlowTheme.of(context).secondary,
-                                                                              ),
-                                                                            );
-                                                                            return;
-                                                                          }
-                                                                          if (_model.datePicked2 ==
-                                                                              null) {
-                                                                            ScaffoldMessenger.of(context).clearSnackBars();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                                              SnackBar(
-                                                                                content: Text(
-                                                                                  'Please pick a start time',
-                                                                                  style: TextStyle(
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  ),
-                                                                                ),
-                                                                                duration: Duration(milliseconds: 4000),
-                                                                                backgroundColor: FlutterFlowTheme.of(context).secondary,
-                                                                              ),
-                                                                            );
-                                                                            return;
-                                                                          }
-                                                                          if (_model.datePicked3 ==
-                                                                              null) {
-                                                                            ScaffoldMessenger.of(context).clearSnackBars();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                                              SnackBar(
-                                                                                content: Text(
-                                                                                  'Please pick an end time.',
-                                                                                  style: TextStyle(
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  ),
-                                                                                ),
-                                                                                duration: Duration(milliseconds: 4000),
-                                                                                backgroundColor: FlutterFlowTheme.of(context).secondary,
-                                                                              ),
-                                                                            );
-                                                                            return;
-                                                                          }
-                                                                          if (_model.selectCauseCreateModel.dropDownValue ==
-                                                                              null) {
-                                                                            ScaffoldMessenger.of(context).clearSnackBars();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                                              SnackBar(
-                                                                                content: Text(
-                                                                                  'Please select atleast 1 cause',
-                                                                                  style: TextStyle(
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  ),
-                                                                                ),
-                                                                                duration: Duration(milliseconds: 4000),
-                                                                                backgroundColor: FlutterFlowTheme.of(context).secondary,
-                                                                              ),
-                                                                            );
-                                                                            return;
-                                                                          }
-                                                                          if (_model.partnerDropDownValue ==
-                                                                              null) {
-                                                                            ScaffoldMessenger.of(context).clearSnackBars();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                                              SnackBar(
-                                                                                content: Text(
-                                                                                  'Select a partner',
-                                                                                  style: TextStyle(
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  ),
-                                                                                ),
-                                                                                duration: Duration(milliseconds: 4000),
-                                                                                backgroundColor: FlutterFlowTheme.of(context).secondary,
-                                                                              ),
-                                                                            );
-                                                                            return;
-                                                                          }
-                                                                          logFirebaseEvent(
-                                                                              'ButtonSubmit_alert_dialog');
-                                                                          var confirmDialogResponse = await showDialog<bool>(
-                                                                                context: context,
-                                                                                builder: (alertDialogContext) {
-                                                                                  return AlertDialog(
-                                                                                    title: Text('Submit '),
-                                                                                    content: Text('Create this event?'),
-                                                                                    actions: [
-                                                                                      TextButton(
-                                                                                        onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                        child: Text('Cancel'),
-                                                                                      ),
-                                                                                      TextButton(
-                                                                                        onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                        child: Text('Confirm'),
-                                                                                      ),
-                                                                                    ],
-                                                                                  );
-                                                                                },
-                                                                              ) ??
-                                                                              false;
-                                                                          if (confirmDialogResponse) {
-                                                                            logFirebaseEvent('ButtonSubmit_custom_action');
-                                                                            _model.isEventExist =
-                                                                                await actions.documentExists(
-                                                                              FFAppState().address,
-                                                                              functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
-                                                                              functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
-                                                                            );
-                                                                            _shouldSetState =
-                                                                                true;
-                                                                            if (_model.isEventExist!) {
-                                                                              logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                              await showDialog(
-                                                                                context: context,
-                                                                                builder: (alertDialogContext) {
-                                                                                  return AlertDialog(
-                                                                                    title: Text('Failed'),
-                                                                                    content: Text('Another events has the same Location and Date.'),
-                                                                                    actions: [
-                                                                                      TextButton(
-                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                        child: Text('Dismiss'),
-                                                                                      ),
-                                                                                    ],
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                              if (_shouldSetState)
-                                                                                setState(() {});
-                                                                              return;
-                                                                            } else {
-                                                                              if (_model.switchValue!) {
-                                                                                logFirebaseEvent('ButtonSubmit_backend_call');
-
-                                                                                final eventsCreateData1 = {
-                                                                                  ...createEventsRecordData(
-                                                                                    eventTitle: _model.titleEventController.text,
-                                                                                    eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                                    eventDescription: _model.descriptionEventController.text,
-                                                                                    eventInChargePerson: _model.personInChargeController.text,
-                                                                                    eventLocation: FFAppState().locationLatLng,
-                                                                                    eventAddress: FFAppState().address,
-                                                                                    neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
-                                                                                    createdDate: getCurrentTimestamp,
-                                                                                    isEnded: false,
-                                                                                    isDeleted: false,
-                                                                                    eventContactNumber: _model.contactNumberController.text,
-                                                                                    isConfirmbySA: false,
-                                                                                    eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
-                                                                                    eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
-                                                                                    neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
-                                                                                    partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
-                                                                                    isReqCancel: false,
-                                                                                    isRecurring: _model.switchValue,
-                                                                                    rateTotal: 0.0,
-                                                                                    rateCount: 0.0,
-                                                                                    isDeclined: false,
-                                                                                    volunteerCount: null,
-                                                                                    expiryDate: null,
-                                                                                    reason: null,
-                                                                                    ageRequirement: int.tryParse(_model.ageRequirementController.text),
-                                                                                    isMeritScoreUpdated: false,
-                                                                                    addRequirementEvent: _model.addRequirementsEventController.text,
-                                                                                    organizationPartnter: _model.partnerDropDownValue,
-                                                                                    registrationDate: _model.datePicked1,
-                                                                                    minimumVolunteer: _model.sliderValue,
-                                                                                  ),
-                                                                                  'admin_ref': [
-                                                                                    currentUserReference
+                                                                  onPressed:
+                                                                      () async {
+                                                                    logFirebaseEvent(
+                                                                        'EVENT_CREATE_PAGE_ButtonSubmit_ON_TAP');
+                                                                    var _shouldSetState =
+                                                                        false;
+                                                                    logFirebaseEvent(
+                                                                        'ButtonSubmit_validate_form');
+                                                                    if (_model.formKey1.currentState ==
+                                                                            null ||
+                                                                        !_model
+                                                                            .formKey1
+                                                                            .currentState!
+                                                                            .validate()) {
+                                                                      return;
+                                                                    }
+                                                                    if (_model
+                                                                            .datePicked1 ==
+                                                                        null) {
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .clearSnackBars();
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Pick a registration date.',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                      return;
+                                                                    }
+                                                                    if (_model
+                                                                            .datePicked2 ==
+                                                                        null) {
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .clearSnackBars();
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Please pick a start time',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                      return;
+                                                                    }
+                                                                    if (_model
+                                                                            .datePicked3 ==
+                                                                        null) {
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .clearSnackBars();
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Please pick an end time.',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                      return;
+                                                                    }
+                                                                    if (_model
+                                                                            .selectCauseCreateModel
+                                                                            .dropDownValue ==
+                                                                        null) {
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .clearSnackBars();
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Please select atleast 1 cause',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                      return;
+                                                                    }
+                                                                    if (_model
+                                                                            .partnerDropDownValue ==
+                                                                        null) {
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .clearSnackBars();
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Select a partner',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                      return;
+                                                                    }
+                                                                    logFirebaseEvent(
+                                                                        'ButtonSubmit_alert_dialog');
+                                                                    var confirmDialogResponse =
+                                                                        await showDialog<bool>(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Submit '),
+                                                                                  content: Text('Create this event?'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                      child: Text('Cancel'),
+                                                                                    ),
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                      child: Text('Confirm'),
+                                                                                    ),
                                                                                   ],
-                                                                                  'eventTag': _model.selectCauseCreateModel.selectedTagsList,
-                                                                                  'recurranceDate': _model.choiceChipsValues,
-                                                                                };
-                                                                                var eventsRecordReference1 = EventsRecord.collection.doc();
-                                                                                await eventsRecordReference1.set(eventsCreateData1);
-                                                                                _model.isCreated1 = EventsRecord.getDocumentFromData(eventsCreateData1, eventsRecordReference1);
-                                                                                _shouldSetState = true;
-                                                                                if (_model.isCreated1!.reference != null) {
-                                                                                  logFirebaseEvent('ButtonSubmit_backend_call');
+                                                                                );
+                                                                              },
+                                                                            ) ??
+                                                                            false;
+                                                                    if (confirmDialogResponse) {
+                                                                      logFirebaseEvent(
+                                                                          'ButtonSubmit_custom_action');
+                                                                      _model.isEventExist =
+                                                                          await actions
+                                                                              .documentExists(
+                                                                        _model
+                                                                            .streetController
+                                                                            .text,
+                                                                        _model
+                                                                            .cityController1
+                                                                            .text,
+                                                                        _model
+                                                                            .cityController2
+                                                                            .text,
+                                                                        functions.overwriteEvent(
+                                                                            FFAppState().startDate!,
+                                                                            FFAppState().startTime!),
+                                                                        functions.overwriteEvent(
+                                                                            FFAppState().endDate!,
+                                                                            FFAppState().endTime!),
+                                                                      );
+                                                                      _shouldSetState =
+                                                                          true;
+                                                                      if (_model
+                                                                          .isEventExist!) {
+                                                                        logFirebaseEvent(
+                                                                            'ButtonSubmit_alert_dialog');
+                                                                        await showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (alertDialogContext) {
+                                                                            return AlertDialog(
+                                                                              title: Text('Failed'),
+                                                                              content: Text('Another events has the same Location and Date.'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                  child: Text('Dismiss'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        );
+                                                                        if (_shouldSetState)
+                                                                          setState(
+                                                                              () {});
+                                                                        return;
+                                                                      } else {
+                                                                        if (_model
+                                                                            .switchValue!) {
+                                                                          logFirebaseEvent(
+                                                                              'ButtonSubmit_backend_call');
 
-                                                                                  final logsCreateData1 = createLogsRecordData(
-                                                                                    date: getCurrentTimestamp,
-                                                                                    action: 'Created an event',
-                                                                                    userRef: currentUserReference,
-                                                                                  );
-                                                                                  await LogsRecord.createDoc(currentUserReference!).set(logsCreateData1);
-                                                                                  logFirebaseEvent('ButtonSubmit_backend_call');
+                                                                          var eventsRecordReference1 = EventsRecord
+                                                                              .collection
+                                                                              .doc();
+                                                                          await eventsRecordReference1
+                                                                              .set({
+                                                                            ...createEventsRecordData(
+                                                                              eventTitle: _model.titleEventController.text,
+                                                                              eventPhotoUrl: _model.uploadedFileUrl1,
+                                                                              eventDescription: _model.descriptionEventController.text,
+                                                                              eventInChargePerson: _model.personInChargeController.text,
+                                                                              neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
+                                                                              createdDate: getCurrentTimestamp,
+                                                                              isEnded: false,
+                                                                              isDeleted: false,
+                                                                              eventContactNumber: _model.contactNumberController.text,
+                                                                              isConfirmbySA: false,
+                                                                              eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                              eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
+                                                                              neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
+                                                                              partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
+                                                                              isReqCancel: false,
+                                                                              isRecurring: _model.switchValue,
+                                                                              rateTotal: 0.0,
+                                                                              rateCount: 0.0,
+                                                                              isDeclined: false,
+                                                                              volunteerCount: null,
+                                                                              expiryDate: null,
+                                                                              reason: null,
+                                                                              ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                              isMeritScoreUpdated: false,
+                                                                              addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                              organizationPartnter: _model.partnerDropDownValue,
+                                                                              registrationDate: _model.datePicked1,
+                                                                              minimumVolunteer: _model.sliderValue,
+                                                                              streetAddress: _model.streetController.text,
+                                                                              city: _model.cityController1.text,
+                                                                              province: _model.cityController2.text,
+                                                                            ),
+                                                                            'admin_ref':
+                                                                                [
+                                                                              currentUserReference
+                                                                            ],
+                                                                            'eventTag':
+                                                                                _model.selectCauseCreateModel.selectedTagsList,
+                                                                            'recurranceDate':
+                                                                                _model.choiceChipsValues,
+                                                                          });
+                                                                          _model.isCreated1 =
+                                                                              EventsRecord.getDocumentFromData({
+                                                                            ...createEventsRecordData(
+                                                                              eventTitle: _model.titleEventController.text,
+                                                                              eventPhotoUrl: _model.uploadedFileUrl1,
+                                                                              eventDescription: _model.descriptionEventController.text,
+                                                                              eventInChargePerson: _model.personInChargeController.text,
+                                                                              neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
+                                                                              createdDate: getCurrentTimestamp,
+                                                                              isEnded: false,
+                                                                              isDeleted: false,
+                                                                              eventContactNumber: _model.contactNumberController.text,
+                                                                              isConfirmbySA: false,
+                                                                              eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                              eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
+                                                                              neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
+                                                                              partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
+                                                                              isReqCancel: false,
+                                                                              isRecurring: _model.switchValue,
+                                                                              rateTotal: 0.0,
+                                                                              rateCount: 0.0,
+                                                                              isDeclined: false,
+                                                                              volunteerCount: null,
+                                                                              expiryDate: null,
+                                                                              reason: null,
+                                                                              ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                              isMeritScoreUpdated: false,
+                                                                              addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                              organizationPartnter: _model.partnerDropDownValue,
+                                                                              registrationDate: _model.datePicked1,
+                                                                              minimumVolunteer: _model.sliderValue,
+                                                                              streetAddress: _model.streetController.text,
+                                                                              city: _model.cityController1.text,
+                                                                              province: _model.cityController2.text,
+                                                                            ),
+                                                                            'admin_ref':
+                                                                                [
+                                                                              currentUserReference
+                                                                            ],
+                                                                            'eventTag':
+                                                                                _model.selectCauseCreateModel.selectedTagsList,
+                                                                            'recurranceDate':
+                                                                                _model.choiceChipsValues,
+                                                                          }, eventsRecordReference1);
+                                                                          _shouldSetState =
+                                                                              true;
+                                                                          if (_model.isCreated1!.reference !=
+                                                                              null) {
+                                                                            logFirebaseEvent('ButtonSubmit_backend_call');
 
-                                                                                  final myEventsCreateData1 = createMyEventsRecordData(
-                                                                                    eventReference: _model.isCreated1!.reference,
-                                                                                    dateCreated: getCurrentTimestamp,
-                                                                                  );
-                                                                                  await MyEventsRecord.createDoc(currentUserReference!).set(myEventsCreateData1);
-                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                                  await showDialog(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        content: Text('The event has been created and is to be approved.'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                            child: Text('Ok'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  );
-                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
-                                                                                  FFAppState().update(() {
-                                                                                    FFAppState().deleteLocationLatLng();
-                                                                                    FFAppState().locationLatLng = null;
+                                                                            await LogsRecord.createDoc(currentUserReference!).set(createLogsRecordData(
+                                                                              date: getCurrentTimestamp,
+                                                                              action: 'Created an event',
+                                                                              userRef: currentUserReference,
+                                                                            ));
+                                                                            logFirebaseEvent('ButtonSubmit_backend_call');
 
-                                                                                    FFAppState().deleteAddress();
-                                                                                    FFAppState().address = '';
-
-                                                                                    FFAppState().startDate = null;
-                                                                                    FFAppState().endDate = null;
-                                                                                    FFAppState().startTime = null;
-                                                                                    FFAppState().endTime = null;
-                                                                                  });
-                                                                                  logFirebaseEvent('ButtonSubmit_clear_text_fields');
-                                                                                  setState(() {
-                                                                                    _model.titleEventController?.clear();
-                                                                                    _model.descriptionEventController?.clear();
-                                                                                    _model.addRequirementsEventController?.clear();
-                                                                                    _model.personInChargeController?.clear();
-                                                                                    _model.contactNumberController?.clear();
-                                                                                    _model.ageRequirementController?.clear();
-                                                                                    _model.neededVolunteerController?.clear();
-                                                                                    _model.descriptionAnnouncementController?.clear();
-                                                                                    _model.titleAnnouncementController?.clear();
-                                                                                  });
-                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                                  await showDialog(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        title: Text('Done'),
-                                                                                        content: Text('Event is to be confirmed.'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                            child: Text('Ok'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  );
-                                                                                  logFirebaseEvent('ButtonSubmit_navigate_to');
-
-                                                                                  context.goNamed('HomeScreen');
-
-                                                                                  if (_shouldSetState) setState(() {});
-                                                                                  return;
-                                                                                } else {
-                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                                  await showDialog(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        title: Text('Done'),
-                                                                                        content: Text('Creation failed.'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                            child: Text('Ok'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  );
-                                                                                  if (_shouldSetState) setState(() {});
-                                                                                  return;
-                                                                                }
-                                                                              } else {
-                                                                                logFirebaseEvent('ButtonSubmit_backend_call');
-
-                                                                                final eventsCreateData2 = {
-                                                                                  ...createEventsRecordData(
-                                                                                    eventTitle: _model.titleEventController.text,
-                                                                                    eventPhotoUrl: _model.uploadedFileUrl1,
-                                                                                    eventDescription: _model.descriptionEventController.text,
-                                                                                    eventInChargePerson: _model.personInChargeController.text,
-                                                                                    eventLocation: FFAppState().locationLatLng,
-                                                                                    eventAddress: FFAppState().address,
-                                                                                    neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
-                                                                                    createdDate: getCurrentTimestamp,
-                                                                                    isEnded: false,
-                                                                                    isDeleted: false,
-                                                                                    eventContactNumber: _model.contactNumberController.text,
-                                                                                    isConfirmbySA: false,
-                                                                                    eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
-                                                                                    eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
-                                                                                    neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
-                                                                                    partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
-                                                                                    isReqCancel: false,
-                                                                                    isDeclined: false,
-                                                                                    volunteerCount: null,
-                                                                                    expiryDate: null,
-                                                                                    isRecurring: false,
-                                                                                    rateTotal: 0.0,
-                                                                                    rateCount: 0.0,
-                                                                                    reason: null,
-                                                                                    ageRequirement: int.tryParse(_model.ageRequirementController.text),
-                                                                                    isMeritScoreUpdated: false,
-                                                                                    addRequirementEvent: _model.addRequirementsEventController.text,
-                                                                                    organizationPartnter: _model.partnerDropDownValue,
-                                                                                    registrationDate: _model.datePicked1,
-                                                                                    minimumVolunteer: _model.sliderValue,
-                                                                                  ),
-                                                                                  'admin_ref': [
-                                                                                    currentUserReference
+                                                                            await MyEventsRecord.createDoc(currentUserReference!).set(createMyEventsRecordData(
+                                                                              eventReference: _model.isCreated1!.reference,
+                                                                              dateCreated: getCurrentTimestamp,
+                                                                            ));
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  content: Text('The event has been created and is to be approved.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
                                                                                   ],
-                                                                                  'eventTag': _model.selectCauseCreateModel.selectedTagsList,
-                                                                                  'recurranceDate': _model.choiceChipsValues,
-                                                                                };
-                                                                                var eventsRecordReference2 = EventsRecord.collection.doc();
-                                                                                await eventsRecordReference2.set(eventsCreateData2);
-                                                                                _model.isCreated2 = EventsRecord.getDocumentFromData(eventsCreateData2, eventsRecordReference2);
-                                                                                _shouldSetState = true;
-                                                                                if (_model.isCreated2!.reference != null) {
-                                                                                  logFirebaseEvent('ButtonSubmit_backend_call');
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                            FFAppState().update(() {
+                                                                              FFAppState().deleteLocationLatLng();
+                                                                              FFAppState().locationLatLng = null;
 
-                                                                                  final logsCreateData2 = createLogsRecordData(
-                                                                                    date: getCurrentTimestamp,
-                                                                                    action: 'Created an event',
-                                                                                    userRef: currentUserReference,
-                                                                                  );
-                                                                                  await LogsRecord.createDoc(currentUserReference!).set(logsCreateData2);
-                                                                                  logFirebaseEvent('ButtonSubmit_backend_call');
+                                                                              FFAppState().deleteAddress();
+                                                                              FFAppState().address = '';
 
-                                                                                  final myEventsCreateData2 = createMyEventsRecordData(
-                                                                                    eventReference: _model.isCreated2!.reference,
-                                                                                    dateCreated: getCurrentTimestamp,
-                                                                                  );
-                                                                                  await MyEventsRecord.createDoc(currentUserReference!).set(myEventsCreateData2);
-                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                                  await showDialog(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        content: Text('The event has been created and is to be approved.'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                            child: Text('Ok'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  );
-                                                                                  logFirebaseEvent('ButtonSubmit_update_app_state');
-                                                                                  FFAppState().update(() {
-                                                                                    FFAppState().deleteLocationLatLng();
-                                                                                    FFAppState().locationLatLng = null;
+                                                                              FFAppState().startDate = null;
+                                                                              FFAppState().endDate = null;
+                                                                              FFAppState().startTime = null;
+                                                                              FFAppState().endTime = null;
+                                                                            });
+                                                                            logFirebaseEvent('ButtonSubmit_clear_text_fields');
+                                                                            setState(() {
+                                                                              _model.titleEventController?.clear();
+                                                                              _model.descriptionEventController?.clear();
+                                                                              _model.addRequirementsEventController?.clear();
+                                                                              _model.personInChargeController?.clear();
+                                                                              _model.contactNumberController?.clear();
+                                                                              _model.ageRequirementController?.clear();
+                                                                              _model.neededVolunteerController?.clear();
+                                                                              _model.descriptionAnnouncementController?.clear();
+                                                                              _model.titleAnnouncementController?.clear();
+                                                                            });
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Event is to be confirmed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            logFirebaseEvent('ButtonSubmit_navigate_to');
 
-                                                                                    FFAppState().deleteAddress();
-                                                                                    FFAppState().address = '';
+                                                                            context.goNamed('HomeScreen');
 
-                                                                                    FFAppState().startDate = null;
-                                                                                    FFAppState().endDate = null;
-                                                                                    FFAppState().startTime = null;
-                                                                                    FFAppState().endTime = null;
-                                                                                  });
-                                                                                  logFirebaseEvent('ButtonSubmit_clear_text_fields');
-                                                                                  setState(() {
-                                                                                    _model.titleEventController?.clear();
-                                                                                    _model.descriptionEventController?.clear();
-                                                                                    _model.addRequirementsEventController?.clear();
-                                                                                    _model.personInChargeController?.clear();
-                                                                                    _model.contactNumberController?.clear();
-                                                                                    _model.ageRequirementController?.clear();
-                                                                                    _model.neededVolunteerController?.clear();
-                                                                                    _model.titleAnnouncementController?.clear();
-                                                                                    _model.descriptionAnnouncementController?.clear();
-                                                                                  });
-                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                                  await showDialog(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        title: Text('Done'),
-                                                                                        content: Text('Event is to be confirmed.'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                            child: Text('Ok'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  );
-                                                                                  logFirebaseEvent('ButtonSubmit_navigate_to');
-
-                                                                                  context.goNamed('HomeScreen');
-
-                                                                                  if (_shouldSetState) setState(() {});
-                                                                                  return;
-                                                                                } else {
-                                                                                  logFirebaseEvent('ButtonSubmit_alert_dialog');
-                                                                                  await showDialog(
-                                                                                    context: context,
-                                                                                    builder: (alertDialogContext) {
-                                                                                      return AlertDialog(
-                                                                                        title: Text('Done'),
-                                                                                        content: Text('Creation failed.'),
-                                                                                        actions: [
-                                                                                          TextButton(
-                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                            child: Text('Ok'),
-                                                                                          ),
-                                                                                        ],
-                                                                                      );
-                                                                                    },
-                                                                                  );
-                                                                                  if (_shouldSetState) setState(() {});
-                                                                                  return;
-                                                                                }
-                                                                              }
-                                                                            }
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
                                                                           } else {
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Creation failed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
                                                                             if (_shouldSetState)
                                                                               setState(() {});
                                                                             return;
                                                                           }
+                                                                        } else {
+                                                                          logFirebaseEvent(
+                                                                              'ButtonSubmit_backend_call');
 
-                                                                          if (_shouldSetState)
-                                                                            setState(() {});
-                                                                        },
+                                                                          var eventsRecordReference2 = EventsRecord
+                                                                              .collection
+                                                                              .doc();
+                                                                          await eventsRecordReference2
+                                                                              .set({
+                                                                            ...createEventsRecordData(
+                                                                              eventTitle: _model.titleEventController.text,
+                                                                              eventPhotoUrl: _model.uploadedFileUrl1,
+                                                                              eventDescription: _model.descriptionEventController.text,
+                                                                              eventInChargePerson: _model.personInChargeController.text,
+                                                                              neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
+                                                                              createdDate: getCurrentTimestamp,
+                                                                              isEnded: false,
+                                                                              isDeleted: false,
+                                                                              eventContactNumber: _model.contactNumberController.text,
+                                                                              isConfirmbySA: false,
+                                                                              eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                              eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
+                                                                              neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
+                                                                              partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
+                                                                              isReqCancel: false,
+                                                                              isDeclined: false,
+                                                                              volunteerCount: null,
+                                                                              expiryDate: null,
+                                                                              isRecurring: false,
+                                                                              rateTotal: 0.0,
+                                                                              rateCount: 0.0,
+                                                                              reason: null,
+                                                                              ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                              isMeritScoreUpdated: false,
+                                                                              addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                              organizationPartnter: _model.partnerDropDownValue,
+                                                                              registrationDate: _model.datePicked1,
+                                                                              minimumVolunteer: _model.sliderValue,
+                                                                              streetAddress: _model.streetController.text,
+                                                                              city: _model.cityController1.text,
+                                                                              province: _model.cityController2.text,
+                                                                            ),
+                                                                            'admin_ref':
+                                                                                [
+                                                                              currentUserReference
+                                                                            ],
+                                                                            'eventTag':
+                                                                                _model.selectCauseCreateModel.selectedTagsList,
+                                                                          });
+                                                                          _model.isCreated2 =
+                                                                              EventsRecord.getDocumentFromData({
+                                                                            ...createEventsRecordData(
+                                                                              eventTitle: _model.titleEventController.text,
+                                                                              eventPhotoUrl: _model.uploadedFileUrl1,
+                                                                              eventDescription: _model.descriptionEventController.text,
+                                                                              eventInChargePerson: _model.personInChargeController.text,
+                                                                              neededVolunteer: double.tryParse(_model.neededVolunteerController.text),
+                                                                              createdDate: getCurrentTimestamp,
+                                                                              isEnded: false,
+                                                                              isDeleted: false,
+                                                                              eventContactNumber: _model.contactNumberController.text,
+                                                                              isConfirmbySA: false,
+                                                                              eventDateStart: functions.overwriteEvent(FFAppState().startDate!, FFAppState().startTime!),
+                                                                              eventDateEnd: functions.overwriteEvent(FFAppState().endDate!, FFAppState().endTime!),
+                                                                              neededVolunteerCount: double.tryParse(_model.neededVolunteerController.text),
+                                                                              partnerOrgRef: buttonSubmitPartnerOrgRecord!.reference,
+                                                                              isReqCancel: false,
+                                                                              isDeclined: false,
+                                                                              volunteerCount: null,
+                                                                              expiryDate: null,
+                                                                              isRecurring: false,
+                                                                              rateTotal: 0.0,
+                                                                              rateCount: 0.0,
+                                                                              reason: null,
+                                                                              ageRequirement: int.tryParse(_model.ageRequirementController.text),
+                                                                              isMeritScoreUpdated: false,
+                                                                              addRequirementEvent: _model.addRequirementsEventController.text,
+                                                                              organizationPartnter: _model.partnerDropDownValue,
+                                                                              registrationDate: _model.datePicked1,
+                                                                              minimumVolunteer: _model.sliderValue,
+                                                                              streetAddress: _model.streetController.text,
+                                                                              city: _model.cityController1.text,
+                                                                              province: _model.cityController2.text,
+                                                                            ),
+                                                                            'admin_ref':
+                                                                                [
+                                                                              currentUserReference
+                                                                            ],
+                                                                            'eventTag':
+                                                                                _model.selectCauseCreateModel.selectedTagsList,
+                                                                          }, eventsRecordReference2);
+                                                                          _shouldSetState =
+                                                                              true;
+                                                                          if (_model.isCreated2!.reference !=
+                                                                              null) {
+                                                                            logFirebaseEvent('ButtonSubmit_backend_call');
+
+                                                                            await LogsRecord.createDoc(currentUserReference!).set(createLogsRecordData(
+                                                                              date: getCurrentTimestamp,
+                                                                              action: 'Created an event',
+                                                                              userRef: currentUserReference,
+                                                                            ));
+                                                                            logFirebaseEvent('ButtonSubmit_backend_call');
+
+                                                                            await MyEventsRecord.createDoc(currentUserReference!).set(createMyEventsRecordData(
+                                                                              eventReference: _model.isCreated2!.reference,
+                                                                              dateCreated: getCurrentTimestamp,
+                                                                            ));
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  content: Text('The event has been created and is to be approved.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            logFirebaseEvent('ButtonSubmit_update_app_state');
+                                                                            FFAppState().update(() {
+                                                                              FFAppState().deleteLocationLatLng();
+                                                                              FFAppState().locationLatLng = null;
+
+                                                                              FFAppState().deleteAddress();
+                                                                              FFAppState().address = '';
+
+                                                                              FFAppState().startDate = null;
+                                                                              FFAppState().endDate = null;
+                                                                              FFAppState().startTime = null;
+                                                                              FFAppState().endTime = null;
+                                                                            });
+                                                                            logFirebaseEvent('ButtonSubmit_clear_text_fields');
+                                                                            setState(() {
+                                                                              _model.titleEventController?.clear();
+                                                                              _model.descriptionEventController?.clear();
+                                                                              _model.addRequirementsEventController?.clear();
+                                                                              _model.personInChargeController?.clear();
+                                                                              _model.contactNumberController?.clear();
+                                                                              _model.ageRequirementController?.clear();
+                                                                              _model.neededVolunteerController?.clear();
+                                                                              _model.titleAnnouncementController?.clear();
+                                                                              _model.descriptionAnnouncementController?.clear();
+                                                                            });
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Event is to be confirmed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            logFirebaseEvent('ButtonSubmit_navigate_to');
+
+                                                                            context.goNamed('HomeScreen');
+
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
+                                                                          } else {
+                                                                            logFirebaseEvent('ButtonSubmit_alert_dialog');
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Done'),
+                                                                                  content: Text('Creation failed.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                            if (_shouldSetState)
+                                                                              setState(() {});
+                                                                            return;
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    } else {
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+
+                                                                    if (_shouldSetState)
+                                                                      setState(
+                                                                          () {});
+                                                                  },
                                                                   text:
                                                                       'Submit',
                                                                   options:
@@ -3666,7 +4238,7 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                           child: Form(
                                             key: _model.formKey2,
                                             autovalidateMode:
-                                                AutovalidateMode.disabled,
+                                                AutovalidateMode.always,
                                             child: SingleChildScrollView(
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
@@ -4166,8 +4738,13 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                           logFirebaseEvent(
                                                               'Button_backend_call');
 
-                                                          final announcementCreateData =
-                                                              createAnnouncementRecordData(
+                                                          var announcementRecordReference =
+                                                              AnnouncementRecord
+                                                                  .collection
+                                                                  .doc();
+                                                          await announcementRecordReference
+                                                              .set(
+                                                                  createAnnouncementRecordData(
                                                             title: _model
                                                                 .titleAnnouncementController
                                                                 .text,
@@ -4184,18 +4761,30 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                             isConfirmbySA:
                                                                 false,
                                                             isDeclined: false,
-                                                          );
-                                                          var announcementRecordReference =
-                                                              AnnouncementRecord
-                                                                  .collection
-                                                                  .doc();
-                                                          await announcementRecordReference
-                                                              .set(
-                                                                  announcementCreateData);
+                                                          ));
                                                           _model.announcement =
                                                               AnnouncementRecord
                                                                   .getDocumentFromData(
-                                                                      announcementCreateData,
+                                                                      createAnnouncementRecordData(
+                                                                        title: _model
+                                                                            .titleAnnouncementController
+                                                                            .text,
+                                                                        body: _model
+                                                                            .descriptionAnnouncementController
+                                                                            .text,
+                                                                        photoUrl:
+                                                                            _model.uploadedFileUrl2,
+                                                                        createdTime:
+                                                                            getCurrentTimestamp,
+                                                                        createdBy:
+                                                                            currentUserReference,
+                                                                        isDeleted:
+                                                                            false,
+                                                                        isConfirmbySA:
+                                                                            false,
+                                                                        isDeclined:
+                                                                            false,
+                                                                      ),
                                                                       announcementRecordReference);
                                                           _shouldSetState =
                                                               true;
@@ -4206,20 +4795,18 @@ class _EventCreateWidgetState extends State<EventCreateWidget> {
                                                             logFirebaseEvent(
                                                                 'Button_backend_call');
 
-                                                            final logsCreateData =
-                                                                createLogsRecordData(
+                                                            await LogsRecord
+                                                                    .createDoc(
+                                                                        currentUserReference!)
+                                                                .set(
+                                                                    createLogsRecordData(
                                                               date:
                                                                   getCurrentTimestamp,
                                                               action:
                                                                   'Created an announcement',
                                                               userRef:
                                                                   currentUserReference,
-                                                            );
-                                                            await LogsRecord
-                                                                    .createDoc(
-                                                                        currentUserReference!)
-                                                                .set(
-                                                                    logsCreateData);
+                                                            ));
                                                             logFirebaseEvent(
                                                                 'Button_navigate_to');
 

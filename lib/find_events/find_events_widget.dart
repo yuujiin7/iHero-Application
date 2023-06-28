@@ -88,9 +88,8 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
       _navigate();
     });
 
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => setState(() => currentUserLocationValue = loc));
     _model.searchFieldController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -103,21 +102,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-    if (currentUserLocationValue == null) {
-      return Container(
-        color: FlutterFlowTheme.of(context).primaryBackground,
-        child: Center(
-          child: SizedBox(
-            width: 50.0,
-            height: 50.0,
-            child: SpinKitRipple(
-              color: Color(0xFFFE2126),
-              size: 50.0,
-            ),
-          ),
-        ),
-      );
-    }
 
     return FutureBuilder<List<EventsRecord>>(
       future: queryEventsRecordOnce(
@@ -963,34 +947,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      '${formatNumber(
-                                                                        functions.returnDistanceBetweenTwoPointsCopy(
-                                                                            eventListItem.eventLocation,
-                                                                            currentUserLocationValue),
-                                                                        formatType:
-                                                                            FormatType.compact,
-                                                                      )} Km away',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryBackground,
-                                                                            useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                          ),
-                                                                    ),
-                                                                  ),
                                                                   Text(
                                                                     eventListItem
                                                                             .isRecurring
@@ -1638,29 +1594,6 @@ class _FindEventsWidgetState extends State<FindEventsWidget> {
                                                                         MainAxisAlignment
                                                                             .spaceBetween,
                                                                     children: [
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Text(
-                                                                          '${formatNumber(
-                                                                            functions.returnDistanceBetweenTwoPointsCopy(eventListItem.eventLocation,
-                                                                                currentUserLocationValue),
-                                                                            formatType:
-                                                                                FormatType.compact,
-                                                                          )} Km away',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                color: FlutterFlowTheme.of(context).primaryBackground,
-                                                                                useGoogleFonts: GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).bodyMediumFamily),
-                                                                              ),
-                                                                        ),
-                                                                      ),
                                                                       Text(
                                                                         eventListItem.isRecurring
                                                                             ? 'Recurring'

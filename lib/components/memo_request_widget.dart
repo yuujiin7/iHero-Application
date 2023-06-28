@@ -39,6 +39,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
     _model = createModel(context, () => MemoRequestModel());
 
     _model.textFieldController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -706,7 +707,9 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                             }
                             logFirebaseEvent('Button_backend_call');
 
-                            final memoralizationReportCreateData = {
+                            await MemoralizationReportRecord.collection
+                                .doc()
+                                .set({
                               ...createMemoralizationReportRecordData(
                                 fullName: _model.textFieldController.text,
                                 dateOfDeath: _model.datePicked,
@@ -716,10 +719,7 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                                 isDeclined: false,
                               ),
                               'photo_url': _model.uploadedFileUrls,
-                            };
-                            await MemoralizationReportRecord.collection
-                                .doc()
-                                .set(memoralizationReportCreateData);
+                            });
                             logFirebaseEvent('Button_alert_dialog');
                             await showDialog(
                               context: context,
@@ -739,13 +739,12 @@ class _MemoRequestWidgetState extends State<MemoRequestWidget> {
                             );
                             logFirebaseEvent('Button_backend_call');
 
-                            final logsCreateData = createLogsRecordData(
+                            await LogsRecord.createDoc(currentUserReference!)
+                                .set(createLogsRecordData(
                               date: getCurrentTimestamp,
                               action: 'Created a memoralization report.',
                               userRef: currentUserReference,
-                            );
-                            await LogsRecord.createDoc(currentUserReference!)
-                                .set(logsCreateData);
+                            ));
                             logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                             return;

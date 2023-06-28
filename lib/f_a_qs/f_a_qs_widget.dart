@@ -53,6 +53,8 @@ class _FAQsWidgetState extends State<FAQsWidget> {
         'Help Center',
       );
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

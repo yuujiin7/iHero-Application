@@ -29,3 +29,4 @@ export 'checkifhourbefore.dart' show checkifhourbefore;
 export 'get_near_events.dart' show getNearEvents;
 export 'has_joined_event_within_hour.dart' show hasJoinedEventWithinHour;
 export 'can_volunteer_join_event.dart' show canVolunteerJoinEvent;
+export 'add_days_to_registration_date.dart' show addDaysToRegistrationDate;

@@ -29,6 +29,8 @@ class _StopScreenWidgetState extends State<StopScreenWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => StopScreenModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
